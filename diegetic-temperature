@@ -1,0 +1,168 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index d3cad3c0..2cf9a779 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -3400,6 +3400,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+         pos = add( pos, actionOffset );
+         }                
+ 
++    // diegetic temperature
++    if( inObj->heat < 0.5 ) {
++        double shiverChance = 1.0 - inObj->heat * 2;
++        if( randSource.getRandomBoundedDouble( 0, 1.0 ) < pow(shiverChance, 3) ) {
++            double shiverMax = CELL_D * 0.01;
++            double shiverX = randSource.getRandomBoundedInt( 0, shiverMax );
++            double shiverY = randSource.getRandomBoundedInt( 0, shiverMax );
++            doublePair shiver = { shiverX, shiverY };
++
++            pos = add( pos, shiver );
++            }
++        }
+                 
+     AnimType curType = inObj->curAnim;
+     AnimType fadeTargetType = inObj->curAnim;
+@@ -3522,6 +3534,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+ 
+         if( ! inObj->tempAgeOverrideSet )
+             setAnimationEmotion( inObj->currentEmot );
++
++        setAnimationHeat( inObj->heat );
+         
+         holdingPos =
+             drawObjectAnim( inObj->displayID, 2, curType, 
+@@ -3701,6 +3715,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+ 
+             if( ! inObj->tempAgeOverrideSet )
+                 setAnimationEmotion( inObj->currentEmot );
++
++            setAnimationHeat( inObj->heat );
+             
+             // rideable object
+             holdingPos =
+@@ -3781,6 +3797,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+                 
+                 if( ! babyO->tempAgeOverrideSet )
+                     setAnimationEmotion( babyO->currentEmot );
++
++                setAnimationHeat( babyO->heat );
+                 
+                 doublePair babyHeldPos = holdPos;
+                 
+diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
+index 0e54461e..c41fdb39 100644
+--- a/gameSource/animationBank.cpp
++++ b/gameSource/animationBank.cpp
+@@ -67,6 +67,16 @@ static char outputMouthFrames = false;
+ static char mouthFrameOutputStarted = false;
+ 
+ 
++static SpriteHandle sweatDrops[5];
++const char *sweatDropFiles[5] = {
++    "sprites/87.tga",
++    "sprites/88.tga", // - 0.12
++    "sprites/89.tga", // - 0.12
++    "sprites/90.tga", // + 0.7
++    "sprites/91.tga"  // + 0.12
++};
++const int numSweatDrops = 5;
++
+ 
+ 
+ 
+@@ -148,6 +158,9 @@ int initAnimationBankStart( char *outRebuildingCache ) {
+         
+         }
+     
++    for ( int i=0; i<numSweatDrops; i++) {
++        sweatDrops[i] = loadSpriteBase( sweatDropFiles[i], false );
++        }
+ 
+ 
+     maxID = 0;
+@@ -511,6 +524,11 @@ void freeAnimationBank() {
+         delete [] mouthShapes;
+         mouthShapes = NULL;
+         }
++
++    for( int i=0; i<numSweatDrops; i++ ) {
++        freeSprite( sweatDrops[i] );
++        sweatDrops[i] = NULL;
++        }
+     
+     if( mouthShapeFrameList != NULL ) {
+         delete [] mouthShapeFrameList;
+@@ -1185,6 +1203,13 @@ void setAnimationEmotion( Emotion *inEmotion ) {
+     }
+ 
+ 
++static float drawWithHeat = 0.5;
++
++void setAnimationHeat( float heat ) {
++    drawWithHeat = heat;
++    }
++
++
+ 
+ ObjectAnimPack drawObjectAnimPacked( 
+     int inObjectID,
+@@ -2675,6 +2700,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+ 
+ 
+ 
++
++        // sweat drops
++        if( i == headIndex &&
++            obj->person &&
++            drawWithHeat > 0.5 ) {
++                doublePair offset = {0, 10};
++                double rot = 0.12;
++
++                if( inFlipH ) {
++                    offset.x *= -1;
++                    rot *= -1;
++                    }
++
++                if( animHeadRotDelta != 0 ) {
++                    offset = rotate( offset, -2 * M_PI * animHeadRotDelta );
++                    }
++
++
++                doublePair sPos = add( animHeadPos, offset );
++
++                sPos = add( sPos, inPos );
++
++                double sinVal = getOscOffset( 
++                    inFrameTime,
++                    0,
++                    0.4,
++                    1.0,
++                    0 );
++
++                setDrawFade( (drawWithHeat - 0.5) * 2 );
++                drawSprite( sweatDrops[1],
++                            sPos,
++                            1.5 + sinVal * 0.1,
++                            animHeadRotDelta - rot,
++                            inFlipH);
++                setDrawFade(0.0);
++            }
++
++
++
++
+         // shoes on top of feet
+         if( inClothing.backShoe != NULL && i == backFootIndex ) {
+             int numCont = 0;
+diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
+index 49ddfc32..0d4b7c8e 100644
+--- a/gameSource/animationBank.h
++++ b/gameSource/animationBank.h
+@@ -445,6 +445,8 @@ char isSoundUsedByAnim( int inSoundID );
+ // sets emotion for subsequent drawObjectAnim calls, or NULL for no emotion
+ void setAnimationEmotion( Emotion *inEmotion );
+ 
++void setAnimationHeat( float heat );
++
+ 
+ 
+ #endif

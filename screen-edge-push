@@ -1,0 +1,92 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index be20731f..0fd5c007 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -102,6 +102,7 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ static float lastMouseX = 0;
+ static float lastMouseY = 0;
+ 
++doublePair lastScreenEdge = {0,0};
+ 
+ // set to true to render for teaser video
+ static char teaserVideo = false;
+@@ -5052,7 +5053,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+         }
+ 
+     
+-    
+ 
+     // reset flags so that only drawn objects get flagged
+     for( int i=0; i<gameObjects.size(); i++ ) {
+@@ -5845,7 +5845,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+         return;
+         }
+ 
+-
+     // special mode for teaser video
+     if( teaserVideo ) {
+         //setDrawColor( 1, 1, 1, 1 );
+@@ -14615,18 +14614,6 @@ void LivingLifePage::step() {
+                 lrint( moveScale * 
+                        cameraFollowsObject->currentMoveDirection.y );
+  
+-            if( screenCenterPlayerOffsetX < -viewWidth / 3 ) {
+-                screenCenterPlayerOffsetX =  -viewWidth / 3;
+-                }
+-            if( screenCenterPlayerOffsetX >  viewWidth / 3 ) {
+-                screenCenterPlayerOffsetX =  viewWidth / 3;
+-                }
+-            if( screenCenterPlayerOffsetY < -viewHeight / 5 ) {
+-                screenCenterPlayerOffsetY =  -viewHeight / 5;
+-                }
+-            if( screenCenterPlayerOffsetY >  viewHeight / 6 ) {
+-                screenCenterPlayerOffsetY =  viewHeight / 6;
+-                }
+             }
+         else if( false ) { // skip for now
+             // stopped moving
+@@ -14667,6 +14654,21 @@ void LivingLifePage::step() {
+             
+             }
+ 
++        screenCenterPlayerOffsetX -= lastScreenEdge.x * 10;
++        screenCenterPlayerOffsetY -= lastScreenEdge.y * 10;
++
++        if( screenCenterPlayerOffsetX < -viewWidth / 3 ) {
++            screenCenterPlayerOffsetX =  -viewWidth / 3;
++            }
++        if( screenCenterPlayerOffsetX >  viewWidth / 3 ) {
++            screenCenterPlayerOffsetX =  viewWidth / 3;
++            }
++        if( screenCenterPlayerOffsetY < -viewHeight / 5 ) {
++            screenCenterPlayerOffsetY =  -viewHeight / 5;
++            }
++        if( screenCenterPlayerOffsetY >  viewHeight / 6 ) {
++            screenCenterPlayerOffsetY =  viewHeight / 6;
++            }
+ 
+         screenTargetPos.x = 
+             CELL_D * cameraFollowsObject->currentPos.x - 
+@@ -16647,7 +16649,21 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+         mCurMouseOverBehind = false;
+         mLastMouseOverFade = 1.0f;
+         }
+-    
++
++    float spanX = viewWidth/2 - CELL_D/2;
++    float spanY = viewHeight/2 - CELL_D/2;
++    doublePair delta = {
++        inX - lastScreenViewCenter.x,
++        inY - lastScreenViewCenter.y
++        };
++    if (fabs(delta.x) > spanX || fabs(delta.y) > spanY) {
++        lastScreenEdge = normalize(delta);
++        }
++    else {
++        lastScreenEdge.x = 0;
++        lastScreenEdge.y = 0;
++        }
++
+     }
+ 
+ 

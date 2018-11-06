@@ -1,0 +1,145 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 0fd5c007..6c5c5ef2 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -92,8 +92,12 @@ static JenkinsRandomSource remapRandSource( 340403 );
+ static int lastScreenMouseX, lastScreenMouseY;
+ static char mouseDown = false;
+ static int mouseDownFrames = 0;
++static int mouseClickGap = 0;
++static char mouseHeld = false;
++static char autoRun = false;
+ 
+ static int minMouseDownFrames = 30;
++static int maxDoubleClickFrames = 12;
+ 
+ 
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+@@ -1494,7 +1498,7 @@ void LivingLifePage::computePathToDest( LiveObject *inObject ) {
+             inObject->pathToDest[i].y -= pathOffsetY;
+             }
+ 
+-        inObject->shouldDrawPathMarks = false;
++        inObject->shouldDrawPathMarks = autoRun;
+         
+         // up, down, left, right
+         int dirsInPath[4] = { 0, 0, 0, 0 };
+@@ -8654,8 +8658,12 @@ void LivingLifePage::step() {
+         }
+     
+ 
++    mouseClickGap++;
+     if( mouseDown ) {
+         mouseDownFrames++;
++        if ( mouseDownFrames > minMouseDownFrames / frameRateFactor ) {
++            mouseHeld = true;
++            }
+         }
+     
+     if( mServerSocket == -1 ) {
+@@ -15066,7 +15074,7 @@ void LivingLifePage::step() {
+                 }
+             else {
+ 
+-                if( o->id == ourID && mouseDown ) {
++                if( o->id == ourID && (mouseHeld || autoRun) ) {
+                     float worldMouseX, worldMouseY;
+                     
+                     screenToWorld( lastScreenMouseX,
+@@ -15085,9 +15093,7 @@ void LivingLifePage::step() {
+                     // however, if they started by clicking on something
+                     // make sure they are really holding the mouse down
+                     // (give them time to unpress the mouse)
+-                    if( nextActionMessageToSend == NULL ||
+-                        mouseDownFrames >  
+-                        minMouseDownFrames / frameRateFactor ) {
++                    if( nextActionMessageToSend == NULL ) {
+                         
+                         double absX = abs( delta.x );
+                         double absY = abs( delta.y );
+@@ -15099,10 +15105,7 @@ void LivingLifePage::step() {
+                             
+                             if( absX < CELL_D * 4 
+                                 &&
+-                                absY < CELL_D * 4 
+-                                &&
+-                                mouseDownFrames >  
+-                                minMouseDownFrames / frameRateFactor ) {
++                                absY < CELL_D * 4 ) {
+                                 
+                                 // they're holding mouse down very close
+                                 // to to their character
+@@ -15275,6 +15278,9 @@ void LivingLifePage::step() {
+                     //trailColor.g = randSource.getRandomBoundedDouble( 0, .5 );
+                     //trailColor.b = randSource.getRandomBoundedDouble( 0, .5 );
+                     
++                    if( o->id == ourID ) {
++                        autoRun = false;
++                        }
+ 
+                     if( ( o->id != ourID && 
+                           ! o->somePendingMessageIsMoreMovement ) 
+@@ -15959,7 +15965,7 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+     p->closestCellX = clickDestX;
+     p->closestCellY = clickDestY;
+ 
+-    if( mForceGroundClick ) {
++    if( mForceGroundClick || autoRun ) {
+         return;
+         }
+     
+@@ -16740,6 +16746,15 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+         }
+     
+     mLastMouseOverID = 0;
++
++    if (mouseClickGap < maxDoubleClickFrames) {
++      autoRun = true;
++      LiveObject* ourLiveObject = getOurLiveObject();
++      if (ourLiveObject != NULL) {
++          ourLiveObject->shouldDrawPathMarks = autoRun;
++          }
++    }
++    mouseClickGap = 0;
+     
+     // detect cases where mouse is held down already
+     // this is for long-distance player motion, and we don't want
+@@ -16858,10 +16873,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+     int mapX = clickDestX - mMapOffsetX + mMapD / 2;
+     int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
+     
+-    
+-    if( mouseAlreadyDown && 
+-        mouseDownFrames >  
+-        minMouseDownFrames / frameRateFactor ) {
++    if( mouseHeld || autoRun ) {
+         
+         // continuous movement mode
+ 
+@@ -18015,17 +18027,21 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+         return;
+         }
+ 
+-    if( mouseDown && 
+-        getOurLiveObject()->inMotion 
+-        &&
+-        mouseDownFrames >  
+-        minMouseDownFrames / frameRateFactor ) {
++    if( mouseHeld && 
++        getOurLiveObject()->inMotion ) {
+         
+         // treat the up as one final click
+         pointerDown( inX, inY );
++        // reuse of pointerDown in auto run makes it look like button is held
++        autoRun = false;
++        LiveObject* ourLiveObject = getOurLiveObject();
++        if (ourLiveObject != NULL) {
++            ourLiveObject->shouldDrawPathMarks = autoRun;
++            }
+         }
+ 
+     mouseDown = false;
++    mouseHeld = false;
+ 
+ 
+     // clear mouse over cell

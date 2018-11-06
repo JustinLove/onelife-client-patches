@@ -1,0 +1,17 @@
+diff --git a/.gitignore b/.gitignore
+index 319c1177..ab1cfc4c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -28,3 +28,12 @@ server/lifeLog/
+ server/categories
+ server/objects
+ server/transitions
++
++*.exe
++*.ico
++*.rc
++gameSource/log.txt
++gameSource/log.txt
++build/windows
++notes.md
++patches-master
