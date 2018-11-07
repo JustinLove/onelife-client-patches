@@ -49,49 +49,38 @@ index 39c1ff34..51898f19 100644
                  doublePair babyHeldPos = holdPos;
                  
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 0e54461e..c41fdb39 100644
+index 0e54461e..8213dfbf 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
-@@ -67,6 +67,16 @@ static char outputMouthFrames = false;
+@@ -67,6 +67,9 @@ static char outputMouthFrames = false;
  static char mouthFrameOutputStarted = false;
  
  
-+static SpriteHandle sweatDrops[5];
-+const char *sweatDropFiles[5] = {
-+    "sprites/87.tga",
-+    "sprites/88.tga", // - 0.12
-+    "sprites/89.tga", // - 0.12
-+    "sprites/90.tga", // + 0.7
-+    "sprites/91.tga"  // + 0.12
-+};
-+const int numSweatDrops = 5;
++static SpriteHandle sweatDrop;
++const char *sweatDropFile = "sprites/88.tga"; // - 0.12
 +
  
  
  
-@@ -148,6 +158,9 @@ int initAnimationBankStart( char *outRebuildingCache ) {
+@@ -148,6 +151,7 @@ int initAnimationBankStart( char *outRebuildingCache ) {
          
          }
      
-+    for ( int i=0; i<numSweatDrops; i++) {
-+        sweatDrops[i] = loadSpriteBase( sweatDropFiles[i], false );
-+        }
++    sweatDrop = loadSpriteBase( sweatDropFile, false );
  
  
      maxID = 0;
-@@ -511,6 +524,11 @@ void freeAnimationBank() {
+@@ -511,6 +515,9 @@ void freeAnimationBank() {
          delete [] mouthShapes;
          mouthShapes = NULL;
          }
 +
-+    for( int i=0; i<numSweatDrops; i++ ) {
-+        freeSprite( sweatDrops[i] );
-+        sweatDrops[i] = NULL;
-+        }
++    freeSprite( sweatDrop );
++    sweatDrop = NULL;
      
      if( mouthShapeFrameList != NULL ) {
          delete [] mouthShapeFrameList;
-@@ -1185,6 +1203,13 @@ void setAnimationEmotion( Emotion *inEmotion ) {
+@@ -1185,6 +1192,13 @@ void setAnimationEmotion( Emotion *inEmotion ) {
      }
  
  
@@ -105,7 +94,7 @@ index 0e54461e..c41fdb39 100644
  
  ObjectAnimPack drawObjectAnimPacked( 
      int inObjectID,
-@@ -2675,6 +2700,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -2675,6 +2689,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  
@@ -139,7 +128,7 @@ index 0e54461e..c41fdb39 100644
 +                    0 );
 +
 +                setDrawFade( (drawWithHeat - 0.5) * 2 );
-+                drawSprite( sweatDrops[1],
++                drawSprite( sweatDrop,
 +                            sPos,
 +                            1.5 + sinVal * 0.1,
 +                            animHeadRotDelta - rot,
