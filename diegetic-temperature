@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 39c1ff34..51898f19 100644
+index 6720a08d..7d2e9d83 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -3405,6 +3405,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3403,6 +3403,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -21,7 +21,7 @@ index 39c1ff34..51898f19 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3527,6 +3539,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3525,6 +3537,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          if( ! inObj->tempAgeOverrideSet )
              setAnimationEmotion( inObj->currentEmot );
@@ -30,7 +30,7 @@ index 39c1ff34..51898f19 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -3706,6 +3720,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3704,6 +3718,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
              if( ! inObj->tempAgeOverrideSet )
                  setAnimationEmotion( inObj->currentEmot );
@@ -39,7 +39,7 @@ index 39c1ff34..51898f19 100644
              
              // rideable object
              holdingPos =
-@@ -3786,6 +3802,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3784,6 +3800,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  if( ! babyO->tempAgeOverrideSet )
                      setAnimationEmotion( babyO->currentEmot );
@@ -49,7 +49,7 @@ index 39c1ff34..51898f19 100644
                  doublePair babyHeldPos = holdPos;
                  
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 0e54461e..8213dfbf 100644
+index 834a49ae..9d110537 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -67,6 +67,9 @@ static char outputMouthFrames = false;
@@ -140,8 +140,8 @@ index 0e54461e..8213dfbf 100644
 +
 +
          // shoes on top of feet
-         if( inClothing.backShoe != NULL && i == backFootIndex ) {
-             int numCont = 0;
+         if( ! skipSprite && 
+             inClothing.backShoe != NULL && i == backFootIndex ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
 index 49ddfc32..0d4b7c8e 100644
 --- a/gameSource/animationBank.h
