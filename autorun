@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d914bb6f..474adc32 100644
+index d914bb6f..2847388f 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -94,9 +94,17 @@ static JenkinsRandomSource remapRandSource( 340403 );
@@ -15,8 +15,9 @@ index d914bb6f..474adc32 100644
 +static float previousMouseX = 0;
 +static float previousMouseY = 0;
  
- static int minMouseDownFrames = 30;
-+static int maxDoubleClickFrames = 20;
+-static int minMouseDownFrames = 30;
++static unsigned int minMouseDownFrames = 30;
++static unsigned int maxDoubleClickFrames = 20;
 +static int maxDoubleClickDrift = 30;
  
  

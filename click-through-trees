@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 474adc32..847baf19 100644
+index 2847388f..c5b3e978 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -16288,8 +16288,7 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,

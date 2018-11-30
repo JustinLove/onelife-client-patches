@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 847baf19..b95a46ec 100644
+index c5b3e978..552b133b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -3426,6 +3426,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
