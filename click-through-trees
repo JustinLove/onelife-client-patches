@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 2847388f..c5b3e978 100644
+index f4e7bb7f..e0877c96 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -16288,8 +16288,7 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16319,8 +16319,7 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
  
          // all short objects are mouse-through-able
          
@@ -12,7 +12,7 @@ index 2847388f..c5b3e978 100644
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -16399,8 +16398,6 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16430,8 +16429,6 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
@@ -21,7 +21,7 @@ index 2847388f..c5b3e978 100644
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -16411,10 +16408,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16442,7 +16439,9 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }
@@ -31,8 +31,4 @@ index 2847388f..c5b3e978 100644
 +
                          p->closestCellX = x;
                          p->closestCellY = y;
--                        
-+
-                         p->hitSlotIndex = sl;
- 
-                         p->hitAnObject = true;
+                         

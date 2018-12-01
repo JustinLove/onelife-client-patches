@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 88cb72df..d914bb6f 100644
+index f5fee532..7884e08a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -105,6 +105,7 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -26,7 +26,7 @@ index 88cb72df..d914bb6f 100644
      // special mode for teaser video
      if( teaserVideo ) {
          //setDrawColor( 1, 1, 1, 1 );
-@@ -14857,18 +14856,6 @@ void LivingLifePage::step() {
+@@ -14885,18 +14884,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -45,7 +45,7 @@ index 88cb72df..d914bb6f 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -14909,6 +14896,21 @@ void LivingLifePage::step() {
+@@ -14937,6 +14924,21 @@ void LivingLifePage::step() {
              
              }
  
@@ -67,7 +67,7 @@ index 88cb72df..d914bb6f 100644
  
          screenTargetPos.x = 
              CELL_D * cameraFollowsObject->currentPos.x - 
-@@ -16894,7 +16896,21 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -16922,7 +16924,21 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mCurMouseOverBehind = false;
          mLastMouseOverFade = 1.0f;
          }
