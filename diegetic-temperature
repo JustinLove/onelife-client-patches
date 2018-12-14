@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e0877c96..09dc3a1e 100644
+index 30cb8dd5..414e5d4b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -3429,6 +3429,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3526,6 +3526,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -21,7 +21,7 @@ index e0877c96..09dc3a1e 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3551,6 +3563,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3648,6 +3660,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          if( ! inObj->tempAgeOverrideSet )
              setAnimationEmotion( inObj->currentEmot );
@@ -30,16 +30,16 @@ index e0877c96..09dc3a1e 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -3730,6 +3744,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
- 
-             if( ! inObj->tempAgeOverrideSet )
-                 setAnimationEmotion( inObj->currentEmot );
+@@ -3884,6 +3898,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+                 
+                 restoreSkipDrawing( heldObject );
+                 }
 +
 +            setAnimationHeat( inObj->heat );
              
+ 
              // rideable object
-             holdingPos =
-@@ -3810,6 +3826,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3957,6 +3973,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  if( ! babyO->tempAgeOverrideSet )
                      setAnimationEmotion( babyO->currentEmot );
@@ -49,10 +49,10 @@ index e0877c96..09dc3a1e 100644
                  doublePair babyHeldPos = holdPos;
                  
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 4a9be9e2..e871d993 100644
+index 11d262af..fb110da0 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
-@@ -67,6 +67,9 @@ static char outputMouthFrames = false;
+@@ -68,6 +68,9 @@ static char outputMouthFrames = false;
  static char mouthFrameOutputStarted = false;
  
  
@@ -62,7 +62,7 @@ index 4a9be9e2..e871d993 100644
  
  
  
-@@ -148,6 +151,7 @@ int initAnimationBankStart( char *outRebuildingCache ) {
+@@ -149,6 +152,7 @@ int initAnimationBankStart( char *outRebuildingCache ) {
          
          }
      
@@ -70,7 +70,7 @@ index 4a9be9e2..e871d993 100644
  
  
      maxID = 0;
-@@ -511,6 +515,9 @@ void freeAnimationBank() {
+@@ -512,6 +516,9 @@ void freeAnimationBank() {
          delete [] mouthShapes;
          mouthShapes = NULL;
          }
@@ -80,7 +80,7 @@ index 4a9be9e2..e871d993 100644
      
      if( mouthShapeFrameList != NULL ) {
          delete [] mouthShapeFrameList;
-@@ -1185,6 +1192,13 @@ void setAnimationEmotion( Emotion *inEmotion ) {
+@@ -1202,6 +1209,13 @@ void setClothingHighlightFades( float *inFades ) {
      }
  
  
@@ -94,7 +94,7 @@ index 4a9be9e2..e871d993 100644
  
  ObjectAnimPack drawObjectAnimPacked( 
      int inObjectID,
-@@ -2752,6 +2766,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -2948,6 +2962,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  
@@ -143,7 +143,7 @@ index 4a9be9e2..e871d993 100644
          if( ! skipSprite && 
              inClothing.backShoe != NULL && i == backFootIndex ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index 49ddfc32..0d4b7c8e 100644
+index 98277961..952d1806 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
 @@ -445,6 +445,8 @@ char isSoundUsedByAnim( int inSoundID );
@@ -153,5 +153,5 @@ index 49ddfc32..0d4b7c8e 100644
 +void setAnimationHeat( float heat );
 +
  
- 
- #endif
+ // sets fade values for clothing highlights of next drawn person
+ // or NULL for no clothing highlights

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f5fee532..7884e08a 100644
+index bd3285f3..67f6b1d6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -105,6 +105,7 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -10,7 +10,7 @@ index f5fee532..7884e08a 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -5084,7 +5085,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -5235,7 +5236,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
      
@@ -18,7 +18,7 @@ index f5fee532..7884e08a 100644
  
      // reset flags so that only drawn objects get flagged
      for( int i=0; i<gameObjects.size(); i++ ) {
-@@ -5877,7 +5877,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -6048,7 +6048,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
          return;
          }
  
@@ -26,7 +26,7 @@ index f5fee532..7884e08a 100644
      // special mode for teaser video
      if( teaserVideo ) {
          //setDrawColor( 1, 1, 1, 1 );
-@@ -14885,18 +14884,6 @@ void LivingLifePage::step() {
+@@ -15040,18 +15039,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -45,7 +45,7 @@ index f5fee532..7884e08a 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -14937,6 +14924,21 @@ void LivingLifePage::step() {
+@@ -15092,6 +15079,21 @@ void LivingLifePage::step() {
              
              }
  
@@ -67,7 +67,7 @@ index f5fee532..7884e08a 100644
  
          screenTargetPos.x = 
              CELL_D * cameraFollowsObject->currentPos.x - 
-@@ -16922,7 +16924,21 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -17083,7 +17085,21 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mCurMouseOverBehind = false;
          mLastMouseOverFade = 1.0f;
          }
