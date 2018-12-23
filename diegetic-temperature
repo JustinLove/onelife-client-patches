@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 30cb8dd5..414e5d4b 100644
+index d5e1e9bb..0c40173d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -3526,6 +3526,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3537,6 +3537,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -21,7 +21,7 @@ index 30cb8dd5..414e5d4b 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3648,6 +3660,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3659,6 +3671,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          if( ! inObj->tempAgeOverrideSet )
              setAnimationEmotion( inObj->currentEmot );
@@ -30,7 +30,7 @@ index 30cb8dd5..414e5d4b 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -3884,6 +3898,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3895,6 +3909,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -39,7 +39,7 @@ index 30cb8dd5..414e5d4b 100644
              
  
              // rideable object
-@@ -3957,6 +3973,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3968,6 +3984,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  if( ! babyO->tempAgeOverrideSet )
                      setAnimationEmotion( babyO->currentEmot );
@@ -49,7 +49,7 @@ index 30cb8dd5..414e5d4b 100644
                  doublePair babyHeldPos = holdPos;
                  
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 11d262af..fb110da0 100644
+index 3ae8e8b3..c998b9d0 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -68,6 +68,9 @@ static char outputMouthFrames = false;
@@ -94,7 +94,7 @@ index 11d262af..fb110da0 100644
  
  ObjectAnimPack drawObjectAnimPacked( 
      int inObjectID,
-@@ -2948,6 +2962,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -2961,6 +2975,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  

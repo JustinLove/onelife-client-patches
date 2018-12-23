@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index bd3285f3..67f6b1d6 100644
+index ce94dc63..365b4099 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -105,6 +105,7 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+@@ -106,6 +106,7 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  static float lastMouseX = 0;
  static float lastMouseY = 0;
  
@@ -10,7 +10,7 @@ index bd3285f3..67f6b1d6 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -5235,7 +5236,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -5246,7 +5247,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
      
@@ -18,7 +18,7 @@ index bd3285f3..67f6b1d6 100644
  
      // reset flags so that only drawn objects get flagged
      for( int i=0; i<gameObjects.size(); i++ ) {
-@@ -6048,7 +6048,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -6059,7 +6059,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
          return;
          }
  
@@ -26,7 +26,7 @@ index bd3285f3..67f6b1d6 100644
      // special mode for teaser video
      if( teaserVideo ) {
          //setDrawColor( 1, 1, 1, 1 );
-@@ -15040,18 +15039,6 @@ void LivingLifePage::step() {
+@@ -15154,18 +15153,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -45,7 +45,7 @@ index bd3285f3..67f6b1d6 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -15092,6 +15079,21 @@ void LivingLifePage::step() {
+@@ -15206,6 +15193,21 @@ void LivingLifePage::step() {
              
              }
  
@@ -67,7 +67,7 @@ index bd3285f3..67f6b1d6 100644
  
          screenTargetPos.x = 
              CELL_D * cameraFollowsObject->currentPos.x - 
-@@ -17083,7 +17085,21 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -17200,7 +17202,21 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mCurMouseOverBehind = false;
          mLastMouseOverFade = 1.0f;
          }

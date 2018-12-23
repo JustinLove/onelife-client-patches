@@ -1,0 +1,18 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 0c40173d..c6d95b0d 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -16818,6 +16818,13 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+                     
+                     if( dist < minDistThatHits ) {
+                         p->hit = true;
++                        if( !shouldMoveCamera && p->hitOurPlacement ) {
++                            if( p->closestCellY > y ) {
++                                p->hitOurPlacementBehind = true;
++                                }
++                            continue;
++                            }
++
+                         p->closestCellX = x;
+                         p->closestCellY = y;
+                         if( o == ourLiveObject ) {
