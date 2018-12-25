@@ -20,6 +20,8 @@ Putting the pointer near the edge of the screen will nudge it over, up the norma
 
 Double-click to enable an auto-run mode. Dotted line trails will always be shown while active. Click again or catch your cursor to stop.
 
+This feature can be adjusted or disabled by the setting file `maxDoubleClickFrames.ini`. Set to 0 to disable double click to run; you can't click twice in 1 frame.
+
 ### click-through-trees
 
 Changes the hit detection of large objects (mainly trees) so they they only detect clicks on their tile, making it much easier to navigate through swamps and other dense areas. Main other affect I've noticed is that you cannot click on the cart part of a horse-cart.
