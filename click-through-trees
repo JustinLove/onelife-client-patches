@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index bd95715a..d5e1e9bb 100644
+index 4f957507..19abc6d4 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -16591,8 +16591,7 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16599,8 +16599,7 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
  
          // all short objects are mouse-through-able
          
@@ -12,7 +12,7 @@ index bd95715a..d5e1e9bb 100644
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -16702,8 +16701,6 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16710,8 +16709,6 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
@@ -21,7 +21,7 @@ index bd95715a..d5e1e9bb 100644
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -16714,7 +16711,9 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16722,7 +16719,9 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }

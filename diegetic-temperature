@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d5e1e9bb..0c40173d 100644
+index 19abc6d4..46dde196 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -3537,6 +3537,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3541,6 +3541,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -21,7 +21,7 @@ index d5e1e9bb..0c40173d 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3659,6 +3671,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3663,6 +3675,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          if( ! inObj->tempAgeOverrideSet )
              setAnimationEmotion( inObj->currentEmot );
@@ -30,7 +30,7 @@ index d5e1e9bb..0c40173d 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -3895,6 +3909,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3899,6 +3913,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -39,7 +39,7 @@ index d5e1e9bb..0c40173d 100644
              
  
              // rideable object
-@@ -3968,6 +3984,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3972,6 +3988,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  if( ! babyO->tempAgeOverrideSet )
                      setAnimationEmotion( babyO->currentEmot );

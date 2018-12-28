@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 0c40173d..c6d95b0d 100644
+index 46dde196..dae1d135 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -16818,6 +16818,13 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16826,6 +16826,13 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      
                      if( dist < minDistThatHits ) {
                          p->hit = true;
