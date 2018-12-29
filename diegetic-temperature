@@ -1,13 +1,31 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 19abc6d4..46dde196 100644
+index 9263aded..7aa89a2c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -3541,6 +3541,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -109,6 +109,8 @@ static int maxDoubleClickDrift = 30;
+ 
+ static int ignoreTallObjects = 1;
+ 
++static int showShiverSweat = 1;
++
+ 
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
+@@ -1934,6 +1936,8 @@ LivingLifePage::LivingLifePage()
+     maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
+ 
+     ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
++
++    showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
+     
+     initLiveTriggers();
+ 
+@@ -3549,6 +3553,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
 +    // diegetic temperature
-+    if( inObj->heat < 0.5 ) {
++    if( showShiverSweat && inObj->heat < 0.5 ) {
 +        double shiverChance = 1.0 - inObj->heat * 2;
 +        if( randSource.getRandomBoundedDouble( 0, 1.0 ) < pow(shiverChance, 3) ) {
 +            double shiverMax = CELL_D * 0.01;
@@ -21,30 +39,45 @@ index 19abc6d4..46dde196 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3663,6 +3675,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3671,6 +3687,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          if( ! inObj->tempAgeOverrideSet )
              setAnimationEmotion( inObj->currentEmot );
 +
-+        setAnimationHeat( inObj->heat );
++        if ( showShiverSweat ) {
++            setAnimationHeat( inObj->heat );
++            }
++        else {
++            setAnimationHeat( 0.5 );
++            }
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -3899,6 +3913,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3907,6 +3930,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
 +
-+            setAnimationHeat( inObj->heat );
++            if ( showShiverSweat ) {
++                setAnimationHeat( inObj->heat );
++                }
++            else {
++                setAnimationHeat( 0.5 );
++                }
              
  
              // rideable object
-@@ -3972,6 +3988,8 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3980,6 +4010,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  if( ! babyO->tempAgeOverrideSet )
                      setAnimationEmotion( babyO->currentEmot );
 +
-+                setAnimationHeat( babyO->heat );
++                if ( showShiverSweat ) {
++                    setAnimationHeat( inObj->heat );
++                    }
++                else {
++                    setAnimationHeat( 0.5 );
++                    }
                  
                  doublePair babyHeldPos = holdPos;
                  

@@ -1,32 +1,57 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4f957507..19abc6d4 100644
+index cb5bc65d..9263aded 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -16599,8 +16599,7 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -107,6 +107,8 @@ static unsigned int minMouseDownFrames = 30;
+ static unsigned int maxDoubleClickFrames = 20;
+ static int maxDoubleClickDrift = 30;
  
++static int ignoreTallObjects = 1;
++
+ 
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
+@@ -1930,6 +1932,8 @@ LivingLifePage::LivingLifePage()
+ 
+     // set to 0 to disable double click to run; you can't click twice in 1 frame
+     maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
++
++    ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
+     
+     initLiveTriggers();
+ 
+@@ -16606,7 +16610,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
          // all short objects are mouse-through-able
          
--        if( oID > 0 && 
+         if( oID > 0 && 
 -            getObjectHeight( oID ) < CELL_D ) {
-+        if( oID > 0 ) {
++            (ignoreTallObjects ||
++            getObjectHeight( oID ) < CELL_D) ) {
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -16710,8 +16709,6 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16716,8 +16721,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
 -                    p->hit = true;
 -                    
++                    if( !ignoreTallObjects ) {
++                        p->hit = true;
++                        }
++
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -16722,7 +16719,9 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -16728,7 +16735,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }
 -                    else {
-+                    else if( getObjectHeight( oID ) < .75 * CELL_D ) {
++                    else if( !ignoreTallObjects ||
++                        getObjectHeight( oID ) < .75 * CELL_D ) {
++                        // set if ignoring tall and short object
++                        // or redundant set in normal case
 +                        p->hit = true;
 +
                          p->closestCellX = x;

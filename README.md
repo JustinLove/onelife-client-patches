@@ -16,6 +16,8 @@ Cleans up some noise from my local compile environment that apparently don't bot
 
 Putting the pointer near the edge of the screen will nudge it over, up the normal limits used by the game engine.
 
+Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
+
 ### autorun
 
 Double-click to enable an auto-run mode. Dotted line trails will always be shown while active. Click again or catch your cursor to stop.
@@ -26,11 +28,16 @@ This feature can be adjusted or disabled by the setting file `maxDoubleClickFram
 
 Changes the hit detection of large objects (mainly trees) so they they only detect clicks on their tile, making it much easier to navigate through swamps and other dense areas. Main other affect I've noticed is that you cannot click on the cart part of a horse-cart.
 
+`settings/ignoreTallObjects.ini` (0 to disable this feature)
+
 ### diegetic-temperature
 
 Characters shiver when cold, and get a sweat drop when hot. This applies to all characters, although the client does not receive temperature updates for other players who are standing still.
+
+`settings/showShiverSweat.ini` (0 to disable this feature)
 
 ### click-through-heads
 
 While in screen lock (spacebar), hit detection prefers the item in the tile to any characters who may be overlapping it, and provides the highlight effect seen most commonly seen with objects behind trees. Note that this can make it harder to eat, which makes me still slightly unsatisfied with this mode of activation.
 
+`settings/preferObjectsOverPlayersWithScreenLock.ini` (0 to disable this feature)

@@ -1,32 +1,27 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e5572e8a..f3199f9c 100644
+index e5572e8a..5f534efb 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -106,6 +106,7 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+@@ -106,6 +106,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  static float lastMouseX = 0;
  static float lastMouseY = 0;
  
-+doublePair lastScreenEdge = {0,0};
++static doublePair lastScreenEdge = {0,0};
++static float screenEdgePushSpeed = 10;
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -5250,7 +5251,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
-         }
- 
+@@ -1914,6 +1916,9 @@ LivingLifePage::LivingLifePage()
+     mSayField.setIgnoreArrowKeys( true );
+     // drawn under world at (0,1000), don't allow click to focus
+     mSayField.setIgnoreMouse( true );
++
++    // set to 0 to disable screen edge push
++    screenEdgePushSpeed = SettingsManager::getFloatSetting( "screenEdgePushSpeed", 10 );
      
--    
+     initLiveTriggers();
  
-     // reset flags so that only drawn objects get flagged
-     for( int i=0; i<gameObjects.size(); i++ ) {
-@@ -6063,7 +6063,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
-         return;
-         }
- 
--
-     // special mode for teaser video
-     if( teaserVideo ) {
-         //setDrawColor( 1, 1, 1, 1 );
-@@ -15162,18 +15161,6 @@ void LivingLifePage::step() {
+@@ -15162,18 +15167,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -45,12 +40,12 @@ index e5572e8a..f3199f9c 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -15214,6 +15201,21 @@ void LivingLifePage::step() {
+@@ -15214,6 +15207,21 @@ void LivingLifePage::step() {
              
              }
  
-+        screenCenterPlayerOffsetX -= lastScreenEdge.x * 10;
-+        screenCenterPlayerOffsetY -= lastScreenEdge.y * 10;
++        screenCenterPlayerOffsetX -= lastScreenEdge.x * screenEdgePushSpeed;
++        screenCenterPlayerOffsetY -= lastScreenEdge.y * screenEdgePushSpeed;
 +
 +        if( screenCenterPlayerOffsetX < -viewWidth / 3 ) {
 +            screenCenterPlayerOffsetX =  -viewWidth / 3;
@@ -67,12 +62,10 @@ index e5572e8a..f3199f9c 100644
  
          screenTargetPos.x = 
              CELL_D * cameraFollowsObject->currentPos.x - 
-@@ -17208,7 +17210,21 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
-         mCurMouseOverBehind = false;
+@@ -17209,6 +17217,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
--    
-+
+     
 +    float spanX = viewWidth/2 - CELL_D/2;
 +    float spanY = viewHeight/2 - CELL_D/2;
 +    doublePair delta = {
