@@ -1,12 +1,6 @@
 ## Wondible's One Hour One Life Client Patches
 
-I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.
-
-I'm currently using [Stacked Git](http://procode.org/stgit/) (stgit) to manage patches, although it seems to create a lot of noise in the commit graph.
-
-Importing all of these patches would be:
-
-`stg import --series onelife-client-patches/series`
+[Patched Windows Client](https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip)
 
 ### custom-gitignore
 
@@ -41,3 +35,14 @@ Characters shiver when cold, and get a sweat drop when hot. This applies to all 
 While in screen lock (spacebar), hit detection prefers the item in the tile to any characters who may be overlapping it, and provides the highlight effect seen most commonly seen with objects behind trees. Note that this can make it harder to eat, which makes me still slightly unsatisfied with this mode of activation.
 
 `settings/preferObjectsOverPlayersWithScreenLock.ini` (0 to disable this feature)
+
+### Patch Development
+
+I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.
+
+I'm currently using [Stacked Git](http://procode.org/stgit/) (stgit) to manage patches, although it seems to create a lot of noise in the commit graph.
+
+Importing all of these patches would be:
+
+`stg import --series onelife-client-patches/series`
+
