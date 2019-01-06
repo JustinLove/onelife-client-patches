@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c280e232..dd33363f 100644
+index 7185fad7..2d6da3c6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -109,6 +109,8 @@ static int maxDoubleClickDrift = 30;
@@ -11,7 +11,7 @@ index c280e232..dd33363f 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -1934,6 +1936,8 @@ LivingLifePage::LivingLifePage()
+@@ -1938,6 +1940,8 @@ LivingLifePage::LivingLifePage()
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -20,7 +20,7 @@ index c280e232..dd33363f 100644
      
      initLiveTriggers();
  
-@@ -3549,6 +3553,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3553,6 +3557,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -39,7 +39,7 @@ index c280e232..dd33363f 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3671,6 +3687,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3675,6 +3691,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          if( ! inObj->tempAgeOverrideSet )
              setAnimationEmotion( inObj->currentEmot );
@@ -53,7 +53,7 @@ index c280e232..dd33363f 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -3907,6 +3930,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3911,6 +3934,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -67,7 +67,7 @@ index c280e232..dd33363f 100644
              
  
              // rideable object
-@@ -3980,6 +4010,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3984,6 +4014,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  if( ! babyO->tempAgeOverrideSet )
                      setAnimationEmotion( babyO->currentEmot );
@@ -82,7 +82,7 @@ index c280e232..dd33363f 100644
                  doublePair babyHeldPos = holdPos;
                  
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 3ae8e8b3..c998b9d0 100644
+index 3a20300f..bb0c8a0d 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -68,6 +68,9 @@ static char outputMouthFrames = false;
@@ -127,7 +127,7 @@ index 3ae8e8b3..c998b9d0 100644
  
  ObjectAnimPack drawObjectAnimPacked( 
      int inObjectID,
-@@ -2961,6 +2975,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -2963,6 +2977,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  

@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v8
+
+- Adds time based transitions to crafting hints.
+
 ## v7
 
 - All features can now be disabled by settings files

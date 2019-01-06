@@ -1,7 +1,8 @@
-# This series applies on GIT commit fc4cd2bcae0b84378174e9bd2d75364486d843e3
+# This series applies on GIT commit 4c1265a405846a8f821708c1ec0edc4be625c800
 custom-gitignore
 screen-edge-push
 autorun
 click-through-trees
 diegetic-temperature
 click-through-heads
+time-transition-hints
