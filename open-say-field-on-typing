@@ -1,0 +1,81 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 249dc3f5..9004e830 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -142,6 +142,10 @@ static char savingSpeechMask = false;
+ static char savingSpeechNumber = 1;
+ 
+ 
++static unsigned int keyDownGap = 0;
++static char sayCapture[3] = {0,0,0};
++
++
+ static double emotDuration = 10;
+ 
+ 
+@@ -9173,6 +9177,8 @@ void LivingLifePage::step() {
+             mouseHeld = true;
+             }
+         }
++
++    keyDownGap++;
+     
+     if( mServerSocket == -1 ) {
+         serverSocketConnected = false;
+@@ -19000,6 +19006,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+                 savingSpeechMask = false;
+                 savingSpeech = true;
+                 }
++            sayCapture[0] = inASCII;
+             break;
+         case 'x':
+             if( userTwinCode != NULL &&
+@@ -19011,6 +19018,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+                 setWaiting( false );
+                 setSignal( "twinCancel" );
+                 }
++            sayCapture[0] = inASCII;
+             break;
+         /*
+         case 'b':
+@@ -19073,12 +19081,14 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+             if( ! mSayField.isFocused() ) {
+                 mEKeyDown = true;
+                 }
++            sayCapture[0] = inASCII;
+             break;
+         case 'z':
+         case 'Z':
+             if( mUsingSteam && ! mSayField.isFocused() ) {
+                 mZKeyDown = true;
+                 }
++            sayCapture[0] = inASCII;
+             break;
+         case ' ':
+             if( ! mSayField.isFocused() ) {
+@@ -19287,7 +19297,25 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+                 delete [] typedText;
+                 }
+             break;
++        default:
++            // inspired by Awbz OneLife+
++            if( ! mSayField.isFocused()
++                && isalpha( inASCII ) ) {
++                if( keyDownGap < 30 && sayCapture[0] != 0 ) {
++                  sayCapture[1] = inASCII;
++                  sayCapture[2] = 0;
++                } else {
++                  sayCapture[0] = inASCII;
++                  sayCapture[1] = 0;
++                }
++                mSayField.setText( sayCapture );
++                mSayField.focus();
++                sayCapture[0] = 0;
++                }
++            break;
+         }
++
++    keyDownGap = 0;
+     }
+ 
+ 

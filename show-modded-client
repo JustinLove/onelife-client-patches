@@ -1,0 +1,15 @@
+diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
+index 45d18602..edf0c66c 100644
+--- a/gameSource/ExistingAccountPage.cpp
++++ b/gameSource/ExistingAccountPage.cpp
+@@ -629,6 +629,10 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
+         delete [] key;
+         delete [] s;
+         }
++
++    setDrawColor( 1, 1, 1, 1.0 );
++    mainFont->drawString( "WonLife", {-600, 300}, alignLeft );
+     
+     }
+ 
++

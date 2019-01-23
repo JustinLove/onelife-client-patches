@@ -1,5 +1,11 @@
 # Changelog - feature changes
 
+## v9
+
+- Prints "WonLife" on login screen
+- Automatically opens say field if printable characters are typed
+- Prototype curse assist with left/right arrows
+
 ## v8
 
 - Adds time based transitions to crafting hints.

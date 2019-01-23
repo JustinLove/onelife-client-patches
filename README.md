@@ -6,6 +6,10 @@
 
 Cleans up some noise from my local compile environment that apparently don't bother Jason. Perhaps he has global ignores for those files.
 
+### show-modded-client
+
+Prints "WonLife" on the start page so it's easy to tell when the mod has loaded, or the game has relaunced vanilla.
+
 ### screen-edge-push
 
 Putting the pointer near the edge of the screen will nudge it over, up the normal limits used by the game engine.
@@ -46,6 +50,14 @@ This didnt do as much for finding relevant precursors as I hoped, such as
 - Making Milkweed Seed (Fruiting Milkweed Not Relevant) - this shouldn't even be time based?
 
 More work is needed.
+
+### open-say-field-on-typing
+
+Automatically open the say field to talk if you type an text chracter. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
+
+### curse-assist
+
+Allows stepping through "CURSE <player>" with left and right arrows. Currently goes through all living players.
 
 ### Patch Development
 

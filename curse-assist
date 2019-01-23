@@ -1,0 +1,110 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 9004e830..6b869ada 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -19437,6 +19437,105 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+                 }
+             }
+         }
++
++    if( inKeyCode == MG_KEY_LEFT ||
++        inKeyCode == MG_KEY_RIGHT ) {
++        if( ! mSayField.isFocused() && inKeyCode == MG_KEY_UP ) {
++            }
++        else {
++            char *curText = mSayField.getText();
++                
++            int curBufferIndex = -1;
++            
++            if( strcmp( curText, "" ) != 0 ) {
++                for( int i=gameObjects.size()-1; i>=0; i-- ) {
++                    if( strcmp( curText, gameObjects.getElement( i )->name )
++                        == 0 ) {
++                        curBufferIndex = i;
++                        break;
++                        }
++                    }
++                }
++            delete [] curText;
++            
++            int newIndex = gameObjects.size();
++            
++            if( curBufferIndex != -1 ) {
++                newIndex = curBufferIndex;
++                
++                }
++
++            if( inKeyCode == MG_KEY_RIGHT ) {
++                newIndex --;
++                }
++            else {
++                newIndex ++;
++                }
++
++            if( newIndex >= 0 ) {
++                if( mCurrentNoteChars.size() > 0 ) {
++                    // fade older erased chars 
++
++                    for( int i=0; i<mErasedNoteCharFades.size(); i++ ) {
++                        if( mErasedNoteCharFades.getElementDirect( i ) > 0.5 ) {
++                            *( mErasedNoteCharFades.getElement( i ) ) -= 0.2;
++                            }
++                        else {
++                            *( mErasedNoteCharFades.getElement( i ) ) -= 0.1;
++                            }
++                        
++                        if( mErasedNoteCharFades.getElementDirect( i ) <= 0 ) {
++                            mErasedNoteCharFades.deleteElement( i );
++                            mErasedNoteChars.deleteElement( i );
++                            mErasedNoteCharOffsets.deleteElement( i );
++                            i--;
++                            }
++                        }
++                    }
++                
++                // first, remove exact duplicates from erased
++                for( int i=0; i<mCurrentNoteChars.size(); i++ ) {
++                    char c = mCurrentNoteChars.getElementDirect( i );
++                    doublePair pos = 
++                        mCurrentNoteCharOffsets.getElementDirect( i );
++                    
++                    for( int j=0; j<mErasedNoteChars.size(); j++ ) {
++                        if( mErasedNoteChars.getElementDirect(j) == c 
++                            &&
++                            equal( mErasedNoteCharOffsets.getElementDirect(j),
++                                   pos ) ) {
++                            
++                            mErasedNoteChars.deleteElement( j );
++                            mErasedNoteCharOffsets.deleteElement( j );
++                            mErasedNoteCharFades.deleteElement( j );
++                            j--;
++                            }
++                        }
++                    }
++                
++
++                for( int i=0; i<mCurrentNoteChars.size(); i++ ) {
++                    mErasedNoteChars.push_back( 
++                        mCurrentNoteChars.getElementDirect( i ) );
++                    
++                    mErasedNoteCharOffsets.push_back(
++                        mCurrentNoteCharOffsets.getElementDirect( i ) );
++                    
++                    mErasedNoteCharFades.push_back( 1.0f );
++                    }
++
++                if( newIndex >= gameObjects.size() ) {
++                    mSayField.setText( "" );
++                    }
++                else {
++                    char *curse = autoSprintf( "curse %s",
++                        gameObjects.getElement( newIndex )->name );
++                    mSayField.setText( curse );
++                    delete [] curse;
++                    }
++                }
++            }
++        }
+     }
+ 
+ 

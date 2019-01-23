@@ -1,8 +1,11 @@
-# This series applies on GIT commit 4c1265a405846a8f821708c1ec0edc4be625c800
+# This series applies on GIT commit 40f7eb4e538d1d5db70e9cb342bf8128ea6acfe7
 custom-gitignore
+show-modded-client
 screen-edge-push
 autorun
 click-through-trees
 diegetic-temperature
 click-through-heads
 time-transition-hints
+open-say-field-on-typing
+curse-assist
