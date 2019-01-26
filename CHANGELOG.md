@@ -4,7 +4,7 @@
 
 - Prints "WonLife" on login screen
 - Automatically opens say field if printable characters are typed
-- Prototype curse assist with left/right arrows
+- Prototype curse assist, actually tab player name completion
 
 ## v8
 

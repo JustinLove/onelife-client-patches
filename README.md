@@ -57,7 +57,7 @@ Automatically open the say field to talk if you type an text chracter. Does not 
 
 ### curse-assist
 
-Allows stepping through "CURSE <player>" with left and right arrows. Currently goes through all living players.
+Allows stepping through completions of player names with tab key while say field is open.
 
 ### Patch Development
 

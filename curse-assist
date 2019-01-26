@@ -1,110 +1,198 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9004e830..6b869ada 100644
+index 9004e830..70e0dabf 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -19437,6 +19437,105 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -19096,6 +19096,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
-             }
-         }
-+
-+    if( inKeyCode == MG_KEY_LEFT ||
-+        inKeyCode == MG_KEY_RIGHT ) {
-+        if( ! mSayField.isFocused() && inKeyCode == MG_KEY_UP ) {
-+            }
-+        else {
-+            char *curText = mSayField.getText();
-+                
-+            int curBufferIndex = -1;
-+            
-+            if( strcmp( curText, "" ) != 0 ) {
-+                for( int i=gameObjects.size()-1; i>=0; i-- ) {
-+                    if( strcmp( curText, gameObjects.getElement( i )->name )
-+                        == 0 ) {
-+                        curBufferIndex = i;
-+                        break;
-+                        }
-+                    }
+             break;
+         case 9: // tab
++            if( mSayField.isFocused() ) {
++                nameCompletion();
 +                }
-+            delete [] curText;
-+            
-+            int newIndex = gameObjects.size();
-+            
-+            if( curBufferIndex != -1 ) {
-+                newIndex = curBufferIndex;
-+                
-+                }
++            else
+             if( mCurrentHintObjectID != 0 ) {
+                 
+                 int num = getNumHints( mCurrentHintObjectID );
+@@ -19460,7 +19464,169 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+     }
+ 
+         
++void LivingLifePage::fadeErasedCharacters() {
++    if( mCurrentNoteChars.size() > 0 ) {
++        // fade older erased chars 
 +
-+            if( inKeyCode == MG_KEY_RIGHT ) {
-+                newIndex --;
++        for( int i=0; i<mErasedNoteCharFades.size(); i++ ) {
++            if( mErasedNoteCharFades.getElementDirect( i ) > 0.5 ) {
++                *( mErasedNoteCharFades.getElement( i ) ) -= 0.2;
 +                }
 +            else {
-+                newIndex ++;
++                *( mErasedNoteCharFades.getElement( i ) ) -= 0.1;
 +                }
 +
-+            if( newIndex >= 0 ) {
-+                if( mCurrentNoteChars.size() > 0 ) {
-+                    // fade older erased chars 
-+
-+                    for( int i=0; i<mErasedNoteCharFades.size(); i++ ) {
-+                        if( mErasedNoteCharFades.getElementDirect( i ) > 0.5 ) {
-+                            *( mErasedNoteCharFades.getElement( i ) ) -= 0.2;
-+                            }
-+                        else {
-+                            *( mErasedNoteCharFades.getElement( i ) ) -= 0.1;
-+                            }
-+                        
-+                        if( mErasedNoteCharFades.getElementDirect( i ) <= 0 ) {
-+                            mErasedNoteCharFades.deleteElement( i );
-+                            mErasedNoteChars.deleteElement( i );
-+                            mErasedNoteCharOffsets.deleteElement( i );
-+                            i--;
-+                            }
-+                        }
-+                    }
-+                
-+                // first, remove exact duplicates from erased
-+                for( int i=0; i<mCurrentNoteChars.size(); i++ ) {
-+                    char c = mCurrentNoteChars.getElementDirect( i );
-+                    doublePair pos = 
-+                        mCurrentNoteCharOffsets.getElementDirect( i );
-+                    
-+                    for( int j=0; j<mErasedNoteChars.size(); j++ ) {
-+                        if( mErasedNoteChars.getElementDirect(j) == c 
-+                            &&
-+                            equal( mErasedNoteCharOffsets.getElementDirect(j),
-+                                   pos ) ) {
-+                            
-+                            mErasedNoteChars.deleteElement( j );
-+                            mErasedNoteCharOffsets.deleteElement( j );
-+                            mErasedNoteCharFades.deleteElement( j );
-+                            j--;
-+                            }
-+                        }
-+                    }
-+                
-+
-+                for( int i=0; i<mCurrentNoteChars.size(); i++ ) {
-+                    mErasedNoteChars.push_back( 
-+                        mCurrentNoteChars.getElementDirect( i ) );
-+                    
-+                    mErasedNoteCharOffsets.push_back(
-+                        mCurrentNoteCharOffsets.getElementDirect( i ) );
-+                    
-+                    mErasedNoteCharFades.push_back( 1.0f );
-+                    }
-+
-+                if( newIndex >= gameObjects.size() ) {
-+                    mSayField.setText( "" );
-+                    }
-+                else {
-+                    char *curse = autoSprintf( "curse %s",
-+                        gameObjects.getElement( newIndex )->name );
-+                    mSayField.setText( curse );
-+                    delete [] curse;
-+                    }
++            if( mErasedNoteCharFades.getElementDirect( i ) <= 0 ) {
++                mErasedNoteCharFades.deleteElement( i );
++                mErasedNoteChars.deleteElement( i );
++                mErasedNoteCharOffsets.deleteElement( i );
++                i--;
 +                }
 +            }
 +        }
-     }
++
++    // first, remove exact duplicates from erased
++    for( int i=0; i<mCurrentNoteChars.size(); i++ ) {
++        char c = mCurrentNoteChars.getElementDirect( i );
++        doublePair pos = 
++            mCurrentNoteCharOffsets.getElementDirect( i );
++
++        for( int j=0; j<mErasedNoteChars.size(); j++ ) {
++            if( mErasedNoteChars.getElementDirect(j) == c 
++                &&
++                equal( mErasedNoteCharOffsets.getElementDirect(j),
++                       pos ) ) {
++
++                mErasedNoteChars.deleteElement( j );
++                mErasedNoteCharOffsets.deleteElement( j );
++                mErasedNoteCharFades.deleteElement( j );
++                j--;
++                }
++            }
++        }
++
++
++    for( int i=0; i<mCurrentNoteChars.size(); i++ ) {
++        mErasedNoteChars.push_back( 
++            mCurrentNoteChars.getElementDirect( i ) );
++
++        mErasedNoteCharOffsets.push_back(
++            mCurrentNoteCharOffsets.getElementDirect( i ) );
++
++        mErasedNoteCharFades.push_back( 1.0f );
++        }
++    }
++
++
++char originalCompletionText[256] = {0};
++unsigned int originalCompletionLength = 0;
++
++
++const char* nameDetection(const char * const inString ) {
++    unsigned int textLength = strlen(inString);
++    const char* nameText = NULL;
++
++    if( textLength > 6 && strncmp( inString, "CURSE ", 6 ) == 0 ) {
++        return inString + 6;
++        }
++    else {
++        nameText = strrchr( inString, ' ' );
++        if( nameText == NULL ) {
++            return inString;
++            }
++        else {
++            return nameText + 1;
++            }
++        }
++    }
++
+ 
++int trailingNameMatch( const char * const inString ) {
++    unsigned int textLength = strlen(inString);
++
++    if( textLength == 0 ) return -1;
++
++    for( int i=gameObjects.size()-1; i>=0; i-- ) {
++        char * name = gameObjects.getElement( i )->name;
++        if ( name == NULL ) continue;
++        unsigned int nameLength = strlen(name);
++        if( textLength >= nameLength && strncmp( inString + (textLength - nameLength), gameObjects.getElement( i )->name, nameLength )
++            == 0 ) {
++            return i;
++            }
++        }
++
++    return -1;
++    }
++
++
++int nameMatching(const char * const nameText, int startNameIndex) {
++    unsigned int nameLength = strlen(nameText);
++
++    if( nameLength == 0 ) return -1;
++
++    for( int i=startNameIndex-1; i>=0; i-- ) {
++        char * name = gameObjects.getElement( i )->name;
++        if ( name == NULL ) continue;
++        if( strncmp( nameText, name, nameLength )
++            == 0 ) {
++            return i;
++            }
++        }
++
++    for( int i=gameObjects.size()-1; i>=startNameIndex+1; i-- ) {
++        char * name = gameObjects.getElement( i )->name;
++        if ( name == NULL ) continue;
++        if( strncmp( nameText, name, nameLength )
++            == 0 ) {
++            return i;
++            }
++        }
++
++        return -1;
++    }
++
++
++void LivingLifePage::nameCompletion() {
++    if( ! mSayField.isFocused() ) return;
++
++    char *curText = mSayField.getText();
++
++    int curNameIndex = trailingNameMatch( curText );
++
++    // no exact match, has not run yet capture partial name for matching
++    if( curNameIndex == -1 ) {
++        strncpy(originalCompletionText, curText, 255);
++        originalCompletionLength = strlen(originalCompletionText);
++        }
++
++    delete [] curText;
++
++    // exact match, but prefix has changed so not a continuation
++    if ( strncmp( curText, originalCompletionText, originalCompletionLength ) != 0 ) return;
++
++    // name match, but no partial name to work with
++    if ( originalCompletionLength == 0 ) return;
++
++    // some text to try and find partial name in, try next name
++
++    const char* nameText = nameDetection( originalCompletionText );
++
++    int newIndex = nameMatching( nameText, curNameIndex );
++
++    if( newIndex < 0 || newIndex >= gameObjects.size() ) return;
++
++    fadeErasedCharacters();
++
++    char say[256];
++    const char* name = gameObjects.getElement( newIndex )->name;
++    if ( name == NULL ) return;
++    unsigned int prefixLength = nameText - originalCompletionText;
++    if ( prefixLength > 255 ) return;
++    strncpy( say, originalCompletionText, prefixLength );
++    strncpy( say + prefixLength, name, 255-prefixLength );
++    mSayField.setText( say );
++    }
  
  
+ ExtraMapObject LivingLifePage::copyFromMap( int inMapI ) {
+diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
+index b2556f1e..5399bea3 100644
+--- a/gameSource/LivingLifePage.h
++++ b/gameSource/LivingLifePage.h
+@@ -433,6 +433,8 @@ class LivingLifePage : public GamePage {
+         
+         virtual void keyUp( unsigned char inASCII );
+ 
++        void fadeErasedCharacters();
++        void nameCompletion();
+         
+         // handles error detection, total byte counting, etc.
+         void sendToServerSocket( char *inMessage );
