@@ -53,7 +53,7 @@ More work is needed.
 
 ### open-say-field-on-typing
 
-Automatically open the say field to talk if you type an text chracter. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
+Automatically open the say field to talk if you type a text chracter. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
 
 ### curse-assist
 

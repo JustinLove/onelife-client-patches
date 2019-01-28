@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 249dc3f5..9004e830 100644
+index 249dc3f5..4212c5b5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -142,6 +142,10 @@ static char savingSpeechMask = false;
@@ -22,27 +22,30 @@ index 249dc3f5..9004e830 100644
      
      if( mServerSocket == -1 ) {
          serverSocketConnected = false;
-@@ -19000,6 +19006,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19000,6 +19006,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  savingSpeechMask = false;
                  savingSpeech = true;
                  }
 +            sayCapture[0] = inASCII;
++            keyDownGap = 0;
              break;
          case 'x':
              if( userTwinCode != NULL &&
-@@ -19011,6 +19018,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19011,6 +19019,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  setWaiting( false );
                  setSignal( "twinCancel" );
                  }
 +            sayCapture[0] = inASCII;
++            keyDownGap = 0;
              break;
          /*
          case 'b':
-@@ -19073,12 +19081,14 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19073,12 +19083,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() ) {
                  mEKeyDown = true;
                  }
 +            sayCapture[0] = inASCII;
++            keyDownGap = 0;
              break;
          case 'z':
          case 'Z':
@@ -50,10 +53,11 @@ index 249dc3f5..9004e830 100644
                  mZKeyDown = true;
                  }
 +            sayCapture[0] = inASCII;
++            keyDownGap = 0;
              break;
          case ' ':
              if( ! mSayField.isFocused() ) {
-@@ -19287,7 +19297,25 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19287,6 +19301,22 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  delete [] typedText;
                  }
              break;
@@ -74,8 +78,5 @@ index 249dc3f5..9004e830 100644
 +                }
 +            break;
          }
-+
-+    keyDownGap = 0;
      }
- 
  

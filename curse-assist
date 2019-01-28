@@ -1,8 +1,33 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9004e830..70e0dabf 100644
+index 4212c5b5..90438bb2 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -19096,6 +19096,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -1324,6 +1324,8 @@ static LiveObject *getGameObject( int inID ) {
+     }
+ 
+ 
++SimpleVector<char*> knownNames;
++
+ 
+ extern char autoAdjustFramerate;
+ extern int baseFramesPerSecond;
+@@ -2304,6 +2306,7 @@ void LivingLifePage::clearLiveObjects() {
+         }
+     
+     gameObjects.deleteAll();
++    knownNames.deallocateStringElements();
+     }
+ 
+ 
+@@ -14828,6 +14831,7 @@ void LivingLifePage::step() {
+                                 char *nameStart = &( firstSpace[1] );
+                                 
+                                 existing->name = stringDuplicate( nameStart );
++                                knownNames.push_back(stringDuplicate( nameStart ));
+                                 }
+                             
+                             break;
+@@ -19100,6 +19104,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
              break;
          case 9: // tab
@@ -13,7 +38,7 @@ index 9004e830..70e0dabf 100644
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -19460,7 +19464,169 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -19462,7 +19470,169 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
      }
  
          
@@ -99,11 +124,11 @@ index 9004e830..70e0dabf 100644
 +
 +    if( textLength == 0 ) return -1;
 +
-+    for( int i=gameObjects.size()-1; i>=0; i-- ) {
-+        char * name = gameObjects.getElement( i )->name;
++    for( int i=knownNames.size()-1; i>=0; i-- ) {
++        char * name = knownNames.getElementDirect( i );
 +        if ( name == NULL ) continue;
 +        unsigned int nameLength = strlen(name);
-+        if( textLength >= nameLength && strncmp( inString + (textLength - nameLength), gameObjects.getElement( i )->name, nameLength )
++        if( textLength >= nameLength && strncmp( inString + (textLength - nameLength), knownNames.getElementDirect( i ), nameLength )
 +            == 0 ) {
 +            return i;
 +            }
@@ -119,7 +144,7 @@ index 9004e830..70e0dabf 100644
 +    if( nameLength == 0 ) return -1;
 +
 +    for( int i=startNameIndex-1; i>=0; i-- ) {
-+        char * name = gameObjects.getElement( i )->name;
++        char * name = knownNames.getElementDirect( i );
 +        if ( name == NULL ) continue;
 +        if( strncmp( nameText, name, nameLength )
 +            == 0 ) {
@@ -127,8 +152,8 @@ index 9004e830..70e0dabf 100644
 +            }
 +        }
 +
-+    for( int i=gameObjects.size()-1; i>=startNameIndex+1; i-- ) {
-+        char * name = gameObjects.getElement( i )->name;
++    for( int i=knownNames.size()-1; i>=startNameIndex+1; i-- ) {
++        char * name = knownNames.getElementDirect( i );
 +        if ( name == NULL ) continue;
 +        if( strncmp( nameText, name, nameLength )
 +            == 0 ) {
@@ -167,12 +192,12 @@ index 9004e830..70e0dabf 100644
 +
 +    int newIndex = nameMatching( nameText, curNameIndex );
 +
-+    if( newIndex < 0 || newIndex >= gameObjects.size() ) return;
++    if( newIndex < 0 || newIndex >= knownNames.size() ) return;
 +
 +    fadeErasedCharacters();
 +
 +    char say[256];
-+    const char* name = gameObjects.getElement( newIndex )->name;
++    const char* name = knownNames.getElementDirect( newIndex );
 +    if ( name == NULL ) return;
 +    unsigned int prefixLength = nameText - originalCompletionText;
 +    if ( prefixLength > 255 ) return;
