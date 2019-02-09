@@ -1,4 +1,4 @@
-# This series applies on GIT commit 40f7eb4e538d1d5db70e9cb342bf8128ea6acfe7
+# This series applies on GIT commit d0134288f2f13ef2664fe070a4baba75f4d7ca9d
 custom-gitignore
 show-modded-client
 screen-edge-push
@@ -9,3 +9,4 @@ click-through-heads
 time-transition-hints
 open-say-field-on-typing
 curse-assist
+name-assist

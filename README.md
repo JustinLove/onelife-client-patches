@@ -57,7 +57,11 @@ Automatically open the say field to talk if you type a text chracter. Does not b
 
 ### curse-assist
 
-Allows stepping through completions of player names with tab key while say field is open.
+Allows stepping through completions of player and grave names with tab key while say field is open.  Can recognize full names for "CURSE " or the begging of first names otherwise.
+
+### name-assist
+
+Suggests random names or name completions by pressing tab with "I AM " or "YOU ARE " in the say field.
 
 ### Patch Development
 

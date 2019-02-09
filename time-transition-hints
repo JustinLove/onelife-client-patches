@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d866a4c6..249dc3f5 100644
+index 545b6916..263e7d0e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -8134,7 +8134,7 @@ static char getTransHintable( TransRecord *inTrans ) {
+@@ -8149,7 +8149,7 @@ static char getTransHintable( TransRecord *inTrans ) {
          return false;
          }
      
@@ -11,7 +11,7 @@ index d866a4c6..249dc3f5 100644
          ( inTrans->target > 0 || inTrans->target == -1 ) &&
          ( inTrans->newActor > 0 || inTrans->newTarget > 0 ) ) {
  
-@@ -8720,7 +8720,10 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -8735,7 +8735,10 @@ int LivingLifePage::getNumHints( int inObjectID ) {
          
          int depth = 0;
              
@@ -23,7 +23,7 @@ index d866a4c6..249dc3f5 100644
              depth = getObjectDepth( tr->actor );
              }
          else if( tr->target > 0 && tr->target != inObjectID ) {
-@@ -8832,6 +8835,9 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex ) {
+@@ -8847,6 +8850,9 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex ) {
          else if( actor == 0 ) {
              actorString = stringDuplicate( translate( "bareHandHint" ) );
              }

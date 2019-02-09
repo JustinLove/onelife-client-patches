@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4212c5b5..90438bb2 100644
+index f74734af..7f7db08c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1324,6 +1324,8 @@ static LiveObject *getGameObject( int inID ) {
+@@ -1336,6 +1336,8 @@ static LiveObject *getGameObject( int inID ) {
      }
  
  
@@ -11,7 +11,7 @@ index 4212c5b5..90438bb2 100644
  
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
-@@ -2304,6 +2306,7 @@ void LivingLifePage::clearLiveObjects() {
+@@ -2316,6 +2318,7 @@ void LivingLifePage::clearLiveObjects() {
          }
      
      gameObjects.deleteAll();
@@ -19,7 +19,7 @@ index 4212c5b5..90438bb2 100644
      }
  
  
-@@ -14828,6 +14831,7 @@ void LivingLifePage::step() {
+@@ -14898,6 +14901,7 @@ void LivingLifePage::step() {
                                  char *nameStart = &( firstSpace[1] );
                                  
                                  existing->name = stringDuplicate( nameStart );
@@ -27,7 +27,7 @@ index 4212c5b5..90438bb2 100644
                                  }
                              
                              break;
-@@ -19100,6 +19104,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19183,6 +19187,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
              break;
          case 9: // tab
@@ -38,7 +38,7 @@ index 4212c5b5..90438bb2 100644
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -19462,7 +19470,169 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -19545,7 +19553,175 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
      }
  
          
@@ -202,14 +202,20 @@ index 4212c5b5..90438bb2 100644
 +    unsigned int prefixLength = nameText - originalCompletionText;
 +    if ( prefixLength > 255 ) return;
 +    strncpy( say, originalCompletionText, prefixLength );
-+    strncpy( say + prefixLength, name, 255-prefixLength );
++    unsigned int maxLength = mSayField.getMaxLength();
++    if (maxLength > 255) {
++        maxLength = 255;
++        }
++    if (maxLength < prefixLength) return;
++    strncpy( say + prefixLength, name, maxLength-prefixLength );
++    say[maxLength] = 0;
 +    mSayField.setText( say );
 +    }
  
  
  ExtraMapObject LivingLifePage::copyFromMap( int inMapI ) {
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index b2556f1e..5399bea3 100644
+index 4125202a..f2e00bc6 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -433,6 +433,8 @@ class LivingLifePage : public GamePage {

@@ -4,7 +4,8 @@
 
 - Prints "WonLife" on login screen
 - Automatically opens say field if printable characters are typed
-- Prototype curse assist, actually tab player name completion
+- Player name completion, in particular with "CURSE "
+- Name suggestion for "I AM " and "YOU ARE "
 
 ## v8
 
