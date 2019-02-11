@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f74734af..7f7db08c 100644
+index cb268caa..be8eaee1 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1336,6 +1336,8 @@ static LiveObject *getGameObject( int inID ) {
+@@ -1376,6 +1376,8 @@ static LiveObject *getGameObject( int inID ) {
      }
  
  
@@ -11,7 +11,7 @@ index f74734af..7f7db08c 100644
  
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
-@@ -2316,6 +2318,7 @@ void LivingLifePage::clearLiveObjects() {
+@@ -2356,6 +2358,7 @@ void LivingLifePage::clearLiveObjects() {
          }
      
      gameObjects.deleteAll();
@@ -19,7 +19,7 @@ index f74734af..7f7db08c 100644
      }
  
  
-@@ -14898,6 +14901,7 @@ void LivingLifePage::step() {
+@@ -15097,6 +15100,7 @@ void LivingLifePage::step() {
                                  char *nameStart = &( firstSpace[1] );
                                  
                                  existing->name = stringDuplicate( nameStart );
@@ -27,7 +27,7 @@ index f74734af..7f7db08c 100644
                                  }
                              
                              break;
-@@ -19183,6 +19187,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19383,6 +19387,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
              break;
          case 9: // tab
@@ -38,7 +38,7 @@ index f74734af..7f7db08c 100644
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -19545,7 +19553,175 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -19759,7 +19767,175 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
      }
  
          

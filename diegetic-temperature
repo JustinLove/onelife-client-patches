@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index af7752c2..cebc5f34 100644
+index 625acca0..b548b36d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -109,6 +109,8 @@ static int maxDoubleClickDrift = 30;
@@ -11,7 +11,7 @@ index af7752c2..cebc5f34 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -1977,6 +1979,8 @@ LivingLifePage::LivingLifePage()
+@@ -2017,6 +2019,8 @@ LivingLifePage::LivingLifePage()
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -20,7 +20,7 @@ index af7752c2..cebc5f34 100644
      
      initLiveTriggers();
  
-@@ -3594,6 +3598,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3634,6 +3638,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -39,7 +39,7 @@ index af7752c2..cebc5f34 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3716,6 +3732,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3756,6 +3772,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          if( ! inObj->tempAgeOverrideSet )
              setAnimationEmotion( inObj->currentEmot );
@@ -53,7 +53,7 @@ index af7752c2..cebc5f34 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -3952,6 +3975,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3992,6 +4015,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -67,7 +67,7 @@ index af7752c2..cebc5f34 100644
              
  
              // rideable object
-@@ -4025,6 +4055,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4065,6 +4095,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  if( ! babyO->tempAgeOverrideSet )
                      setAnimationEmotion( babyO->currentEmot );

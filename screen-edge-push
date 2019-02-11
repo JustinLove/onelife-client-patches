@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a25f8792..bf3d05e3 100644
+index 3b7a547b..237b112a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -106,6 +106,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -11,7 +11,7 @@ index a25f8792..bf3d05e3 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -1957,6 +1959,9 @@ LivingLifePage::LivingLifePage()
+@@ -1997,6 +1999,9 @@ LivingLifePage::LivingLifePage()
      mSayField.setIgnoreArrowKeys( true );
      // drawn under world at (0,1000), don't allow click to focus
      mSayField.setIgnoreMouse( true );
@@ -21,7 +21,7 @@ index a25f8792..bf3d05e3 100644
      
      initLiveTriggers();
  
-@@ -15369,18 +15374,6 @@ void LivingLifePage::step() {
+@@ -15568,18 +15573,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -40,7 +40,7 @@ index a25f8792..bf3d05e3 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -15421,6 +15414,21 @@ void LivingLifePage::step() {
+@@ -15620,6 +15613,21 @@ void LivingLifePage::step() {
              
              }
  
@@ -62,7 +62,7 @@ index a25f8792..bf3d05e3 100644
  
          screenTargetPos.x = 
              CELL_D * cameraFollowsObject->currentPos.x - 
-@@ -17446,6 +17454,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -17646,6 +17654,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      
