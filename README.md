@@ -63,6 +63,11 @@ Allows stepping through completions of player and grave names with tab key while
 
 Suggests random names or name completions by pressing tab with "I AM " or "YOU ARE " in the say field.
 
+This requires the name files from the game's source repository. They should also be packed in WonLife zip release.
+
+- server/firstNames.txt
+- server/lastNames.txt
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.
