@@ -13,3 +13,183 @@ index 45d18602..edf0c66c 100644
      }
  
 +
+diff --git a/gameSource/FinalMessagePage.cpp b/gameSource/FinalMessagePage.cpp
+index 3827fea9..08648dbf 100644
+--- a/gameSource/FinalMessagePage.cpp
++++ b/gameSource/FinalMessagePage.cpp
+@@ -16,6 +16,9 @@ extern Font *mainFont;
+ 
+ FinalMessagePage::FinalMessagePage()
+         : mKey( "" ), mSubMessage( NULL ),
++          mUpdateURL( NULL ),
++          mUpdateModButton( mainFont, 0, 0, 
++                       translate( "upgradeMessage" ) ),
+           mQuitButton( mainFont, 0, -300, 
+                        translate( "quit" ) ) {
+ 
+@@ -24,12 +27,18 @@ FinalMessagePage::FinalMessagePage()
+     addComponent( &mQuitButton );
+     
+     mQuitButton.addActionListener( this );
++
++    setButtonStyle( &mUpdateModButton );
++    addComponent( &mUpdateModButton );
++
++    mUpdateModButton.addActionListener( this );
+     }
+ 
+ 
+ 
+ FinalMessagePage::~FinalMessagePage() {
+     setSubMessage( NULL );
++    setUpdateURL( NULL );
+     }
+ 
+ 
+@@ -38,6 +47,10 @@ void FinalMessagePage::actionPerformed( GUIComponent *inTarget ) {
+     if( inTarget == &mQuitButton ) {
+         setSignal( "quit" );
+         }
++    else if( inTarget == &mUpdateModButton ) {
++        launchURL( (char*)"https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip" );
++        setSignal( "quit" );
++        }
+     }
+ 
+ 
+@@ -60,12 +73,25 @@ void FinalMessagePage::setSubMessage( const char *inSubMessage ) {
+     }
+ 
+ 
++void FinalMessagePage::setUpdateURL( const char *inUpdateURL ) {
++    if( mUpdateURL != NULL ) {
++        delete [] mUpdateURL;
++        mUpdateURL = NULL;
++        }
++    if( inUpdateURL != NULL ) {
++        mUpdateURL = stringDuplicate( inUpdateURL );
++        }
++    }
+ 
+ 
+ void FinalMessagePage::makeActive( char inFresh ) {
+     if( !inFresh ) {
+         return;
+         }
++
++    char show = mUpdateURL && ( strcmp( mUpdateURL, "" ) != 0 )
++        && isURLLaunchSupported();
++    mUpdateModButton.setVisible( show );
+     
+     setWaiting( false );
+     }
+diff --git a/gameSource/FinalMessagePage.h b/gameSource/FinalMessagePage.h
+index b717c382..f651d129 100644
+--- a/gameSource/FinalMessagePage.h
++++ b/gameSource/FinalMessagePage.h
+@@ -24,6 +24,10 @@ class FinalMessagePage : public GamePage, ActionListener {
+         // set to NULL to clear
+         void setSubMessage( const char *inSubMessage );
+ 
++        // copied internally
++        // set to NULL to clear
++        void setUpdateURL( const char *inUpdateURL );
++
+         virtual void makeActive( char inFresh );
+ 
+         virtual void draw( doublePair inViewCenter, 
+@@ -33,7 +37,9 @@ class FinalMessagePage : public GamePage, ActionListener {
+         const char *mKey;
+ 
+         char *mSubMessage;
++        char *mUpdateURL;
+ 
++        TextButton mUpdateModButton;
+         TextButton mQuitButton;
+         
+     };
+diff --git a/gameSource/game.cpp b/gameSource/game.cpp
+index ab8eccf1..6d753c43 100644
+--- a/gameSource/game.cpp
++++ b/gameSource/game.cpp
+@@ -1,5 +1,7 @@
+ int versionNumber = 199;
+ int dataVersionNumber = 0;
++int clientVersionNumber = versionNumber;
++int expectedVersionNumber = 0;
+ 
+ // NOTE that OneLife doesn't use account hmacs
+ 
+@@ -246,12 +248,12 @@ char isNonIntegerScalingAllowed() {
+ 
+ 
+ const char *getWindowTitle() {
+-    return "OneLife";
++    return "WonLife";
+     }
+ 
+ 
+ const char *getAppName() {
+-    return "OneLife";
++    return "WonLife";
+     }
+ 
+ int getAppVersion() {
+@@ -339,6 +341,22 @@ static void updateDataVersionNumber() {
+     }
+ 
+ 
++// borrowed from awbz/OneLife+
++static void updateExpectedVersionNumber() {
++    File file( NULL, "binary.txt" );
++
++    if( file.exists() ) {
++        char *contents = file.readFileContents();
++        
++        if( contents != NULL ) {
++            sscanf( contents, "v%d", &expectedVersionNumber );
++            }
++
++            delete [] contents;
++        }
++    }
++
++
+ 
+ 
+ #define SETTINGS_HASH_SALT "another_loss"
+@@ -443,6 +461,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+     initAgeControl();
+     
+     updateDataVersionNumber();
++    updateExpectedVersionNumber();
+ 
+     toggleLinearMagFilter( true );
+     toggleMipMapGeneration( true );
+@@ -1609,8 +1628,24 @@ void drawFrame( char inUpdate ) {
+                         autoLogIn = false;
+                         }
+ 
+-                    currentGamePage = existingAccountPage;
+-                    currentGamePage->base_makeActive( true );
++                    if( clientVersionNumber == expectedVersionNumber ) { 
++                        currentGamePage = existingAccountPage;
++                        currentGamePage->base_makeActive( true );
++                        }
++                    else if( clientVersionNumber > expectedVersionNumber ) {
++                        currentGamePage = finalMessagePage;                        
++                        finalMessagePage->setMessageKey( "upgradeMessage" );
++                        finalMessagePage->setSubMessage( "IT LOOKS LIKE YOU UPDATED WONLIFE##BEFORE DOWNLOADING THE LATEST GAME UPDATE.####USE YOUR UN-MODDED CLIENT TO UPDATE FIRST.##(DON'T FORGET TO CLEAR ANY CUSTOM SERVER SETTINGS!)" );
++                        currentGamePage->base_makeActive( true );
++                        }
++                    else {
++                        currentGamePage = finalMessagePage;                        
++                        finalMessagePage->setMessageKey( "upgradeMessage" );
++                        finalMessagePage->setSubMessage( autoSprintf( "THIS VERSION OF THE WONLLIFE IS OUTDATED##(EXPECTING VERSION %d - RUNNING VERSION %d)##PLEASE DOWNLOAD A NEWER VERSION FROM:####HTTPS://WONDIBLE-COM-WONLIFE.S3.AMAZONAWS.COM/WONLIFE-LATEST.ZIP", expectedVersionNumber, clientVersionNumber ) );
++
++                        finalMessagePage->setUpdateURL( "https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip" );
++                        currentGamePage->base_makeActive( true );
++                    }
+                 }
+             }
+         else if( currentGamePage == settingsPage ) {
