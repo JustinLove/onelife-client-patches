@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f97d3504..8d8d6117 100644
+index 97f0ef63..c5bdca2c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -106,6 +106,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -21,7 +21,7 @@ index f97d3504..8d8d6117 100644
      
      initLiveTriggers();
  
-@@ -15566,18 +15571,6 @@ void LivingLifePage::step() {
+@@ -15565,18 +15570,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -40,7 +40,7 @@ index f97d3504..8d8d6117 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -15618,6 +15611,21 @@ void LivingLifePage::step() {
+@@ -15617,6 +15610,21 @@ void LivingLifePage::step() {
              
              }
  
@@ -62,7 +62,7 @@ index f97d3504..8d8d6117 100644
  
          screenTargetPos.x = 
              CELL_D * cameraFollowsObject->currentPos.x - 
-@@ -17644,6 +17652,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -17649,6 +17657,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      

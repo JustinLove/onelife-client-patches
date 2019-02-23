@@ -109,11 +109,11 @@ index b717c382..f651d129 100644
          
      };
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index ab8eccf1..6d753c43 100644
+index 3824f981..bd805674 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 199;
+ int versionNumber = 204;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
@@ -166,7 +166,7 @@ index ab8eccf1..6d753c43 100644
  
      toggleLinearMagFilter( true );
      toggleMipMapGeneration( true );
-@@ -1609,8 +1628,24 @@ void drawFrame( char inUpdate ) {
+@@ -1587,8 +1606,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index fb8eeb56..05f67123 100644
+index b2b6f4fd..844f9bb1 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -142,6 +142,10 @@ static char savingSpeechMask = false;
@@ -13,7 +13,7 @@ index fb8eeb56..05f67123 100644
  static double emotDuration = 10;
  
  
-@@ -9385,6 +9389,8 @@ void LivingLifePage::step() {
+@@ -9384,6 +9388,8 @@ void LivingLifePage::step() {
              mouseHeld = true;
              }
          }
@@ -22,7 +22,7 @@ index fb8eeb56..05f67123 100644
      
      if( mServerSocket == -1 ) {
          serverSocketConnected = false;
-@@ -19281,6 +19287,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19286,6 +19292,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  savingSpeechMask = false;
                  savingSpeech = true;
                  }
@@ -31,7 +31,7 @@ index fb8eeb56..05f67123 100644
              break;
          case 'x':
              if( userTwinCode != NULL &&
-@@ -19292,6 +19300,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19297,6 +19305,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  setWaiting( false );
                  setSignal( "twinCancel" );
                  }
@@ -40,7 +40,7 @@ index fb8eeb56..05f67123 100644
              break;
          /*
          case 'b':
-@@ -19354,12 +19364,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19359,12 +19369,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() ) {
                  mEKeyDown = true;
                  }
@@ -57,7 +57,7 @@ index fb8eeb56..05f67123 100644
              break;
          case ' ':
              if( ! mSayField.isFocused() ) {
-@@ -19582,6 +19596,22 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19587,6 +19601,22 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  delete [] typedText;
                  }
              break;
