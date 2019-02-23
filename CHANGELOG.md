@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## v10
+
+- Should relaunch mod from game updates and fps detect.
+- Attempts to detect changes in base game client version and notify player, with a download link.
+
 ## v9
 
 - Prints "WonLife" on login screen
