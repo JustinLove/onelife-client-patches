@@ -8,7 +8,7 @@ Cleans up some noise from my local compile environment that apparently don't bot
 
 ### show-modded-client
 
-Prints "WonLife" on the start page so it's easy to tell when the mod has loaded, or the game has relaunced vanilla. This also adds same-program relauch and client version mismatch testing.
+Prints "WonLife" on the start page so it's easy to tell when the mod has loaded, or the game has relaunced vanilla. This also adds same-program relaunch and client version mismatch testing.
 
 ### screen-edge-push
 
