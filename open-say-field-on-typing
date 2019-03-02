@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b2b6f4fd..844f9bb1 100644
+index f48d9587..02a3d662 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -142,6 +142,10 @@ static char savingSpeechMask = false;
+@@ -155,6 +155,10 @@ static char savingSpeechMask = false;
  static char savingSpeechNumber = 1;
  
  
@@ -13,7 +13,7 @@ index b2b6f4fd..844f9bb1 100644
  static double emotDuration = 10;
  
  
-@@ -9384,6 +9388,8 @@ void LivingLifePage::step() {
+@@ -9407,6 +9411,8 @@ void LivingLifePage::step() {
              mouseHeld = true;
              }
          }
@@ -22,7 +22,7 @@ index b2b6f4fd..844f9bb1 100644
      
      if( mServerSocket == -1 ) {
          serverSocketConnected = false;
-@@ -19286,6 +19292,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19428,6 +19434,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  savingSpeechMask = false;
                  savingSpeech = true;
                  }
@@ -31,7 +31,7 @@ index b2b6f4fd..844f9bb1 100644
              break;
          case 'x':
              if( userTwinCode != NULL &&
-@@ -19297,6 +19305,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19439,6 +19447,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  setWaiting( false );
                  setSignal( "twinCancel" );
                  }
@@ -40,7 +40,7 @@ index b2b6f4fd..844f9bb1 100644
              break;
          /*
          case 'b':
-@@ -19359,12 +19369,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19501,12 +19511,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() ) {
                  mEKeyDown = true;
                  }
@@ -57,8 +57,8 @@ index b2b6f4fd..844f9bb1 100644
              break;
          case ' ':
              if( ! mSayField.isFocused() ) {
-@@ -19587,6 +19601,22 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
-                 delete [] typedText;
+@@ -19740,6 +19754,22 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+                 TextField::unfocusAll();
                  }
              break;
 +        default:

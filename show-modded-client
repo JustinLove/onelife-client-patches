@@ -109,18 +109,18 @@ index b717c382..f651d129 100644
          
      };
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 3824f981..bd805674 100644
+index 131591da..845be5cf 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 204;
+ int versionNumber = 206;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
  
- // NOTE that OneLife doesn't use account hmacs
+ int binVersionNumber = versionNumber;
  
-@@ -246,12 +248,12 @@ char isNonIntegerScalingAllowed() {
+@@ -249,12 +251,12 @@ char isNonIntegerScalingAllowed() {
  
  
  const char *getWindowTitle() {
@@ -135,7 +135,7 @@ index 3824f981..bd805674 100644
      }
  
  int getAppVersion() {
-@@ -339,6 +341,22 @@ static void updateDataVersionNumber() {
+@@ -344,6 +346,22 @@ static void updateDataVersionNumber() {
      }
  
  
@@ -158,15 +158,15 @@ index 3824f981..bd805674 100644
  
  
  #define SETTINGS_HASH_SALT "another_loss"
-@@ -443,6 +461,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -448,6 +466,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      initAgeControl();
      
      updateDataVersionNumber();
 +    updateExpectedVersionNumber();
  
-     toggleLinearMagFilter( true );
-     toggleMipMapGeneration( true );
-@@ -1587,8 +1606,24 @@ void drawFrame( char inUpdate ) {
+ 
+     AppLog::printOutNextMessage();
+@@ -1603,8 +1622,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  

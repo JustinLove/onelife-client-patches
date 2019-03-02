@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 844f9bb1..894b13a1 100644
+index 02a3d662..0ae491b4 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1376,6 +1376,8 @@ static LiveObject *getGameObject( int inID ) {
+@@ -1393,6 +1393,8 @@ static LiveObject *getGameObject( int inID ) {
      }
  
  
@@ -11,7 +11,7 @@ index 844f9bb1..894b13a1 100644
  
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
-@@ -2356,6 +2358,7 @@ void LivingLifePage::clearLiveObjects() {
+@@ -2374,6 +2376,7 @@ void LivingLifePage::clearLiveObjects() {
          }
      
      gameObjects.deleteAll();
@@ -19,7 +19,7 @@ index 844f9bb1..894b13a1 100644
      }
  
  
-@@ -15094,6 +15097,7 @@ void LivingLifePage::step() {
+@@ -15141,6 +15144,7 @@ void LivingLifePage::step() {
                                  char *nameStart = &( firstSpace[1] );
                                  
                                  existing->name = stringDuplicate( nameStart );
@@ -27,7 +27,7 @@ index 844f9bb1..894b13a1 100644
                                  }
                              
                              break;
-@@ -19386,6 +19390,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19528,6 +19532,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
              break;
          case 9: // tab
@@ -38,10 +38,13 @@ index 844f9bb1..894b13a1 100644
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -19762,7 +19770,175 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
-     }
- 
-         
+@@ -19973,10 +19981,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
+             delete [] message;
+             }
+         }
++   }
++
++
 +void LivingLifePage::fadeErasedCharacters() {
 +    if( mCurrentNoteChars.size() > 0 ) {
 +        // fade older erased chars 
@@ -93,9 +96,9 @@ index 844f9bb1..894b13a1 100644
 +
 +        mErasedNoteCharFades.push_back( 1.0f );
 +        }
-+    }
-+
-+
+     }
+ 
+ 
 +char originalCompletionText[256] = {0};
 +unsigned int originalCompletionLength = 0;
 +
@@ -117,13 +120,11 @@ index 844f9bb1..894b13a1 100644
 +            }
 +        }
 +    }
-+
- 
 +int trailingNameMatch( const char * const inString ) {
 +    unsigned int textLength = strlen(inString);
 +
 +    if( textLength == 0 ) return -1;
-+
+ 
 +    for( int i=knownNames.size()-1; i>=0; i-- ) {
 +        char * name = knownNames.getElementDirect( i );
 +        if ( name == NULL ) continue;
@@ -215,10 +216,10 @@ index 844f9bb1..894b13a1 100644
  
  ExtraMapObject LivingLifePage::copyFromMap( int inMapI ) {
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 4125202a..f2e00bc6 100644
+index c2c76b49..ce286486 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -433,6 +433,8 @@ class LivingLifePage : public GamePage {
+@@ -435,6 +435,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          
          virtual void keyUp( unsigned char inASCII );
  

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 97f0ef63..c5bdca2c 100644
+index fd72cc23..af69932c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -106,6 +106,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+@@ -119,6 +119,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  static float lastMouseX = 0;
  static float lastMouseY = 0;
  
@@ -11,7 +11,7 @@ index 97f0ef63..c5bdca2c 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -1997,6 +1999,9 @@ LivingLifePage::LivingLifePage()
+@@ -2015,6 +2017,9 @@ LivingLifePage::LivingLifePage()
      mSayField.setIgnoreArrowKeys( true );
      // drawn under world at (0,1000), don't allow click to focus
      mSayField.setIgnoreMouse( true );
@@ -21,7 +21,7 @@ index 97f0ef63..c5bdca2c 100644
      
      initLiveTriggers();
  
-@@ -15565,18 +15570,6 @@ void LivingLifePage::step() {
+@@ -15626,18 +15631,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -40,7 +40,7 @@ index 97f0ef63..c5bdca2c 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -15617,6 +15610,21 @@ void LivingLifePage::step() {
+@@ -15678,6 +15671,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -59,10 +59,11 @@ index 97f0ef63..c5bdca2c 100644
 +        if( screenCenterPlayerOffsetY >  viewHeight / 6 ) {
 +            screenCenterPlayerOffsetY =  viewHeight / 6;
 +            }
- 
-         screenTargetPos.x = 
-             CELL_D * cameraFollowsObject->currentPos.x - 
-@@ -17649,6 +17657,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
++
+         if( ! vogMode ) {
+             
+             screenTargetPos.x = 
+@@ -17718,6 +17727,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      
