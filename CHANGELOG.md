@@ -2,7 +2,7 @@
 
 ## v12
 
-- Includes patches for client position discrepeancies, usually visible as draw inversion or can't pick up baby.
+- Includes patches for client position discrepancies, usually visible as draw inversion or can't pick up baby.
 
 ## v10
 
