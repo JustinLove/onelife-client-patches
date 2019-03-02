@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f48d9587..02a3d662 100644
+index b9352868..268b0039 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -155,6 +155,10 @@ static char savingSpeechMask = false;
@@ -13,7 +13,7 @@ index f48d9587..02a3d662 100644
  static double emotDuration = 10;
  
  
-@@ -9407,6 +9411,8 @@ void LivingLifePage::step() {
+@@ -9461,6 +9465,8 @@ void LivingLifePage::step() {
              mouseHeld = true;
              }
          }
@@ -22,7 +22,7 @@ index f48d9587..02a3d662 100644
      
      if( mServerSocket == -1 ) {
          serverSocketConnected = false;
-@@ -19428,6 +19434,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19462,6 +19468,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  savingSpeechMask = false;
                  savingSpeech = true;
                  }
@@ -31,7 +31,7 @@ index f48d9587..02a3d662 100644
              break;
          case 'x':
              if( userTwinCode != NULL &&
-@@ -19439,6 +19447,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19473,6 +19481,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  setWaiting( false );
                  setSignal( "twinCancel" );
                  }
@@ -40,7 +40,7 @@ index f48d9587..02a3d662 100644
              break;
          /*
          case 'b':
-@@ -19501,12 +19511,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19535,12 +19545,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() ) {
                  mEKeyDown = true;
                  }
@@ -57,7 +57,7 @@ index f48d9587..02a3d662 100644
              break;
          case ' ':
              if( ! mSayField.isFocused() ) {
-@@ -19740,6 +19754,22 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19774,6 +19788,22 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;

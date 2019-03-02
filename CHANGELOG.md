@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v12
+
+- Includes patches for client position discrepeancies, usually visible as draw inversion or can't pick up baby.
+
 ## v10
 
 - Should relaunch mod from game updates and fps detect.
