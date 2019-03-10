@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v13?
+
+- Auto-open say field is disabled in VOG mode.
+
 ## v12
 
 - Includes patches for client position discrepancies, usually visible as draw inversion or can't pick up baby.

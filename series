@@ -1,4 +1,4 @@
-# This series applies on GIT commit ddaa632fbb3e661e35bca94a44b2948c50b3d909
+# This series applies on GIT commit 8480b80312723330809e5c31b30fdd9f60adfbe6
 custom-gitignore
 fix-auto-clicks-at-end-of-path
 path-over-truncation

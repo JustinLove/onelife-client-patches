@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b9352868..268b0039 100644
+index b9352868..dd52b1f7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -155,6 +155,10 @@ static char savingSpeechMask = false;
@@ -57,13 +57,14 @@ index b9352868..268b0039 100644
              break;
          case ' ':
              if( ! mSayField.isFocused() ) {
-@@ -19774,6 +19788,22 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19774,6 +19788,23 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
 +        default:
 +            // inspired by Awbz OneLife+
 +            if( ! mSayField.isFocused()
++                && ! vogMode
 +                && isalpha( inASCII ) ) {
 +                if( keyDownGap < 30 && sayCapture[0] != 0 ) {
 +                  sayCapture[1] = inASCII;
