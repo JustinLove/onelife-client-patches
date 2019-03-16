@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 061f3cd4..e3c36121 100644
+index 2a4240c9..e5818b7e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -124,6 +124,8 @@ static int ignoreTallObjects = 1;
@@ -20,7 +20,7 @@ index 061f3cd4..e3c36121 100644
      
      initLiveTriggers();
  
-@@ -17410,6 +17414,15 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -17441,6 +17445,15 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      
                      if( dist < minDistThatHits ) {
                          p->hit = true;

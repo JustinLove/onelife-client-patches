@@ -1,4 +1,4 @@
-# This series applies on GIT commit 8480b80312723330809e5c31b30fdd9f60adfbe6
+# This series applies on GIT commit 9e2844873b5bd8e313d5861f91ea24d53f93fafd
 custom-gitignore
 fix-auto-clicks-at-end-of-path
 path-over-truncation
@@ -13,3 +13,4 @@ time-transition-hints
 open-say-field-on-typing
 curse-assist
 name-assist
+fix-mushroom-death

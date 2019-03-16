@@ -1,8 +1,9 @@
 # Changelog - feature changes
 
-## v13?
+## v13
 
 - Auto-open say field is disabled in VOG mode.
+- Reset sprite remap if you die while high
 
 ## v12
 

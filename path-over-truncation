@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index bc263b7e..cb079395 100644
+index 54af5245..af681e33 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1444,6 +1444,60 @@ void updateMoveSpeed( LiveObject *inObject ) {

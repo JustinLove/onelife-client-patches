@@ -103,6 +103,10 @@ This requires the name files from the game's source repository. They should also
 - server/firstNames.txt
 - server/lastNames.txt
 
+### fix-mushroom-death
+
+Reset the sprite remap if you die while high. See [OneLife/#163](https://github.com/jasonrohrer/OneLife/issues/163)
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

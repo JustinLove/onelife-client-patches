@@ -1,0 +1,14 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index ba88ead9..d50e041d 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -14216,6 +14216,9 @@ void LivingLifePage::step() {
+                 
+ 
+                 remapRandSource.reseed( ourID );
++                mCurrentRemapFraction = 0;
++                mRemapPeak = 0;
++                setRemapFraction( mCurrentRemapFraction );
+ 
+                 printf( "Got first PLAYER_UPDATE message, our ID = %d\n",
+                         ourID );
