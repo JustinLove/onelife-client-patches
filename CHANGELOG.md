@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v14
+
+- Temp patch for container click change which blocked picking up basket on tule stumps, horse carts, and, I hear, fishing poles.
+
 ## v13
 
 - Auto-open say field is disabled in VOG mode.
