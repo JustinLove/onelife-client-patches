@@ -1,8 +1,8 @@
 diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
-index 45d18602..edf0c66c 100644
+index 7a923db5..b26907ba 100644
 --- a/gameSource/ExistingAccountPage.cpp
 +++ b/gameSource/ExistingAccountPage.cpp
-@@ -629,6 +629,10 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
+@@ -655,6 +655,10 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
          delete [] key;
          delete [] s;
          }
@@ -109,11 +109,11 @@ index b717c382..f651d129 100644
          
      };
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index a0d1b47a..8a401f99 100644
+index 5bd6ca3b..e1786c1b 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 211;
+ int versionNumber = 212;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;

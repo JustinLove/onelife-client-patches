@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f9ded698..7a6bb78f 100644
+index d4259195..cfb1f461 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -155,6 +155,10 @@ static char savingSpeechMask = false;
@@ -22,7 +22,7 @@ index f9ded698..7a6bb78f 100644
      
      if( mServerSocket == -1 ) {
          serverSocketConnected = false;
-@@ -19498,6 +19504,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19503,6 +19509,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  savingSpeechMask = false;
                  savingSpeech = true;
                  }
@@ -31,7 +31,7 @@ index f9ded698..7a6bb78f 100644
              break;
          case 'x':
              if( userTwinCode != NULL &&
-@@ -19509,6 +19517,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19514,6 +19522,8 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  setWaiting( false );
                  setSignal( "twinCancel" );
                  }
@@ -40,7 +40,7 @@ index f9ded698..7a6bb78f 100644
              break;
          /*
          case 'b':
-@@ -19571,12 +19581,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19576,12 +19586,16 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() ) {
                  mEKeyDown = true;
                  }
@@ -57,7 +57,7 @@ index f9ded698..7a6bb78f 100644
              break;
          case ' ':
              if( ! mSayField.isFocused() ) {
-@@ -19810,6 +19824,23 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19815,6 +19829,23 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;

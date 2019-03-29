@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v15
+
+- Remove container patch
+
 ## v14
 
 - Temp patch for container click change which blocked picking up basket on tule stumps, horse carts, and, I hear, fishing poles.
