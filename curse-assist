@@ -1,17 +1,27 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cfb1f461..6f2105a6 100644
+index 5024359e..eaf9d0b3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1393,6 +1393,8 @@ static LiveObject *getGameObject( int inID ) {
+@@ -1394,6 +1394,9 @@ static LiveObject *getGameObject( int inID ) {
      }
  
  
 +SimpleVector<char*> knownNames;
++static int tabNameCompletion = 1;
 +
  
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
-@@ -2428,6 +2430,7 @@ void LivingLifePage::clearLiveObjects() {
+@@ -2104,6 +2107,8 @@ LivingLifePage::LivingLifePage()
+     preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
+ 
+     openSayFieldOnTyping = SettingsManager::getIntSetting( "openSayFieldOnTyping", 1 );
++
++    tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
+     
+     initLiveTriggers();
+ 
+@@ -2431,6 +2436,7 @@ void LivingLifePage::clearLiveObjects() {
          }
      
      gameObjects.deleteAll();
@@ -19,7 +29,7 @@ index cfb1f461..6f2105a6 100644
      }
  
  
-@@ -15200,6 +15203,7 @@ void LivingLifePage::step() {
+@@ -15203,6 +15209,7 @@ void LivingLifePage::step() {
                                  char *nameStart = &( firstSpace[1] );
                                  
                                  existing->name = stringDuplicate( nameStart );
@@ -27,18 +37,18 @@ index cfb1f461..6f2105a6 100644
                                  }
                              
                              break;
-@@ -19603,6 +19607,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -19606,6 +19613,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
              break;
          case 9: // tab
-+            if( mSayField.isFocused() ) {
++            if( tabNameCompletion && mSayField.isFocused() ) {
 +                nameCompletion();
 +                }
 +            else
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -20049,10 +20057,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
+@@ -20053,10 +20064,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
              delete [] message;
              }
          }
@@ -96,9 +106,9 @@ index cfb1f461..6f2105a6 100644
 +
 +        mErasedNoteCharFades.push_back( 1.0f );
 +        }
-     }
- 
- 
++    }
++
++
 +char originalCompletionText[256] = {0};
 +unsigned int originalCompletionLength = 0;
 +
@@ -124,7 +134,7 @@ index cfb1f461..6f2105a6 100644
 +    unsigned int textLength = strlen(inString);
 +
 +    if( textLength == 0 ) return -1;
- 
++
 +    for( int i=knownNames.size()-1; i>=0; i-- ) {
 +        char * name = knownNames.getElementDirect( i );
 +        if ( name == NULL ) continue;
@@ -136,12 +146,12 @@ index cfb1f461..6f2105a6 100644
 +        }
 +
 +    return -1;
-+    }
-+
-+
+     }
+ 
+ 
 +int nameMatching(const char * const nameText, int startNameIndex) {
 +    unsigned int nameLength = strlen(nameText);
-+
+ 
 +    if( nameLength == 0 ) return -1;
 +
 +    for( int i=startNameIndex-1; i>=0; i-- ) {
@@ -228,3 +238,11 @@ index c2c76b49..ce286486 100644
          
          // handles error detection, total byte counting, etc.
          void sendToServerSocket( char *inMessage );
+diff --git a/gameSource/settings/tabNameCompletion.ini b/gameSource/settings/tabNameCompletion.ini
+new file mode 100644
+index 00000000..56a6051c
+--- /dev/null
++++ b/gameSource/settings/tabNameCompletion.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file

@@ -1,9 +1,9 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9a8470ef..2da3b8aa 100644
+index c84aa843..e3fc2a78 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -120,6 +120,8 @@ static unsigned int minMouseDownFrames = 30;
- static unsigned int maxDoubleClickFrames = 20;
+ static unsigned int maxDoubleClickFrames = 30;
  static int maxDoubleClickDrift = 30;
  
 +static int ignoreTallObjects = 1;
@@ -57,3 +57,10 @@ index 9a8470ef..2da3b8aa 100644
                          p->closestCellX = x;
                          p->closestCellY = y;
                          
+diff --git a/gameSource/settings/ignoreTallObjects.ini b/gameSource/settings/ignoreTallObjects.ini
+new file mode 100644
+index 00000000..d00491fd
+--- /dev/null
++++ b/gameSource/settings/ignoreTallObjects.ini
+@@ -0,0 +1 @@
++1

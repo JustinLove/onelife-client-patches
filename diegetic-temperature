@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 2da3b8aa..d54860d4 100644
+index e3fc2a78..4a4c1c9b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -122,6 +122,8 @@ static int maxDoubleClickDrift = 30;
@@ -188,3 +188,10 @@ index 98277961..952d1806 100644
  
  // sets fade values for clothing highlights of next drawn person
  // or NULL for no clothing highlights
+diff --git a/gameSource/settings/showShiverSweat.ini b/gameSource/settings/showShiverSweat.ini
+new file mode 100644
+index 00000000..d00491fd
+--- /dev/null
++++ b/gameSource/settings/showShiverSweat.ini
+@@ -0,0 +1 @@
++1

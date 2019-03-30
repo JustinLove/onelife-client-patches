@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 5e45ab86..9a8470ef 100644
+index 5e45ab86..c84aa843 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -108,9 +108,17 @@ static JenkinsRandomSource remapRandSource( 340403 );
@@ -17,7 +17,7 @@ index 5e45ab86..9a8470ef 100644
  
 -static int minMouseDownFrames = 30;
 +static unsigned int minMouseDownFrames = 30;
-+static unsigned int maxDoubleClickFrames = 20;
++static unsigned int maxDoubleClickFrames = 30;
 +static int maxDoubleClickDrift = 30;
  
  
@@ -189,3 +189,10 @@ index 5e45ab86..9a8470ef 100644
  
  
      // clear mouse over cell
+diff --git a/gameSource/settings/maxDoubleClickFrames.ini b/gameSource/settings/maxDoubleClickFrames.ini
+new file mode 100644
+index 00000000..64bb6b74
+--- /dev/null
++++ b/gameSource/settings/maxDoubleClickFrames.ini
+@@ -0,0 +1 @@
++30

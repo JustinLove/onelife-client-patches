@@ -90,9 +90,13 @@ More work is needed.
 
 Automatically open the say field to talk if you type a text chracter. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
 
+`settings/openSayFieldOnTyping.ini` (0 to disable this feature)
+
 ### curse-assist
 
 Allows stepping through completions of player and grave names with tab key while say field is open.  Can recognize full names for "CURSE " or the begging of first names otherwise.
+
+`settings/tabNameCompletion.ini` (0 to disable this feature)
 
 ### name-assist
 
@@ -102,6 +106,8 @@ This requires the name files from the game's source repository. They should also
 
 - server/firstNames.txt
 - server/lastNames.txt
+
+Depends on curse-name-assist, uses same settings file
 
 ### fix-mushroom-death
 

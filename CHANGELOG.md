@@ -1,5 +1,11 @@
 # Changelog - feature changes
 
+## v16
+
+- patches add settings files to source directory
+- open say field on typing now has a setting file
+- tab name completion now has a setting file
+
 ## v15
 
 - Remove container patch

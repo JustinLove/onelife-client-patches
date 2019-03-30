@@ -84,3 +84,10 @@ index 62fd4a10..5e45ab86 100644
      }
  
  
+diff --git a/gameSource/settings/screenEdgePushSpeed.ini b/gameSource/settings/screenEdgePushSpeed.ini
+new file mode 100644
+index 00000000..f599e28b
+--- /dev/null
++++ b/gameSource/settings/screenEdgePushSpeed.ini
+@@ -0,0 +1 @@
++10
