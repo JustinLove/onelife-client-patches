@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cdfc9bda..62fd4a10 100644
+index 27953a81..2df38489 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -12661,6 +12661,14 @@ void LivingLifePage::step() {
+@@ -12857,6 +12857,14 @@ void LivingLifePage::step() {
                              existing->xd = o.xd;
                              existing->yd = o.yd;
                              existing->destTruncated = false;
@@ -17,7 +17,7 @@ index cdfc9bda..62fd4a10 100644
                              }
                          existing->outOfRange = false;
  
-@@ -13493,6 +13501,13 @@ void LivingLifePage::step() {
+@@ -13689,6 +13697,13 @@ void LivingLifePage::step() {
                              existing->yd = o.yd;
                              existing->destTruncated = false;
  

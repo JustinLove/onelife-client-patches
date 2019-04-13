@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d6fff065..5922618e 100644
+index c2977a2c..b15cef57 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -16179,11 +16179,17 @@ void LivingLifePage::step() {
+@@ -16375,11 +16375,17 @@ void LivingLifePage::step() {
                                  o->waypointY = lrint( worldMouseY / CELL_D );
  
                                  pointerDown( fakeClick.x, fakeClick.y );

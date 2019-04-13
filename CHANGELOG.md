@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## ??
+
+- Fix certain characters for auto open say (notably captial I, N, M)
+
 ## v16
 
 - patches add settings files to source directory

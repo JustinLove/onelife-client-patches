@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e3fc2a78..4a4c1c9b 100644
+index f32bb979..ee1cc009 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -122,6 +122,8 @@ static int maxDoubleClickDrift = 30;
@@ -11,7 +11,7 @@ index e3fc2a78..4a4c1c9b 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2089,6 +2091,8 @@ LivingLifePage::LivingLifePage()
+@@ -2120,6 +2122,8 @@ LivingLifePage::LivingLifePage()
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -20,7 +20,7 @@ index e3fc2a78..4a4c1c9b 100644
      
      initLiveTriggers();
  
-@@ -3706,6 +3710,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3737,6 +3741,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -39,7 +39,7 @@ index e3fc2a78..4a4c1c9b 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3827,6 +3843,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3858,6 +3874,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          
  
          setAnimationEmotion( inObj->currentEmot );
@@ -53,7 +53,7 @@ index e3fc2a78..4a4c1c9b 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -4062,6 +4085,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4093,6 +4116,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -67,7 +67,7 @@ index e3fc2a78..4a4c1c9b 100644
              
  
              // rideable object
-@@ -4134,6 +4164,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4165,6 +4195,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  
                  setAnimationEmotion( babyO->currentEmot );
