@@ -113,6 +113,33 @@ Depends on curse-name-assist, uses same settings file
 
 Reset the sprite remap if you die while high. See [OneLife/#163](https://github.com/jasonrohrer/OneLife/issues/163)
 
+### emotion-keys
+
+Allows triggering emotes with modifier keys combitation. Alt+key works for me, Ctrl+key is reported to work for others. Emote keys are defined in `settings/emotionKeys.ini` with these defaults. The emotion commands in the setting file are for conveience only, it uses line number like the base game settings.
+
+h /happy
+m /mad
+a /angry
+s /sad
+d /devious
+j /joy
+b /blush
+u /hubba
+i /ill
+y /yoohoo
+f /hmph
+l /love
+o /oreally
+k /shock
+
+### interacation-refactoring
+
+Rewrite of some portions of pointer down and command issuing, depended on by other patches.
+
+### drag-drop-use
+
+Allows holding the mouse button when picking up an item, once the character is shown as holding the item, the cursor will show the item, and it can be released on another tile to use the item there. Handy for water-to-crops, soil-to-crops, moving things, etc.
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

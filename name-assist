@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d0c4a631..3a43cdab 100644
+index 8bbaf769..3436a710 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -20,6 +20,8 @@
+@@ -22,6 +22,8 @@
  
  #include "liveAnimationTriggers.h"
  
@@ -11,7 +11,7 @@ index d0c4a631..3a43cdab 100644
  #include "../commonSource/fractalNoise.h"
  
  #include "minorGems/util/SimpleVector.h"
-@@ -2143,6 +2145,8 @@ LivingLifePage::LivingLifePage()
+@@ -2162,6 +2164,8 @@ LivingLifePage::LivingLifePage()
      
      initLiveTriggers();
  
@@ -20,7 +20,7 @@ index d0c4a631..3a43cdab 100644
      for( int i=0; i<4; i++ ) {
          char *name = autoSprintf( "ground_t%d.tga", i );    
          mGroundOverlaySprite[i] = loadSprite( name, false );
-@@ -2481,6 +2485,8 @@ LivingLifePage::~LivingLifePage() {
+@@ -2500,6 +2504,8 @@ LivingLifePage::~LivingLifePage() {
      
      freeLiveTriggers();
  
@@ -29,7 +29,7 @@ index d0c4a631..3a43cdab 100644
      readyPendingReceivedMessages.deallocateStringElements();
  
      serverFrameMessages.deallocateStringElements();
-@@ -20319,6 +20325,7 @@ void LivingLifePage::fadeErasedCharacters() {
+@@ -20668,6 +20674,7 @@ void LivingLifePage::fadeErasedCharacters() {
      }
  
  
@@ -37,7 +37,7 @@ index d0c4a631..3a43cdab 100644
  char originalCompletionText[256] = {0};
  unsigned int originalCompletionLength = 0;
  
-@@ -20330,6 +20337,12 @@ const char* nameDetection(const char * const inString ) {
+@@ -20679,6 +20686,12 @@ const char* nameDetection(const char * const inString ) {
      if( textLength > 6 && strncmp( inString, "CURSE ", 6 ) == 0 ) {
          return inString + 6;
          }
@@ -50,7 +50,7 @@ index d0c4a631..3a43cdab 100644
      else {
          nameText = strrchr( inString, ' ' );
          if( nameText == NULL ) {
-@@ -20391,13 +20404,12 @@ void LivingLifePage::nameCompletion() {
+@@ -20740,13 +20753,12 @@ void LivingLifePage::nameCompletion() {
  
      char *curText = mSayField.getText();
  
@@ -69,7 +69,7 @@ index d0c4a631..3a43cdab 100644
  
      delete [] curText;
  
-@@ -20410,16 +20422,27 @@ void LivingLifePage::nameCompletion() {
+@@ -20759,16 +20771,27 @@ void LivingLifePage::nameCompletion() {
      // some text to try and find partial name in, try next name
  
      const char* nameText = nameDetection( originalCompletionText );
@@ -101,7 +101,7 @@ index d0c4a631..3a43cdab 100644
      unsigned int prefixLength = nameText - originalCompletionText;
      if ( prefixLength > 255 ) return;
      strncpy( say, originalCompletionText, prefixLength );
-@@ -20430,6 +20453,7 @@ void LivingLifePage::nameCompletion() {
+@@ -20779,6 +20802,7 @@ void LivingLifePage::nameCompletion() {
      if (maxLength < prefixLength) return;
      strncpy( say + prefixLength, name, maxLength-prefixLength );
      say[maxLength] = 0;
@@ -110,7 +110,7 @@ index d0c4a631..3a43cdab 100644
      }
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index ad092703..0ceed01f 100644
+index aa152699..5b878a4a 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -26,6 +26,7 @@ accountHmac.cpp \

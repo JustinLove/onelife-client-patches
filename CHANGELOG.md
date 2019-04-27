@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## ?
+
+- Allows triggering emotes with modifier keys combitation. 
+- drag-drop-use: Hold the mouse button when picking up an item, release to use.
+
 ## v17
 
 - Fix certain characters for auto open say (notably captial I, N, M)
