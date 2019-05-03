@@ -1,0 +1,14 @@
+WonLife.exe
+README.md
+CHANGELOG.md
+firstNames.txt
+lastNames.txt
+namesInfo.txt
+settings/screenEdgePushSpeed.ini
+settings/maxDoubleClickFrames.ini
+settings/ignoreTallObjects.ini
+settings/showShiverSweat.ini
+settings/preferObjectsOverPlayersWithScreenLock.ini
+settings/openSayFieldOnTyping.ini
+settings/tabNameCompletion.ini
+settings/emotionKeys.ini

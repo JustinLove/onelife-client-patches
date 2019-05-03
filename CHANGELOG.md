@@ -1,9 +1,10 @@
 # Changelog - feature changes
 
-## ?
+## v18
 
 - Allows triggering emotes with modifier keys combitation. 
 - drag-drop-use: Hold the mouse button when picking up an item, release to use.
+- List of files to include in build packages is now stored in this repository.
 
 ## v17
 
