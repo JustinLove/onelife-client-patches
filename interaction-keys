@@ -1,0 +1,481 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 158777ac..aeab0203 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -132,6 +132,108 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
+ 
+ static int clickToMoveLockToInteract = 0;
+ 
++
++typedef enum interactionKeyType {
++    IK_MOVE,
++    IK_RUN,
++    IK_USE,
++    IK_DROP,
++    IK_REMV,
++    IK_SELF,
++    IK_UOTHER,
++    IK_KILL,
++    IK_EXAMINE,
++    IK_BP_USE,
++    IK_BP_DROP,
++    IK_BP_SREMV,
++    IK_COUNT,
++    } interactionKeyType;
++
++static int interactionKeysEnabled = 1;
++static char interactionKeys[IK_COUNT] = {
++    'q', // IK_MOVE
++    'a', // IK_RUN
++    'f', // IK_USE
++    'd', // IK_DROP
++    's', // IK_REMV
++    'v', // IK_SELF
++    'g', // IK_UOTHER
++    'k', // IK_KILL
++    'x', // IK_EXAMINE
++    'r', // IK_BP_USE
++    'e', // IK_BP_DROP
++    'w' // IK_SREMV
++    };
++
++static char const * const interactionKeysHelp[IK_COUNT] = {
++    "Move to", // IK_MOVE
++    "Run", // IK_RUN
++    "Use", // IK_USE
++    "Drop", // IK_DROP
++    "Remove/Cycle container", // IK_REMV
++    "Eat/Wear/Self", // IK_SELF
++    "Pickup Baby, use on Other", // IK_UOTHER
++    "Kill", // IK_KILL
++    "Examine", // IK_EXAMINE
++    "Put/Take from backpack", // IK_BP_USE
++    "Put in backpack", // IK_BP_DROP
++    "Remove/cycle in backpack" // IK_SREMV
++    };
++
++void initKeybinds() {
++    char *cont = SettingsManager::getSettingContents( "interactionKeys", "" );
++
++    if( strcmp( cont, "" ) == 0 ) {
++        delete [] cont;
++        return;
++        }
++
++    int numParts;
++    char **parts = split( cont, "\n", &numParts );
++    delete [] cont;
++
++    for( int i=0; i<numParts; i++ ) {
++        if( strcmp( parts[i], "" ) != 0 ) {
++
++            if( i < IK_COUNT ) {
++                interactionKeys[i] = parts[i][0];
++                }
++            else {
++                break;
++                }
++            }
++        delete [] parts[i];
++        }
++    delete [] parts;
++    }
++
++void drawHelpInteractionKeys( doublePair messagePos ) {
++    double lineSpacing = 30;
++    double indent = 60;
++    double columnWidth = 600;
++
++    char letters[2];
++    letters[1] = 0;
++
++    messagePos.x += columnWidth/2;
++    mainFont->drawString( "Actions at Cursor", 
++                           messagePos, alignCenter );
++    messagePos.x -= columnWidth/2;
++    messagePos.y -= lineSpacing;
++
++    for( int command = 0; command < IK_COUNT; command++ ) {
++        letters[0] = interactionKeys[command];
++        mainFont->drawString( letters, 
++                               messagePos, alignLeft );
++        messagePos.x += indent;
++        mainFont->drawString( interactionKeysHelp[command], 
++                               messagePos, alignLeft );
++        messagePos.x -= indent;
++        messagePos.y -= lineSpacing;
++        }
++    }
++
++
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
+ 
+@@ -2181,6 +2283,10 @@ LivingLifePage::LivingLifePage()
+     tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
+ 
+     clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
++
++    interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
++
++    initKeybinds();
+     
+     initLiveTriggers();
+ 
+@@ -3818,11 +3924,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+     
+         if( inObj->currentPos.x < trueTargetX ) {
+             if( inObj->currentSpeed == 0 ) {
++                if( inObj->holdingFlip == true ) {
++                    printf( "animation flip\n" );
++                    }
+                 inObj->holdingFlip = false;
+                 }
+             }
+         if( inObj->currentPos.x > trueTargetX ) {
+             if( inObj->currentSpeed == 0 ) {
++                if( inObj->holdingFlip == false ) {
++                    printf( "animation flip\n" );
++                    }
+                 inObj->holdingFlip = true;
+                 }
+             }
+@@ -17012,9 +17124,15 @@ void LivingLifePage::step() {
+             // don't change flip unless moving substantially in x
+             if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
+                 if( o->currentMoveDirection.x > 0 ) {
++                    if( o->holdingFlip == true ) {
++                        printf( "step flip\n" );
++                        }
+                     o->holdingFlip = false;
+                     }
+                 else {
++                    if( o->holdingFlip == false ) {
++                        printf( "step flip\n" );
++                        }
+                     o->holdingFlip = true;
+                     }         
+                 }
+@@ -17103,6 +17221,7 @@ void LivingLifePage::step() {
+                                 o->waypointX = lrint( worldMouseX / CELL_D );
+                                 o->waypointY = lrint( worldMouseY / CELL_D );
+ 
++                                printf( "close autorun\n" );
+                                 pointerDown( fakeClick.x, fakeClick.y );
+ 
+                                 endPos.x = fakeClick.x / CELL_D;
+@@ -17111,6 +17230,7 @@ void LivingLifePage::step() {
+                                 o->useWaypoint = false;
+                                 }
+                             else {
++                                printf( "normal autorun\n" );
+                                 pointerDown( worldMouseX, worldMouseY );
+ 
+                                 endPos.x = (double)( worldMouseX / CELL_D );
+@@ -19454,6 +19574,234 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY ) {
+ 
+ 
+ 
++bool LivingLifePage::tryInteractionKeys( char inASCII ) {
++
++    CellHitRecord c;
++    LiveObject *ourLiveObject = getOurLiveObject();
++
++    for( int command = 0; command < IK_COUNT; command++ ) {
++        if( interactionKeys[command] == inASCII ) {
++            if( playerActionPending ) {
++                return true;
++                }
++            switch( command ) {
++                case IK_MOVE:
++                    checkForCellHit( c );
++
++                    moveTo( c.cellX, c.cellY );
++                    return true;
++                case IK_RUN:
++                    checkForCellHit( c );
++
++                    moveTo( c.cellX, c.cellY );
++                    autoRun = true;
++                    return true;
++                case IK_USE:
++                    checkForCellHit( c );
++
++                    if( c.destID != 0 ) {
++                        hintForObjectInteraction( ourLiveObject->holdingID, c.destID );
++                        if( ourLiveObject->holdingID == 0 &&
++                            hasSpecialBareHandTransition( c.destID ) ) {
++
++                            removeAt( c.cellX, c.cellY );
++                            }
++                        else {
++                            useAt( c.cellX, c.cellY );
++                            }
++                        }
++                    else if( hasEmptyTileTransition( ourLiveObject->holdingID, c.floorDestID ) ) {
++                        useAt( c.cellX, c.cellY );
++                        if( c.destID == 0 || ! getObject( c.destID )->permanent ) {
++
++                            // empty cell, or something we can swap held with
++
++                            GridPos clickPos = { c.mapX, c.mapY };
++
++                            mPrevMouseClickCells.push_back( clickPos );
++                            mPrevMouseClickCellFades.push_back( 1 );
++
++                            // instantly fade current cell to get it out of the way
++                            // of our click indicator
++                            mCurMouseOverCellFade = 0;
++                            }
++                        }
++                    return true;
++                case IK_DROP:
++                    if( ourLiveObject->holdingID == 0 ) {
++                        return true;
++                        }
++
++                    checkForCellHit( c );
++
++                    if( c.destID != 0 &&
++                        getNumContainerSlots( c.destID ) > 0 &&
++                        c.destNumContained < getNumContainerSlots( c.destID ) ) {
++                        useAt( c.cellX, c.cellY );
++                        }
++                    else {
++                        dropAt( c.cellX, c.cellY );
++                        }
++                    if( c.destID == 0 || ! getObject( c.destID )->permanent ) {
++
++                        // empty cell, or something we can swap held with
++
++                        GridPos clickPos = { c.mapX, c.mapY };
++
++                        mPrevMouseClickCells.push_back( clickPos );
++                        mPrevMouseClickCellFades.push_back( 1 );
++
++                        // instantly fade current cell to get it out of the way
++                        // of our click indicator
++                        mCurMouseOverCellFade = 0;
++                        }
++                    return true;
++                case IK_REMV:
++                    checkForCellHit( c );
++
++                    if( c.destID == 0 ) {
++                        return true;
++                        }
++                    else if( ourLiveObject->holdingID == 0 ) {
++                        if( hasSpecialBareHandTransition( c.destID ) ) {
++                            useAt( c.cellX, c.cellY );
++                            }
++                        else {
++                            removeAt( c.cellX, c.cellY );
++                            }
++                        }
++                    else {
++                        dropAt( c.cellX, c.cellY );
++                        }
++                    return true;
++                case IK_SELF:
++                   if( ! ourLiveObject->inMotion ) {
++                       if( ourLiveObject->holdingID > 0 &&
++                           getObject( ourLiveObject->holdingID )->foodValue > 0 ) {
++                           nextActionEating = true;
++                           }
++
++                       if( nextActionMessageToSend != NULL ) {
++                           delete [] nextActionMessageToSend;
++                           nextActionMessageToSend = NULL;
++                           }
++
++                       nextActionMessageToSend =
++                           autoSprintf( "SELF %d %d -1#",
++                                        sendX( ourLiveObject->xd ), sendY( ourLiveObject->yd ) );
++                       playerActionTargetX = ourLiveObject->xd;
++                       playerActionTargetY = ourLiveObject->yd;
++                       }
++                    return true;
++                case IK_UOTHER:
++                    checkForCellHit( c );
++
++                    if( ourLiveObject->holdingID == 0 ) {
++                        pickupBabyAt( c.cellX, c.cellY );
++                        }
++                    else {
++                        useOnOtherAt( c.cellX, c.cellY );
++                        }
++                    return true;
++                case IK_KILL:
++                    checkForCellHit( c );
++
++                    if( ourLiveObject->holdingID != 0 ) {
++                        killAt( c.cellX, c.cellY );
++                        }
++                    return true;
++                case IK_EXAMINE:
++                    checkForCellHit( c );
++
++                    if( c.destID > 0 ) {
++                        mNextHintObjectID = c.destID;
++                        mNextHintIndex = mHintBookmarks[ c.destID ];
++                        }
++                    else if( c.floorDestID > 0 ) {
++                        mNextHintObjectID = c.floorDestID;
++                        mNextHintIndex = mHintBookmarks[ c.floorDestID ];
++                        }
++                    return true;
++                case IK_BP_USE:
++                    if( ! ourLiveObject->inMotion
++                        && ourLiveObject->clothing.backpack != NULL ) {
++
++                        if( nextActionMessageToSend != NULL ) {
++                            delete [] nextActionMessageToSend;
++                            nextActionMessageToSend = NULL;
++                            }
++
++                        if( ourLiveObject->holdingID > 0 ) {
++                            nextActionMessageToSend =
++                                autoSprintf( "SELF %d %d 5#",
++                                        sendX( ourLiveObject->xd ), sendY( ourLiveObject->yd ) );
++                            }
++                        else {
++                            nextActionMessageToSend =
++                                autoSprintf( "SREMV %d %d 5 -1#",
++                                        sendX( ourLiveObject->xd ), sendY( ourLiveObject->yd ) );
++                            }
++
++                        playerActionTargetX = ourLiveObject->xd;
++                        playerActionTargetY = ourLiveObject->yd;
++                        }
++                    return true;
++                case IK_BP_DROP:
++                    if( mEKeyEnabled ) {
++                        return true;
++                        }
++                    else {
++                        if( ! ourLiveObject->inMotion
++                            && ourLiveObject->clothing.backpack != NULL ) {
++                            if( ourLiveObject->holdingID > 0 ) {
++                                if( nextActionMessageToSend != NULL ) {
++                                    delete [] nextActionMessageToSend;
++                                    nextActionMessageToSend = NULL;
++                                }
++
++                                nextActionMessageToSend =
++                                    autoSprintf( "SELF %d %d 5#",
++                                            sendX( ourLiveObject->xd ), sendY( ourLiveObject->yd ) );
++                                playerActionTargetX = ourLiveObject->xd;
++                                playerActionTargetY = ourLiveObject->yd;
++                                }
++                            }
++                        return true;
++                        }
++                    return true;
++                case IK_BP_SREMV:
++                    if( ! ourLiveObject->inMotion
++                        && ourLiveObject->clothing.backpack != NULL ) {
++
++                        if( nextActionMessageToSend != NULL ) {
++                            delete [] nextActionMessageToSend;
++                            nextActionMessageToSend = NULL;
++                        }
++
++                        if( ourLiveObject->holdingID > 0 ) {
++                            nextActionMessageToSend =
++                                autoSprintf( "DROP %d %d 5#",
++                                        sendX( ourLiveObject->xd ), sendY( ourLiveObject->yd ) );
++                        }
++                        else {
++                            nextActionMessageToSend =
++                                autoSprintf( "SREMV %d %d 5 -1#",
++                                        sendX( ourLiveObject->xd ), sendY( ourLiveObject->yd ) );
++                        }
++
++                        playerActionTargetX = ourLiveObject->xd;
++                        playerActionTargetY = ourLiveObject->yd;
++                    }
++                    return true;
++                default:
++                    return false;
++                }
++            }
++        }
++    return false;
++    }
++
++
+ void LivingLifePage::pointerDown( float inX, float inY ) {
+     lastMouseX = inX;
+     lastMouseY = inY;
+@@ -20945,18 +21293,33 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+             break;
+         }
+ 
++    if( mSayField.isFocused() ) {
++        return;
++        }
++
+     if( keyHandledByCase ) {
+         printf( "key handled by case %c\n", inASCII);
+         sayCapture[0] = inASCII;
+         keyDownGap = 0;
++        if( interactionKeysEnabled && inASCII != interactionKeys[IK_RUN] && inASCII != 13 ) {
++            autoRun = false;
++            }
+         }
+     else {
+         printf( "key NOT handled by case %c\n", inASCII);
++
++        bool keyHandledByKeybind = false;
++
++        if ( interactionKeysEnabled ) {
++            keyHandledByKeybind = tryInteractionKeys( inASCII );
++            }
++
+         // inspired by Awbz OneLife+
+         if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
+               || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
+             )
+             && ! mSayField.isFocused()
++            && ! keyHandledByKeybind
+             && ! vogMode
+             && (isalpha( inASCII )
+                 || (inASCII == ' ' && keyDownGap < 30 && sayCapture[0] != 0 ))) {
+diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
+index d49e44f3..8c98b316 100644
+--- a/gameSource/LivingLifePage.h
++++ b/gameSource/LivingLifePage.h
+@@ -856,6 +856,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+         void useOnOtherAt( int clickDestX, int clickDestY );
+         void killAt( int clickDestX, int clickDestY );
+ 
++        bool tryInteractionKeys( char inASCII );
++
+ 
+         LiveObject *getOurLiveObject();
+         LiveObject *getLiveObject( int inID );
+diff --git a/gameSource/settings/interactionKeys.ini b/gameSource/settings/interactionKeys.ini
+new file mode 100644
+index 00000000..ce3be461
+--- /dev/null
++++ b/gameSource/settings/interactionKeys.ini
+@@ -0,0 +1,12 @@
++q step
++a autorun
++f use
++d drop
++s take/cycle from container
++v eat/self
++g feed/use on other
++k kill
++x examine
++r put/take in backpack
++e put in backpack
++w take/cycle in backpack
+diff --git a/gameSource/settings/interactionKeysEnabled.ini b/gameSource/settings/interactionKeysEnabled.ini
+new file mode 100644
+index 00000000..d00491fd
+--- /dev/null
++++ b/gameSource/settings/interactionKeysEnabled.ini
+@@ -0,0 +1 @@
++1

@@ -1,0 +1,104 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index aeab0203..e5bccbb5 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -234,6 +234,9 @@ void drawHelpInteractionKeys( doublePair messagePos ) {
+     }
+ 
+ 
++static char showHelpOverlay = false;
++static char showHelpOverlayKey = 'h';
++
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
+ 
+@@ -2287,6 +2290,16 @@ LivingLifePage::LivingLifePage()
+     interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
+ 
+     initKeybinds();
++
++    char *keyString = SettingsManager::getStringSetting( "showHelpOverlayKey" );
++
++    if( keyString != NULL ) {
++        if( strlen( keyString ) == 1 ) {
++            showHelpOverlayKey = keyString[0];
++            }
++        delete [] keyString;
++        }
++
+     
+     initLiveTriggers();
+ 
+@@ -2960,6 +2973,42 @@ void drawHelpEmotionKeys( doublePair messagePos ) {
+ 
+ 
+ 
++void drawHelpOverlay() {
++    double lineSpacing = 30;
++    double indent = 60;
++
++    setDrawColor( 0, 0, 0, 0.5 );
++    drawRect( lastScreenViewCenter, 640, 360 );
++
++    setDrawColor( 1, 1, 1, 1 );
++
++    doublePair messagePos = lastScreenViewCenter;
++    messagePos.y += 300;
++
++    char letters[2];
++    letters[0] = showHelpOverlayKey;
++    letters[1] = 0;
++
++    messagePos.x -= indent;
++    mainFont->drawString( letters, 
++                           messagePos, alignLeft );
++    messagePos.x += indent;
++    mainFont->drawString( "Toggle Help", 
++                           messagePos, alignLeft );
++
++    messagePos.y -= lineSpacing*2;
++
++    // ------------------ interaction keys -----------------
++    messagePos.x -= 600;
++    drawHelpInteractionKeys( messagePos );
++
++    // ------------------ emotion keys -----------------
++    messagePos.x += 900;
++    drawHelpEmotionKeys( messagePos );
++    }
++
++
++
+ SimpleVector<char*> *splitLines( const char *inString,
+                                  double inMaxWidth ) {
+     
+@@ -7313,6 +7362,10 @@ void LivingLifePage::draw( doublePair inViewCenter,
+             drawFixedShadowString( translate( "fpsPending" ), pos );
+             }
+         }
++
++    if( showHelpOverlay ) {
++        drawHelpOverlay();
++        }
+     
+     if( showNet ) {
+         doublePair pos = lastScreenViewCenter;
+@@ -21314,6 +21367,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+             keyHandledByKeybind = tryInteractionKeys( inASCII );
+             }
+ 
++        if( inASCII == showHelpOverlayKey ) {
++            showHelpOverlay = !showHelpOverlay;
++            keyHandledByKeybind = true;
++            }
++
+         // inspired by Awbz OneLife+
+         if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
+               || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
+diff --git a/gameSource/settings/showHelpOverlayKey.ini b/gameSource/settings/showHelpOverlayKey.ini
+new file mode 100644
+index 00000000..6e9f0da1
+--- /dev/null
++++ b/gameSource/settings/showHelpOverlayKey.ini
+@@ -0,0 +1 @@
++h

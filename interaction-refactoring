@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cfdbe5c9..c1fbdd78 100644
+index ddc702e8..27f6f67b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -18504,6 +18504,615 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -18758,6 +18758,667 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
  
  
  
@@ -20,8 +20,8 @@ index cfdbe5c9..c1fbdd78 100644
 +    inRecord.floorDestID = 0;
 +    inRecord.destNumContained = 0;
 +
-+    int mapX = inRecord.cellX - mMapOffsetX + mMapD / 2;
-+    int mapY = inRecord.cellY - mMapOffsetY + mMapD / 2;
++    int mapX = inRecord.mapX = inRecord.cellX - mMapOffsetX + mMapD / 2;
++    int mapY = inRecord.mapY = inRecord.cellY - mMapOffsetY + mMapD / 2;
 +    if( mapY >= 0 && mapY < mMapD &&
 +        mapX >= 0 && mapX < mMapD ) {
 +
@@ -29,6 +29,58 @@ index cfdbe5c9..c1fbdd78 100644
 +        inRecord.floorDestID = mMapFloors[ mapY * mMapD + mapX ];
 +        inRecord.destNumContained = mMapContainedStacks[ mapY * mMapD + mapX ].size();
 +        }
++    }
++
++
++
++void LivingLifePage::hintForObjectInteraction( int holdingID, int destID ) {
++      if( holdingID > 0 ) {
++          TransRecord *tr = getTrans( holdingID, destID );
++          
++          if( tr == NULL ) {
++              // try defaul transition
++              // tr = getTrans( -2, destID );
++              
++              // for now, DO NOT consider default transition
++              // no main transition for this held object applies
++              // so we should probably give a hint about what CAN apply
++              // to the target object.
++
++              // Default transitions are currently just used to make
++              // something react to the player (usually for animals getting
++              // startled), not to actually accomplish
++              // something
++
++              // so we should show hints about the target object BEFORE it
++              // went into its (temporary) reaction state. 
++              }
++          
++          if( tr == NULL || tr->newTarget == destID ) {
++              // give hint about dest object which will be unchanged 
++              mNextHintObjectID = destID;
++              mNextHintIndex = mHintBookmarks[ destID ];
++              }
++          else if( tr->newActor > 0 && 
++                   holdingID != tr->newActor ) {
++              // give hint about how what we're holding will change
++              mNextHintObjectID = tr->newActor;
++              mNextHintIndex = mHintBookmarks[ tr->newTarget ];
++              }
++          else if( tr->newTarget > 0 ) {
++              // give hint about changed target after we act on it
++              mNextHintObjectID = tr->newTarget;
++              mNextHintIndex = mHintBookmarks[ tr->newTarget ];
++              }
++          }
++      else {
++          // bare hand
++          // only give hint about hit if no bare-hand action applies
++
++          if( getTrans( 0, destID ) == NULL ) {
++              mNextHintObjectID = destID;
++              mNextHintIndex = mHintBookmarks[ destID ];
++              }
++          }
 +    }
 +
 +
@@ -618,7 +670,7 @@ index cfdbe5c9..c1fbdd78 100644
  
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
-@@ -18846,7 +19455,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19100,7 +19761,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -626,7 +678,62 @@ index cfdbe5c9..c1fbdd78 100644
  
  
      
-@@ -19300,7 +19908,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19108,53 +19768,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+ 
+     if( destID > 0 && p.hitAnObject ) {
+         
+-        if( ourLiveObject->holdingID > 0 ) {
+-            TransRecord *tr = getTrans( ourLiveObject->holdingID, destID );
+-            
+-            if( tr == NULL ) {
+-                // try defaul transition
+-                // tr = getTrans( -2, destID );
+-                
+-                // for now, DO NOT consider default transition
+-                // no main transition for this held object applies
+-                // so we should probably give a hint about what CAN apply
+-                // to the target object.
+-
+-                // Default transitions are currently just used to make
+-                // something react to the player (usually for animals getting
+-                // startled), not to actually accomplish
+-                // something
+-
+-                // so we should show hints about the target object BEFORE it
+-                // went into its (temporary) reaction state. 
+-                }
+-            
+-            if( tr == NULL || tr->newTarget == destID ) {
+-                // give hint about dest object which will be unchanged 
+-                mNextHintObjectID = destID;
+-                mNextHintIndex = mHintBookmarks[ destID ];
+-                }
+-            else if( tr->newActor > 0 && 
+-                     ourLiveObject->holdingID != tr->newActor ) {
+-                // give hint about how what we're holding will change
+-                mNextHintObjectID = tr->newActor;
+-                mNextHintIndex = mHintBookmarks[ tr->newTarget ];
+-                }
+-            else if( tr->newTarget > 0 ) {
+-                // give hint about changed target after we act on it
+-                mNextHintObjectID = tr->newTarget;
+-                mNextHintIndex = mHintBookmarks[ tr->newTarget ];
+-                }
+-            }
+-        else {
+-            // bare hand
+-            // only give hint about hit if no bare-hand action applies
+-
+-            if( getTrans( 0, destID ) == NULL ) {
+-                mNextHintObjectID = destID;
+-                mNextHintIndex = mHintBookmarks[ destID ];
+-                }
+-            }
++        hintForObjectInteraction( ourLiveObject->holdingID, destID );
+         }
+ 
+     
+@@ -19554,7 +20168,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -635,7 +742,7 @@ index cfdbe5c9..c1fbdd78 100644
          }
      else if( ( modClick && ourLiveObject->holdingID != 0 )
               || tryingToPickUpBaby
-@@ -19311,155 +19919,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19565,155 +20179,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -792,7 +899,7 @@ index cfdbe5c9..c1fbdd78 100644
          
  
          if( canExecute ) {
-@@ -19506,45 +19967,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19760,45 +20227,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                      // check for other special case
                      // a use-on-ground transition or use-on-floor transition
  
@@ -840,7 +947,7 @@ index cfdbe5c9..c1fbdd78 100644
                          }
                      }
                  }
-@@ -19666,222 +20090,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19920,222 +20350,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1064,16 +1171,18 @@ index cfdbe5c9..c1fbdd78 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 988c78bc..8d3965a7 100644
+index ecb49494..d49e44f3 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -352,6 +352,16 @@ typedef struct PointerHitRecord {
+@@ -368,6 +368,18 @@ typedef struct PointerHitRecord {
  
  
  
 +typedef struct CellHitRecord {
 +        int cellX;
 +        int cellY;
++        int mapX;
++        int mapY;
 +        int destID;
 +        int floorDestID;
 +        int destNumContained;
@@ -1084,11 +1193,12 @@ index 988c78bc..8d3965a7 100644
  typedef struct OldArrow {
          int i;
          float heat;
-@@ -814,6 +824,16 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -832,6 +844,17 @@ class LivingLifePage : public GamePage, public ActionListener {
          // forces next pointerDown call to avoid everything but ground clicks
          char mForceGroundClick;
          
 +        void checkForCellHit( CellHitRecord& inRecord );
++        void hintForObjectInteraction( int holdingID, int destID );
 +        void moveTo( int moveDestX, int moveDestY );
 +        char moveNearTo( int clickDestX, int clickDestY );
 +        char prepareForActionMessage( int clickDestX, int clickDestY );

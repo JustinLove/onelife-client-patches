@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c847c872..1ae393de 100644
+index a88becbc..58dfac93 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1494,6 +1494,60 @@ void updateMoveSpeed( LiveObject *inObject ) {
+@@ -1505,6 +1505,60 @@ void updateMoveSpeed( LiveObject *inObject ) {
      }
  
  
@@ -63,7 +63,7 @@ index c847c872..1ae393de 100644
  // should match limit on server
  static int pathFindingD = 32;
  
-@@ -13001,6 +13055,10 @@ void LivingLifePage::step() {
+@@ -13216,6 +13270,10 @@ void LivingLifePage::step() {
                                          break;
                                          }
                                      }
@@ -74,7 +74,7 @@ index c847c872..1ae393de 100644
                                  }
                              }
  
-@@ -14971,52 +15029,7 @@ void LivingLifePage::step() {
+@@ -15188,52 +15246,7 @@ void LivingLifePage::step() {
                                                         existing->pathLength );
  
                                              if( existing->pathLength == 1 ) {

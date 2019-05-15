@@ -1,29 +1,31 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e96f9a38..9d12e26a 100644
+index 1258d266..b8c373a7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -164,6 +164,11 @@ static char waitingForPhotoSig = false;
+@@ -164,6 +164,12 @@ static char waitingForPhotoSig = false;
  static char *photoSig = NULL;
  
  
 +static unsigned int keyDownGap = 0;
 +static char sayCapture[3] = {0,0,0};
-+static int openSayFieldOnTyping = 1;
++static int openSayFieldOnTypingLower = 0;
++static int openSayFieldOnTypingUpper = 1;
 +
 +
  static double emotDuration = 10;
  
  
-@@ -2147,6 +2152,8 @@ LivingLifePage::LivingLifePage()
+@@ -2162,6 +2168,9 @@ LivingLifePage::LivingLifePage()
      showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
 +
-+    openSayFieldOnTyping = SettingsManager::getIntSetting( "openSayFieldOnTyping", 1 );
++    openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
++    openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
      
      initLiveTriggers();
  
-@@ -9742,6 +9749,8 @@ void LivingLifePage::step() {
+@@ -9934,6 +9943,8 @@ void LivingLifePage::step() {
              mouseHeld = true;
              }
          }
@@ -32,7 +34,7 @@ index e96f9a38..9d12e26a 100644
      
      if( mServerSocket == -1 ) {
          serverSocketConnected = false;
-@@ -19954,6 +19963,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20176,6 +20187,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          return;
          }
  
@@ -40,7 +42,7 @@ index e96f9a38..9d12e26a 100644
      
      switch( inASCII ) {
          /*
-@@ -19975,6 +19985,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20197,6 +20209,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  SettingsManager::getIntSetting( "vogModeOn", 0 ) ) {
@@ -48,7 +50,7 @@ index e96f9a38..9d12e26a 100644
                  
                  if( ! vogMode ) {
                      sendToServerSocket( (char*)"VOGS 0 0#" );
-@@ -20004,6 +20015,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20226,6 +20239,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          case 'I':
              if( ! mSayField.isFocused() &&
                  vogMode ) {
@@ -56,7 +58,7 @@ index e96f9a38..9d12e26a 100644
                  
                  if( ! vogPickerOn ) {
                      addComponent( &mObjectPicker );
-@@ -20020,6 +20032,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20242,6 +20256,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  vogMode ) {
@@ -64,7 +66,7 @@ index e96f9a38..9d12e26a 100644
                  sendToServerSocket( (char*)"VOGP 0 0#" );
                  }
              break;
-@@ -20027,12 +20040,14 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20249,12 +20264,14 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  vogMode ) {
@@ -79,7 +81,7 @@ index e96f9a38..9d12e26a 100644
                  savingSpeechColor = true;
                  savingSpeechMask = false;
                  savingSpeech = true;
-@@ -20041,6 +20056,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20263,6 +20280,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          case 'x':
              if( userTwinCode != NULL &&
                  ! mStartedLoadingFirstObjectSet ) {
@@ -87,7 +89,7 @@ index e96f9a38..9d12e26a 100644
                  
                  closeSocket( mServerSocket );
                  mServerSocket = -1;
-@@ -20107,18 +20123,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20329,18 +20347,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          */
          case 'e':
          case 'E':
@@ -110,7 +112,7 @@ index e96f9a38..9d12e26a 100644
                  shouldMoveCamera = false;
                  }
              break;
-@@ -20349,6 +20368,35 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20571,6 +20592,37 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -127,7 +129,9 @@ index e96f9a38..9d12e26a 100644
 +    else {
 +        printf( "key NOT handled by case %c\n", inASCII);
 +        // inspired by Awbz OneLife+
-+        if( openSayFieldOnTyping
++        if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
++              || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
++            )
 +            && ! mSayField.isFocused()
 +            && ! vogMode
 +            && (isalpha( inASCII )
@@ -146,11 +150,19 @@ index e96f9a38..9d12e26a 100644
          }
      }
  
-diff --git a/gameSource/settings/openSayFieldOnTyping.ini b/gameSource/settings/openSayFieldOnTyping.ini
+diff --git a/gameSource/settings/openSayFieldOnTypingLower.ini b/gameSource/settings/openSayFieldOnTypingLower.ini
+new file mode 100644
+index 00000000..c2270834
+--- /dev/null
++++ b/gameSource/settings/openSayFieldOnTypingLower.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
+diff --git a/gameSource/settings/openSayFieldOnTypingUpper.ini b/gameSource/settings/openSayFieldOnTypingUpper.ini
 new file mode 100644
 index 00000000..56a6051c
 --- /dev/null
-+++ b/gameSource/settings/openSayFieldOnTyping.ini
++++ b/gameSource/settings/openSayFieldOnTypingUpper.ini
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file

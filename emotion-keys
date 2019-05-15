@@ -1,8 +1,45 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 95b06f29..cfdbe5c9 100644
+index 62518bda..ddc702e8 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -19979,6 +19979,19 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -2821,6 +2821,36 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
+ 
+ 
+ 
++void drawHelpEmotionKeys( doublePair messagePos ) {
++    double lineSpacing = 30;
++    double indent = 60;
++    double columnWidth = 300;
++
++    char letters[2];
++    letters[1] = 0;
++
++    messagePos.x += columnWidth/2;
++    mainFont->drawString( "Emotes: Alt+ or Ctrl+", 
++                           messagePos, alignCenter );
++    messagePos.x -= columnWidth/2;
++    messagePos.y -= lineSpacing;
++
++    Emotion *e = getEmotion(0);
++    for( int index = 0; (e = getEmotion(index)) != NULL && e->triggerWord && index < 200; index++ ) {
++        if( e->triggerKey == 0) continue;
++        letters[0] = e->triggerKey;
++        mainFont->drawString( letters, 
++                               messagePos, alignLeft );
++        messagePos.x += indent;
++        mainFont->drawString( e->triggerWord, 
++                               messagePos, alignLeft );
++        messagePos.x -= indent;
++        messagePos.y -= lineSpacing;
++        }
++    }
++
++
++
+ SimpleVector<char*> *splitLines( const char *inString,
+                                  double inMaxWidth ) {
+     
+@@ -20203,6 +20233,19 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          return;
          }
  

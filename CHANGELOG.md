@@ -1,14 +1,21 @@
 # Changelog - feature changes
 
+## v19
+
+- Open say field on typing split into upper and lower case settings files. By default only upper is enabled
+- New, disabled by default: click by default moves, lock screen to interact
+- Keyboard commands that do specific things at mouse pointer cell.
+- Help overlay, press 'h' by default
+
 ## v18
 
-- Allows triggering emotes with modifier keys combitation. 
+- Allows triggering emotes with modifier keys combination. 
 - drag-drop-use: Hold the mouse button when picking up an item, release to use.
 - List of files to include in build packages is now stored in this repository.
 
 ## v17
 
-- Fix certain characters for auto open say (notably captial I, N, M)
+- Fix certain characters for auto open say (notably capital I, N, M)
 
 ## v16
 

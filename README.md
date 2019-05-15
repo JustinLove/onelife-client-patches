@@ -90,7 +90,8 @@ More work is needed.
 
 Automatically open the say field to talk if you type a text chracter. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
 
-`settings/openSayFieldOnTyping.ini` (0 to disable this feature)
+`settings/openSayFieldOnTypingLower.ini` (1 to enable on lower case letters)
+`settings/openSayFieldOnTypingUpper.ini` (0 to disable on upper case letters)
 
 ### curse-assist
 
@@ -115,7 +116,7 @@ Reset the sprite remap if you die while high. See [OneLife/#163](https://github.
 
 ### emotion-keys
 
-Allows triggering emotes with modifier keys combitation. Alt+key works for me, Ctrl+key is reported to work for others. Emote keys are defined in `settings/emotionKeys.ini` with these defaults. The emotion commands in the setting file are for conveience only, it uses line number like the base game settings.
+Allows triggering emotes with modifier keys combination. Alt+key works for me, Ctrl+key is reported to work for others. Emote keys are defined in `settings/emotionKeys.ini` with these defaults. The emotion commands in the setting file are for convenience only, it uses line number like the base game settings.
 
 h /happy
 m /mad
@@ -139,6 +140,38 @@ Rewrite of some portions of pointer down and command issuing, depended on by oth
 ### drag-drop-use
 
 Allows holding the mouse button when picking up an item, once the character is shown as holding the item, the cursor will show the item, and it can be released on another tile to use the item there. Handy for water-to-crops, soil-to-crops, moving things, etc.
+
+### click-to-move-lock-to-interact
+
+Disabled by default `settings/clickToMoveLockToInteractoin.ini` (1 to enable this feature)
+
+Makes clicks by default move only. Lock the screen (spacebar) to perform all other functions.
+
+### interaction-keys
+
+Adds key actions that do very specific things at the mouse pointer cell, versus the default click which does very context sensitive things based on precise hit detection.
+
+This feature may conflict with openSayFieldOnTypingLower.
+
+`settings/interactionKeysEnabled.ini` (0 to disable this feature)
+
+Default bindings (change in `settings/interactionKeys.ini`)
+q step
+a autorun
+f use
+d drop
+s take/cycle from container
+v eat/self
+g feed/use on other
+k kill
+x examine
+r put/take in backpack
+e put in backpack
+w take/cycle in backpack
+
+### help-overlay
+
+Shows a help overlay for interaction keys and emote keys. Default keybind is 'h', change in `settings/showHelpOverlayKey.ini`
 
 ### Patch Development
 

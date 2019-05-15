@@ -9,6 +9,10 @@ settings/maxDoubleClickFrames.ini
 settings/ignoreTallObjects.ini
 settings/showShiverSweat.ini
 settings/preferObjectsOverPlayersWithScreenLock.ini
-settings/openSayFieldOnTyping.ini
+settings/openSayFieldOnTypingLower.ini
+settings/openSayFieldOnTypingUpper.ini
 settings/tabNameCompletion.ini
 settings/emotionKeys.ini
+settings/clickToMoveLockToInteract.ini
+settings/interactionKeysEnabled.ini
+settings/interactionKeys.ini
