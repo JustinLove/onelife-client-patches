@@ -143,7 +143,7 @@ Allows holding the mouse button when picking up an item, once the character is s
 
 ### click-to-move-lock-to-interact
 
-Disabled by default `settings/clickToMoveLockToInteractoin.ini` (1 to enable this feature)
+Disabled by default `settings/clickToMoveLockToInteract.ini` (1 to enable this feature)
 
 Makes clicks by default move only. Lock the screen (spacebar) to perform all other functions.
 
