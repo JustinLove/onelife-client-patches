@@ -16,3 +16,4 @@ settings/emotionKeys.ini
 settings/clickToMoveLockToInteract.ini
 settings/interactionKeysEnabled.ini
 settings/interactionKeys.ini
+settings/showHelpOverlayKey.ini
