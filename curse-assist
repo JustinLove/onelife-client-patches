@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7316c017..d026ae78 100644
+index 6acb9bda..efd4ce09 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1467,6 +1467,9 @@ static LiveObject *getGameObject( int inID ) {
@@ -48,7 +48,7 @@ index 7316c017..d026ae78 100644
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -20820,10 +20831,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
+@@ -20818,10 +20829,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
              delete [] message;
              }
          }

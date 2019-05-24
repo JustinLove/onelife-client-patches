@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 56c20b65..7316c017 100644
+index 56c20b65..6acb9bda 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -164,6 +164,12 @@ static char waitingForPhotoSig = false;
@@ -7,7 +7,7 @@ index 56c20b65..7316c017 100644
  
  
 +static unsigned int keyDownGap = 0;
-+static char sayCapture[3] = {0,0,0};
++static char sayCapture = 0;
 +static int openSayFieldOnTypingLower = 0;
 +static int openSayFieldOnTypingUpper = 1;
 +
@@ -112,7 +112,7 @@ index 56c20b65..7316c017 100644
                  shouldMoveCamera = false;
                  }
              break;
-@@ -20565,6 +20586,37 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20565,6 +20586,35 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -123,7 +123,7 @@ index 56c20b65..7316c017 100644
 +
 +    if( keyHandledByCase ) {
 +        printf( "key handled by case %c\n", inASCII);
-+        sayCapture[0] = inASCII;
++        sayCapture = inASCII;
 +        keyDownGap = 0;
 +        }
 +    else {
@@ -135,17 +135,15 @@ index 56c20b65..7316c017 100644
 +            && ! mSayField.isFocused()
 +            && ! vogMode
 +            && (isalpha( inASCII )
-+                || (inASCII == ' ' && keyDownGap < 30 && sayCapture[0] != 0 ))) {
-+            if( keyDownGap < 30 && sayCapture[0] != 0 ) {
-+              sayCapture[1] = inASCII;
-+              sayCapture[2] = 0;
++                || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
++            if( keyDownGap < 30 && sayCapture != 0 ) {
++              mSayField.insertCharacter( sayCapture );
 +            } else {
-+              sayCapture[0] = inASCII;
-+              sayCapture[1] = 0;
++              sayCapture = inASCII;
 +            }
-+            mSayField.setText( sayCapture );
++            mSayField.insertCharacter( inASCII );
 +            mSayField.focus();
-+            sayCapture[0] = 0;
++            sayCapture = 0;
 +            }
          }
      }

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 2cf152fc..e2254aef 100644
+index 90c62a10..8158020c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -18800,6 +18800,811 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -18800,6 +18800,818 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
  
  
  
@@ -793,28 +793,35 @@ index 2cf152fc..e2254aef 100644
 +
 +
 +void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
-+    if( prepareForActionMessage( clickDestX, clickDestY ) ) {
-+        if( targetID > 0 ) {
-+            nextActionMessageToSend =
-+                autoSprintf( "KILL %d %d %d#",
-+                             sendX( clickDestX ),
-+                             sendY( clickDestY ),
-+                             targetID );
-+            }
-+        else {
-+            nextActionMessageToSend =
-+                autoSprintf( "KILL %d %d#",
-+                             sendX( clickDestX ),
-+                             sendY( clickDestY ) );
-+            }
++    if( targetID <= 0 ) return;
++
++    if( nextActionMessageToSend != NULL ) {
++        delete [] nextActionMessageToSend;
++        nextActionMessageToSend = NULL;
 +        }
++
++    nextActionMessageToSend =
++        autoSprintf( "KILL %d %d %d#",
++                     sendX( clickDestX ),
++                     sendY( clickDestY ),
++                     targetID );
++
++    sendToServerSocket( nextActionMessageToSend );
++    delete [] nextActionMessageToSend;
++    nextActionMessageToSend = NULL;
++
++    LiveObject *ourLiveObject = getOurLiveObject();
++    ourLiveObject->killMode = true;
++    ourLiveObject->killWithID = ourLiveObject->holdingID;
++
++    moveNearTo( clickDestX, clickDestY );
 +    }
 +
 +
  
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
-@@ -19142,7 +19947,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19142,7 +19954,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -822,7 +829,7 @@ index 2cf152fc..e2254aef 100644
  
  
      
-@@ -19150,53 +19954,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19150,53 +19961,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -877,7 +884,7 @@ index 2cf152fc..e2254aef 100644
          }
  
      
-@@ -19562,7 +20320,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19562,7 +20327,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -886,7 +893,7 @@ index 2cf152fc..e2254aef 100644
          }
      else if( ( modClick && ourLiveObject->holdingID != 0 )
               || killMode
-@@ -19574,155 +20332,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19574,155 +20339,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1043,7 +1050,7 @@ index 2cf152fc..e2254aef 100644
          
  
          if( canExecute && ! killMode ) {
-@@ -19756,44 +20367,11 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19756,44 +20374,11 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1092,7 +1099,7 @@ index 2cf152fc..e2254aef 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -19914,222 +20492,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19914,222 +20499,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }

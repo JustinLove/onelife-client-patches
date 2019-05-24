@@ -81,7 +81,7 @@ Reset the sprite remap if you die while high. See [OneLife/#163](https://github.
 
 ### emotion-keys
 
-Allows triggering emotes with modifier keys combination. Alt+key works for me, Ctrl+key is reported to work for others. Emote keys are defined in `settings/emotionKeys.ini` with these defaults. The emotion commands in the setting file are for convenience only, it uses line number like the base game settings.
+Allows triggering emotes with Ctrl+key or Alt+key. Emote keys are defined in `settings/emotionKeys.ini` with these defaults. The emotion commands in the setting file are for convenience only, it uses line number like the base game settings. Note: Certain key combos may not work; Ctrl+q is interpreted as ESC for instance.
 
 h /happy
 m /mad
@@ -110,11 +110,13 @@ Allows holding the mouse button when picking up an item, once the character is s
 
 Disabled by default `settings/clickToMoveLockToInteract.ini` (1 to enable this feature)
 
-Makes clicks by default move only. Lock the screen (spacebar) to perform all other functions.
+Makes clicks by default move only. Lock the screen (spacebar) to perform all other functions. Alternately, you may use Ctrl or Alt to *not* lock the screen and perform actions; this works while the say field is open.
 
 ### interaction-keys
 
 Adds key actions that do very specific things at the mouse pointer cell, versus the default click which does very context sensitive things based on precise hit detection.
+
+Press F1 to close the say field without erasing it if you need to do something.
 
 This feature may conflict with openSayFieldOnTypingLower.
 
@@ -137,6 +139,12 @@ w take/cycle in backpack
 ### help-overlay
 
 Shows a help overlay for interaction keys and emote keys. Default keybind is 'h', change in `settings/showHelpOverlayKey.ini`
+
+### yum-hover
+
+Food item descriptions show Yum or Meh. Edible items are highlighted green (yum) or red (meh) on cursor over.
+
+`settings/showYumHover.ini` (0 to disable this feature)
 
 ### Patch Development
 

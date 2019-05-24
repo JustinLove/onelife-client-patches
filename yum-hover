@@ -1,0 +1,180 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 782d3ba9..cccb2ef4 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -237,6 +237,31 @@ void drawHelpInteractionKeys( doublePair messagePos ) {
+ static char showHelpOverlay = false;
+ static char showHelpOverlayKey = 'h';
+ 
++
++SimpleVector<int> yummyFoodChain;
++static char showYumHover = false;
++
++static char isYummy( int inObjectID ) {
++    ObjectRecord *o = getObject( inObjectID );
++
++    if( o->isUseDummy ) {
++        inObjectID = o->useDummyParent;
++        o = getObject( inObjectID );
++        }
++
++    if( o->foodValue == 0 ) {
++        return false;
++        }
++
++    for( int i=0; i<yummyFoodChain.size(); i++ ) {
++        if( inObjectID == yummyFoodChain.getElementDirect(i) ) {
++            return false;
++            }
++        }
++    return true;
++    }
++
++
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
+ 
+@@ -2312,6 +2337,7 @@ LivingLifePage::LivingLifePage()
+         delete [] keyString;
+         }
+ 
++    showYumHover = SettingsManager::getIntSetting( "showYumHover", 1 );
+     
+     initLiveTriggers();
+ 
+@@ -3687,6 +3713,11 @@ void LivingLifePage::drawMapCell( int inMapI,
+         for( int i=startPass; i<numPasses; i++ ) {
+             
+             doublePair passPos = pos;
++
++            bool yummy = false;
++            if( showYumHover ) {
++                yummy = isYummy( oID );
++                }
+             
+             if( highlight ) {
+                 
+@@ -3768,8 +3799,8 @@ void LivingLifePage::drawMapCell( int inMapI,
+ 
+         if( highlight ) {
+             
+-            
+             float mainFade = .35f;
++            float yumFade = .7f;
+         
+             toggleAdditiveBlend( true );
+             
+@@ -3789,7 +3820,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+                     // opaque portion
+                     startDrawingThroughStencil( false );
+ 
+-                    setDrawColor( 1, 1, 1, highlightFade * mainFade );
++                    if( showYumHover && obj->foodValue > 0 ) {
++                        if( yummy ) {
++                            setDrawColor( 0, 1, 0, highlightFade * yumFade );
++                            }
++                        else {
++                            setDrawColor( 1, 0, 0, highlightFade * yumFade );
++                            }
++                        }
++                    else {
++                        setDrawColor( 1, 1, 1, highlightFade * mainFade );
++                        }
+                     
+                     drawSquare( squarePos, squareRad );
+                     
+@@ -3803,7 +3844,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+                     // now first fringe is isolated in stencil
+                     startDrawingThroughStencil( false );
+ 
+-                    setDrawColor( 1, 1, 1, highlightFade * mainFade * .5 );
++                    if( showYumHover && obj->foodValue > 0 ) {
++                        if( yummy ) {
++                            setDrawColor( 0, 1, 0, highlightFade * yumFade * .5 );
++                            }
++                        else {
++                            setDrawColor( 1, 0, 0, highlightFade * yumFade * .5 );
++                            }
++                        }
++                    else {
++                        setDrawColor( 1, 1, 1, highlightFade * mainFade * .5 );
++                        }
+ 
+                     drawSquare( squarePos, squareRad );
+ 
+@@ -3817,7 +3868,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+                     // now second fringe is isolated in stencil
+                     startDrawingThroughStencil( false );
+                     
+-                    setDrawColor( 1, 1, 1, highlightFade * mainFade *.25 );
++                    if( showYumHover && obj->foodValue > 0 ) {
++                        if( yummy ) {
++                            setDrawColor( 0, 1, 0, highlightFade * yumFade * .25 );
++                            }
++                        else {
++                            setDrawColor( 1, 0, 0, highlightFade * yumFade * .25 );
++                            }
++                        }
++                    else {
++                        setDrawColor( 1, 1, 1, highlightFade * mainFade * .25 );
++                        }
+                     
+                     drawSquare( squarePos, squareRad );
+                     
+@@ -8755,6 +8816,18 @@ void LivingLifePage::draw( doublePair inViewCenter,
+                         desToDelete = des;
+                         }
+                     }
++                else if( showYumHover && o->foodValue > 0 ) {
++                    if ( isYummy( idToDescribe ) ) {
++                        des = autoSprintf( "%s - %s",
++                                           des, translate( "yum" ) );
++                        desToDelete = des;
++                        }
++                    else {
++                        des = autoSprintf( "%s - %s",
++                                           des, translate( "meh" ) );
++                        desToDelete = des;
++                        }
++                    }
+                 }
+             
+             char *stringUpper = stringToUpperCase( des );
+@@ -16435,6 +16508,9 @@ void LivingLifePage::step() {
+                     }
+                 
+                 if( mYumMultiplier != oldYumMultiplier ) {
++                    if( mYumMultiplier == 0 ) {
++                        yummyFoodChain.deleteAll();
++                        }
+                     int oldSlipIndex = -1;
+                     int newSlipIndex = 0;
+                     
+@@ -16556,6 +16632,12 @@ void LivingLifePage::step() {
+                 
+                     if( lastAteID != 0 ) {
+                         ObjectRecord *lastAteObj = getObject( lastAteID );
++                        if( lastAteObj->isUseDummy ) {
++                            yummyFoodChain.push_back( lastAteObj->useDummyParent );
++                            }
++                        else {
++                            yummyFoodChain.push_back( lastAteID );
++                            }
+                         
+                         char *strUpper = stringToUpperCase(
+                             lastAteObj->description );
+@@ -18139,6 +18221,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+         mYumSlipNumberToShow[i] = 0;
+         }
+     
++    yummyFoodChain.deleteAll();
+ 
+     mCurrentArrowI = 0;
+     mCurrentArrowHeat = -1;
+diff --git a/gameSource/settings/showYumHover.ini b/gameSource/settings/showYumHover.ini
+new file mode 100644
+index 00000000..d00491fd
+--- /dev/null
++++ b/gameSource/settings/showYumHover.ini
+@@ -0,0 +1 @@
++1

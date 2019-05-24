@@ -1,5 +1,13 @@
 # Changelog - feature changes
 
+## v21
+
+- Kill key should work like shift-rightclick.
+- F1 will close the say field without erasing it.
+- Ctrl or Alt also allows interaction with clickToMoveLockToInteract. These can be used while the say field is open.
+- Emote keys can now be used with Ctrl modifier in addition to Alt.
+- New feature: highlight foods as Yum or Meh
+
 ## v20
 
 - Remove position patches (merged to main codebase) and fix conflicts

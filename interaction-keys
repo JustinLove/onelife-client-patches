@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f0d95779..584e54ce 100644
+index c7f09866..922b3055 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -132,6 +132,108 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -172,7 +172,7 @@ index f0d95779..584e54ce 100644
                                  pointerDown( worldMouseX, worldMouseY );
  
                                  endPos.x = (double)( worldMouseX );
-@@ -19640,6 +19760,237 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+@@ -19647,6 +19767,237 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -410,7 +410,15 @@ index f0d95779..584e54ce 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -21087,18 +21438,33 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -20910,7 +21261,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+             // speak
+             if( ! TextField::isAnyFocused() ) {
+                 
+-                mSayField.setText( "" );
+                 mSayField.focus();
+                 }
+             else if( mSayField.isFocused() ) {
+@@ -21101,18 +21451,33 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              break;
          }
  
@@ -420,7 +428,7 @@ index f0d95779..584e54ce 100644
 +
      if( keyHandledByCase ) {
          printf( "key handled by case %c\n", inASCII);
-         sayCapture[0] = inASCII;
+         sayCapture = inASCII;
          keyDownGap = 0;
 +        if( interactionKeysEnabled && inASCII != interactionKeys[IK_RUN] && inASCII != 13 ) {
 +            autoRun = false;
@@ -443,7 +451,17 @@ index f0d95779..584e54ce 100644
 +            && ! keyHandledByKeybind
              && ! vogMode
              && (isalpha( inASCII )
-                 || (inASCII == ' ' && keyDownGap < 30 && sayCapture[0] != 0 ))) {
+                 || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
+@@ -21287,6 +21652,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+                 }
+             }
+         }
++    else if( inKeyCode == MG_KEY_F1 ) {
++        mSayField.unfocus();
++        }
+     }
+ 
+ 
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
 index a7ab8914..0c1532a0 100644
 --- a/gameSource/LivingLifePage.h
