@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d8cf8502..d8c9c1af 100644
+index ddcfeb0b..3999b1b9 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -110,9 +110,17 @@ static JenkinsRandomSource remapRandSource( 340403 );
@@ -22,7 +22,7 @@ index d8cf8502..d8c9c1af 100644
  
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
-@@ -1742,7 +1750,7 @@ void LivingLifePage::computePathToDest( LiveObject *inObject ) {
+@@ -1754,7 +1762,7 @@ void LivingLifePage::computePathToDest( LiveObject *inObject ) {
              inObject->pathToDest[i].y -= pathOffsetY;
              }
  
@@ -31,7 +31,7 @@ index d8cf8502..d8c9c1af 100644
          
          // up, down, left, right
          int dirsInPath[4] = { 0, 0, 0, 0 };
-@@ -2139,6 +2147,9 @@ LivingLifePage::LivingLifePage()
+@@ -2151,6 +2159,9 @@ LivingLifePage::LivingLifePage()
  
      // set to 0 to disable screen edge push
      screenEdgePushSpeed = SettingsManager::getFloatSetting( "screenEdgePushSpeed", 10 );
@@ -41,7 +41,7 @@ index d8cf8502..d8c9c1af 100644
      
      initLiveTriggers();
  
-@@ -9864,8 +9875,13 @@ void LivingLifePage::step() {
+@@ -9880,8 +9891,13 @@ void LivingLifePage::step() {
          }
      
  
@@ -55,17 +55,19 @@ index d8cf8502..d8c9c1af 100644
          }
      
      if( mServerSocket == -1 ) {
-@@ -16883,7 +16899,8 @@ void LivingLifePage::step() {
+@@ -16929,9 +16945,10 @@ void LivingLifePage::step() {
                  }
              else {
  
--                if( o->id == ourID && mouseDown && shouldMoveCamera ) {
-+                if( o->id == ourID && (mouseHeld || autoRun) && shouldMoveCamera ) {
+-                if( o->id == ourID && mouseDown && shouldMoveCamera &&
++                if( o->id == ourID && (mouseHeld || autoRun) && shouldMoveCamera &&
+                     o->pathLength > 2 ) {
+                     
 +                    mForceGroundClick = true;
                      float worldMouseX, worldMouseY;
                      
                      screenToWorld( lastScreenMouseX,
-@@ -16902,9 +16919,7 @@ void LivingLifePage::step() {
+@@ -16950,9 +16967,7 @@ void LivingLifePage::step() {
                      // however, if they started by clicking on something
                      // make sure they are really holding the mouse down
                      // (give them time to unpress the mouse)
@@ -76,7 +78,7 @@ index d8cf8502..d8c9c1af 100644
                          
                          double absX = fabs( delta.x );
                          double absY = fabs( delta.y );
-@@ -16916,10 +16931,7 @@ void LivingLifePage::step() {
+@@ -16964,10 +16979,7 @@ void LivingLifePage::step() {
                              
                              if( absX < CELL_D * 4 
                                  &&
@@ -88,7 +90,7 @@ index d8cf8502..d8c9c1af 100644
                                  
                                  // they're holding mouse down very close
                                  // to to their character
-@@ -16964,6 +16976,7 @@ void LivingLifePage::step() {
+@@ -17012,6 +17024,7 @@ void LivingLifePage::step() {
                                  }
                              }
                          }
@@ -96,7 +98,7 @@ index d8cf8502..d8c9c1af 100644
                      }
                  else if( o->id == ourID && o->pathLength >= 2 &&
                           nextActionMessageToSend == NULL &&
-@@ -17098,6 +17111,9 @@ void LivingLifePage::step() {
+@@ -17146,6 +17159,9 @@ void LivingLifePage::step() {
                      //trailColor.g = randSource.getRandomBoundedDouble( 0, .5 );
                      //trailColor.b = randSource.getRandomBoundedDouble( 0, .5 );
                      
@@ -106,7 +108,7 @@ index d8cf8502..d8c9c1af 100644
  
                      if( ( o->id != ourID && 
                            ! o->somePendingMessageIsMoreMovement ) 
-@@ -18649,12 +18665,33 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -18691,12 +18707,33 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      // something actionable along the way
      char mouseAlreadyDown = mouseDown;
      
@@ -141,7 +143,7 @@ index d8cf8502..d8c9c1af 100644
      
      if( mFirstServerMessagesReceived != 3 || ! mDoneLoadingFirstObjectSet ) {
          return;
-@@ -18669,7 +18706,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -18711,7 +18748,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -149,7 +151,7 @@ index d8cf8502..d8c9c1af 100644
      
      if( ourLiveObject->holdingID > 0 &&
          getObject( ourLiveObject->holdingID )->speedMult == 0 ) {
-@@ -18776,9 +18812,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -18818,9 +18854,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      
@@ -160,7 +162,7 @@ index d8cf8502..d8c9c1af 100644
          
          // continuous movement mode
  
-@@ -20018,11 +20052,15 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -20012,11 +20046,15 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          return;
          }
  
@@ -181,7 +183,7 @@ index d8cf8502..d8c9c1af 100644
          
          // treat the up as one final click (at closest next path position
          // to where they currently are)
-@@ -20042,6 +20080,7 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -20036,6 +20074,7 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          }
  
      mouseDown = false;

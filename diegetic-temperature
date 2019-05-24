@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index fc3cfff4..00453e03 100644
+index 15a9342b..7c90ca05 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -124,6 +124,8 @@ static int maxDoubleClickDrift = 30;
@@ -11,7 +11,7 @@ index fc3cfff4..00453e03 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2154,6 +2156,8 @@ LivingLifePage::LivingLifePage()
+@@ -2166,6 +2168,8 @@ LivingLifePage::LivingLifePage()
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -20,7 +20,7 @@ index fc3cfff4..00453e03 100644
      
      initLiveTriggers();
  
-@@ -3802,6 +3806,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3818,6 +3822,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -39,7 +39,7 @@ index fc3cfff4..00453e03 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -3923,6 +3939,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3939,6 +3955,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          
  
          setAnimationEmotion( inObj->currentEmot );
@@ -53,7 +53,7 @@ index fc3cfff4..00453e03 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -4158,6 +4181,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4174,6 +4197,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -67,7 +67,7 @@ index fc3cfff4..00453e03 100644
              
  
              // rideable object
-@@ -4230,6 +4260,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4246,6 +4276,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  
                  setAnimationEmotion( babyO->currentEmot );
@@ -82,7 +82,7 @@ index fc3cfff4..00453e03 100644
                  doublePair babyHeldPos = holdPos;
                  
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 3a20300f..bb0c8a0d 100644
+index 3a20300f..32ef8d96 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -68,6 +68,9 @@ static char outputMouthFrames = false;
@@ -166,7 +166,7 @@ index 3a20300f..bb0c8a0d 100644
 +                            1.5 + sinVal * 0.1,
 +                            animHeadRotDelta - rot,
 +                            inFlipH);
-+                setDrawFade(0.0);
++                setDrawFade(1.0);
 +            }
 +
 +

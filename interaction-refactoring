@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ddc702e8..27f6f67b 100644
+index 2cf152fc..e2254aef 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -18758,6 +18758,667 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -18800,6 +18800,811 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
  
  
  
@@ -29,6 +29,123 @@ index ddc702e8..27f6f67b 100644
 +        inRecord.floorDestID = mMapFloors[ mapY * mMapD + mapX ];
 +        inRecord.destNumContained = mMapContainedStacks[ mapY * mMapD + mapX ].size();
 +        }
++    }
++
++
++
++int LivingLifePage::checkForPersonHit() {
++    float inX, inY;
++
++    screenToWorld( lastScreenMouseX,
++            lastScreenMouseY,
++            &inX,
++            &inY );
++
++    LiveObject *ourLiveObject = getOurLiveObject();
++
++    double minDistThatHits = 2.0;
++
++    int clickDestX = lrintf( ( inX ) / CELL_D );
++
++    int clickDestY = lrintf( ( inY ) / CELL_D );
++
++    float clickExtraX = inX - clickDestX * CELL_D;
++    float clickExtraY = inY - clickDestY * CELL_D;
++
++    // need to check 3 around cell in all directions because
++    // of moving object offsets
++
++    // start in front row
++    // right to left
++    // (check things that are in front first
++    for( int y=clickDestY-3; y<=clickDestY+3; y++ ) {
++        float clickOffsetY = ( clickDestY  - y ) * CELL_D + clickExtraY;
++
++        // don't worry about p->hitOurPlacement when checking them
++        // next, people in this row
++        // recently dropped babies are in front and tested first
++        for( int d=0; d<2 ; d++ )
++        for( int x=clickDestX+1; x>=clickDestX-1 ; x-- ) {
++            float clickOffsetX = ( clickDestX  - x ) * CELL_D + clickExtraX;
++
++            for( int i=gameObjects.size()-1; i>=0 ; i-- ) {
++        
++                LiveObject *o = gameObjects.getElement( i );
++
++                if( o == ourLiveObject ) {
++                    continue;
++                    }
++
++                if( o->outOfRange ) {
++                    // out of range, but this was their last known position
++                    // don't draw now
++                    continue;
++                    }
++
++                if( o->heldByAdultID != -1 ) {
++                    // held by someone else, don't draw now
++                    continue;
++                    }
++
++                if( d == 1 &&
++                    ( o->heldByDropOffset.x != 0 ||
++                      o->heldByDropOffset.y != 0 ) ) {
++                    // recently dropped baby, skip
++                    continue;
++                    }
++                else if( d == 0 &&
++                         o->heldByDropOffset.x == 0 &&
++                         o->heldByDropOffset.y == 0 ) {
++                    // not a recently-dropped baby, skip
++                    continue;
++                    }
++
++
++                double oX = o->xd;
++                double oY = o->yd;
++
++                if( o->currentSpeed != 0 && o->pathToDest != NULL ) {
++                    oX = o->currentPos.x;
++                    oY = o->currentPos.y;
++                    }
++
++
++                if( round( oX ) == x &&
++                    round( oY ) == y ) {
++                                        
++                    // here!
++
++                    double personClickOffsetX = ( oX - x ) * CELL_D;
++                    double personClickOffsetY = ( oY - y ) * CELL_D;
++
++                    personClickOffsetX = clickOffsetX - personClickOffsetX;
++                    personClickOffsetY = clickOffsetY - personClickOffsetY;
++
++                    ObjectRecord *obj = getObject( o->displayID );
++
++                    int sp, cl, sl;
++
++                    double dist = getClosestObjectPart( 
++                        obj,
++                        &( o->clothing ),
++                        NULL,
++                        o->clothingContained,
++                        false,
++                        computeCurrentAge( o ),
++                        -1,
++                        o->holdingFlip,
++                        personClickOffsetX,
++                        personClickOffsetY,
++                        &sp, &cl, &sl );
++
++                    if( dist < minDistThatHits ) {
++                        return o->id;
++                        }
++                    }
++                }
++            }
++        }
++    return 0;
 +    }
 +
 +
@@ -627,7 +744,7 @@ index ddc702e8..27f6f67b 100644
 +    }
 +
 +
-+void LivingLifePage::removeAt(int clickDestX, int clickDestY) {
++void LivingLifePage::removeAt( int clickDestX, int clickDestY ) {
 +    if( prepareForActionMessage( clickDestX, clickDestY ) ) {
 +        nextActionMessageToSend = 
 +            autoSprintf( "REMV %d %d -1#",
@@ -637,32 +754,59 @@ index ddc702e8..27f6f67b 100644
 +    }
 +
 +
-+void LivingLifePage::pickupBabyAt( int clickDestX, int clickDestY ) {
++void LivingLifePage::pickupBabyAt( int clickDestX, int clickDestY, int targetID ) {
 +    if( prepareForActionMessage( clickDestX, clickDestY ) ) {
-+        nextActionMessageToSend =
-+            autoSprintf( "BABY %d %d#",
-+                         sendX( clickDestX ),
-+                         sendY( clickDestY ) );
++        if( targetID > 0 ) {
++            nextActionMessageToSend =
++                autoSprintf( "BABY %d %d %d#",
++                             sendX( clickDestX ),
++                             sendY( clickDestY ),
++                             targetID );
++            }
++        else {
++            nextActionMessageToSend =
++                autoSprintf( "BABY %d %d#",
++                             sendX( clickDestX ),
++                             sendY( clickDestY ) );
++            }
 +        }
 +    }
 +
 +
-+void LivingLifePage::useOnOtherAt( int clickDestX, int clickDestY ) {
++void LivingLifePage::useOnOtherAt( int clickDestX, int clickDestY, int targetID ) {
 +    if( prepareForActionMessage( clickDestX, clickDestY ) ) {
-+        nextActionMessageToSend =
-+            autoSprintf( "UBABY %d %d -1#",
-+                         sendX( clickDestX ),
-+                         sendY( clickDestY ) );
++        if( targetID > 0 ) {
++            nextActionMessageToSend =
++                autoSprintf( "UBABY %d %d -1 %d#",
++                             sendX( clickDestX ),
++                             sendY( clickDestY ),
++                             targetID );
++            }
++        else {
++            nextActionMessageToSend =
++                autoSprintf( "UBABY %d %d -1#",
++                             sendX( clickDestX ),
++                             sendY( clickDestY ) );
++            }
 +        }
 +    }
 +
 +
-+void LivingLifePage::killAt( int clickDestX, int clickDestY ) {
++void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
 +    if( prepareForActionMessage( clickDestX, clickDestY ) ) {
-+        nextActionMessageToSend =
-+            autoSprintf( "KILL %d %d#",
-+                         sendX( clickDestX ),
-+                         sendY( clickDestY ) );
++        if( targetID > 0 ) {
++            nextActionMessageToSend =
++                autoSprintf( "KILL %d %d %d#",
++                             sendX( clickDestX ),
++                             sendY( clickDestY ),
++                             targetID );
++            }
++        else {
++            nextActionMessageToSend =
++                autoSprintf( "KILL %d %d#",
++                             sendX( clickDestX ),
++                             sendY( clickDestY ) );
++            }
 +        }
 +    }
 +
@@ -670,7 +814,7 @@ index ddc702e8..27f6f67b 100644
  
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
-@@ -19100,7 +19761,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19142,7 +19947,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -678,7 +822,7 @@ index ddc702e8..27f6f67b 100644
  
  
      
-@@ -19108,53 +19768,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19150,53 +19954,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -733,7 +877,7 @@ index ddc702e8..27f6f67b 100644
          }
  
      
-@@ -19554,7 +20168,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19562,7 +20320,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -741,8 +885,8 @@ index ddc702e8..27f6f67b 100644
 +        moveTo( clickDestX, clickDestY );
          }
      else if( ( modClick && ourLiveObject->holdingID != 0 )
-              || tryingToPickUpBaby
-@@ -19565,155 +20179,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+              || killMode
+@@ -19574,155 +20332,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -898,56 +1042,57 @@ index ddc702e8..27f6f67b 100644
 -            }
          
  
-         if( canExecute ) {
-@@ -19760,45 +20227,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
-                     // check for other special case
-                     // a use-on-ground transition or use-on-floor transition
+         if( canExecute && ! killMode ) {
+@@ -19756,44 +20367,11 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+                 // check for other special case
+                 // a use-on-ground transition or use-on-floor transition
  
--                    if( ourLiveObject->holdingID > 0 ) {
+-                if( ourLiveObject->holdingID > 0 ) {
 -                        
--                        ObjectRecord *held = 
--                            getObject( ourLiveObject->holdingID );
+-                    ObjectRecord *held = 
+-                        getObject( ourLiveObject->holdingID );
 -                        
--                        char foundAlt = false;
+-                    char foundAlt = false;
 -                        
--                        if( held->foodValue == 0 ) {
+-                    if( held->foodValue == 0 ) {
 -                            
--                            TransRecord *r = 
--                                getTrans( ourLiveObject->holdingID,
--                                          -1 );
+-                        TransRecord *r = 
+-                            getTrans( ourLiveObject->holdingID,
+-                                      -1 );
 -                            
--                            if( r != NULL &&
--                                r->newTarget != 0 ) {
+-                        if( r != NULL &&
+-                            r->newTarget != 0 ) {
 -                                
--                                // a use-on-ground transition exists!
+-                            // a use-on-ground transition exists!
 -                                
--                                // override the drop action
--                                action = "USE";
--                                foundAlt = true;
--                                }
+-                            // override the drop action
+-                            action = "USE";
+-                            foundAlt = true;
 -                            }
--
--                        if( !foundAlt && floorDestID > 0 ) {
--                            // check if use on floor exists
--                            TransRecord *r = 
--                                getTrans( ourLiveObject->holdingID, 
--                                          floorDestID );
+-                        }
++                // check for other special case
++                // a use-on-ground transition or use-on-floor transition
+ 
+-                    if( !foundAlt && floorDestID > 0 ) {
+-                        // check if use on floor exists
+-                        TransRecord *r = 
+-                            getTrans( ourLiveObject->holdingID, 
+-                                      floorDestID );
 -                                
--                            if( r != NULL ) {
--                                // a use-on-floor transition exists!
+-                        if( r != NULL ) {
+-                            // a use-on-floor transition exists!
 -                                
--                                // override the drop action
--                                action = "USE";
+-                            // override the drop action
+-                            action = "USE";
 -                                
--                                }
 -                            }
--
-+                    if( hasEmptyTileTransition( ourLiveObject->holdingID, floorDestID ) ) {
-+                        action = "USE";
-                         }
+-                        }
++                if( hasEmptyTileTransition( ourLiveObject->holdingID, floorDestID ) ) {
++                    action = "USE";
                      }
                  }
-@@ -19920,222 +20350,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+             else if( destID != 0 &&
+@@ -19914,222 +20492,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1171,10 +1316,10 @@ index ddc702e8..27f6f67b 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index ecb49494..d49e44f3 100644
+index ee7b4c26..a7ab8914 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -368,6 +368,18 @@ typedef struct PointerHitRecord {
+@@ -370,6 +370,18 @@ typedef struct PointerHitRecord {
  
  
  
@@ -1193,11 +1338,12 @@ index ecb49494..d49e44f3 100644
  typedef struct OldArrow {
          int i;
          float heat;
-@@ -832,6 +844,17 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -834,6 +846,18 @@ class LivingLifePage : public GamePage, public ActionListener {
          // forces next pointerDown call to avoid everything but ground clicks
          char mForceGroundClick;
          
 +        void checkForCellHit( CellHitRecord& inRecord );
++        int checkForPersonHit();
 +        void hintForObjectInteraction( int holdingID, int destID );
 +        void moveTo( int moveDestX, int moveDestY );
 +        char moveNearTo( int clickDestX, int clickDestY );
@@ -1205,9 +1351,9 @@ index ecb49494..d49e44f3 100644
 +        void useAt( int clickDestX, int clickDestY );
 +        void dropAt( int clickDestX, int clickDestY );
 +        void removeAt( int clickDestX, int clickDestY );
-+        void pickupBabyAt( int clickDestX, int clickDestY );
-+        void useOnOtherAt( int clickDestX, int clickDestY );
-+        void killAt( int clickDestX, int clickDestY );
++        void pickupBabyAt( int clickDestX, int clickDestY, int targetID = 0 );
++        void useOnOtherAt( int clickDestX, int clickDestY, int targetID = 0 );
++        void killAt( int clickDestX, int clickDestY, int targetID = 0 );
  
  
          LiveObject *getOurLiveObject();

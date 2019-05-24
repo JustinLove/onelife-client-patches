@@ -1,8 +1,5 @@
-# This series applies on GIT commit 19a5b13bebba2646de648cddb44e539fd185a296
+# This series applies on GIT commit a769198c47ea3ac43d72298d48df009f0c40eeb6
 custom-gitignore
-fix-auto-clicks-at-end-of-path
-path-over-truncation
-additional-path-clears
 show-modded-client
 screen-edge-push
 autorun

@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v20
+
+- Remove position patches (merged to main codebase) and fix conflicts
+
 ## v19
 
 - Open say field on typing split into upper and lower case settings files. By default only upper is enabled

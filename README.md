@@ -6,41 +6,6 @@
 
 Cleans up some noise from my local compile environment that apparently don't bother Jason. Perhaps he has global ignores for those files.
 
-### fix-auto-clicks-at-end-of-path
-
-Fix for automatic clicks happening just before stopping movement.
-
-The code for continuous running (mouse hold) runs just before the
-end-of-move detection, so it possible to have an automatic move occur as
-the character reaches their current destination, resulting in the
-character stopped with an outstanding path (which had been sent to server)
-and destination position different than current position.
-
-Updating the move end position prevents the later code from immediately
-ending movement.
-
-### path-over-truncation
-
-Fix up over-truncation in player update.
-
-I believe this fixes draw inversion, and perhaps unable to pickup baby, due
-to player position discrepancy on the client. It was possible for truncation
-of paths during PLAYER_UPDATE to leave a single step path after truncation,
-which the code elsewhere takes steps to prevent. The path execution code
-will use the next path location without checking length, causing it to path
-beyond the current destination position.
-
-This patch extracts a function from the code which fixes up over-truncated
-paths during PLAYER_MOVE in order to use it during PLAYER_UPDATE.
-
-### additional-path-clears
-
-Additional player path clears.
-
-These are less certain to be issues, but I discovered possible path and
-destination discrepancies while investigating position issues. This add some
-additional path resets where current and destination positions were forced.
-
 ### show-modded-client
 
 Prints "WonLife" on the start page so it's easy to tell when the mod has loaded, or the game has relaunced vanilla. This also adds same-program relaunch and client version mismatch testing.

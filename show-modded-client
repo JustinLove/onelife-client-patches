@@ -109,11 +109,11 @@ index b717c382..f651d129 100644
          
      };
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index b9a6998c..caf8f7b9 100644
+index 2a805e9a..0d5338da 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 223;
+ int versionNumber = 231;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
