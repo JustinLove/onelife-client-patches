@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9193ba2e..c7f09866 100644
+index a9e0235f..6d4f02b5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -130,6 +130,7 @@ static int showShiverSweat = 1;
@@ -19,11 +19,10 @@ index 9193ba2e..c7f09866 100644
      
      initLiveTriggers();
  
-@@ -19777,8 +19780,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
-     
+@@ -19796,7 +19799,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
--
+ 
 -    checkForPointerHit( &p, inX, inY );
 +    if( clickToMoveLockToInteract && shouldMoveCamera && ! isCommandKeyDown() ) {
 +        p.closestCellX = lrintf( ( inX ) / CELL_D );
@@ -32,10 +31,10 @@ index 9193ba2e..c7f09866 100644
 +    else {
 +        checkForPointerHit( &p, inX, inY );
 +        }
-     
-     mCurMouseOverPerson = p.hitOtherPerson || p.hitSelf;
  
-@@ -19822,7 +19830,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+ 
+ 
+@@ -19937,7 +19946,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      

@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v22
+
+- fix merge conflict
+
 ## v21
 
 - Kill key should work like shift-rightclick.

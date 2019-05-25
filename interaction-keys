@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c7f09866..922b3055 100644
+index 6d4f02b5..ffc0b1a3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -132,6 +132,108 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -140,7 +140,7 @@ index c7f09866..922b3055 100644
                  inObj->holdingFlip = true;
                  }
              }
-@@ -17058,9 +17170,15 @@ void LivingLifePage::step() {
+@@ -17075,9 +17187,15 @@ void LivingLifePage::step() {
              // don't change flip unless moving substantially in x
              if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
                  if( o->currentMoveDirection.x > 0 ) {
@@ -156,7 +156,7 @@ index c7f09866..922b3055 100644
                      o->holdingFlip = true;
                      }         
                  }
-@@ -17151,6 +17269,7 @@ void LivingLifePage::step() {
+@@ -17168,6 +17286,7 @@ void LivingLifePage::step() {
                                  o->waypointX = lrint( worldMouseX / CELL_D );
                                  o->waypointY = lrint( worldMouseY / CELL_D );
  
@@ -164,7 +164,7 @@ index c7f09866..922b3055 100644
                                  pointerDown( fakeClick.x, fakeClick.y );
  
                                  endPos.x = (double)( fakeClick.x );
-@@ -17159,6 +17278,7 @@ void LivingLifePage::step() {
+@@ -17176,6 +17295,7 @@ void LivingLifePage::step() {
                                  o->useWaypoint = false;
                                  }
                              else {
@@ -172,7 +172,7 @@ index c7f09866..922b3055 100644
                                  pointerDown( worldMouseX, worldMouseY );
  
                                  endPos.x = (double)( worldMouseX );
-@@ -19647,6 +19767,237 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+@@ -19665,6 +19785,237 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -410,7 +410,7 @@ index c7f09866..922b3055 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -20910,7 +21261,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21021,7 +21372,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              // speak
              if( ! TextField::isAnyFocused() ) {
                  
@@ -418,7 +418,7 @@ index c7f09866..922b3055 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -21101,18 +21451,33 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21212,18 +21562,33 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              break;
          }
  
@@ -452,7 +452,7 @@ index c7f09866..922b3055 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -21287,6 +21652,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -21398,6 +21763,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
