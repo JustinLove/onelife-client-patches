@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v23
+
+- Kill key now uses nearest player search, like main game. This is currently apllied to all player action keys (pickup/use-on)
+
 ## v22
 
 - fix merge conflict

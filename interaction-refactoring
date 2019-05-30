@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dfe61413..b620717c 100644
+index a2452b84..3462e210 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -18818,6 +18818,818 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -18832,6 +18832,881 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
  
  
  
@@ -33,24 +33,28 @@ index dfe61413..b620717c 100644
 +
 +
 +
-+int LivingLifePage::checkForPersonHit() {
-+    float inX, inY;
++void LivingLifePage::checkForPersonHit( PersonHitRecord& inRecord ) {
++    float worldMouseX, worldMouseY;
 +
 +    screenToWorld( lastScreenMouseX,
 +            lastScreenMouseY,
-+            &inX,
-+            &inY );
++            &worldMouseX,
++            &worldMouseY );
 +
 +    LiveObject *ourLiveObject = getOurLiveObject();
 +
 +    double minDistThatHits = 2.0;
 +
-+    int clickDestX = lrintf( ( inX ) / CELL_D );
++    int clickDestX = lrintf( ( worldMouseX ) / CELL_D );
 +
-+    int clickDestY = lrintf( ( inY ) / CELL_D );
++    int clickDestY = lrintf( ( worldMouseY ) / CELL_D );
 +
-+    float clickExtraX = inX - clickDestX * CELL_D;
-+    float clickExtraY = inY - clickDestY * CELL_D;
++    float clickExtraX = worldMouseX - clickDestX * CELL_D;
++    float clickExtraY = worldMouseY - clickDestY * CELL_D;
++
++    inRecord.cellX = clickDestX;
++    inRecord.cellY = clickDestY;
++    inRecord.targetID = -1;
 +
 +    // need to check 3 around cell in all directions because
 +    // of moving object offsets
@@ -139,13 +143,72 @@ index dfe61413..b620717c 100644
 +                        &sp, &cl, &sl );
 +
 +                    if( dist < minDistThatHits ) {
-+                        return o->id;
++                        inRecord.cellX = x;
++                        inRecord.cellY = y;
++                        inRecord.targetID = o->id;
++                        return;
 +                        }
 +                    }
 +                }
 +            }
 +        }
-+    return 0;
++
++
++
++    // find closest person for them to hit
++
++    doublePair clickPos = { (double)clickDestX, (double)clickDestY };
++
++
++    double closeDistance = 4;
++
++    for( int i=gameObjects.size()-1; i>=0; i-- ) {
++
++        LiveObject *o = gameObjects.getElement( i );
++
++        if( o->id == ourID ) {
++            // don't consider ourself as a kill target
++            continue;
++            }
++
++        if( o->outOfRange ) {
++            // out of range, but this was their last known position
++            // don't draw now
++            continue;
++            }
++
++        if( o->heldByAdultID != -1 ) {
++            // held by someone else, can't click on them
++            continue;
++            }
++
++        if( o->heldByDropOffset.x != 0 ||
++            o->heldByDropOffset.y != 0 ) {
++            // recently dropped baby, skip
++            continue;
++            }
++
++
++        double oX = o->xd;
++        double oY = o->yd;
++
++        if( o->currentSpeed != 0 && o->pathToDest != NULL ) {
++            oX = o->currentPos.x;
++            oY = o->currentPos.y;
++            }
++
++        doublePair oPos = { oX, oY };
++
++
++        double thisDistance = distance( clickPos, oPos );
++
++        if( thisDistance < closeDistance ) {
++            closeDistance = thisDistance;
++            inRecord.cellX = lrintf( oX );
++            inRecord.cellY = lrintf( oY );
++            inRecord.targetID = o->id;
++            }
++        }
 +    }
 +
 +
@@ -821,7 +884,7 @@ index dfe61413..b620717c 100644
  
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
-@@ -19258,7 +20070,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19272,7 +20147,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -829,7 +892,7 @@ index dfe61413..b620717c 100644
  
  
      
-@@ -19266,53 +20077,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19280,53 +20154,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -884,7 +947,7 @@ index dfe61413..b620717c 100644
          }
  
      
-@@ -19672,7 +20437,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19686,7 +20514,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -893,7 +956,7 @@ index dfe61413..b620717c 100644
          }
      else if( ( modClick && ourLiveObject->holdingID != 0 )
               || killMode
-@@ -19684,155 +20449,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19698,155 +20526,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1050,7 +1113,7 @@ index dfe61413..b620717c 100644
          
  
          if( canExecute && ! killMode ) {
-@@ -19866,44 +20484,11 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19880,44 +20561,11 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1099,7 +1162,7 @@ index dfe61413..b620717c 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -20024,222 +20609,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20038,222 +20686,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1323,10 +1386,10 @@ index dfe61413..b620717c 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index ee7b4c26..a7ab8914 100644
+index ee7b4c26..c0b52554 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -370,6 +370,18 @@ typedef struct PointerHitRecord {
+@@ -370,6 +370,24 @@ typedef struct PointerHitRecord {
  
  
  
@@ -1340,17 +1403,23 @@ index ee7b4c26..a7ab8914 100644
 +        int destNumContained;
 +    } CellHitRecord;
 +
++typedef struct PersonHitRecord {
++        int cellX;
++        int cellY;
++        int targetID;
++    } PersonHitRecord;
++
 +
 +
  typedef struct OldArrow {
          int i;
          float heat;
-@@ -834,6 +846,18 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -834,6 +852,18 @@ class LivingLifePage : public GamePage, public ActionListener {
          // forces next pointerDown call to avoid everything but ground clicks
          char mForceGroundClick;
          
 +        void checkForCellHit( CellHitRecord& inRecord );
-+        int checkForPersonHit();
++        void checkForPersonHit( PersonHitRecord& inRecord );
 +        void hintForObjectInteraction( int holdingID, int destID );
 +        void moveTo( int moveDestX, int moveDestY );
 +        char moveNearTo( int clickDestX, int clickDestY );
