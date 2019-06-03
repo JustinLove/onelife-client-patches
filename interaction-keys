@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d1cee626..fb6a297a 100644
+index 330f4b33..b0249097 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -132,6 +132,108 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -163,7 +163,7 @@ index d1cee626..fb6a297a 100644
 +                                printf( "close autorun\n" );
                                  pointerDown( fakeClick.x, fakeClick.y );
  
-                                 endPos.x = (double)( fakeClick.x );
+                                 //endPos.x = fakeClick.x / CELL_D;
 @@ -17190,6 +17309,7 @@ void LivingLifePage::step() {
                                  o->useWaypoint = false;
                                  }
@@ -171,8 +171,8 @@ index d1cee626..fb6a297a 100644
 +                                printf( "normal autorun\n" );
                                  pointerDown( worldMouseX, worldMouseY );
  
-                                 endPos.x = (double)( worldMouseX );
-@@ -19742,6 +19862,235 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+                                 //endPos.x = worldMouseX / CELL_D;
+@@ -19742,6 +19862,239 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -240,6 +240,10 @@ index d1cee626..fb6a297a 100644
 +                    if( c.destID != 0 &&
 +                        getNumContainerSlots( c.destID ) > 0 &&
 +                        c.destNumContained < getNumContainerSlots( c.destID ) ) {
++                        useAt( c.cellX, c.cellY );
++                        }
++                    else if( ourLiveObject->holdingID > 0 &&
++                        getObject( ourLiveObject->holdingID )->permanent ) {
 +                        useAt( c.cellX, c.cellY );
 +                        }
 +                    else {
@@ -408,7 +412,7 @@ index d1cee626..fb6a297a 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -21098,7 +21447,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21098,7 +21451,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              // speak
              if( ! TextField::isAnyFocused() ) {
                  
@@ -416,7 +420,7 @@ index d1cee626..fb6a297a 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -21289,18 +21637,33 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21289,18 +21641,33 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              break;
          }
  
@@ -450,7 +454,7 @@ index d1cee626..fb6a297a 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -21475,6 +21838,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -21475,6 +21842,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }

@@ -8,6 +8,7 @@ settings/screenEdgePushSpeed.ini
 settings/maxDoubleClickFrames.ini
 settings/ignoreTallObjects.ini
 settings/showShiverSweat.ini
+settings/showRelationDistance.ini
 settings/preferObjectsOverPlayersWithScreenLock.ini
 settings/openSayFieldOnTypingLower.ini
 settings/openSayFieldOnTypingUpper.ini

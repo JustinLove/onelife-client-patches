@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b287d2df..1f8e6c57 100644
+index ce1c1a29..48d26cf9 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -237,6 +237,31 @@ void drawHelpInteractionKeys( doublePair messagePos ) {

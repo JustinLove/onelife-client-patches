@@ -3,6 +3,7 @@ custom-gitignore
 show-modded-client
 screen-edge-push
 autorun
+fix-path-extension-scale
 click-through-trees
 diegetic-temperature
 click-through-heads
@@ -18,3 +19,4 @@ click-to-move-lock-to-interact
 interaction-keys
 help-overlay
 yum-hover
+show-close-family

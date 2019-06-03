@@ -1,8 +1,8 @@
 diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
-index 7a923db5..b26907ba 100644
+index 7a923db5..09340c86 100644
 --- a/gameSource/ExistingAccountPage.cpp
 +++ b/gameSource/ExistingAccountPage.cpp
-@@ -655,6 +655,10 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
+@@ -655,6 +655,9 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
          delete [] key;
          delete [] s;
          }
@@ -12,56 +12,98 @@ index 7a923db5..b26907ba 100644
      
      }
  
+diff --git a/gameSource/ModUpdateMessagePage.cpp b/gameSource/ModUpdateMessagePage.cpp
+new file mode 100644
+index 00000000..bc15226f
+--- /dev/null
++++ b/gameSource/ModUpdateMessagePage.cpp
+@@ -0,0 +1,126 @@
++#include "ModUpdateMessagePage.h"
 +
-diff --git a/gameSource/FinalMessagePage.cpp b/gameSource/FinalMessagePage.cpp
-index 3827fea9..08648dbf 100644
---- a/gameSource/FinalMessagePage.cpp
-+++ b/gameSource/FinalMessagePage.cpp
-@@ -16,6 +16,9 @@ extern Font *mainFont;
- 
- FinalMessagePage::FinalMessagePage()
-         : mKey( "" ), mSubMessage( NULL ),
++#include "minorGems/game/Font.h"
++#include "minorGems/game/game.h"
++
++#include "minorGems/util/stringUtils.h"
++
++#include "message.h"
++
++#include "buttonStyle.h"
++
++
++extern Font *mainFont;
++
++
++
++ModUpdateMessagePage::ModUpdateMessagePage()
++        : mKey( "" ), mSubMessage( NULL ),
 +          mUpdateURL( NULL ),
 +          mUpdateModButton( mainFont, 0, 0, 
 +                       translate( "upgradeMessage" ) ),
-           mQuitButton( mainFont, 0, -300, 
-                        translate( "quit" ) ) {
- 
-@@ -24,12 +27,18 @@ FinalMessagePage::FinalMessagePage()
-     addComponent( &mQuitButton );
-     
-     mQuitButton.addActionListener( this );
++          mPlayAnywayButton( mainFont, 0, 300, 
++                       "PLAY AT YOUR OWN RISK" ),
++          mQuitButton( mainFont, 0, -300, 
++                       translate( "quit" ) ) {
++
++
++    setButtonStyle( &mQuitButton );
++    addComponent( &mQuitButton );
++    
++    mQuitButton.addActionListener( this );
 +
 +    setButtonStyle( &mUpdateModButton );
 +    addComponent( &mUpdateModButton );
 +
 +    mUpdateModButton.addActionListener( this );
-     }
- 
- 
- 
- FinalMessagePage::~FinalMessagePage() {
-     setSubMessage( NULL );
++
++    setButtonStyle( &mPlayAnywayButton );
++    addComponent( &mPlayAnywayButton );
++
++    mPlayAnywayButton.addActionListener( this );
++    }
++
++
++
++ModUpdateMessagePage::~ModUpdateMessagePage() {
++    setSubMessage( NULL );
 +    setUpdateURL( NULL );
-     }
- 
- 
-@@ -38,6 +47,10 @@ void FinalMessagePage::actionPerformed( GUIComponent *inTarget ) {
-     if( inTarget == &mQuitButton ) {
-         setSignal( "quit" );
-         }
-+    else if( inTarget == &mUpdateModButton ) {
-+        launchURL( (char*)"https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip" );
++    }
++
++
++
++void ModUpdateMessagePage::actionPerformed( GUIComponent *inTarget ) {
++    if( inTarget == &mQuitButton ) {
 +        setSignal( "quit" );
 +        }
-     }
- 
- 
-@@ -60,12 +73,25 @@ void FinalMessagePage::setSubMessage( const char *inSubMessage ) {
-     }
- 
- 
-+void FinalMessagePage::setUpdateURL( const char *inUpdateURL ) {
++    else if( inTarget == &mUpdateModButton ) {
++        launchURL( mUpdateURL );
++        setSignal( "quit" );
++        }
++    else if( inTarget == &mPlayAnywayButton ) {
++        setSignal( "back" );
++        }
++    }
++
++
++
++
++void ModUpdateMessagePage::setMessageKey( const char *inKey ) {
++    mKey = inKey;
++    }
++
++
++
++void ModUpdateMessagePage::setSubMessage( const char *inSubMessage ) {
++    if( mSubMessage != NULL ) {
++        delete [] mSubMessage;
++        mSubMessage = NULL;
++        }
++    if( inSubMessage != NULL ) {
++        mSubMessage = stringDuplicate( inSubMessage );
++        }
++    }
++
++
++void ModUpdateMessagePage::setUpdateURL( const char *inUpdateURL ) {
 +    if( mUpdateURL != NULL ) {
 +        delete [] mUpdateURL;
 +        mUpdateURL = NULL;
@@ -70,46 +112,93 @@ index 3827fea9..08648dbf 100644
 +        mUpdateURL = stringDuplicate( inUpdateURL );
 +        }
 +    }
- 
- 
- void FinalMessagePage::makeActive( char inFresh ) {
-     if( !inFresh ) {
-         return;
-         }
++
++
++void ModUpdateMessagePage::makeActive( char inFresh ) {
++    if( !inFresh ) {
++        return;
++        }
 +
 +    char show = mUpdateURL && ( strcmp( mUpdateURL, "" ) != 0 )
 +        && isURLLaunchSupported();
 +    mUpdateModButton.setVisible( show );
-     
-     setWaiting( false );
-     }
-diff --git a/gameSource/FinalMessagePage.h b/gameSource/FinalMessagePage.h
-index b717c382..f651d129 100644
---- a/gameSource/FinalMessagePage.h
-+++ b/gameSource/FinalMessagePage.h
-@@ -24,6 +24,10 @@ class FinalMessagePage : public GamePage, ActionListener {
-         // set to NULL to clear
-         void setSubMessage( const char *inSubMessage );
- 
++
++    setWaiting( false );
++    }
++
++
++void ModUpdateMessagePage::draw( doublePair inViewCenter, 
++                              double inViewSize ) {
++
++    doublePair labelPos = { 0, 100 };
++
++    
++    drawMessage( translate( mKey ), labelPos, false );
++
++    if( mSubMessage != NULL ) {    
++        labelPos.y -= 200;
++        
++        drawMessage( mSubMessage, labelPos, false );
++        }
++    
++    }
++
++
+diff --git a/gameSource/ModUpdateMessagePage.h b/gameSource/ModUpdateMessagePage.h
+new file mode 100644
+index 00000000..a0d2d2fa
+--- /dev/null
++++ b/gameSource/ModUpdateMessagePage.h
+@@ -0,0 +1,47 @@
++#include "GamePage.h"
++
++#include "minorGems/ui/event/ActionListener.h"
++
++#include "TextButton.h"
++
++
++class ModUpdateMessagePage : public GamePage, ActionListener {
++        
++    public:
++
++        ModUpdateMessagePage();
++        
++        ~ModUpdateMessagePage();
++
++
++        virtual void actionPerformed( GUIComponent *inTarget );
++
++        
++        // must be a string literal
++        void setMessageKey( const char *inKey );
++
++        // copied internally
++        // set to NULL to clear
++        void setSubMessage( const char *inSubMessage );
++
 +        // copied internally
 +        // set to NULL to clear
 +        void setUpdateURL( const char *inUpdateURL );
 +
-         virtual void makeActive( char inFresh );
- 
-         virtual void draw( doublePair inViewCenter, 
-@@ -33,7 +37,9 @@ class FinalMessagePage : public GamePage, ActionListener {
-         const char *mKey;
- 
-         char *mSubMessage;
++        virtual void makeActive( char inFresh );
++
++        virtual void draw( doublePair inViewCenter, 
++                           double inViewSize );
++
++    protected:
++        const char *mKey;
++
++        char *mSubMessage;
 +        char *mUpdateURL;
- 
++
 +        TextButton mUpdateModButton;
-         TextButton mQuitButton;
-         
-     };
++        TextButton mPlayAnywayButton;
++        TextButton mQuitButton;
++        
++    };
++
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 8d67f990..0bab6282 100644
+index 8d67f990..db945d16 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
@@ -120,7 +209,23 @@ index 8d67f990..0bab6282 100644
  
  int binVersionNumber = versionNumber;
  
-@@ -250,12 +252,12 @@ char isNonIntegerScalingAllowed() {
+@@ -78,6 +80,7 @@ CustomRandomSource randSource( 34957197 );
+ 
+ 
+ #include "FinalMessagePage.h"
++#include "ModUpdateMessagePage.h"
+ #include "LoadingPage.h"
+ #include "AutoUpdatePage.h"
+ #include "LivingLifePage.h"
+@@ -127,6 +130,7 @@ int serverSequenceNumber = 0;
+ 
+ 
+ FinalMessagePage *finalMessagePage;
++ModUpdateMessagePage *modUpdateMessagePage;
+ 
+ ServerActionPage *getServerAddressPage;
+ 
+@@ -250,12 +254,12 @@ char isNonIntegerScalingAllowed() {
  
  
  const char *getWindowTitle() {
@@ -135,7 +240,7 @@ index 8d67f990..0bab6282 100644
      }
  
  int getAppVersion() {
-@@ -345,6 +347,22 @@ static void updateDataVersionNumber() {
+@@ -345,6 +349,22 @@ static void updateDataVersionNumber() {
      }
  
  
@@ -158,7 +263,7 @@ index 8d67f990..0bab6282 100644
  
  
  #define SETTINGS_HASH_SALT "another_loss"
-@@ -449,6 +467,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -449,6 +469,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      initAgeControl();
      
      updateDataVersionNumber();
@@ -166,7 +271,23 @@ index 8d67f990..0bab6282 100644
  
  
      AppLog::printOutNextMessage();
-@@ -1610,8 +1629,24 @@ void drawFrame( char inUpdate ) {
+@@ -610,6 +631,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+     
+     
+     finalMessagePage = new FinalMessagePage;
++    modUpdateMessagePage = new ModUpdateMessagePage;
+     loadingPage = new LoadingPage;
+     autoUpdatePage = new AutoUpdatePage;
+     livingLifePage = NULL;
+@@ -706,6 +728,7 @@ void freeFrameDrawer() {
+     delete getServerAddressPage;
+     
+     delete finalMessagePage;
++    delete modUpdateMessagePage;
+     delete loadingPage;
+     delete autoUpdatePage;
+     if( livingLifePage != NULL ) {
+@@ -1610,8 +1633,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  
@@ -177,19 +298,47 @@ index 8d67f990..0bab6282 100644
 +                        currentGamePage->base_makeActive( true );
 +                        }
 +                    else if( clientVersionNumber > expectedVersionNumber ) {
-+                        currentGamePage = finalMessagePage;                        
-+                        finalMessagePage->setMessageKey( "upgradeMessage" );
-+                        finalMessagePage->setSubMessage( "IT LOOKS LIKE YOU UPDATED WONLIFE##BEFORE DOWNLOADING THE LATEST GAME UPDATE.####USE YOUR UN-MODDED CLIENT TO UPDATE FIRST.##(DON'T FORGET TO CLEAR ANY CUSTOM SERVER SETTINGS!)" );
++                        currentGamePage = modUpdateMessagePage;                        
++                        modUpdateMessagePage->setMessageKey( "upgradeMessage" );
++                        modUpdateMessagePage->setSubMessage( "IT LOOKS LIKE YOU UPDATED WONLIFE##BEFORE DOWNLOADING THE LATEST GAME UPDATE.####USE YOUR UN-MODDED CLIENT TO UPDATE FIRST.##(DON'T FORGET TO CLEAR ANY CUSTOM SERVER SETTINGS!)" );
 +                        currentGamePage->base_makeActive( true );
 +                        }
 +                    else {
-+                        currentGamePage = finalMessagePage;                        
-+                        finalMessagePage->setMessageKey( "upgradeMessage" );
-+                        finalMessagePage->setSubMessage( autoSprintf( "THIS VERSION OF THE WONLLIFE IS OUTDATED##(EXPECTING VERSION %d - RUNNING VERSION %d)##PLEASE DOWNLOAD A NEWER VERSION FROM:####HTTPS://WONDIBLE-COM-WONLIFE.S3.AMAZONAWS.COM/WONLIFE-LATEST.ZIP", expectedVersionNumber, clientVersionNumber ) );
++                        currentGamePage = modUpdateMessagePage;                        
++                        modUpdateMessagePage->setMessageKey( "upgradeMessage" );
++                        modUpdateMessagePage->setSubMessage( autoSprintf( "THIS VERSION OF THE WONLLIFE IS OUTDATED##(EXPECTING VERSION %d - RUNNING VERSION %d)##PLEASE DOWNLOAD A NEWER VERSION FROM:####HTTPS://WONDIBLE-COM-WONLIFE.S3.AMAZONAWS.COM/WONLIFE-LATEST.ZIP", expectedVersionNumber, clientVersionNumber ) );
 +
-+                        finalMessagePage->setUpdateURL( "https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip" );
++                        modUpdateMessagePage->setUpdateURL( "https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip" );
 +                        currentGamePage->base_makeActive( true );
 +                    }
                  }
              }
          else if( currentGamePage == settingsPage ) {
+@@ -2012,6 +2051,15 @@ void drawFrame( char inUpdate ) {
+                 quitGame();
+                 }
+             }
++        else if( currentGamePage == modUpdateMessagePage ) {
++            if( modUpdateMessagePage->checkSignal( "quit" ) ) {
++                quitGame();
++                }
++            else if( modUpdateMessagePage->checkSignal( "back" ) ) {
++                currentGamePage = existingAccountPage;
++                currentGamePage->base_makeActive( true );
++                }
++            }
+         }
+     
+ 
+diff --git a/gameSource/makeFileList b/gameSource/makeFileList
+index aa152699..3204616c 100644
+--- a/gameSource/makeFileList
++++ b/gameSource/makeFileList
+@@ -43,6 +43,7 @@ ExistingAccountPage.cpp \
+ KeyEquivalentTextButton.cpp \
+ ServerActionPage.cpp \
+ FinalMessagePage.cpp \
++ModUpdateMessagePage.cpp \
+ AutoUpdatePage.cpp \
+ soundBank.cpp \
+ convolution.cpp \

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 53eee089..6c6bb33e 100644
+index ebc7c459..311ca14e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -22,6 +22,8 @@
@@ -110,7 +110,7 @@ index 53eee089..6c6bb33e 100644
      }
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index aa152699..5b878a4a 100644
+index 3204616c..2dd17849 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -26,6 +26,7 @@ accountHmac.cpp \

@@ -1,8 +1,14 @@
 # Changelog - feature changes
 
+## v24
+
+- Shows hearts above close family
+- "Play at your own risk" button on version mismatch message
+- Patch for single frame character facing flips while running
+
 ## v23
 
-- Kill key now uses nearest player search, like main game. This is currently apllied to all player action keys (pickup/use-on)
+- Kill key now uses nearest player search, like main game. This is currently applied to all player action keys (pickup/use-on)
 
 ## v22
 

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 8b26c80f..22df2e6c 100644
+index a2749088..ff6079ec 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -164,6 +164,12 @@ static char waitingForPhotoSig = false;

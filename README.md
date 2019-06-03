@@ -22,6 +22,10 @@ Double-click to enable an auto-run mode. Dotted line trails will always be shown
 
 This feature can be adjusted or disabled by the setting file `maxDoubleClickFrames.ini`. Set to 0 to disable double click to run; you can't click twice in 1 frame.
 
+### fix-path-extension-scale
+
+Fixes a small bug where character will be drawn flipped for one frame while running.
+
 ### click-through-trees
 
 Changes the hit detection of large objects (mainly trees) so they they only detect clicks on their tile, making it much easier to navigate through swamps and other dense areas. Main other affect I've noticed is that you cannot click on the cart part of a horse-cart.
@@ -145,6 +149,12 @@ Shows a help overlay for interaction keys and emote keys. Default keybind is 'h'
 Food item descriptions show Yum or Meh. Edible items are highlighted green (yum) or red (meh) on cursor over.
 
 `settings/showYumHover.ini` (0 to disable this feature)
+
+### show-close-family
+
+Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
+
+`settings/showRelationDistance.ini` (0 to disable this feature)
 
 ### Patch Development
 
