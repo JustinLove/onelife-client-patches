@@ -1,8 +1,24 @@
 diff --git a/.gitignore b/.gitignore
-index 319c1177..ab1cfc4c 100644
+index 319c1177..9e747328 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -28,3 +28,12 @@ server/lifeLog/
+@@ -3,6 +3,7 @@
+ *.o
+ *.dep
+ *.dep2
++*.dep3
+ *~
+ *.orig
+ Makefile*
+@@ -16,6 +17,7 @@ gameSource/testUser/*
+ gameSource/testUser2/*
+ gameSource/recordedGames/*
+ gameSource/screenShots/*
++gameSource/reverbCache/*
+ 
+ server/OneLifeServer
+ server/log.txt
+@@ -28,3 +30,11 @@ server/lifeLog/
  server/categories
  server/objects
  server/transitions
@@ -11,7 +27,6 @@ index 319c1177..ab1cfc4c 100644
 +*.ico
 +*.rc
 +gameSource/log.txt
-+gameSource/log.txt
 +build/windows
 +notes.md
-+patches-master
++patches-*

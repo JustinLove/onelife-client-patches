@@ -121,6 +121,7 @@ Makes clicks by default move only. Lock the screen (spacebar) to perform all oth
 Adds key actions that do very specific things at the mouse pointer cell, versus the default click which does very context sensitive things based on precise hit detection.
 
 Press F1 to close the say field without erasing it if you need to do something.
+Press shift-backspace to close and clear the say field (e.g. "YOU ARE ... DEAD")
 
 This feature may conflict with openSayFieldOnTypingLower.
 
@@ -154,7 +155,11 @@ Food item descriptions show Yum or Meh. Edible items are highlighted green (yum)
 
 Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
 
+There are keybinds to increase (= aka ushifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
+
 `settings/showRelationDistance.ini` (0 to disable this feature)
+`settings/playerMarkKey.ini`
+`settings/playerUnmarkKey.ini`
 
 ### Patch Development
 

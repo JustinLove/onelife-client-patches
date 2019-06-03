@@ -3,6 +3,8 @@
 ## v24
 
 - Shows hearts above close family
+- Keybinds to manually adjust player heart sizes
+- Shift+backspace will clear and close the say field (e.g. "YOU ARE ... DEAD")
 - "Play at your own risk" button on version mismatch message
 - Patch for single frame character facing flips while running
 
