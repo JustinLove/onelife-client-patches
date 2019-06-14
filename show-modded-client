@@ -1,8 +1,8 @@
 diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
-index 7a923db5..09340c86 100644
+index eef3387b..c7bc1a05 100644
 --- a/gameSource/ExistingAccountPage.cpp
 +++ b/gameSource/ExistingAccountPage.cpp
-@@ -655,6 +655,9 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
+@@ -697,6 +697,9 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
          delete [] key;
          delete [] s;
          }
@@ -10,7 +10,7 @@ index 7a923db5..09340c86 100644
 +    setDrawColor( 1, 1, 1, 1.0 );
 +    mainFont->drawString( "WonLife", {-600, 300}, alignLeft );
      
-     }
+ 
  
 diff --git a/gameSource/ModUpdateMessagePage.cpp b/gameSource/ModUpdateMessagePage.cpp
 new file mode 100644
@@ -198,18 +198,18 @@ index 00000000..a0d2d2fa
 +    };
 +
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 8d67f990..db945d16 100644
+index 4cb5c542..e7e6d11f 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 235;
+ int versionNumber = 240;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
  
  int binVersionNumber = versionNumber;
  
-@@ -78,6 +80,7 @@ CustomRandomSource randSource( 34957197 );
+@@ -79,6 +81,7 @@ CustomRandomSource randSource( 34957197 );
  
  
  #include "FinalMessagePage.h"
@@ -217,7 +217,7 @@ index 8d67f990..db945d16 100644
  #include "LoadingPage.h"
  #include "AutoUpdatePage.h"
  #include "LivingLifePage.h"
-@@ -127,6 +130,7 @@ int serverSequenceNumber = 0;
+@@ -128,6 +131,7 @@ int serverSequenceNumber = 0;
  
  
  FinalMessagePage *finalMessagePage;
@@ -225,7 +225,7 @@ index 8d67f990..db945d16 100644
  
  ServerActionPage *getServerAddressPage;
  
-@@ -250,12 +254,12 @@ char isNonIntegerScalingAllowed() {
+@@ -251,12 +255,12 @@ char isNonIntegerScalingAllowed() {
  
  
  const char *getWindowTitle() {
@@ -240,7 +240,7 @@ index 8d67f990..db945d16 100644
      }
  
  int getAppVersion() {
-@@ -345,6 +349,22 @@ static void updateDataVersionNumber() {
+@@ -346,6 +350,22 @@ static void updateDataVersionNumber() {
      }
  
  
@@ -263,7 +263,7 @@ index 8d67f990..db945d16 100644
  
  
  #define SETTINGS_HASH_SALT "another_loss"
-@@ -449,6 +469,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -450,6 +470,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      initAgeControl();
      
      updateDataVersionNumber();
@@ -271,7 +271,7 @@ index 8d67f990..db945d16 100644
  
  
      AppLog::printOutNextMessage();
-@@ -610,6 +631,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -611,6 +632,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      
      
      finalMessagePage = new FinalMessagePage;
@@ -279,7 +279,7 @@ index 8d67f990..db945d16 100644
      loadingPage = new LoadingPage;
      autoUpdatePage = new AutoUpdatePage;
      livingLifePage = NULL;
-@@ -706,6 +728,7 @@ void freeFrameDrawer() {
+@@ -707,6 +729,7 @@ void freeFrameDrawer() {
      delete getServerAddressPage;
      
      delete finalMessagePage;
@@ -287,7 +287,7 @@ index 8d67f990..db945d16 100644
      delete loadingPage;
      delete autoUpdatePage;
      if( livingLifePage != NULL ) {
-@@ -1610,8 +1633,24 @@ void drawFrame( char inUpdate ) {
+@@ -1614,8 +1637,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  
@@ -314,7 +314,7 @@ index 8d67f990..db945d16 100644
                  }
              }
          else if( currentGamePage == settingsPage ) {
-@@ -2012,6 +2051,15 @@ void drawFrame( char inUpdate ) {
+@@ -2031,6 +2070,15 @@ void drawFrame( char inUpdate ) {
                  quitGame();
                  }
              }
@@ -331,7 +331,7 @@ index 8d67f990..db945d16 100644
      
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index aa152699..3204616c 100644
+index f63c7850..b2c28f0b 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -43,6 +43,7 @@ ExistingAccountPage.cpp \

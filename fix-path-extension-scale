@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index fba111c8..1c945b69 100644
+index 315c1909..3688a53d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -17042,16 +17042,16 @@ void LivingLifePage::step() {
+@@ -17116,16 +17116,16 @@ void LivingLifePage::step() {
  
                                  pointerDown( fakeClick.x, fakeClick.y );
  

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 3b34adb0..51f424ef 100644
+index 6b69a5ad..6020725c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -18802,6 +18802,881 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -18876,6 +18876,916 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
  
  
  
@@ -73,7 +73,7 @@ index 3b34adb0..51f424ef 100644
 +            float clickOffsetX = ( clickDestX  - x ) * CELL_D + clickExtraX;
 +
 +            for( int i=gameObjects.size()-1; i>=0 ; i-- ) {
-+        
++
 +                LiveObject *o = gameObjects.getElement( i );
 +
 +                if( o == ourLiveObject ) {
@@ -116,7 +116,7 @@ index 3b34adb0..51f424ef 100644
 +
 +                if( round( oX ) == x &&
 +                    round( oY ) == y ) {
-+                                        
++
 +                    // here!
 +
 +                    double personClickOffsetX = ( oX - x ) * CELL_D;
@@ -216,11 +216,11 @@ index 3b34adb0..51f424ef 100644
 +void LivingLifePage::hintForObjectInteraction( int holdingID, int destID ) {
 +      if( holdingID > 0 ) {
 +          TransRecord *tr = getTrans( holdingID, destID );
-+          
++
 +          if( tr == NULL ) {
 +              // try defaul transition
 +              // tr = getTrans( -2, destID );
-+              
++
 +              // for now, DO NOT consider default transition
 +              // no main transition for this held object applies
 +              // so we should probably give a hint about what CAN apply
@@ -232,15 +232,15 @@ index 3b34adb0..51f424ef 100644
 +              // something
 +
 +              // so we should show hints about the target object BEFORE it
-+              // went into its (temporary) reaction state. 
++              // went into its (temporary) reaction state.
 +              }
-+          
++
 +          if( tr == NULL || tr->newTarget == destID ) {
-+              // give hint about dest object which will be unchanged 
++              // give hint about dest object which will be unchanged
 +              mNextHintObjectID = destID;
 +              mNextHintIndex = mHintBookmarks[ destID ];
 +              }
-+          else if( tr->newActor > 0 && 
++          else if( tr->newActor > 0 &&
 +                   holdingID != tr->newActor ) {
 +              // give hint about how what we're holding will change
 +              mNextHintObjectID = tr->newActor;
@@ -270,7 +270,7 @@ index 3b34adb0..51f424ef 100644
 +
 +    int oldXD = ourLiveObject->xd;
 +    int oldYD = ourLiveObject->yd;
-+    
++
 +    ourLiveObject->xd = moveDestX;
 +    ourLiveObject->yd = moveDestY;
 +    ourLiveObject->destTruncated = false;
@@ -281,7 +281,7 @@ index 3b34adb0..51f424ef 100644
 +    GridPos *oldPathToDest = NULL;
 +    int oldPathLength = 0;
 +    int oldCurrentPathStep = 0;
-+    
++
 +    if( ourLiveObject->pathToDest != NULL ) {
 +        oldPathLength = ourLiveObject->pathLength;
 +        oldPathToDest = new GridPos[ oldPathLength ];
@@ -290,20 +290,20 @@ index 3b34adb0..51f424ef 100644
 +                sizeof( GridPos ) * ourLiveObject->pathLength );
 +        oldCurrentPathStep = ourLiveObject->currentPathStep;
 +        }
-+    
++
 +
 +    computePathToDest( ourLiveObject );
 +
-+    
++
 +    if( ourLiveObject->pathToDest == NULL ) {
 +        // adjust move to closest possible
 +        ourLiveObject->xd = ourLiveObject->closestDestIfPathFailedX;
 +        ourLiveObject->yd = ourLiveObject->closestDestIfPathFailedY;
 +        ourLiveObject->destTruncated = false;
-+        
++
 +        if( ourLiveObject->xd == oldXD && ourLiveObject->yd == oldYD ) {
 +            // completely blocked in, no path at all toward dest
-+            
++
 +            if( oldPathToDest != NULL ) {
 +                // restore it
 +                ourLiveObject->pathToDest = oldPathToDest;
@@ -311,11 +311,11 @@ index 3b34adb0..51f424ef 100644
 +                ourLiveObject->currentPathStep = oldCurrentPathStep;
 +                oldPathToDest = NULL;
 +                }
-+            
-+                
++
++
 +
 +            // ignore click
-+            
++
 +            if( nextActionMessageToSend != NULL ) {
 +                delete [] nextActionMessageToSend;
 +                nextActionMessageToSend = NULL;
@@ -328,10 +328,10 @@ index 3b34adb0..51f424ef 100644
 +            delete [] oldPathToDest;
 +            oldPathToDest = NULL;
 +            }
-+        
++
 +
 +        computePathToDest( ourLiveObject );
-+        
++
 +        if( ourLiveObject->pathToDest == NULL &&
 +            ourLiveObject->useWaypoint ) {
 +            // waypoint itself may be blocked
@@ -347,7 +347,7 @@ index 3b34adb0..51f424ef 100644
 +            // make a fake path
 +            doublePair dest = { (double) ourLiveObject->xd,
 +                                (double) ourLiveObject->yd };
-+            
++
 +            doublePair dir = normalize( sub( dest, 
 +                                             ourLiveObject->currentPos ) );
 +
@@ -355,7 +355,7 @@ index 3b34adb0..51f424ef 100644
 +            doublePair fakeStart = dest;
 +
 +            if( fabs( dir.x ) > fabs( dir.y ) ) {
-+                
++
 +                if( dir.x < 0 ) {
 +                    fakeStart.x += 1;
 +                    }
@@ -370,33 +370,33 @@ index 3b34adb0..51f424ef 100644
 +                else {
 +                    fakeStart.y -= 1;
 +                    }
-+                
++
 +                }
-+            
-+            
++
++
 +            ourLiveObject->pathToDest = new GridPos[2];
-+            
++
 +            ourLiveObject->pathToDest[0].x = (int)fakeStart.x;
 +            ourLiveObject->pathToDest[0].y = (int)fakeStart.y;
-+            
++
 +            ourLiveObject->pathToDest[1].x = ourLiveObject->xd;
 +            ourLiveObject->pathToDest[1].y = ourLiveObject->yd;
-+            
++
 +            ourLiveObject->pathLength = 2;
 +            ourLiveObject->currentPathStep = 0;
 +            ourLiveObject->numFramesOnCurrentStep = 0;
 +            ourLiveObject->onFinalPathStep = false;
-+            
++
 +            ourLiveObject->currentMoveDirection =
-+                normalize( 
-+                    sub( gridToDouble( ourLiveObject->pathToDest[1] ), 
++                normalize(
++                    sub( gridToDouble( ourLiveObject->pathToDest[1] ),
 +                         gridToDouble( ourLiveObject->pathToDest[0] ) ) );
 +            }
 +
-+        if( ourLiveObject->xd == oldXD 
++        if( ourLiveObject->xd == oldXD
 +            &&
 +            ourLiveObject->yd == oldYD ) {
-+            
++
 +            // truncated path is where we're already going
 +            // don't send new move message
 +            return;
@@ -405,53 +405,53 @@ index 3b34adb0..51f424ef 100644
 +
 +        moveDestX = ourLiveObject->xd;
 +        moveDestY = ourLiveObject->yd;
-+        
++
 +        if( nextActionMessageToSend != NULL ) {
 +            // abort the action, because we can't reach the spot we
 +            // want to reach
 +            delete [] nextActionMessageToSend;
 +            nextActionMessageToSend = NULL;
 +            }
-+        
++
 +        }
-+    
-+    
++
++
 +    if( oldPathToDest != NULL ) {
 +        delete [] oldPathToDest;
 +        oldPathToDest = NULL;
 +        }
-+        
++
 +
 +
 +    // send move right away
 +    //Thread::staticSleep( 2000 );
 +    SimpleVector<char> moveMessageBuffer;
-+    
++
 +    moveMessageBuffer.appendElementString( "MOVE" );
 +    ourLiveObject->lastMoveSequenceNumber ++;
-+    
++
 +    // start is absolute
-+    char *startString = 
-+        autoSprintf( " %d %d @%d", 
++    char *startString =
++        autoSprintf( " %d %d @%d",
 +                     sendX( ourLiveObject->pathToDest[0].x ),
 +                     sendY( ourLiveObject->pathToDest[0].y ),
 +                     ourLiveObject->lastMoveSequenceNumber );
 +    moveMessageBuffer.appendElementString( startString );
 +    delete [] startString;
-+    
++
 +    for( int i=1; i<ourLiveObject->pathLength; i++ ) {
 +        // rest are relative to start
-+        char *stepString = autoSprintf( " %d %d", 
++        char *stepString = autoSprintf( " %d %d",
 +                                     ourLiveObject->pathToDest[i].x
 +                                        - ourLiveObject->pathToDest[0].x,
 +                                     ourLiveObject->pathToDest[i].y
 +                                        - ourLiveObject->pathToDest[0].y );
-+        
++
 +        moveMessageBuffer.appendElementString( stepString );
 +        delete [] stepString;
 +        }
 +    moveMessageBuffer.appendElementString( "#" );
-+    
++
 +
 +    char *message = moveMessageBuffer.getElementString();
 +
@@ -466,16 +466,16 @@ index 3b34adb0..51f424ef 100644
 +
 +    double floorSpeedMod = computePathSpeedMod( ourLiveObject,
 +                                                ourLiveObject->pathLength );
-+    
 +
-+    ourLiveObject->moveTotalTime = 
-+        measurePathLength( ourLiveObject, ourLiveObject->pathLength ) / 
++
++    ourLiveObject->moveTotalTime =
++        measurePathLength( ourLiveObject, ourLiveObject->pathLength ) /
 +        ( ourLiveObject->lastSpeed * floorSpeedMod );
 +
 +    ourLiveObject->moveEtaTime = game_getCurrentTime() +
 +        ourLiveObject->moveTotalTime;
 +
-+        
++
 +    updateMoveSpeed( ourLiveObject );
 +    }
 +
@@ -484,33 +484,33 @@ index 3b34adb0..51f424ef 100644
 +    LiveObject *ourLiveObject = getOurLiveObject();
 +
 +    int mapX = clickDestX - mMapOffsetX + mMapD / 2;
-+    int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
++    int mapY = clickDestY - mMapOffsetY + mMapD / 2;
 +
 +    int destID = 0;
 +
 +    if( mapY >= 0 && mapY < mMapD &&
 +        mapX >= 0 && mapX < mMapD ) {
-+        
++
 +        destID = mMap[ mapY * mMapD + mapX ];
 +        }
 +
 +    char canExecute = false;
 +    char sideAccess = false;
-+    
++
 +    if( destID > 0 && getObject( destID )->sideAccess ) {
 +        sideAccess = true;
 +        }
-+    
++
 +
 +    // direct click on adjacent cells or self cell?
 +    if( isGridAdjacent( clickDestX, clickDestY,
 +                        ourLiveObject->xd, ourLiveObject->yd )
-+        || 
-+        ( clickDestX == ourLiveObject->xd && 
++        ||
++        ( clickDestX == ourLiveObject->xd &&
 +          clickDestY == ourLiveObject->yd ) ) {
-+        
++
 +        canExecute = true;
-+        
++
 +        if( sideAccess &&
 +            ( clickDestY > ourLiveObject->yd ||
 +              clickDestY < ourLiveObject->yd ) ) {
@@ -522,37 +522,37 @@ index 3b34adb0..51f424ef 100644
 +
 +    if( ! canExecute ) {
 +        // need to move to empty adjacent first, if it exists
-+        
++
 +        // also consider spot itself in some cases
 +
 +        int moveDestX = clickDestX;
 +        int moveDestY = clickDestY;
-+        
++
 +        int nDX[5] = { 0, -1, +1, 0, 0 };
 +        int nDY[5] = { 0, 0, 0, -1, +1 };
-+        
++
 +        char foundEmpty = false;
-+        
++
 +        int closestDist = 9999999;
 +
 +        char oldPathExists = ( ourLiveObject->pathToDest != NULL );
-+        
++
 +        // don't consider dest spot itself generally
 +        int nStart = 1;
-+        
++
 +        int nLimit = 5;
-+        
++
 +        if( sideAccess ) {
 +            // don't consider N or S neighbors
 +            nLimit = 3;
 +            }
 +        else if( destID > 0 &&
-+                 ourLiveObject->holdingID == 0 && 
++                 ourLiveObject->holdingID == 0 &&
 +                 getObject( destID )->permanent &&
 +                 ! getObject( destID )->blocksWalking ) {
-+            
++
 +            TransRecord *handTrans = getTrans( 0, destID );
-+            
++
 +            if( handTrans == NULL ||
 +                ( handTrans->newActor != 0 &&
 +                  getObject( handTrans->newActor )->foodValue > 0 &&
@@ -584,44 +584,44 @@ index 3b34adb0..51f424ef 100644
 +
 +            if( y >= 0 && y < mMapD &&
 +                x >= 0 && x < mMapD ) {
-+             
-+                
++
++
 +                int mapI = y * mMapD + x;
-+                
++
 +                if( mMap[ mapI ] == 0
 +                    ||
-+                    ( mMap[ mapI ] != -1 && 
++                    ( mMap[ mapI ] != -1 &&
 +                      ! getObject( mMap[ mapI ] )->blocksWalking ) ) {
-+                    
++
 +                    int emptyX = clickDestX + nDX[n];
 +                    int emptyY = clickDestY + nDY[n];
 +
 +                    // check if there's a path there
 +                    int oldXD = ourLiveObject->xd;
 +                    int oldYD = ourLiveObject->yd;
-+                    
++
 +                    // set this temporarily for pathfinding
 +                    ourLiveObject->xd = emptyX;
 +                    ourLiveObject->yd = emptyY;
-+                    
++
 +                    computePathToDest( ourLiveObject );
-+                    
++
 +                    if( ourLiveObject->pathToDest != NULL &&
 +                        ourLiveObject->pathLength < closestDist ) {
-+                        
++
 +                        // can get there
-+                        
++
 +                        moveDestX = emptyX;
 +                        moveDestY = emptyY;
-+                        
++
 +                        closestDist = ourLiveObject->pathLength;
-+                        
++
 +                        foundEmpty = true;
 +                        }
-+                    
++
 +                    // restore our old dest
 +                    ourLiveObject->xd = oldXD;
-+                    ourLiveObject->yd = oldYD;    
++                    ourLiveObject->yd = oldYD;
 +
 +                    if( n == 0 && foundEmpty ) {
 +                        // always prefer tile itself, if that's an option
@@ -629,10 +629,45 @@ index 3b34adb0..51f424ef 100644
 +                        break;
 +                        }
 +                    }
-+                
++
 +                }
 +            }
-+        
++
++          if( !foundEmpty &&
++              ! sideAccess &&
++              nStart > 0 &&
++              destID > 0 &&
++              ! getObject( destID )->blocksWalking ) {
++
++              // all neighbors blocked
++              // we didn't consider tile itself before
++              // but now we will, as last resort.
++
++              // consider tile itself as dest
++              int oldXD = ourLiveObject->xd;
++              int oldYD = ourLiveObject->yd;
++
++              // set this temporarily for pathfinding
++              ourLiveObject->xd = clickDestX;
++              ourLiveObject->yd = clickDestY;
++
++              computePathToDest( ourLiveObject );
++
++              if( ourLiveObject->pathToDest != NULL  ) {
++
++                  // can get there
++
++                  moveDestX = clickDestX;
++                  moveDestY = clickDestY;
++
++                  foundEmpty = true;
++                  }
++
++              // restore our old dest
++              ourLiveObject->xd = oldXD;
++              ourLiveObject->yd = oldYD; 
++              }
++
 +        if( oldPathExists ) {
 +            // restore it
 +            computePathToDest( ourLiveObject );
@@ -706,12 +741,12 @@ index 3b34adb0..51f424ef 100644
 +
 +char hasEmptyTileTransition( int holdingID, int floorDestID ) {
 +    if( holdingID > 0 ) {
-+        ObjectRecord *held = 
++        ObjectRecord *held =
 +            getObject( holdingID );
 +
 +        if( held->foodValue == 0 ) {
 +
-+            TransRecord *r = 
++            TransRecord *r =
 +                getTrans( holdingID,
 +                          -1 );
 +
@@ -752,12 +787,12 @@ index 3b34adb0..51f424ef 100644
 +        getObject( ourLiveObject->holdingID )->useDistance > 1// &&
 +        //getTrans( ourLiveObject->holdingID, destID ) != NULL ) {
 +        ) {
-+        // check if we're close enough to use this from here 
-+        
-+        double d = sqrt( ( clickDestX - ourLiveObject->xd ) * 
++        // check if we're close enough to use this from here
++
++        double d = sqrt( ( clickDestX - ourLiveObject->xd ) *
 +                         ( clickDestX - ourLiveObject->xd )
 +                         +
-+                         ( clickDestY - ourLiveObject->yd ) * 
++                         ( clickDestY - ourLiveObject->yd ) *
 +                         ( clickDestY - ourLiveObject->yd ) );
 +
 +
@@ -884,7 +919,7 @@ index 3b34adb0..51f424ef 100644
  
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
-@@ -19242,7 +20117,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19316,7 +20226,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -892,7 +927,7 @@ index 3b34adb0..51f424ef 100644
  
  
      
-@@ -19250,53 +20124,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19324,53 +20233,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -947,7 +982,7 @@ index 3b34adb0..51f424ef 100644
          }
  
      
-@@ -19656,7 +20484,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19733,7 +20596,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -956,7 +991,7 @@ index 3b34adb0..51f424ef 100644
          }
      else if( ( modClick && ourLiveObject->holdingID != 0 )
               || killMode
-@@ -19668,155 +20496,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19745,192 +20608,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1097,6 +1132,43 @@ index 3b34adb0..51f424ef 100644
 -                    
 -                    }
 -                }
+-
+-
+-            if( !foundEmpty && 
+-                ! sideAccess &&
+-                nStart > 0 &&
+-                destID > 0 &&
+-                ! getObject( destID )->blocksWalking ) {
+-                
+-                // all neighbors blocked
+-                // we didn't consider tile itself before
+-                // but now we will, as last resort.
+-
+-                // consider tile itself as dest
+-                int oldXD = ourLiveObject->xd;
+-                int oldYD = ourLiveObject->yd;
+-                        
+-                // set this temporarily for pathfinding
+-                ourLiveObject->xd = clickDestX;
+-                ourLiveObject->yd = clickDestY;
+-                        
+-                computePathToDest( ourLiveObject );
+-                        
+-                if( ourLiveObject->pathToDest != NULL  ) {
+-                            
+-                    // can get there
+-                    
+-                    moveDestX = clickDestX;
+-                    moveDestY = clickDestY;
+-                            
+-                    foundEmpty = true;
+-                    }
+-                        
+-                // restore our old dest
+-                ourLiveObject->xd = oldXD;
+-                ourLiveObject->yd = oldYD; 
+-                }
+-            
 -            
 -            if( oldPathExists ) {
 -                // restore it
@@ -1113,7 +1185,7 @@ index 3b34adb0..51f424ef 100644
          
  
          if( canExecute && ! killMode ) {
-@@ -19850,44 +20531,11 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19964,44 +20643,11 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1162,7 +1234,7 @@ index 3b34adb0..51f424ef 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -20008,222 +20656,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20122,222 +20768,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1386,10 +1458,10 @@ index 3b34adb0..51f424ef 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index ee7b4c26..c0b52554 100644
+index 93f01eca..7c565c2d 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -370,6 +370,24 @@ typedef struct PointerHitRecord {
+@@ -373,6 +373,24 @@ typedef struct PointerHitRecord {
  
  
  
@@ -1414,7 +1486,7 @@ index ee7b4c26..c0b52554 100644
  typedef struct OldArrow {
          int i;
          float heat;
-@@ -834,6 +852,18 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -837,6 +855,18 @@ class LivingLifePage : public GamePage, public ActionListener {
          // forces next pointerDown call to avoid everything but ground clicks
          char mForceGroundClick;
          
