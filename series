@@ -1,9 +1,8 @@
-# This series applies on GIT commit 22a0fc55f0f05ee278acf3e1e8f6fd1ac69a8914
+# This series applies on GIT commit fdbb726b03903b9577446d16cc599d3615e3115f
 custom-gitignore
 show-modded-client
 screen-edge-push
 autorun
-fix-path-extension-scale
 click-through-trees
 diegetic-temperature
 click-through-heads

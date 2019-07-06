@@ -1,5 +1,15 @@
 # Changelog - feature changes
 
+## v26
+
+- fix merge conflicts.
+- continuous run patch removed (merged)
+- Does not yet incorporate revised ground swapping, other interaction changes need review.
+
+## v25
+
+- fix merge conflicts
+
 ## v24
 
 - Shows hearts above close family

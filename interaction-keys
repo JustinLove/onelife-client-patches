@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d6384508..549d6142 100644
+index 5e2cd20e..d0006328 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -132,6 +132,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -85,7 +85,7 @@ index d6384508..549d6142 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2215,6 +2291,10 @@ LivingLifePage::LivingLifePage()
+@@ -2237,6 +2313,10 @@ LivingLifePage::LivingLifePage()
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
@@ -96,7 +96,7 @@ index d6384508..549d6142 100644
      
      initLiveTriggers();
  
-@@ -3826,11 +3906,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -3967,11 +4047,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
      
          if( inObj->currentPos.x < trueTargetX ) {
              if( inObj->currentSpeed == 0 ) {
@@ -114,7 +114,7 @@ index d6384508..549d6142 100644
                  inObj->holdingFlip = true;
                  }
              }
-@@ -17133,9 +17219,15 @@ void LivingLifePage::step() {
+@@ -17345,9 +17431,15 @@ void LivingLifePage::step() {
              // don't change flip unless moving substantially in x
              if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
                  if( o->currentMoveDirection.x > 0 ) {
@@ -130,23 +130,21 @@ index d6384508..549d6142 100644
                      o->holdingFlip = true;
                      }         
                  }
-@@ -17226,6 +17318,7 @@ void LivingLifePage::step() {
+@@ -17438,11 +17530,13 @@ void LivingLifePage::step() {
                                  o->waypointX = lrint( worldMouseX / CELL_D );
                                  o->waypointY = lrint( worldMouseY / CELL_D );
  
 +                                printf( "close autorun\n" );
                                  pointerDown( fakeClick.x, fakeClick.y );
- 
-                                 //endPos.x = fakeClick.x / CELL_D;
-@@ -17234,6 +17327,7 @@ void LivingLifePage::step() {
+                                
                                  o->useWaypoint = false;
                                  }
                              else {
 +                                printf( "normal autorun\n" );
                                  pointerDown( worldMouseX, worldMouseY );
- 
-                                 //endPos.x = worldMouseX / CELL_D;
-@@ -19821,6 +19915,239 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+                                 }
+                             }
+@@ -20029,6 +20123,239 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -386,7 +384,7 @@ index d6384508..549d6142 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -21180,7 +21507,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21389,7 +21716,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              // speak
              if( ! TextField::isAnyFocused() ) {
                  
@@ -394,7 +392,7 @@ index d6384508..549d6142 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -21371,23 +21697,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21580,23 +21906,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -439,7 +437,7 @@ index d6384508..549d6142 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -21562,6 +21909,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -21771,6 +22118,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
@@ -450,7 +448,7 @@ index d6384508..549d6142 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 7c565c2d..819cac6f 100644
+index 2d9f005c..1af9826e 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -868,6 +868,8 @@ class LivingLifePage : public GamePage, public ActionListener {

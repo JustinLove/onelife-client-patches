@@ -1,8 +1,8 @@
 diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
-index eef3387b..c7bc1a05 100644
+index d3d5bbc9..1abe53f5 100644
 --- a/gameSource/ExistingAccountPage.cpp
 +++ b/gameSource/ExistingAccountPage.cpp
-@@ -697,6 +697,9 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
+@@ -708,6 +708,9 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
          delete [] key;
          delete [] s;
          }
@@ -198,18 +198,18 @@ index 00000000..a0d2d2fa
 +    };
 +
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 4cb5c542..e7e6d11f 100644
+index 29d69864..0ef3317c 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 240;
+ int versionNumber = 246;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
  
  int binVersionNumber = versionNumber;
  
-@@ -79,6 +81,7 @@ CustomRandomSource randSource( 34957197 );
+@@ -80,6 +82,7 @@ CustomRandomSource randSource( 34957197 );
  
  
  #include "FinalMessagePage.h"
@@ -217,7 +217,7 @@ index 4cb5c542..e7e6d11f 100644
  #include "LoadingPage.h"
  #include "AutoUpdatePage.h"
  #include "LivingLifePage.h"
-@@ -128,6 +131,7 @@ int serverSequenceNumber = 0;
+@@ -131,6 +134,7 @@ int serverSequenceNumber = 0;
  
  
  FinalMessagePage *finalMessagePage;
@@ -225,7 +225,7 @@ index 4cb5c542..e7e6d11f 100644
  
  ServerActionPage *getServerAddressPage;
  
-@@ -251,12 +255,12 @@ char isNonIntegerScalingAllowed() {
+@@ -256,12 +260,12 @@ char isNonIntegerScalingAllowed() {
  
  
  const char *getWindowTitle() {
@@ -240,7 +240,7 @@ index 4cb5c542..e7e6d11f 100644
      }
  
  int getAppVersion() {
-@@ -346,6 +350,22 @@ static void updateDataVersionNumber() {
+@@ -351,6 +355,22 @@ static void updateDataVersionNumber() {
      }
  
  
@@ -263,7 +263,7 @@ index 4cb5c542..e7e6d11f 100644
  
  
  #define SETTINGS_HASH_SALT "another_loss"
-@@ -450,6 +470,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -455,6 +475,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      initAgeControl();
      
      updateDataVersionNumber();
@@ -271,7 +271,7 @@ index 4cb5c542..e7e6d11f 100644
  
  
      AppLog::printOutNextMessage();
-@@ -611,6 +632,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -616,6 +637,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      
      
      finalMessagePage = new FinalMessagePage;
@@ -279,7 +279,7 @@ index 4cb5c542..e7e6d11f 100644
      loadingPage = new LoadingPage;
      autoUpdatePage = new AutoUpdatePage;
      livingLifePage = NULL;
-@@ -707,6 +729,7 @@ void freeFrameDrawer() {
+@@ -716,6 +738,7 @@ void freeFrameDrawer() {
      delete getServerAddressPage;
      
      delete finalMessagePage;
@@ -287,7 +287,7 @@ index 4cb5c542..e7e6d11f 100644
      delete loadingPage;
      delete autoUpdatePage;
      if( livingLifePage != NULL ) {
-@@ -1614,8 +1637,24 @@ void drawFrame( char inUpdate ) {
+@@ -1626,8 +1649,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  
@@ -314,7 +314,7 @@ index 4cb5c542..e7e6d11f 100644
                  }
              }
          else if( currentGamePage == settingsPage ) {
-@@ -2031,6 +2070,15 @@ void drawFrame( char inUpdate ) {
+@@ -2072,6 +2111,15 @@ void drawFrame( char inUpdate ) {
                  quitGame();
                  }
              }
@@ -331,7 +331,7 @@ index 4cb5c542..e7e6d11f 100644
      
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index f63c7850..b2c28f0b 100644
+index b8a0fae9..24537bb0 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -43,6 +43,7 @@ ExistingAccountPage.cpp \
