@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index eb7d766a..b235ce11 100644
+index 696b61f4..d431b2d6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -215,6 +215,31 @@ void initKeybinds() {

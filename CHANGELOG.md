@@ -1,5 +1,11 @@
 # Changelog - feature changes
 
+## v27
+
+- handle swapping held horse with item
+- put-in-backpack key does not remove item if hand empty
+- take-from-backpack key does not remove backpack if empty
+
 ## v26
 
 - fix merge conflicts.

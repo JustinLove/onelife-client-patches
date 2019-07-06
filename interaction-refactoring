@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 18bf4f0b..2f20c45e 100644
+index 18bf4f0b..9dd4bef0 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -19084,6 +19084,916 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
@@ -1185,7 +1185,7 @@ index 18bf4f0b..2f20c45e 100644
          
  
          if( canExecute && ! killMode ) {
-@@ -20176,47 +20855,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20176,47 +20855,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1230,12 +1230,13 @@ index 18bf4f0b..2f20c45e 100644
 -                                
 -                            }
 -                        }
-+                if( hasEmptyTileTransition( ourLiveObject->holdingID, floorDestID ) ) {
++                if( destObjInClickedTile == 0 &&
++                    hasEmptyTileTransition( ourLiveObject->holdingID, floorDestID ) ) {
 +                    action = "USE";
                      }
                  }
              else if( destID != 0 &&
-@@ -20337,222 +20977,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20337,222 +20978,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
