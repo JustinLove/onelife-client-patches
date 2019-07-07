@@ -2,6 +2,7 @@
 
 ## v27
 
+- yum hover now highlights many precursor items (gooseberry bush, burdock plant, stew pot, etc)
 - handle swapping held horse with item
 - put-in-backpack key does not remove item if hand empty
 - take-from-backpack key does not remove backpack if empty

@@ -143,7 +143,7 @@ Shows a help overlay for interaction keys and emote keys. Default keybind is 'h'
 
 ### yum-hover
 
-Food item descriptions show Yum or Meh. Edible items are highlighted green (yum) or red (meh) on cursor over.
+Food item descriptions show Yum or Meh. Edible items and some precuros items are highlighted green (yum) or red (meh) on cursor over.
 
 `settings/showYumHover.ini` (0 to disable this feature)
 

@@ -1,146 +1,254 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 696b61f4..d431b2d6 100644
+index 696b61f4..dc789cd4 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -215,6 +215,31 @@ void initKeybinds() {
+@@ -215,6 +215,46 @@ void initKeybinds() {
  static char showHelpOverlay = false;
  static char showHelpOverlayKey = 'h';
  
++typedef enum yumType {
++    YT_INEDIBLE,
++    YT_MEH,
++    YT_YUM,
++    YT_COUNT,
++    } yumType;
 +
 +SimpleVector<int> yummyFoodChain;
++int* becomesFoodID;
 +static char showYumHover = false;
 +
-+static char isYummy( int inObjectID ) {
-+    ObjectRecord *o = getObject( inObjectID );
++static void initBecomesFood();
 +
-+    if( o->isUseDummy ) {
-+        inObjectID = o->useDummyParent;
-+        o = getObject( inObjectID );
++static yumType isYummy( int inObjectID ) {
++    if( inObjectID < 0 ) {
++        return YT_INEDIBLE;
 +        }
 +
-+    if( o->foodValue == 0 ) {
-+        return false;
++    int objectID = becomesFoodID[inObjectID];
++
++    if( objectID < 0 ) {
++        return YT_INEDIBLE;
++        }
++
++    ObjectRecord *o = getObject( objectID );
++
++    if( o == NULL ) {
++        return YT_INEDIBLE;
 +        }
 +
 +    for( int i=0; i<yummyFoodChain.size(); i++ ) {
-+        if( inObjectID == yummyFoodChain.getElementDirect(i) ) {
-+            return false;
++        if( objectID == yummyFoodChain.getElementDirect(i) ) {
++            return YT_MEH;
 +            }
 +        }
-+    return true;
++    return YT_YUM;
 +    }
++
 +
 +
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2527,6 +2552,7 @@ LivingLifePage::LivingLifePage()
+@@ -2527,7 +2567,10 @@ LivingLifePage::LivingLifePage()
          delete [] keyString;
          }
  
+-    
 +    showYumHover = SettingsManager::getIntSetting( "showYumHover", 1 );
-     
++
++    initBecomesFood();
++
      initLiveTriggers();
  
-@@ -4106,6 +4132,11 @@ void LivingLifePage::drawMapCell( int inMapI,
+     initNames();
+@@ -4106,6 +4149,11 @@ void LivingLifePage::drawMapCell( int inMapI,
          for( int i=startPass; i<numPasses; i++ ) {
              
              doublePair passPos = pos;
 +
-+            bool yummy = false;
++            yumType yummy = YT_INEDIBLE;
 +            if( showYumHover ) {
 +                yummy = isYummy( oID );
 +                }
              
              if( highlight ) {
                  
-@@ -4208,8 +4239,8 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4208,8 +4256,8 @@ void LivingLifePage::drawMapCell( int inMapI,
  
          if( highlight ) {
              
 -            
              float mainFade = .35f;
-+            float yumFade = .7f;
++            float yumFade = .5f;
          
              toggleAdditiveBlend( true );
              
-@@ -4229,7 +4260,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4229,7 +4277,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // opaque portion
                      startDrawingThroughStencil( false );
  
 -                    setDrawColor( 1, 1, 1, highlightFade * mainFade );
-+                    if( showYumHover && obj->foodValue > 0 ) {
-+                        if( yummy ) {
++                    switch( yummy ) {
++                        case YT_YUM:
 +                            setDrawColor( 0, 1, 0, highlightFade * yumFade );
-+                            }
-+                        else {
++                            break;
++                        case YT_MEH:
 +                            setDrawColor( 1, 0, 0, highlightFade * yumFade );
-+                            }
-+                        }
-+                    else {
-+                        setDrawColor( 1, 1, 1, highlightFade * mainFade );
++                            break;
++                        default:
++                            setDrawColor( 1, 1, 1, highlightFade * mainFade );
++                            break;
 +                        }
                      
                      drawSquare( squarePos, squareRad );
                      
-@@ -4243,7 +4284,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4243,7 +4301,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // now first fringe is isolated in stencil
                      startDrawingThroughStencil( false );
  
 -                    setDrawColor( 1, 1, 1, highlightFade * mainFade * .5 );
-+                    if( showYumHover && obj->foodValue > 0 ) {
-+                        if( yummy ) {
++                    switch( yummy ) {
++                        case YT_YUM:
 +                            setDrawColor( 0, 1, 0, highlightFade * yumFade * .5 );
-+                            }
-+                        else {
-+                            setDrawColor( 1, 0, 0, highlightFade * yumFade * .5 );
-+                            }
-+                        }
-+                    else {
-+                        setDrawColor( 1, 1, 1, highlightFade * mainFade * .5 );
++                            break;
++                        case YT_MEH:
++                            setDrawColor( 1, 0, 0, highlightFade * yumFade * .5);
++                            break;
++                        default:
++                            setDrawColor( 1, 1, 1, highlightFade * mainFade * .5);
++                            break;
 +                        }
  
                      drawSquare( squarePos, squareRad );
  
-@@ -4257,7 +4308,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4257,7 +4325,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // now second fringe is isolated in stencil
                      startDrawingThroughStencil( false );
                      
 -                    setDrawColor( 1, 1, 1, highlightFade * mainFade *.25 );
-+                    if( showYumHover && obj->foodValue > 0 ) {
-+                        if( yummy ) {
++                    switch( yummy ) {
++                        case YT_YUM:
 +                            setDrawColor( 0, 1, 0, highlightFade * yumFade * .25 );
-+                            }
-+                        else {
-+                            setDrawColor( 1, 0, 0, highlightFade * yumFade * .25 );
-+                            }
-+                        }
-+                    else {
-+                        setDrawColor( 1, 1, 1, highlightFade * mainFade * .25 );
++                            break;
++                        case YT_MEH:
++                            setDrawColor( 1, 0, 0, highlightFade * yumFade * .25);
++                            break;
++                        default:
++                            setDrawColor( 1, 1, 1, highlightFade * mainFade * .25);
++                            break;
 +                        }
                      
                      drawSquare( squarePos, squareRad );
                      
-@@ -9225,6 +9286,18 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9225,6 +9303,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
                          desToDelete = des;
                          }
                      }
-+                else if( showYumHover && o->foodValue > 0 ) {
-+                    if ( isYummy( idToDescribe ) ) {
-+                        des = autoSprintf( "%s - %s",
-+                                           des, translate( "yum" ) );
-+                        desToDelete = des;
-+                        }
-+                    else {
-+                        des = autoSprintf( "%s - %s",
-+                                           des, translate( "meh" ) );
-+                        desToDelete = des;
++                else if( showYumHover ) {
++                    switch( isYummy( idToDescribe ) ) {
++                        case YT_YUM:
++                            des = autoSprintf( "%s - %s",
++                                               des, translate( "yum" ) );
++                            desToDelete = des;
++                            break;
++                        case YT_MEH:
++                            des = autoSprintf( "%s - %s",
++                                               des, translate( "meh" ) );
++                            desToDelete = des;
++                            break;
++                        default:
++                            break;
 +                        }
 +                    }
                  }
              
              char *stringUpper = stringToUpperCase( des );
-@@ -17050,6 +17123,9 @@ void LivingLifePage::step() {
+@@ -10421,6 +10515,84 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex ) {
+ 
+ 
+ 
++static int becomesFood( int objectID, int depth ) {
++    if( objectID < 0) return -1;
++
++    ObjectRecord* obj = getObject( objectID );
++    if( obj == NULL ) return -1;
++
++    if( obj->isUseDummy ) {
++        objectID = obj->useDummyParent;
++        obj = getObject( objectID );
++        }
++
++    if( obj->foodValue > 0 ) {
++        return objectID;
++        }
++
++    if( depth < 1) return -1;
++
++    SimpleVector<TransRecord*> *trans = getAllUses( objectID );
++    if( trans == NULL ) return -1;
++
++    if( trans->size() < 1 ) return -1;
++
++    if( trans->size() == 1) {
++        TransRecord* t = trans->getElementDirect( 0 );
++        if( ! getTransHintable( t ) ) return -1;
++
++        int targetEdible = becomesFood( t->newTarget, depth - 1 );
++        if( targetEdible > 0 ) return targetEdible;
++
++        int actorEdible = becomesFood( t->newActor, depth - 1 );
++        if( actorEdible > 0 ) return actorEdible;
++        }
++    else { // trans > 1
++        int lastTarget = -1;
++        int targetCount = 0;
++        int lastActor = -1;
++        int actorCount = 0;
++        for( int i = 0; i<trans->size(); i++) {
++            TransRecord* t = trans->getElementDirect( i );
++            if( ! getTransHintable( t ) ) continue;
++
++            if( t->newActor != lastActor ) {
++                actorCount += 1;
++                }
++            lastActor = t->newActor;
++
++            if( t->newTarget != lastTarget ) {
++                targetCount += 1;
++                }
++            lastTarget = t->newTarget;
++
++            //int actorEdible = becomesFood( t->newActor, 0 );
++            //if( actorEdible > 0 ) return actorEdible;
++            }
++
++        if( actorCount == 1) {
++            int actorEdible = becomesFood( lastActor, depth - 1 );
++            if( actorEdible > 0 ) return actorEdible;
++            }
++        if( targetCount == 1) {
++            int targetEdible = becomesFood( lastTarget, depth - 1 );
++            if( targetEdible > 0 ) return targetEdible;
++            }
++        }
++
++    return -1;
++    }
++
++static void initBecomesFood() {
++    int mapSize = getMaxObjectID() + 1;
++    becomesFoodID = new int[mapSize];
++    for (int i=0; i<mapSize; i++) {
++      becomesFoodID[i] = becomesFood( i, 3 );
++    }
++}
++
++
++
+ // inNewID > 0
+ static char shouldCreationSoundPlay( int inOldID, int inNewID ) {
+     if( inOldID == inNewID ) {
+@@ -17050,6 +17222,9 @@ void LivingLifePage::step() {
                      }
                  
                  if( mYumMultiplier != oldYumMultiplier ) {
@@ -150,7 +258,7 @@ index 696b61f4..d431b2d6 100644
                      int oldSlipIndex = -1;
                      int newSlipIndex = 0;
                      
-@@ -17171,6 +17247,12 @@ void LivingLifePage::step() {
+@@ -17171,6 +17346,12 @@ void LivingLifePage::step() {
                  
                      if( lastAteID != 0 ) {
                          ObjectRecord *lastAteObj = getObject( lastAteID );
@@ -163,7 +271,7 @@ index 696b61f4..d431b2d6 100644
                          
                          char *strUpper = stringToUpperCase(
                              lastAteObj->description );
-@@ -18770,6 +18852,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -18770,6 +18951,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          mYumSlipNumberToShow[i] = 0;
          }
      
