@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b0abb2fa..9dab2c9b 100644
+index 128909f4..d093490c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -132,6 +132,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -85,7 +85,7 @@ index b0abb2fa..9dab2c9b 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2237,6 +2313,10 @@ LivingLifePage::LivingLifePage()
+@@ -2250,6 +2326,10 @@ LivingLifePage::LivingLifePage()
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
@@ -96,7 +96,7 @@ index b0abb2fa..9dab2c9b 100644
      
      initLiveTriggers();
  
-@@ -3967,11 +4047,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4026,11 +4106,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
      
          if( inObj->currentPos.x < trueTargetX ) {
              if( inObj->currentSpeed == 0 ) {
@@ -114,7 +114,7 @@ index b0abb2fa..9dab2c9b 100644
                  inObj->holdingFlip = true;
                  }
              }
-@@ -17345,9 +17431,15 @@ void LivingLifePage::step() {
+@@ -17580,9 +17666,15 @@ void LivingLifePage::step() {
              // don't change flip unless moving substantially in x
              if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
                  if( o->currentMoveDirection.x > 0 ) {
@@ -130,7 +130,7 @@ index b0abb2fa..9dab2c9b 100644
                      o->holdingFlip = true;
                      }         
                  }
-@@ -17438,11 +17530,13 @@ void LivingLifePage::step() {
+@@ -17673,11 +17765,13 @@ void LivingLifePage::step() {
                                  o->waypointX = lrint( worldMouseX / CELL_D );
                                  o->waypointY = lrint( worldMouseY / CELL_D );
  
@@ -144,7 +144,7 @@ index b0abb2fa..9dab2c9b 100644
                                  pointerDown( worldMouseX, worldMouseY );
                                  }
                              }
-@@ -20029,6 +20123,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+@@ -20329,6 +20423,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -386,7 +386,7 @@ index b0abb2fa..9dab2c9b 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -21390,7 +21719,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21688,7 +22017,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              // speak
              if( ! TextField::isAnyFocused() ) {
                  
@@ -394,7 +394,7 @@ index b0abb2fa..9dab2c9b 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -21581,23 +21909,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21879,23 +22207,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -439,7 +439,7 @@ index b0abb2fa..9dab2c9b 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -21772,6 +22121,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -22070,6 +22419,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
@@ -450,10 +450,10 @@ index b0abb2fa..9dab2c9b 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 2d9f005c..1af9826e 100644
+index c5db6757..7ea64d2c 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -868,6 +868,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -883,6 +883,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void useOnOtherAt( int clickDestX, int clickDestY, int targetID = 0 );
          void killAt( int clickDestX, int clickDestY, int targetID = 0 );
  

@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v28
+
+- fix merge conflicts
+
 ## v27
 
 - yum hover now highlights many precursor items (gooseberry bush, burdock plant, stew pot, etc)

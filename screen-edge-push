@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f4005d38..bbe62301 100644
+index 6c3015d4..a970eb45 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -121,6 +121,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -11,17 +11,17 @@ index f4005d38..bbe62301 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -2190,6 +2192,9 @@ LivingLifePage::LivingLifePage()
-     mSayField.setIgnoreArrowKeys( true );
-     // drawn under world at (0,1000), don't allow click to focus
-     mSayField.setIgnoreMouse( true );
+@@ -2203,6 +2205,9 @@ LivingLifePage::LivingLifePage()
+ 
+     // allow ctrl-v to paste into chat from clipboard
+     mSayField.usePasteShortcut( true );
 +
 +    // set to 0 to disable screen edge push
 +    screenEdgePushSpeed = SettingsManager::getFloatSetting( "screenEdgePushSpeed", 10 );
      
      initLiveTriggers();
  
-@@ -16763,18 +16768,6 @@ void LivingLifePage::step() {
+@@ -16998,18 +17003,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -40,7 +40,7 @@ index f4005d38..bbe62301 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -16815,6 +16808,22 @@ void LivingLifePage::step() {
+@@ -17050,6 +17043,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -63,7 +63,7 @@ index f4005d38..bbe62301 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -18895,6 +18904,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -19195,6 +19204,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      
