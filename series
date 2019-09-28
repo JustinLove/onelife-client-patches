@@ -1,4 +1,4 @@
-# This series applies on GIT commit 7731667ce741c4ffad18dfa3cfae77c90fd29f2f
+# This series applies on GIT commit ab158e896a15d58cfe4a168743b5d2ae05684dd5
 custom-gitignore
 show-modded-client
 screen-edge-push
@@ -19,3 +19,4 @@ interaction-keys
 show-close-family
 help-overlay
 yum-hover
+show-name-on-death-screen

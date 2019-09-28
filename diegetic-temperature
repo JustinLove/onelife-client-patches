@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 29efe97b..7366b21d 100644
+index d7d999f6..bc019c60 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -124,6 +124,8 @@ static int maxDoubleClickDrift = 30;
@@ -20,7 +20,7 @@ index 29efe97b..7366b21d 100644
      
      initLiveTriggers();
  
-@@ -4040,6 +4044,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4058,6 +4062,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -39,7 +39,7 @@ index 29efe97b..7366b21d 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -4161,6 +4177,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4179,6 +4195,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          
  
          setAnimationEmotion( inObj->currentEmot );
@@ -53,7 +53,7 @@ index 29efe97b..7366b21d 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -4396,6 +4419,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4414,6 +4437,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -67,7 +67,7 @@ index 29efe97b..7366b21d 100644
              
  
              // rideable object
-@@ -4468,6 +4498,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4486,6 +4516,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  
                  setAnimationEmotion( babyO->currentEmot );

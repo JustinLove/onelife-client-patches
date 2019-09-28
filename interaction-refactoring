@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ced2b852..c6c61d2d 100644
+index 20ec8445..e2d3862b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -19384,6 +19384,916 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -19416,6 +19416,917 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
  
  
  
@@ -775,7 +775,7 @@ index ced2b852..c6c61d2d 100644
 +
 +
 +
-+void LivingLifePage::useAt(int clickDestX, int clickDestY) {
++void LivingLifePage::useAt(int clickDestX, int clickDestY, int destID) {
 +    LiveObject *ourLiveObject = getOurLiveObject();
 +
 +    nextActionEating = false;
@@ -814,9 +814,10 @@ index ced2b852..c6c61d2d 100644
 +            }
 +
 +        nextActionMessageToSend = 
-+            autoSprintf( "USE %d %d#",
++            autoSprintf( "USE %d %d %d#",
 +                         sendX( clickDestX ), 
-+                         sendY( clickDestY ) );
++                         sendY( clickDestY ),
++                         destID );
 +
 +        playerActionTargetX = clickDestX;
 +        playerActionTargetY = clickDestY;
@@ -919,7 +920,7 @@ index ced2b852..c6c61d2d 100644
  
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
-@@ -19828,7 +20738,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19866,7 +20777,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -927,7 +928,7 @@ index ced2b852..c6c61d2d 100644
  
  
      
-@@ -19836,53 +20745,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -19874,53 +20784,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -982,16 +983,16 @@ index ced2b852..c6c61d2d 100644
          }
  
      
-@@ -20245,7 +21108,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20283,7 +21147,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
 -        mustMove = true;
 +        moveTo( clickDestX, clickDestY );
          }
-     else if( ( modClick && ourLiveObject->holdingID != 0 )
-              || killMode
-@@ -20257,193 +21120,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+     else if( ( modClick && 
+                // we can right click on an empty tile or full tile if
+@@ -20302,193 +21166,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1186,7 +1187,7 @@ index ced2b852..c6c61d2d 100644
  
          if( canExecute && ! killMode ) {
              
-@@ -20476,47 +21153,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20528,47 +21206,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1237,7 +1238,7 @@ index ced2b852..c6c61d2d 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -20637,222 +21276,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20697,222 +21337,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1461,7 +1462,7 @@ index ced2b852..c6c61d2d 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 1b25c74b..c5db6757 100644
+index 1b25c74b..fa4e331a 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -379,6 +379,24 @@ typedef struct PointerHitRecord {
@@ -1499,7 +1500,7 @@ index 1b25c74b..c5db6757 100644
 +        void moveTo( int moveDestX, int moveDestY );
 +        char moveNearTo( int clickDestX, int clickDestY );
 +        char prepareForActionMessage( int clickDestX, int clickDestY );
-+        void useAt( int clickDestX, int clickDestY );
++        void useAt( int clickDestX, int clickDestY, int destID = -1 );
 +        void dropAt( int clickDestX, int clickDestY );
 +        void removeAt( int clickDestX, int clickDestY );
 +        void pickupBabyAt( int clickDestX, int clickDestY, int targetID = 0 );

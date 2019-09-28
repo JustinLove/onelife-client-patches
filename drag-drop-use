@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c6c61d2d..f090d2f4 100644
+index e2d3862b..f28bc7d0 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -8882,6 +8882,37 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -8900,6 +8900,37 @@ void LivingLifePage::draw( doublePair inViewCenter,
              }
              
  
@@ -40,7 +40,7 @@ index c6c61d2d..f090d2f4 100644
          
          if( showBugMessage ) {
              
-@@ -21344,6 +21375,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -21405,6 +21436,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  
@@ -66,10 +66,10 @@ index c6c61d2d..f090d2f4 100644
 +            }
 +
 +        if( destID != 0 ) {
-+            useAt( clickDestX, clickDestY );
++            useAt( clickDestX, clickDestY, destID );
 +            }
 +        else if( hasEmptyTileTransition( o->holdingID, floorDestID ) ) {
-+            useAt( clickDestX, clickDestY );
++            useAt( clickDestX, clickDestY, destID );
 +            }
 +        else {
 +            dropAt( clickDestX, clickDestY );

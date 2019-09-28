@@ -137,6 +137,16 @@ r put/take in backpack
 e put in backpack
 w take/cycle in backpack
 
+### show-close-family
+
+Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
+
+There are keybinds to increase (= aka ushifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
+
+`settings/showRelationDistance.ini` (0 to disable this feature)
+`settings/playerMarkKey.ini`
+`settings/playerUnmarkKey.ini`
+
 ### help-overlay
 
 Shows a help overlay for interaction keys and emote keys. Default keybind is 'h', change in `settings/showHelpOverlayKey.ini`
@@ -147,15 +157,9 @@ Food item descriptions show Yum or Meh. Edible items and some precuros items are
 
 `settings/showYumHover.ini` (0 to disable this feature)
 
-### show-close-family
+### show-name-on-death-screen
 
-Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
-
-There are keybinds to increase (= aka ushifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
-
-`settings/showRelationDistance.ini` (0 to disable this feature)
-`settings/playerMarkKey.ini`
-`settings/playerUnmarkKey.ini`
+Shows "R.I.P. <name>" in place of "YOU DIED"
 
 ### Patch Development
 

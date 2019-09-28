@@ -1,0 +1,62 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 26e33f95..d5fb1b96 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -9729,6 +9729,15 @@ char *LivingLifePage::getDeathReason() {
+     }
+ 
+ 
++char *LivingLifePage::getName() {
++    LiveObject* ourLiveObject = getOurLiveObject();
++    if ( ourLiveObject != NULL && ourLiveObject->name != NULL ) {
++            return stringDuplicate( ourLiveObject->name );
++        } else {
++            return NULL;
++        }
++    }
++
+ 
+ void LivingLifePage::handleOurDeath( char inDisconnect ) {
+     
+diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
+index 924bbf3f..6d89a153 100644
+--- a/gameSource/LivingLifePage.h
++++ b/gameSource/LivingLifePage.h
+@@ -464,6 +464,7 @@ class LivingLifePage : public GamePage, public ActionListener {
+         // destroyed by caller
+         // can be NULL
+         char *getDeathReason();
++        char *getName();
+ 
+         // prevent a jitter when frameRateFactor changes due to fps lag
+         void adjustAllFrameCounts( double inOldFrameRateFactor,
+diff --git a/gameSource/game.cpp b/gameSource/game.cpp
+index d9f437a4..cf79c217 100644
+--- a/gameSource/game.cpp
++++ b/gameSource/game.cpp
+@@ -1153,6 +1153,8 @@ static void startConnecting() {
+     }
+ 
+ 
++static char ripMessage[256];
++
+ 
+ void showDiedPage() {
+     userReconnect = false;
+@@ -1165,7 +1167,15 @@ void showDiedPage() {
+     
+     currentGamePage = extendedMessagePage;
+     
+-    extendedMessagePage->setMessageKey( "youDied" );
++    char *name = livingLifePage->getName();
++
++    if (name) {
++      snprintf( ripMessage, 256, "R.I.P. %s", name );
++      delete[] name;
++      extendedMessagePage->setMessageKey( ripMessage );
++    } else {
++      extendedMessagePage->setMessageKey( "youDied" );
++    }
+     
+     char *reason = livingLifePage->getDeathReason();
+     

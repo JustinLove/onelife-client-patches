@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+##
+
+- send additional parameter with USE commands
+- show name on death screen
+
 ## v28
 
 - fix merge conflicts

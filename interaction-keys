@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 128909f4..d093490c 100644
+index ccdcf7b4..5af5eeb3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -132,6 +132,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -96,7 +96,7 @@ index 128909f4..d093490c 100644
      
      initLiveTriggers();
  
-@@ -4026,11 +4106,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4044,11 +4124,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
      
          if( inObj->currentPos.x < trueTargetX ) {
              if( inObj->currentSpeed == 0 ) {
@@ -114,7 +114,7 @@ index 128909f4..d093490c 100644
                  inObj->holdingFlip = true;
                  }
              }
-@@ -17580,9 +17666,15 @@ void LivingLifePage::step() {
+@@ -17612,9 +17698,15 @@ void LivingLifePage::step() {
              // don't change flip unless moving substantially in x
              if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
                  if( o->currentMoveDirection.x > 0 ) {
@@ -130,7 +130,7 @@ index 128909f4..d093490c 100644
                      o->holdingFlip = true;
                      }         
                  }
-@@ -17673,11 +17765,13 @@ void LivingLifePage::step() {
+@@ -17705,11 +17797,13 @@ void LivingLifePage::step() {
                                  o->waypointX = lrint( worldMouseX / CELL_D );
                                  o->waypointY = lrint( worldMouseY / CELL_D );
  
@@ -144,7 +144,7 @@ index 128909f4..d093490c 100644
                                  pointerDown( worldMouseX, worldMouseY );
                                  }
                              }
-@@ -20329,6 +20423,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+@@ -20362,6 +20456,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -182,11 +182,11 @@ index 128909f4..d093490c 100644
 +                            removeAt( c.cellX, c.cellY );
 +                            }
 +                        else {
-+                            useAt( c.cellX, c.cellY );
++                            useAt( c.cellX, c.cellY, c.destID );
 +                            }
 +                        }
 +                    else if( hasEmptyTileTransition( ourLiveObject->holdingID, c.floorDestID ) ) {
-+                        useAt( c.cellX, c.cellY );
++                        useAt( c.cellX, c.cellY, c.destID );
 +                        if( c.destID == 0 || ! getObject( c.destID )->permanent ) {
 +
 +                            // empty cell, or something we can swap held with
@@ -212,12 +212,12 @@ index 128909f4..d093490c 100644
 +                    if( c.destID != 0 &&
 +                        getNumContainerSlots( c.destID ) > 0 &&
 +                        c.destNumContained <= getNumContainerSlots( c.destID ) ) {
-+                        useAt( c.cellX, c.cellY );
++                        useAt( c.cellX, c.cellY, c.destID );
 +                        }
 +                    else if( c.destID == 0 &&
 +                        ourLiveObject->holdingID > 0 &&
 +                        getObject( ourLiveObject->holdingID )->permanent ) {
-+                        useAt( c.cellX, c.cellY );
++                        useAt( c.cellX, c.cellY, c.destID );
 +                        }
 +                    else {
 +                        dropAt( c.cellX, c.cellY );
@@ -244,7 +244,7 @@ index 128909f4..d093490c 100644
 +                        }
 +                    else if( ourLiveObject->holdingID == 0 ) {
 +                        if( hasSpecialBareHandTransition( c.destID ) ) {
-+                            useAt( c.cellX, c.cellY );
++                            useAt( c.cellX, c.cellY, c.destID );
 +                            }
 +                        else {
 +                            removeAt( c.cellX, c.cellY );
@@ -386,7 +386,7 @@ index 128909f4..d093490c 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -21688,7 +22017,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21749,7 +22078,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              // speak
              if( ! TextField::isAnyFocused() ) {
                  
@@ -394,7 +394,7 @@ index 128909f4..d093490c 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -21879,23 +22207,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21940,23 +22268,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -439,7 +439,7 @@ index 128909f4..d093490c 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -22070,6 +22419,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -22131,6 +22480,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
@@ -450,7 +450,7 @@ index 128909f4..d093490c 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index c5db6757..7ea64d2c 100644
+index fa4e331a..d38f3ec6 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -883,6 +883,8 @@ class LivingLifePage : public GamePage, public ActionListener {

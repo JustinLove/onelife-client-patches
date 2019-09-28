@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d093490c..5bfe9773 100644
+index 5af5eeb3..a9a23ffa 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -128,6 +128,10 @@ static int ignoreTallObjects = 1;
@@ -240,7 +240,7 @@ index d093490c..5bfe9773 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -3831,6 +4031,27 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -3849,6 +4049,27 @@ void LivingLifePage::drawMapCell( int inMapI,
  
                  }
  
@@ -268,7 +268,7 @@ index d093490c..5bfe9773 100644
          if( mMapContainedStacks[ inMapI ].size() > 0 ) {
              int *stackArray = 
                  mMapContainedStacks[ inMapI ].getElementArray();
-@@ -4299,6 +4520,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4317,6 +4538,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
              setAnimationHeat( 0.5 );
              }
          
@@ -282,7 +282,7 @@ index d093490c..5bfe9773 100644
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
                              timeVal,
-@@ -4541,6 +4769,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4559,6 +4787,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationHeat( 0.5 );
                  }
              
@@ -296,7 +296,7 @@ index d093490c..5bfe9773 100644
  
              // rideable object
              holdingPos =
-@@ -4620,6 +4855,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4638,6 +4873,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                      setAnimationHeat( 0.5 );
                      }
                  
@@ -310,7 +310,7 @@ index d093490c..5bfe9773 100644
                  doublePair babyHeldPos = holdPos;
                  
                  if( babyO->babyWiggle ) {
-@@ -11752,6 +11994,7 @@ void LivingLifePage::step() {
+@@ -11770,6 +12012,7 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
@@ -318,7 +318,7 @@ index d093490c..5bfe9773 100644
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -11961,6 +12204,14 @@ void LivingLifePage::step() {
+@@ -11979,6 +12222,14 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -333,7 +333,7 @@ index d093490c..5bfe9773 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -13493,6 +13744,7 @@ void LivingLifePage::step() {
+@@ -13511,6 +13762,7 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -341,7 +341,7 @@ index d093490c..5bfe9773 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -16558,6 +16810,8 @@ void LivingLifePage::step() {
+@@ -16590,6 +16842,8 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -350,7 +350,7 @@ index d093490c..5bfe9773 100644
                          }
                      }
                  }
-@@ -20658,6 +20912,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -20691,6 +20945,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -390,7 +390,7 @@ index d093490c..5bfe9773 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -22239,6 +22526,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -22300,6 +22587,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -407,7 +407,7 @@ index d093490c..5bfe9773 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 7ea64d2c..432d4755 100644
+index d38f3ec6..924bbf3f 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -66,6 +66,7 @@ typedef struct LiveObject {
