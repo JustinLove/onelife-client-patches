@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d7d999f6..bc019c60 100644
+index f6e16731..4fc728ec 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -124,6 +124,8 @@ static int maxDoubleClickDrift = 30;

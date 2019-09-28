@@ -2,8 +2,9 @@
 
 ##
 
-- send additional parameter with USE commands
 - show name on death screen
+- send additional parameter with USE commands
+- auto run prefers to travel on roads, instead of ignoring them as it used to
 
 ## v28
 
