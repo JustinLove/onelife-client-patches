@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f6caf6a6..e6d04f07 100644
+index 24ed9815..ff90b695 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -132,6 +132,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -188,7 +188,7 @@ index f6caf6a6..e6d04f07 100644
 +                            }
 +                        }
 +                    else if( hasEmptyTileTransition( ourLiveObject->holdingID, c.floorDestID ) ) {
-+                        useAt( c.cellX, c.cellY, c.destID );
++                        useAt( c.cellX, c.cellY, -1 );
 +                        if( c.destID == 0 || ! getObject( c.destID )->permanent ) {
 +
 +                            // empty cell, or something we can swap held with
@@ -219,7 +219,7 @@ index f6caf6a6..e6d04f07 100644
 +                    else if( c.destID == 0 &&
 +                        ourLiveObject->holdingID > 0 &&
 +                        getObject( ourLiveObject->holdingID )->permanent ) {
-+                        useAt( c.cellX, c.cellY, c.destID );
++                        useAt( c.cellX, c.cellY, -1 );
 +                        }
 +                    else {
 +                        dropAt( c.cellX, c.cellY );

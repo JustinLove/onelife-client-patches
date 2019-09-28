@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 62dc09df..b24959e7 100644
+index 62dc09df..fe3133a5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -8900,6 +8900,37 @@ void LivingLifePage::draw( doublePair inViewCenter,
@@ -69,7 +69,7 @@ index 62dc09df..b24959e7 100644
 +            useAt( clickDestX, clickDestY, destID );
 +            }
 +        else if( hasEmptyTileTransition( o->holdingID, floorDestID ) ) {
-+            useAt( clickDestX, clickDestY, destID );
++            useAt( clickDestX, clickDestY, -1 );
 +            }
 +        else {
 +            dropAt( clickDestX, clickDestY );

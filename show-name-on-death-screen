@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f25e219b..6a534c8e 100644
+index 9fbf1582..6808219d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -9729,6 +9729,15 @@ char *LivingLifePage::getDeathReason() {
