@@ -3,7 +3,7 @@
 ## v30
 
 - Uses male/female names for name completion of held babies. Name files in zips have been updated.
-- Remove inline doublePair syntax from drop drop patch
+- Remove inline doublePair syntax patches
 
 ## v29
 

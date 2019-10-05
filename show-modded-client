@@ -1,14 +1,15 @@
 diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
-index d3d5bbc9..1abe53f5 100644
+index d3d5bbc9..0438be41 100644
 --- a/gameSource/ExistingAccountPage.cpp
 +++ b/gameSource/ExistingAccountPage.cpp
-@@ -708,6 +708,9 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
+@@ -708,6 +708,10 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
          delete [] key;
          delete [] s;
          }
 +
 +    setDrawColor( 1, 1, 1, 1.0 );
-+    mainFont->drawString( "WonLife", {-600, 300}, alignLeft );
++    doublePair wonlife = { -600, 300 };
++    mainFont->drawString( "WonLife", wonlife, alignLeft );
      
  
  
