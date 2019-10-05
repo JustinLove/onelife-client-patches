@@ -70,7 +70,8 @@ Suggests random names or name completions by pressing tab with "I AM " or "YOU A
 
 This requires the name files from the game's source repository. They should also be packed in WonLife zip release.
 
-- server/firstNames.txt
+- server/maleNames.txt
+- server/femaleNames.txt
 - server/lastNames.txt
 
 Depends on curse-name-assist, uses same settings file

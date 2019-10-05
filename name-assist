@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 759dc425..4e8076d8 100644
+index b1a877f2..39b40477 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -22,6 +22,8 @@
@@ -11,7 +11,7 @@ index 759dc425..4e8076d8 100644
  #include "../commonSource/fractalNoise.h"
  
  #include "minorGems/util/SimpleVector.h"
-@@ -2248,6 +2250,8 @@ LivingLifePage::LivingLifePage()
+@@ -2249,6 +2251,8 @@ LivingLifePage::LivingLifePage()
      
      initLiveTriggers();
  
@@ -20,7 +20,7 @@ index 759dc425..4e8076d8 100644
      for( int i=0; i<4; i++ ) {
          char *name = autoSprintf( "ground_t%d.tga", i );    
          mGroundOverlaySprite[i] = loadSprite( name, false );
-@@ -2601,6 +2605,8 @@ LivingLifePage::~LivingLifePage() {
+@@ -2609,6 +2613,8 @@ LivingLifePage::~LivingLifePage() {
  
      freeLiveTriggers();
  
@@ -29,7 +29,7 @@ index 759dc425..4e8076d8 100644
      readyPendingReceivedMessages.deallocateStringElements();
  
      serverFrameMessages.deallocateStringElements();
-@@ -21751,6 +21757,7 @@ void LivingLifePage::fadeErasedCharacters() {
+@@ -21905,6 +21911,7 @@ void LivingLifePage::fadeErasedCharacters() {
      }
  
  
@@ -37,7 +37,7 @@ index 759dc425..4e8076d8 100644
  char originalCompletionText[256] = {0};
  unsigned int originalCompletionLength = 0;
  
-@@ -21762,6 +21769,12 @@ const char* nameDetection(const char * const inString ) {
+@@ -21916,6 +21923,12 @@ const char* nameDetection(const char * const inString ) {
      if( textLength > 6 && strncmp( inString, "CURSE ", 6 ) == 0 ) {
          return inString + 6;
          }
@@ -50,7 +50,7 @@ index 759dc425..4e8076d8 100644
      else {
          nameText = strrchr( inString, ' ' );
          if( nameText == NULL ) {
-@@ -21823,13 +21836,12 @@ void LivingLifePage::nameCompletion() {
+@@ -21977,13 +21990,12 @@ void LivingLifePage::nameCompletion() {
  
      char *curText = mSayField.getText();
  
@@ -69,7 +69,7 @@ index 759dc425..4e8076d8 100644
  
      delete [] curText;
  
-@@ -21842,16 +21854,27 @@ void LivingLifePage::nameCompletion() {
+@@ -21996,16 +22008,46 @@ void LivingLifePage::nameCompletion() {
      // some text to try and find partial name in, try next name
  
      const char* nameText = nameDetection( originalCompletionText );
@@ -80,13 +80,32 @@ index 759dc425..4e8076d8 100644
 +        name = findCloseLastName((char*)nameText);
 +        }
 +    else if( textLength >= 8 && strncmp( curText, "YOU ARE ", 8 ) == 0 ) {
-+        name = findCloseFirstName((char*)nameText);
++        LiveObject *o = getOurLiveObject();
++        LiveObject *babyO = NULL;
++        if( o->holdingID < 0 ) {
++          babyO = getLiveObject( - o->holdingID );
++        } else if ( o->lastHoldingID < 0 ) {
++          babyO = getLiveObject( - o->lastHoldingID );
++        }
++        ObjectRecord *displayObj = babyO ? getObject( babyO->displayID ) : NULL;
++        char male = false;
++        if( displayObj ) {
++            male = displayObj->male;
++        } else {
++            male = randSource.getRandomBoundedInt(0, 1);
++            }
+ 
+-    if( newIndex < 0 || newIndex >= knownNames.size() ) return;
++        if( male ) {
++            name = findCloseMaleName((char*)nameText);
++        } else {
++            name = findCloseFemaleName((char*)nameText);
++            }
 +        }
 +    else {
 +        int curNameIndex = trailingNameMatch( curText );
 +        int newIndex = nameMatching( nameText, curNameIndex );
- 
--    if( newIndex < 0 || newIndex >= knownNames.size() ) return;
++
 +        if( newIndex < 0 || newIndex >= knownNames.size() ) return;
 +        name = knownNames.getElementDirect( newIndex );
 +        }
@@ -101,7 +120,7 @@ index 759dc425..4e8076d8 100644
      unsigned int prefixLength = nameText - originalCompletionText;
      if ( prefixLength > 255 ) return;
      strncpy( say, originalCompletionText, prefixLength );
-@@ -21862,6 +21885,7 @@ void LivingLifePage::nameCompletion() {
+@@ -22016,6 +22058,7 @@ void LivingLifePage::nameCompletion() {
      if (maxLength < prefixLength) return;
      strncpy( say + prefixLength, name, maxLength-prefixLength );
      say[maxLength] = 0;
@@ -110,7 +129,7 @@ index 759dc425..4e8076d8 100644
      }
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index 24537bb0..83f16cee 100644
+index 53d7c3f1..7d7fcc9d 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -26,6 +26,7 @@ accountHmac.cpp \
@@ -123,10 +142,10 @@ index 24537bb0..83f16cee 100644
  ExtendedMessagePage.cpp \
 diff --git a/gameSource/names.cpp b/gameSource/names.cpp
 new file mode 100644
-index 00000000..270437c9
+index 00000000..eb4d4d94
 --- /dev/null
 +++ b/gameSource/names.cpp
-@@ -0,0 +1,241 @@
+@@ -0,0 +1,250 @@
 +#include "names.h"
 +#include "minorGems/util/SimpleVector.h"
 +#include "minorGems/util/StringTree.h"
@@ -139,11 +158,13 @@ index 00000000..270437c9
 +#include <stdio.h>
 +
 +
-+static char *firstNames = NULL;
++static char *firstNamesMale = NULL;
++static char *firstNamesFemale = NULL;
 +static char *lastNames = NULL;
 +
 +// total length of arrays
-+static int firstNamesLen;
++static int firstNamesMaleLen;
++static int firstNamesFemaleLen;
 +static int lastNamesLen;
 +
 +static JenkinsRandomSource nameSource( 340403 );
@@ -188,8 +209,8 @@ index 00000000..270437c9
 +
 +
 +void initNames() {    
-+    firstNames = readNameFile( "firstNames.txt", &firstNamesLen  );
-+    lastNames = readNameFile( "lastNames.txt", &lastNamesLen );
++    firstNamesMale = readNameFile( "maleNames.txt", &firstNamesMaleLen  );
++    firstNamesFemale = readNameFile( "femaleNames.txt", &firstNamesFemaleLen  );
 +    unsigned int timeSeed = 
 +        (unsigned int)fmod( game_getCurrentTime(), UINT_MAX );
 +    nameSource.reseed(timeSeed);
@@ -199,9 +220,13 @@ index 00000000..270437c9
 +
 +
 +void freeNames() {
-+    if( firstNames != NULL ) {
-+        delete [] firstNames;
-+        firstNames = NULL;
++    if( firstNamesMale != NULL ) {
++        delete [] firstNamesMale;
++        firstNamesMale = NULL;
++        }
++    if( firstNamesFemale != NULL ) {
++        delete [] firstNamesFemale;
++        firstNamesFemale = NULL;
 +        }
 +    if( lastNames != NULL ) {
 +        delete [] lastNames;
@@ -359,10 +384,13 @@ index 00000000..270437c9
 +
 +
 +// results destroyed internally when freeNames called
-+const char *findCloseFirstName( char *inString ) {
-+    return findCloseName( inString, firstNames, firstNamesLen );
++const char *findCloseMaleName( char *inString ) {
++    return findCloseName( inString, firstNamesMale, firstNamesMaleLen );
 +    }
 +
++const char *findCloseFemaleName( char *inString ) {
++    return findCloseName( inString, firstNamesFemale, firstNamesFemaleLen );
++    }
 +
 +
 +const char *findCloseLastName( char *inString ) {
@@ -370,10 +398,10 @@ index 00000000..270437c9
 +    }
 diff --git a/gameSource/names.h b/gameSource/names.h
 new file mode 100644
-index 00000000..d3f95559
+index 00000000..9f7b9c30
 --- /dev/null
 +++ b/gameSource/names.h
-@@ -0,0 +1,12 @@
+@@ -0,0 +1,13 @@
 +
 +
 +void initNames();
@@ -383,6 +411,7 @@ index 00000000..d3f95559
 +
 +
 +// results destroyed internally when freeNames called
-+const char *findCloseFirstName( char *inString );
++const char *findCloseMaleName( char *inString );
++const char *findCloseFemaleName( char *inString );
 +
 +const char *findCloseLastName( char *inString );

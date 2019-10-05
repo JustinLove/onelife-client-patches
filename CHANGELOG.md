@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v30
+
+- Uses male/female names for name completion of held babies. Name files in zips have been updated.
+
 ## v29
 
 - show name on death screen

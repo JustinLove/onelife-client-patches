@@ -1,7 +1,8 @@
 WonLife.exe
 README.md
 CHANGELOG.md
-firstNames.txt
+maleNames.txt
+femaleNames.txt
 lastNames.txt
 namesInfo.txt
 settings/screenEdgePushSpeed.ini

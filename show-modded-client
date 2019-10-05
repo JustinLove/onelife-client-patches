@@ -198,11 +198,11 @@ index 00000000..a0d2d2fa
 +    };
 +
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 2b71c106..d9f437a4 100644
+index 2f3c9d45..109dcb07 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 266;
+ int versionNumber = 268;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
@@ -331,7 +331,7 @@ index 2b71c106..d9f437a4 100644
      
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index b8a0fae9..24537bb0 100644
+index 3efc07c2..53d7c3f1 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -43,6 +43,7 @@ ExistingAccountPage.cpp \
