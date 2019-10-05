@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6665633b..18479f92 100644
+index eb39298a..0e35ff10 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -215,6 +215,46 @@ void initKeybinds() {
@@ -163,7 +163,7 @@ index 6665633b..18479f92 100644
                  }
              
              char *stringUpper = stringToUpperCase( des );
-@@ -10667,6 +10761,84 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
+@@ -10668,6 +10762,84 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
  
  
  
@@ -248,7 +248,7 @@ index 6665633b..18479f92 100644
  // inNewID > 0
  static char shouldCreationSoundPlay( int inOldID, int inNewID ) {
      if( inOldID == inNewID ) {
-@@ -17464,6 +17636,9 @@ void LivingLifePage::step() {
+@@ -17465,6 +17637,9 @@ void LivingLifePage::step() {
                      }
                  
                  if( mYumMultiplier != oldYumMultiplier ) {
@@ -258,7 +258,7 @@ index 6665633b..18479f92 100644
                      int oldSlipIndex = -1;
                      int newSlipIndex = 0;
                      
-@@ -17585,6 +17760,12 @@ void LivingLifePage::step() {
+@@ -17586,6 +17761,12 @@ void LivingLifePage::step() {
                  
                      if( lastAteID != 0 ) {
                          ObjectRecord *lastAteObj = getObject( lastAteID );
@@ -271,7 +271,7 @@ index 6665633b..18479f92 100644
                          
                          char *strUpper = stringToUpperCase(
                              lastAteObj->description );
-@@ -19301,6 +19482,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -19302,6 +19483,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          mYumSlipNumberToShow[i] = 0;
          }
      

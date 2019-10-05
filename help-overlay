@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 63254278..6665633b 100644
+index 447f7a25..eb39298a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -212,6 +212,9 @@ void initKeybinds() {
@@ -209,7 +209,7 @@ index 63254278..6665633b 100644
      
      if( showNet ) {
          doublePair pos = lastScreenViewCenter;
-@@ -22797,6 +22969,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -22798,6 +22970,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  

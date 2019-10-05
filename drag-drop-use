@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dbfe040d..1a1b725d 100644
+index dbfe040d..08a0e706 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -8996,6 +8996,37 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -8996,6 +8996,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
              }
              
  
@@ -18,7 +18,8 @@ index dbfe040d..1a1b725d 100644
 +                                      getObjectCenterOffset( heldObject ) );
 +                    }
 +
-+                doublePair heldObjectDrawPos = add( {lastMouseX,lastMouseY},
++                doublePair lastMouse = { lastMouseX, lastMouseY };
++                doublePair heldObjectDrawPos = add( lastMouse,
 +                                                    heldOffset );
 +                setDrawColor( 1, 1, 1, 1 );
 +                setDrawFade( 0.5 );
@@ -40,7 +41,7 @@ index dbfe040d..1a1b725d 100644
          
          if( showBugMessage ) {
              
-@@ -21606,6 +21637,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -21606,6 +21638,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  
