@@ -1,5 +1,16 @@
+
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp             |   20 ++++++++++++++++----
+ gameSource/settings/ignoreTallObjects.ini |    1 +
+ 2 files changed, 17 insertions(+), 4 deletions(-)
+ create mode 100644 gameSource/settings/ignoreTallObjects.ini
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 18d8446e..7123049b 100644
+index b2748b4f..0f7b523f 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -122,6 +122,8 @@ static unsigned int minMouseDownFrames = 30;
@@ -11,7 +22,7 @@ index 18d8446e..7123049b 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2220,6 +2222,8 @@ LivingLifePage::LivingLifePage()
+@@ -2210,6 +2212,8 @@ LivingLifePage::LivingLifePage()
  
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
@@ -20,7 +31,7 @@ index 18d8446e..7123049b 100644
      
      initLiveTriggers();
  
-@@ -18826,7 +18830,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -19108,7 +19112,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
          // all short objects are mouse-through-able
          
          if( oID > 0 && 
@@ -30,7 +41,7 @@ index 18d8446e..7123049b 100644
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -18936,8 +18941,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -19218,8 +19223,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
@@ -43,7 +54,7 @@ index 18d8446e..7123049b 100644
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -18948,7 +18955,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -19230,7 +19237,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }

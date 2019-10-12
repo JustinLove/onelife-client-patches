@@ -40,17 +40,6 @@ While in screen lock (spacebar), hit detection prefers the item in the tile to a
 
 `settings/preferObjectsOverPlayersWithScreenLock.ini` (0 to disable this feature)
 
-### time-transition-hints
-
-Adds TIME + A = B hints for objects with automatic changes, such as fire to coals, dough to leavened dough, etc.
-
-This didnt do as much for finding relevant precursors as I hoped, such as
-
-- Making Milkweed (Milkweed Seed Not Relevant)
-- Making Milkweed Seed (Fruiting Milkweed Not Relevant) - this shouldn't even be time based?
-
-More work is needed.
-
 ### open-say-field-on-typing
 
 Automatically open the say field to talk if you type a text chracter. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.

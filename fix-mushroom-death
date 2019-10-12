@@ -1,8 +1,17 @@
+fix sprites staying scrambled if you die while high
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp |    3 +++
+ 1 file changed, 3 insertions(+)
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 39b40477..e1969b76 100644
+index 595b8270..f517f61d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -15644,6 +15644,9 @@ void LivingLifePage::step() {
+@@ -15914,6 +15914,9 @@ void LivingLifePage::step() {
                  
  
                  remapRandSource.reseed( ourID );

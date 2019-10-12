@@ -1,5 +1,16 @@
+move by default, interact on screen lock
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp                     |   13 +++++++++++--
+ gameSource/settings/clickToMoveLockToInteract.ini |    1 +
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+ create mode 100644 gameSource/settings/clickToMoveLockToInteract.ini
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 08a0e706..2ff3a03e 100644
+index 94c6ce8a..60b47630 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -130,6 +130,7 @@ static int showShiverSweat = 1;
@@ -10,7 +21,7 @@ index 08a0e706..2ff3a03e 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2248,6 +2249,8 @@ LivingLifePage::LivingLifePage()
+@@ -2238,6 +2239,8 @@ LivingLifePage::LivingLifePage()
      openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
  
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
@@ -19,7 +30,7 @@ index 08a0e706..2ff3a03e 100644
      
      initLiveTriggers();
  
-@@ -20693,7 +20696,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20977,7 +20980,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
  
@@ -34,7 +45,7 @@ index 08a0e706..2ff3a03e 100644
  
  
  
-@@ -20837,7 +20846,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21121,7 +21130,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      

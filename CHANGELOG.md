@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v31
+
+- Remove time-transition-hints, as this is supported in vanilla
+
 ## v30
 
 - Uses male/female names for name completion of held babies. Name files in zips have been updated.

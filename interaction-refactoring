@@ -1,8 +1,18 @@
+pointer down function extraction
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp | 1426 +++++++++++++++++++++++++++--------------
+ gameSource/LivingLifePage.h   |   30 +
+ 2 files changed, 955 insertions(+), 501 deletions(-)
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6fc13b9b..dbfe040d 100644
+index bea2e0b3..19e8132c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -19615,6 +19615,917 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -19891,6 +19891,925 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
  
  
  
@@ -238,18 +248,24 @@ index 6fc13b9b..dbfe040d 100644
 +          if( tr == NULL || tr->newTarget == destID ) {
 +              // give hint about dest object which will be unchanged
 +              mNextHintObjectID = destID;
-+              mNextHintIndex = mHintBookmarks[ destID ];
++              if( mHintFilterString == NULL ) {
++                  mNextHintIndex = mHintBookmarks[ destID ];
++                  }
 +              }
 +          else if( tr->newActor > 0 &&
 +                   holdingID != tr->newActor ) {
 +              // give hint about how what we're holding will change
 +              mNextHintObjectID = tr->newActor;
-+              mNextHintIndex = mHintBookmarks[ tr->newTarget ];
++              if( mHintFilterString == NULL ) {
++                  mNextHintIndex = mHintBookmarks[ tr->newTarget ];
++                  }
 +              }
 +          else if( tr->newTarget > 0 ) {
 +              // give hint about changed target after we act on it
 +              mNextHintObjectID = tr->newTarget;
-+              mNextHintIndex = mHintBookmarks[ tr->newTarget ];
++              if( mHintFilterString == NULL ) {
++                  mNextHintIndex = mHintBookmarks[ tr->newTarget ];
++                  }
 +              }
 +          }
 +      else {
@@ -258,7 +274,9 @@ index 6fc13b9b..dbfe040d 100644
 +
 +          if( getTrans( 0, destID ) == NULL ) {
 +              mNextHintObjectID = destID;
-+              mNextHintIndex = mHintBookmarks[ destID ];
++              if( mHintFilterString == NULL ) {
++                  mNextHintIndex = mHintBookmarks[ destID ];
++                  }
 +              }
 +          }
 +    }
@@ -920,7 +938,7 @@ index 6fc13b9b..dbfe040d 100644
  
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
-@@ -20065,7 +20976,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20341,7 +21260,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -928,7 +946,7 @@ index 6fc13b9b..dbfe040d 100644
  
  
      
-@@ -20073,53 +20983,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20349,61 +21267,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -956,18 +974,24 @@ index 6fc13b9b..dbfe040d 100644
 -            if( tr == NULL || tr->newTarget == destID ) {
 -                // give hint about dest object which will be unchanged 
 -                mNextHintObjectID = destID;
--                mNextHintIndex = mHintBookmarks[ destID ];
+-                if( mHintFilterString == NULL ) {
+-                    mNextHintIndex = mHintBookmarks[ destID ];
+-                    }
 -                }
 -            else if( tr->newActor > 0 && 
 -                     ourLiveObject->holdingID != tr->newActor ) {
 -                // give hint about how what we're holding will change
 -                mNextHintObjectID = tr->newActor;
--                mNextHintIndex = mHintBookmarks[ tr->newTarget ];
+-                if( mHintFilterString == NULL ) {
+-                    mNextHintIndex = mHintBookmarks[ tr->newTarget ];
+-                    }
 -                }
 -            else if( tr->newTarget > 0 ) {
 -                // give hint about changed target after we act on it
 -                mNextHintObjectID = tr->newTarget;
--                mNextHintIndex = mHintBookmarks[ tr->newTarget ];
+-                if( mHintFilterString == NULL ) {
+-                    mNextHintIndex = mHintBookmarks[ tr->newTarget ];
+-                    }
 -                }
 -            }
 -        else {
@@ -976,14 +1000,16 @@ index 6fc13b9b..dbfe040d 100644
 -
 -            if( getTrans( 0, destID ) == NULL ) {
 -                mNextHintObjectID = destID;
--                mNextHintIndex = mHintBookmarks[ destID ];
+-                if( mHintFilterString == NULL ) {
+-                    mNextHintIndex = mHintBookmarks[ destID ];
+-                    }
 -                }
 -            }
 +        hintForObjectInteraction( ourLiveObject->holdingID, destID );
          }
  
      
-@@ -20482,7 +21346,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20766,7 +21630,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -992,7 +1018,7 @@ index 6fc13b9b..dbfe040d 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -20501,193 +21365,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20785,193 +21649,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1187,7 +1213,7 @@ index 6fc13b9b..dbfe040d 100644
  
          if( canExecute && ! killMode ) {
              
-@@ -20727,47 +21405,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21011,47 +21689,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1238,7 +1264,7 @@ index 6fc13b9b..dbfe040d 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -20896,222 +21536,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21180,222 +21820,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1462,7 +1488,7 @@ index 6fc13b9b..dbfe040d 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index a01a9e9a..5171e6b1 100644
+index e6057cdf..45c965df 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -379,6 +379,24 @@ typedef struct PointerHitRecord {
@@ -1490,7 +1516,7 @@ index a01a9e9a..5171e6b1 100644
  typedef struct OldArrow {
          int i;
          float heat;
-@@ -864,6 +882,18 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -874,6 +892,18 @@ class LivingLifePage : public GamePage, public ActionListener {
          // forces next pointerDown call to avoid everything but ground clicks
          char mForceGroundClick;
          

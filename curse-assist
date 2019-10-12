@@ -1,8 +1,20 @@
+curse assist
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp             |  177 +++++++++++++++++++++++++++++
+ gameSource/LivingLifePage.h               |    2 
+ gameSource/settings/tabNameCompletion.ini |    1 
+ 3 files changed, 180 insertions(+)
+ create mode 100644 gameSource/settings/tabNameCompletion.ini
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 60fd1ad3..b1a877f2 100644
+index 56be34fb..e83e48df 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1497,6 +1497,9 @@ static LiveObject *getGameObject( int inID ) {
+@@ -1487,6 +1487,9 @@ static LiveObject *getGameObject( int inID ) {
      }
  
  
@@ -12,7 +24,7 @@ index 60fd1ad3..b1a877f2 100644
  
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
-@@ -2241,6 +2244,8 @@ LivingLifePage::LivingLifePage()
+@@ -2231,6 +2234,8 @@ LivingLifePage::LivingLifePage()
  
      openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
      openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
@@ -21,7 +33,7 @@ index 60fd1ad3..b1a877f2 100644
      
      initLiveTriggers();
  
-@@ -2588,6 +2593,7 @@ void LivingLifePage::clearLiveObjects() {
+@@ -2581,6 +2586,7 @@ void LivingLifePage::clearLiveObjects() {
          }
      
      gameObjects.deleteAll();
@@ -29,7 +41,7 @@ index 60fd1ad3..b1a877f2 100644
      }
  
  
-@@ -16697,6 +16703,7 @@ void LivingLifePage::step() {
+@@ -16967,6 +16973,7 @@ void LivingLifePage::step() {
                                  char *nameStart = &( firstSpace[1] );
                                  
                                  existing->name = stringDuplicate( nameStart );
@@ -37,7 +49,7 @@ index 60fd1ad3..b1a877f2 100644
                                  }
                              
                              break;
-@@ -21374,6 +21381,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -21658,6 +21665,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
              break;
          case 9: // tab
@@ -48,7 +60,7 @@ index 60fd1ad3..b1a877f2 100644
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -21837,10 +21848,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
+@@ -22121,10 +22132,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
              delete [] message;
              }
          }
@@ -226,10 +238,10 @@ index 60fd1ad3..b1a877f2 100644
  
  ExtraMapObject LivingLifePage::copyFromMap( int inMapI ) {
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 4e00aee8..a01a9e9a 100644
+index 46affc58..e6057cdf 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -466,6 +466,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -473,6 +473,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          
          virtual void keyUp( unsigned char inASCII );
  

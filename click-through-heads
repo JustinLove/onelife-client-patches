@@ -1,5 +1,16 @@
+click-through-heads
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp                      |   13 +++++++++++++
+ .../preferObjectsOverPlayersWithScreenLock.ini     |    1 +
+ 2 files changed, 14 insertions(+)
+ create mode 100644 gameSource/settings/preferObjectsOverPlayersWithScreenLock.ini
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f0c84200..bc982f71 100644
+index 856e302f..a71beeab 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -126,6 +126,8 @@ static int ignoreTallObjects = 1;
@@ -11,7 +22,7 @@ index f0c84200..bc982f71 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2228,6 +2230,8 @@ LivingLifePage::LivingLifePage()
+@@ -2218,6 +2220,8 @@ LivingLifePage::LivingLifePage()
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
  
      showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
@@ -20,7 +31,7 @@ index f0c84200..bc982f71 100644
      
      initLiveTriggers();
  
-@@ -19084,6 +19088,15 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -19366,6 +19370,15 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      
                      if( dist < minDistThatHits ) {
                          p->hit = true;

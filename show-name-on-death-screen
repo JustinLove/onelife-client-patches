@@ -1,8 +1,19 @@
+show name on death screen
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp |    9 +++++++++
+ gameSource/LivingLifePage.h   |    1 +
+ gameSource/game.cpp           |   12 +++++++++++-
+ 3 files changed, 21 insertions(+), 1 deletion(-)
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 0e35ff10..f5a6e88f 100644
+index dabc3bc3..0eb82cba 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -9826,6 +9826,15 @@ char *LivingLifePage::getDeathReason() {
+@@ -9932,6 +9932,15 @@ char *LivingLifePage::getDeathReason() {
      }
  
  
@@ -19,10 +30,10 @@ index 0e35ff10..f5a6e88f 100644
  void LivingLifePage::handleOurDeath( char inDisconnect ) {
      
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 1d3aaa74..dcfa20c5 100644
+index 3ab7cd2c..a5c12f7f 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -464,6 +464,7 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -471,6 +471,7 @@ class LivingLifePage : public GamePage, public ActionListener {
          // destroyed by caller
          // can be NULL
          char *getDeathReason();

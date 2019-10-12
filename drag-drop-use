@@ -1,8 +1,17 @@
+drag drop use
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp |   64 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dbfe040d..08a0e706 100644
+index 19e8132c..94c6ce8a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -8996,6 +8996,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9102,6 +9102,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
              }
              
  
@@ -41,7 +50,7 @@ index dbfe040d..08a0e706 100644
          
          if( showBugMessage ) {
              
-@@ -21606,6 +21638,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -21890,6 +21922,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  

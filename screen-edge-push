@@ -1,5 +1,16 @@
+
+
+From: Justin Love <git@JustinLove.name>
+
+
+---
+ gameSource/LivingLifePage.cpp               |   47 ++++++++++++++++++++-------
+ gameSource/settings/screenEdgePushSpeed.ini |    1 +
+ 2 files changed, 36 insertions(+), 12 deletions(-)
+ create mode 100644 gameSource/settings/screenEdgePushSpeed.ini
+
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ddbec1cd..2a4ce0e6 100644
+index 55339154..132156ce 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -121,6 +121,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -11,7 +22,7 @@ index ddbec1cd..2a4ce0e6 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -2204,6 +2206,9 @@ LivingLifePage::LivingLifePage()
+@@ -2194,6 +2196,9 @@ LivingLifePage::LivingLifePage()
  
      // allow ctrl-v to paste into chat from clipboard
      mSayField.usePasteShortcut( true );
@@ -21,7 +32,7 @@ index ddbec1cd..2a4ce0e6 100644
      
      initLiveTriggers();
  
-@@ -17177,18 +17182,6 @@ void LivingLifePage::step() {
+@@ -17453,18 +17458,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -40,7 +51,7 @@ index ddbec1cd..2a4ce0e6 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -17229,6 +17222,22 @@ void LivingLifePage::step() {
+@@ -17505,6 +17498,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -63,7 +74,7 @@ index ddbec1cd..2a4ce0e6 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -19381,6 +19390,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -19663,6 +19672,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      
