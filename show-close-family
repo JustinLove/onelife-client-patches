@@ -17,7 +17,7 @@ From: Justin Love <git@JustinLove.name>
  create mode 100644 gameSource/settings/showRelationDistance.ini
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 1b88ffcf..f6a04057 100644
+index 1f8f1160..63d9796a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -128,6 +128,10 @@ static int ignoreTallObjects = 1;
@@ -368,7 +368,7 @@ index 1b88ffcf..f6a04057 100644
                          }
                      }
                  }
-@@ -21175,6 +21429,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -21176,6 +21430,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -408,7 +408,7 @@ index 1b88ffcf..f6a04057 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -22786,6 +23073,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -22787,6 +23074,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  

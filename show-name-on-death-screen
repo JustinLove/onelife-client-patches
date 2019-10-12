@@ -10,7 +10,7 @@ From: Justin Love <git@JustinLove.name>
  3 files changed, 21 insertions(+), 1 deletion(-)
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dabc3bc3..0eb82cba 100644
+index 837efeb1..8e1bcb18 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -9932,6 +9932,15 @@ char *LivingLifePage::getDeathReason() {

@@ -13,7 +13,7 @@ From: Justin Love <git@JustinLove.name>
  create mode 100644 gameSource/settings/interactionKeysEnabled.ini
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 60b47630..1b88ffcf 100644
+index 1b23bc3c..1f8f1160 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -132,6 +132,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -160,7 +160,7 @@ index 60b47630..1b88ffcf 100644
                                  pointerDown( worldMouseX, worldMouseY );
                                  endPos.x = (double)round( worldMouseX / CELL_D);
                                  endPos.y = (double)round( worldMouseY / CELL_D);
-@@ -20846,6 +20940,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+@@ -20847,6 +20941,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -402,7 +402,7 @@ index 60b47630..1b88ffcf 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -22235,7 +22564,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -22236,7 +22565,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              // speak
              if( ! TextField::isAnyFocused() ) {
                  
@@ -410,7 +410,7 @@ index 60b47630..1b88ffcf 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -22426,23 +22754,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -22427,23 +22755,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -455,7 +455,7 @@ index 60b47630..1b88ffcf 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -22617,6 +22966,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -22618,6 +22967,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }

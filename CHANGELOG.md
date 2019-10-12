@@ -3,6 +3,7 @@
 ## v31
 
 - Remove time-transition-hints, as this is supported in vanilla
+- Consider diagonal length when pathing near an action target
 
 ## v30
 

@@ -8,7 +8,7 @@ From: Justin Love <git@JustinLove.name>
  1 file changed, 64 insertions(+)
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 19e8132c..94c6ce8a 100644
+index 9c7ea843..8f6b24d7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -9102,6 +9102,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
@@ -50,7 +50,7 @@ index 19e8132c..94c6ce8a 100644
          
          if( showBugMessage ) {
              
-@@ -21890,6 +21922,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -21891,6 +21923,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  

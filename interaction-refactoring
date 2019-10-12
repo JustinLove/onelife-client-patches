@@ -4,15 +4,15 @@ From: Justin Love <git@JustinLove.name>
 
 
 ---
- gameSource/LivingLifePage.cpp | 1426 +++++++++++++++++++++++++++--------------
+ gameSource/LivingLifePage.cpp | 1427 +++++++++++++++++++++++++++--------------
  gameSource/LivingLifePage.h   |   30 +
- 2 files changed, 955 insertions(+), 501 deletions(-)
+ 2 files changed, 956 insertions(+), 501 deletions(-)
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index bea2e0b3..19e8132c 100644
+index bea2e0b3..9c7ea843 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -19891,6 +19891,925 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -19891,6 +19891,926 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
  
  
  
@@ -551,7 +551,7 @@ index bea2e0b3..19e8132c 100644
 +
 +        char foundEmpty = false;
 +
-+        int closestDist = 9999999;
++        double closestDist = 9999999;
 +
 +        char oldPathExists = ( ourLiveObject->pathToDest != NULL );
 +
@@ -623,16 +623,17 @@ index bea2e0b3..19e8132c 100644
 +                    ourLiveObject->yd = emptyY;
 +
 +                    computePathToDest( ourLiveObject );
++                    double diagPathLength = measurePathLength( ourLiveObject, ourLiveObject->pathLength);
 +
 +                    if( ourLiveObject->pathToDest != NULL &&
-+                        ourLiveObject->pathLength < closestDist ) {
++                        diagPathLength < closestDist ) {
 +
 +                        // can get there
 +
 +                        moveDestX = emptyX;
 +                        moveDestY = emptyY;
 +
-+                        closestDist = ourLiveObject->pathLength;
++                        closestDist = diagPathLength;
 +
 +                        foundEmpty = true;
 +                        }
@@ -938,7 +939,7 @@ index bea2e0b3..19e8132c 100644
  
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
-@@ -20341,7 +21260,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20341,7 +21261,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -946,7 +947,7 @@ index bea2e0b3..19e8132c 100644
  
  
      
-@@ -20349,61 +21267,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20349,61 +21268,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1009,7 +1010,7 @@ index bea2e0b3..19e8132c 100644
          }
  
      
-@@ -20766,7 +21630,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20766,7 +21631,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1018,7 +1019,7 @@ index bea2e0b3..19e8132c 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -20785,193 +21649,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20785,193 +21650,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1213,7 +1214,7 @@ index bea2e0b3..19e8132c 100644
  
          if( canExecute && ! killMode ) {
              
-@@ -21011,47 +21689,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21011,47 +21690,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1264,7 +1265,7 @@ index bea2e0b3..19e8132c 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -21180,222 +21820,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21180,222 +21821,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
