@@ -10,7 +10,7 @@ From: Justin Love <git@JustinLove.name>
  create mode 100644 gameSource/settings/showHelpOverlayKey.ini
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 63d9796a..69b3603b 100644
+index 8a5ea837..0e3e95f3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -212,6 +212,9 @@ void initKeybinds() {
@@ -220,7 +220,7 @@ index 63d9796a..69b3603b 100644
      
      if( showNet ) {
          doublePair pos = lastScreenViewCenter;
-@@ -23083,6 +23255,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -23084,6 +23256,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  

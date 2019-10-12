@@ -10,7 +10,7 @@ From: Justin Love <git@JustinLove.name>
  create mode 100644 gameSource/settings/clickToMoveLockToInteract.ini
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 8f6b24d7..1b23bc3c 100644
+index 453b25b0..c31b4ed0 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -130,6 +130,7 @@ static int showShiverSweat = 1;
@@ -30,7 +30,7 @@ index 8f6b24d7..1b23bc3c 100644
      
      initLiveTriggers();
  
-@@ -20978,7 +20981,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -20979,7 +20982,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
  
@@ -45,7 +45,7 @@ index 8f6b24d7..1b23bc3c 100644
  
  
  
-@@ -21122,7 +21131,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21123,7 +21132,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      

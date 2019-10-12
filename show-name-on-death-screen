@@ -10,7 +10,7 @@ From: Justin Love <git@JustinLove.name>
  3 files changed, 21 insertions(+), 1 deletion(-)
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 837efeb1..8e1bcb18 100644
+index 58a17590..79906fbd 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -9932,6 +9932,15 @@ char *LivingLifePage::getDeathReason() {
@@ -42,7 +42,7 @@ index 3ab7cd2c..a5c12f7f 100644
          // prevent a jitter when frameRateFactor changes due to fps lag
          void adjustAllFrameCounts( double inOldFrameRateFactor,
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 109dcb07..db3ceafc 100644
+index bb282cd2..a3df9daf 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1153,6 +1153,8 @@ static void startConnecting() {

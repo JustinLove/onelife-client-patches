@@ -10,7 +10,7 @@ From: Justin Love <git@JustinLove.name>
  create mode 100644 gameSource/settings/showYumHover.ini
 
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 69b3603b..837efeb1 100644
+index 0e3e95f3..58a17590 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -215,6 +215,46 @@ void initKeybinds() {

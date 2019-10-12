@@ -4,6 +4,7 @@
 
 - Remove time-transition-hints, as this is supported in vanilla
 - Consider diagonal length when pathing near an action target
+- Bugfix for dropping in cell with not orthagonal access
 
 ## v30
 
