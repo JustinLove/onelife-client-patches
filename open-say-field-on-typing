@@ -1,16 +1,3 @@
-open say field on typeing
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp                     |   52 +++++++++++++++++++++
- gameSource/settings/openSayFieldOnTypingLower.ini |    1 
- gameSource/settings/openSayFieldOnTypingUpper.ini |    1 
- 3 files changed, 53 insertions(+), 1 deletion(-)
- create mode 100644 gameSource/settings/openSayFieldOnTypingLower.ini
- create mode 100644 gameSource/settings/openSayFieldOnTypingUpper.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index a71beeab..56be34fb 100644
 --- a/gameSource/LivingLifePage.cpp

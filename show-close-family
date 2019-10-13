@@ -1,21 +1,3 @@
-overlay for family relation
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp                |  296 ++++++++++++++++++++++++++
- gameSource/LivingLifePage.h                  |    6 +
- gameSource/animationBank.cpp                 |   39 +++
- gameSource/animationBank.h                   |    3 
- gameSource/settings/playerMarkKey.ini        |    1 
- gameSource/settings/playerUnmarkKey.ini      |    1 
- gameSource/settings/showRelationDistance.ini |    1 
- 7 files changed, 347 insertions(+)
- create mode 100644 gameSource/settings/playerMarkKey.ini
- create mode 100644 gameSource/settings/playerUnmarkKey.ini
- create mode 100644 gameSource/settings/showRelationDistance.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index f10683ee..8a5ea837 100644
 --- a/gameSource/LivingLifePage.cpp

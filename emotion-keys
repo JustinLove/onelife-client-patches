@@ -1,16 +1,3 @@
-emotion keys
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp       |   20 +++++++++++++++
- gameSource/emotion.cpp              |   48 +++++++++++++++++++++++++++++++++++
- gameSource/emotion.h                |    6 ++++
- gameSource/settings/emotionKeys.ini |   16 ++++++++++++
- 4 files changed, 90 insertions(+)
- create mode 100644 gameSource/settings/emotionKeys.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index f517f61d..bea2e0b3 100644
 --- a/gameSource/LivingLifePage.cpp

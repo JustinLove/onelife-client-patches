@@ -1,16 +1,3 @@
-
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp           |   37 +++++++++++++++++++++
- gameSource/animationBank.cpp            |   55 +++++++++++++++++++++++++++++++
- gameSource/animationBank.h              |    2 +
- gameSource/settings/showShiverSweat.ini |    1 +
- 4 files changed, 95 insertions(+)
- create mode 100644 gameSource/settings/showShiverSweat.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index 0f7b523f..856e302f 100644
 --- a/gameSource/LivingLifePage.cpp

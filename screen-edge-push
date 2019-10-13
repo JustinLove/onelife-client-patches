@@ -1,14 +1,3 @@
-
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp               |   47 ++++++++++++++++++++-------
- gameSource/settings/screenEdgePushSpeed.ini |    1 +
- 2 files changed, 36 insertions(+), 12 deletions(-)
- create mode 100644 gameSource/settings/screenEdgePushSpeed.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index 55339154..132156ce 100644
 --- a/gameSource/LivingLifePage.cpp

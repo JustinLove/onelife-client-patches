@@ -1,14 +1,3 @@
-
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp                |  138 +++++++++++++++++++++-----
- gameSource/settings/maxDoubleClickFrames.ini |    1 
- 2 files changed, 113 insertions(+), 26 deletions(-)
- create mode 100644 gameSource/settings/maxDoubleClickFrames.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index 132156ce..b2748b4f 100644
 --- a/gameSource/LivingLifePage.cpp

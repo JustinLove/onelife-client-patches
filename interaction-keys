@@ -1,17 +1,3 @@
-attempt to differentiate click modes
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp                  |  354 ++++++++++++++++++++++++
- gameSource/LivingLifePage.h                    |    2 
- gameSource/settings/interactionKeys.ini        |   12 +
- gameSource/settings/interactionKeysEnabled.ini |    1 
- 4 files changed, 368 insertions(+), 1 deletion(-)
- create mode 100644 gameSource/settings/interactionKeys.ini
- create mode 100644 gameSource/settings/interactionKeysEnabled.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index c31b4ed0..f10683ee 100644
 --- a/gameSource/LivingLifePage.cpp

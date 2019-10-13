@@ -1,14 +1,3 @@
-help overlay
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp              |  177 ++++++++++++++++++++++++++++
- gameSource/settings/showHelpOverlayKey.ini |    1 
- 2 files changed, 178 insertions(+)
- create mode 100644 gameSource/settings/showHelpOverlayKey.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index 8a5ea837..0e3e95f3 100644
 --- a/gameSource/LivingLifePage.cpp

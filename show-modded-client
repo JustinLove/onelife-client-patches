@@ -1,18 +1,3 @@
-show modded client
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/ExistingAccountPage.cpp  |    4 +
- gameSource/ModUpdateMessagePage.cpp |  126 +++++++++++++++++++++++++++++++++++
- gameSource/ModUpdateMessagePage.h   |   47 +++++++++++++
- gameSource/game.cpp                 |   56 ++++++++++++++--
- gameSource/makeFileList             |    1 
- 5 files changed, 230 insertions(+), 4 deletions(-)
- create mode 100644 gameSource/ModUpdateMessagePage.cpp
- create mode 100644 gameSource/ModUpdateMessagePage.h
-
 diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
 index d3d5bbc9..0438be41 100644
 --- a/gameSource/ExistingAccountPage.cpp

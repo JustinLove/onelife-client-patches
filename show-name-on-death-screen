@@ -1,14 +1,3 @@
-show name on death screen
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp |    9 +++++++++
- gameSource/LivingLifePage.h   |    1 +
- gameSource/game.cpp           |   12 +++++++++++-
- 3 files changed, 21 insertions(+), 1 deletion(-)
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index 58a17590..79906fbd 100644
 --- a/gameSource/LivingLifePage.cpp

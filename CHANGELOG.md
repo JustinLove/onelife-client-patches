@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v32
+
+- Old STG can't import formatted patches
+
 ## v31
 
 - Remove time-transition-hints, as this is supported in vanilla

@@ -1,14 +1,3 @@
-more visible which foods are yum
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp        |  192 +++++++++++++++++++++++++++++++++-
- gameSource/settings/showYumHover.ini |    1 
- 2 files changed, 188 insertions(+), 5 deletions(-)
- create mode 100644 gameSource/settings/showYumHover.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index 0e3e95f3..58a17590 100644
 --- a/gameSource/LivingLifePage.cpp

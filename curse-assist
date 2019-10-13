@@ -1,15 +1,3 @@
-curse assist
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp             |  177 +++++++++++++++++++++++++++++
- gameSource/LivingLifePage.h               |    2 
- gameSource/settings/tabNameCompletion.ini |    1 
- 3 files changed, 180 insertions(+)
- create mode 100644 gameSource/settings/tabNameCompletion.ini
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index 56be34fb..e83e48df 100644
 --- a/gameSource/LivingLifePage.cpp

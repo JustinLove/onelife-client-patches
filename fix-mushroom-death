@@ -1,12 +1,3 @@
-fix sprites staying scrambled if you die while high
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp |    3 +++
- 1 file changed, 3 insertions(+)
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index 595b8270..f517f61d 100644
 --- a/gameSource/LivingLifePage.cpp

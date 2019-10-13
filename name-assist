@@ -1,17 +1,3 @@
-completion for new character names
-
-From: Justin Love <git@JustinLove.name>
-
-
----
- gameSource/LivingLifePage.cpp |   63 +++++++++-
- gameSource/makeFileList       |    1 
- gameSource/names.cpp          |  250 +++++++++++++++++++++++++++++++++++++++++
- gameSource/names.h            |   13 ++
- 4 files changed, 317 insertions(+), 10 deletions(-)
- create mode 100644 gameSource/names.cpp
- create mode 100644 gameSource/names.h
-
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
 index e83e48df..595b8270 100644
 --- a/gameSource/LivingLifePage.cpp
