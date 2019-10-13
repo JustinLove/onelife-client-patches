@@ -3,6 +3,7 @@
 ## v32
 
 - Old STG can't import formatted patches
+- Fix last name suggestions
 
 ## v31
 

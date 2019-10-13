@@ -142,10 +142,10 @@ index 53d7c3f1..7d7fcc9d 100644
  ExtendedMessagePage.cpp \
 diff --git a/gameSource/names.cpp b/gameSource/names.cpp
 new file mode 100644
-index 00000000..eb4d4d94
+index 00000000..4f353ac9
 --- /dev/null
 +++ b/gameSource/names.cpp
-@@ -0,0 +1,250 @@
+@@ -0,0 +1,251 @@
 +#include "names.h"
 +#include "minorGems/util/SimpleVector.h"
 +#include "minorGems/util/StringTree.h"
@@ -211,6 +211,7 @@ index 00000000..eb4d4d94
 +void initNames() {    
 +    firstNamesMale = readNameFile( "maleNames.txt", &firstNamesMaleLen  );
 +    firstNamesFemale = readNameFile( "femaleNames.txt", &firstNamesFemaleLen  );
++    lastNames = readNameFile( "lastNames.txt", &lastNamesLen  );
 +    unsigned int timeSeed = 
 +        (unsigned int)fmod( game_getCurrentTime(), UINT_MAX );
 +    nameSource.reseed(timeSeed);
