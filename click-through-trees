@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 37501d17..3d600bbc 100644
+index ac065d26..a0c89736 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -122,6 +122,8 @@ static unsigned int minMouseDownFrames = 30;
@@ -11,7 +11,7 @@ index 37501d17..3d600bbc 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2241,6 +2243,8 @@ LivingLifePage::LivingLifePage()
+@@ -2285,6 +2287,8 @@ LivingLifePage::LivingLifePage()
  
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
@@ -20,7 +20,7 @@ index 37501d17..3d600bbc 100644
      
      initLiveTriggers();
  
-@@ -19234,7 +19238,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -19325,7 +19329,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
          // all short objects are mouse-through-able
          
          if( oID > 0 && 
@@ -30,7 +30,7 @@ index 37501d17..3d600bbc 100644
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -19344,8 +19349,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -19435,8 +19440,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
@@ -43,7 +43,7 @@ index 37501d17..3d600bbc 100644
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -19356,7 +19363,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -19447,7 +19454,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }
