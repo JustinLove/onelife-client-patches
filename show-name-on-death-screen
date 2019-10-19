@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 58a17590..79906fbd 100644
+index 95e0a21e..569377ef 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -9932,6 +9932,15 @@ char *LivingLifePage::getDeathReason() {
+@@ -10016,6 +10016,15 @@ char *LivingLifePage::getDeathReason() {
      }
  
  
@@ -19,7 +19,7 @@ index 58a17590..79906fbd 100644
  void LivingLifePage::handleOurDeath( char inDisconnect ) {
      
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 3ab7cd2c..a5c12f7f 100644
+index 9f2f479c..c246c2cc 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -471,6 +471,7 @@ class LivingLifePage : public GamePage, public ActionListener {

@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## V33
+
+- patch conflict resolution
+
 ## v32
 
 - Old STG can't import formatted patches
