@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## V34
+
+- using agent `client_wonlife`
+- Supports logging into agent and agentless servers
+
 ## V33
 
 - patch conflict resolution

@@ -10,6 +10,16 @@ Cleans up some noise from my local compile environment that apparently don't bot
 
 Prints "WonLife" on the start page so it's easy to tell when the mod has loaded, or the game has relaunced vanilla. This also adds same-program relaunch and client version mismatch testing.
 
+Sets user agent to `client_wonlife`
+
+### optional-client-tag
+
+Attempts relogin with/without client tag if login fails.
+
+Adds setting for which to try first, but updates setting on successfull login.
+
+`settings/usingClientTag.ini`
+
 ### screen-edge-push
 
 Putting the pointer near the edge of the screen will nudge it over, up the normal limits used by the game engine.

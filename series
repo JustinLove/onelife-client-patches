@@ -1,6 +1,7 @@
-# This series applies on GIT commit c7553c32713ee3197d992eb2aa23c155c021015b
+# This series applies on GIT commit 37769f8c53098443a256b28aff80f8103129c121
 custom-gitignore
 show-modded-client
+optional-client-tag
 screen-edge-push
 autorun
 click-through-trees

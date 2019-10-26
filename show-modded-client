@@ -199,18 +199,27 @@ index 00000000..a0d2d2fa
 +    };
 +
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 4ca73466..dd9f2a99 100644
+index 45db01fa..15a30591 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 272;
+ int versionNumber = 276;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
  
  int binVersionNumber = versionNumber;
  
-@@ -80,6 +82,7 @@ CustomRandomSource randSource( 34957197 );
+@@ -7,7 +9,7 @@ int binVersionNumber = versionNumber;
+ // Please use this tag to describe your client honestly and uniquely
+ // client_official is reserved for the unmodded client
+ // do not include whitespace in your tag
+-const char *clientTag = "client_official";
++const char *clientTag = "client_wonlife";
+ 
+ 
+ 
+@@ -87,6 +89,7 @@ CustomRandomSource randSource( 34957197 );
  
  
  #include "FinalMessagePage.h"
@@ -218,7 +227,7 @@ index 4ca73466..dd9f2a99 100644
  #include "LoadingPage.h"
  #include "AutoUpdatePage.h"
  #include "LivingLifePage.h"
-@@ -131,6 +134,7 @@ int serverSequenceNumber = 0;
+@@ -138,6 +141,7 @@ int serverSequenceNumber = 0;
  
  
  FinalMessagePage *finalMessagePage;
@@ -226,7 +235,7 @@ index 4ca73466..dd9f2a99 100644
  
  ServerActionPage *getServerAddressPage;
  
-@@ -256,12 +260,12 @@ char isNonIntegerScalingAllowed() {
+@@ -263,12 +267,12 @@ char isNonIntegerScalingAllowed() {
  
  
  const char *getWindowTitle() {
@@ -241,7 +250,7 @@ index 4ca73466..dd9f2a99 100644
      }
  
  int getAppVersion() {
-@@ -351,6 +355,22 @@ static void updateDataVersionNumber() {
+@@ -358,6 +362,22 @@ static void updateDataVersionNumber() {
      }
  
  
@@ -264,7 +273,7 @@ index 4ca73466..dd9f2a99 100644
  
  
  #define SETTINGS_HASH_SALT "another_loss"
-@@ -455,6 +475,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -462,6 +482,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      initAgeControl();
      
      updateDataVersionNumber();
@@ -272,7 +281,7 @@ index 4ca73466..dd9f2a99 100644
  
  
      AppLog::printOutNextMessage();
-@@ -616,6 +637,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -623,6 +644,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      
      
      finalMessagePage = new FinalMessagePage;
@@ -280,7 +289,7 @@ index 4ca73466..dd9f2a99 100644
      loadingPage = new LoadingPage;
      autoUpdatePage = new AutoUpdatePage;
      livingLifePage = NULL;
-@@ -716,6 +738,7 @@ void freeFrameDrawer() {
+@@ -723,6 +745,7 @@ void freeFrameDrawer() {
      delete getServerAddressPage;
      
      delete finalMessagePage;
@@ -288,7 +297,7 @@ index 4ca73466..dd9f2a99 100644
      delete loadingPage;
      delete autoUpdatePage;
      if( livingLifePage != NULL ) {
-@@ -1626,8 +1649,24 @@ void drawFrame( char inUpdate ) {
+@@ -1633,8 +1656,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  
@@ -315,7 +324,7 @@ index 4ca73466..dd9f2a99 100644
                  }
              }
          else if( currentGamePage == settingsPage ) {
-@@ -2085,6 +2124,15 @@ void drawFrame( char inUpdate ) {
+@@ -2092,6 +2131,15 @@ void drawFrame( char inUpdate ) {
                  quitGame();
                  }
              }

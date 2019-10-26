@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 568afdae..59009caf 100644
+index 4249a58c..e0b3fe1b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -126,6 +126,8 @@ static int ignoreTallObjects = 1;
+@@ -131,6 +131,8 @@ static int ignoreTallObjects = 1;
  
  static int showShiverSweat = 1;
  
@@ -11,7 +11,7 @@ index 568afdae..59009caf 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2334,6 +2336,8 @@ LivingLifePage::LivingLifePage()
+@@ -2343,6 +2345,8 @@ LivingLifePage::LivingLifePage()
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
  
      showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
@@ -20,7 +20,7 @@ index 568afdae..59009caf 100644
      
      initLiveTriggers();
  
-@@ -19939,6 +19943,15 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -20075,6 +20079,15 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      
                      if( dist < minDistThatHits ) {
                          p->hit = true;

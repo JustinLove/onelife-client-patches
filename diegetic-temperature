@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7d030c80..568afdae 100644
+index d4bb184d..4249a58c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -124,6 +124,8 @@ static int maxDoubleClickDrift = 30;
+@@ -129,6 +129,8 @@ static int maxDoubleClickDrift = 30;
  
  static int ignoreTallObjects = 1;
  
@@ -11,7 +11,7 @@ index 7d030c80..568afdae 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2330,6 +2332,8 @@ LivingLifePage::LivingLifePage()
+@@ -2339,6 +2341,8 @@ LivingLifePage::LivingLifePage()
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -20,7 +20,7 @@ index 7d030c80..568afdae 100644
      
      initLiveTriggers();
  
-@@ -4186,6 +4190,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4195,6 +4199,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -39,7 +39,7 @@ index 7d030c80..568afdae 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -4307,6 +4323,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4316,6 +4332,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          
  
          setAnimationEmotion( inObj->currentEmot );
@@ -53,7 +53,7 @@ index 7d030c80..568afdae 100644
          
          holdingPos =
              drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -4542,6 +4565,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4551,6 +4574,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -67,7 +67,7 @@ index 7d030c80..568afdae 100644
              
  
              // rideable object
-@@ -4614,6 +4644,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4623,6 +4653,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  
                  setAnimationEmotion( babyO->currentEmot );
