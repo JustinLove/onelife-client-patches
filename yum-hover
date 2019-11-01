@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e31d2ead..8401288d 100644
+index 37df27cd..df271a7d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -220,6 +220,46 @@ void initKeybinds() {
@@ -49,7 +49,7 @@ index e31d2ead..8401288d 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2656,7 +2696,10 @@ LivingLifePage::LivingLifePage()
+@@ -2676,7 +2716,10 @@ LivingLifePage::LivingLifePage()
          delete [] keyString;
          }
  
@@ -61,7 +61,7 @@ index e31d2ead..8401288d 100644
      initLiveTriggers();
  
      initNames();
-@@ -4310,6 +4353,11 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4373,6 +4416,11 @@ void LivingLifePage::drawMapCell( int inMapI,
          for( int i=startPass; i<numPasses; i++ ) {
              
              doublePair passPos = pos;
@@ -73,7 +73,7 @@ index e31d2ead..8401288d 100644
              
              if( highlight ) {
                  
-@@ -4412,8 +4460,8 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4475,8 +4523,8 @@ void LivingLifePage::drawMapCell( int inMapI,
  
          if( highlight ) {
              
@@ -83,7 +83,7 @@ index e31d2ead..8401288d 100644
          
              toggleAdditiveBlend( true );
              
-@@ -4433,7 +4481,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4496,7 +4544,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // opaque portion
                      startDrawingThroughStencil( false );
  
@@ -102,7 +102,7 @@ index e31d2ead..8401288d 100644
                      
                      drawSquare( squarePos, squareRad );
                      
-@@ -4447,7 +4505,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4510,7 +4568,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // now first fringe is isolated in stencil
                      startDrawingThroughStencil( false );
  
@@ -121,7 +121,7 @@ index e31d2ead..8401288d 100644
  
                      drawSquare( squarePos, squareRad );
  
-@@ -4461,7 +4529,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4524,7 +4592,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // now second fringe is isolated in stencil
                      startDrawingThroughStencil( false );
                      
@@ -140,7 +140,7 @@ index e31d2ead..8401288d 100644
                      
                      drawSquare( squarePos, squareRad );
                      
-@@ -10045,6 +10123,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10136,6 +10214,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
                          desToDelete = des;
                          }
                      }
@@ -163,7 +163,7 @@ index e31d2ead..8401288d 100644
  
                  
                  if( o->toolSetIndex != -1 ) {                
-@@ -11411,6 +11505,84 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
+@@ -11502,6 +11596,84 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
  
  
  
@@ -248,7 +248,7 @@ index e31d2ead..8401288d 100644
  // inNewID > 0
  static char shouldCreationSoundPlay( int inOldID, int inNewID ) {
      if( inOldID == inNewID ) {
-@@ -18419,6 +18591,9 @@ void LivingLifePage::step() {
+@@ -18570,6 +18742,9 @@ void LivingLifePage::step() {
                      }
                  
                  if( mYumMultiplier != oldYumMultiplier ) {
@@ -258,7 +258,7 @@ index e31d2ead..8401288d 100644
                      int oldSlipIndex = -1;
                      int newSlipIndex = 0;
                      
-@@ -18540,6 +18715,12 @@ void LivingLifePage::step() {
+@@ -18691,6 +18866,12 @@ void LivingLifePage::step() {
                  
                      if( lastAteID != 0 ) {
                          ObjectRecord *lastAteObj = getObject( lastAteID );
@@ -271,7 +271,7 @@ index e31d2ead..8401288d 100644
                          
                          char *strUpper = stringToUpperCase(
                              lastAteObj->description );
-@@ -20284,6 +20465,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -20435,6 +20616,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          mYumSlipNumberToShow[i] = 0;
          }
      

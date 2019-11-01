@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d4bb184d..4249a58c 100644
+index 1aad55a2..cede20b6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -129,6 +129,8 @@ static int maxDoubleClickDrift = 30;
@@ -11,7 +11,7 @@ index d4bb184d..4249a58c 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2339,6 +2341,8 @@ LivingLifePage::LivingLifePage()
+@@ -2359,6 +2361,8 @@ LivingLifePage::LivingLifePage()
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -20,7 +20,7 @@ index d4bb184d..4249a58c 100644
      
      initLiveTriggers();
  
-@@ -4195,6 +4199,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4258,6 +4262,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -39,7 +39,7 @@ index d4bb184d..4249a58c 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -4316,6 +4332,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4379,6 +4395,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          
  
          setAnimationEmotion( inObj->currentEmot );
@@ -51,9 +51,9 @@ index d4bb184d..4249a58c 100644
 +            setAnimationHeat( 0.5 );
 +            }
          
-         holdingPos =
-             drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -4551,6 +4574,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+         // draw young baby lying flat
+         double rot = 0;
+@@ -4642,6 +4665,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -67,7 +67,7 @@ index d4bb184d..4249a58c 100644
              
  
              // rideable object
-@@ -4623,6 +4653,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4714,6 +4744,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  
                  setAnimationEmotion( babyO->currentEmot );
@@ -82,7 +82,7 @@ index d4bb184d..4249a58c 100644
                  doublePair babyHeldPos = holdPos;
                  
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 4eaa68ee..2b961bf2 100644
+index 49c005ac..d59be49d 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -68,6 +68,9 @@ static char outputMouthFrames = false;
@@ -125,9 +125,9 @@ index 4eaa68ee..2b961bf2 100644
 +
 +
  
- ObjectAnimPack drawObjectAnimPacked( 
-     int inObjectID,
-@@ -3058,6 +3072,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+ static char shouldHidePersonShadows = false;
+ 
+@@ -3075,6 +3089,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  
@@ -176,7 +176,7 @@ index 4eaa68ee..2b961bf2 100644
          if( ! skipSprite && 
              inClothing.backShoe != NULL && i == backFootIndex ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index b81e7ea8..9f50695a 100644
+index a1eead33..7de4df0e 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
 @@ -445,6 +445,8 @@ char isSoundUsedByAnim( int inSoundID );
