@@ -1,11 +1,16 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 407336b7..5222ada9 100644
+index 2ac65142..15a44ec3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -20768,6 +20768,927 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -20823,6 +20823,920 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+         }
+     }
  
- 
- 
++static void savePlayerPath( LiveObject *inObject );
++static void restoreSavedPath( LiveObject *inObject );
++static void freeSavedPath();
++
++
 +void LivingLifePage::checkForCellHit( CellHitRecord& inRecord ) {
 +    float worldMouseX, worldMouseY;
 +
@@ -276,6 +281,14 @@ index 407336b7..5222ada9 100644
 +void LivingLifePage::moveTo(int moveDestX, int moveDestY) {
 +    LiveObject *ourLiveObject = getOurLiveObject();
 +
++    char oldPathExists = ( ourLiveObject->pathToDest != NULL );
++
++    if( oldPathExists ) {
++        savePlayerPath( ourLiveObject );
++        }
++
++
++
 +    int oldXD = ourLiveObject->xd;
 +    int oldYD = ourLiveObject->yd;
 +
@@ -284,20 +297,6 @@ index 407336b7..5222ada9 100644
 +    ourLiveObject->destTruncated = false;
 +
 +    ourLiveObject->inMotion = true;
-+
-+
-+    GridPos *oldPathToDest = NULL;
-+    int oldPathLength = 0;
-+    int oldCurrentPathStep = 0;
-+
-+    if( ourLiveObject->pathToDest != NULL ) {
-+        oldPathLength = ourLiveObject->pathLength;
-+        oldPathToDest = new GridPos[ oldPathLength ];
-+
-+        memcpy( oldPathToDest, ourLiveObject->pathToDest,
-+                sizeof( GridPos ) * ourLiveObject->pathLength );
-+        oldCurrentPathStep = ourLiveObject->currentPathStep;
-+        }
 +
 +
 +    computePathToDest( ourLiveObject );
@@ -312,14 +311,9 @@ index 407336b7..5222ada9 100644
 +        if( ourLiveObject->xd == oldXD && ourLiveObject->yd == oldYD ) {
 +            // completely blocked in, no path at all toward dest
 +
-+            if( oldPathToDest != NULL ) {
-+                // restore it
-+                ourLiveObject->pathToDest = oldPathToDest;
-+                ourLiveObject->pathLength = oldPathLength;
-+                ourLiveObject->currentPathStep = oldCurrentPathStep;
-+                oldPathToDest = NULL;
++            if( oldPathExists ) {
++                restoreSavedPath( ourLiveObject );
 +                }
-+
 +
 +
 +            // ignore click
@@ -328,13 +322,13 @@ index 407336b7..5222ada9 100644
 +                delete [] nextActionMessageToSend;
 +                nextActionMessageToSend = NULL;
 +                }
-+            ourLiveObject->inMotion = false;
++
 +            return;
 +            }
 +
-+        if( oldPathToDest != NULL ) {
-+            delete [] oldPathToDest;
-+            oldPathToDest = NULL;
++        if( oldPathExists ) {
++            freeSavedPath();
++            oldPathExists = false;
 +            }
 +
 +
@@ -424,9 +418,8 @@ index 407336b7..5222ada9 100644
 +        }
 +
 +
-+    if( oldPathToDest != NULL ) {
-+        delete [] oldPathToDest;
-+        oldPathToDest = NULL;
++    if( oldPathExists ) {
++        freeSavedPath();
 +        }
 +
 +
@@ -544,6 +537,9 @@ index 407336b7..5222ada9 100644
 +        double closestDist = 9999999;
 +
 +        char oldPathExists = ( ourLiveObject->pathToDest != NULL );
++        if( oldPathExists ) {
++            savePlayerPath( ourLiveObject );
++            }
 +
 +        // don't consider dest spot itself generally
 +        int nStart = 1;
@@ -679,8 +675,7 @@ index 407336b7..5222ada9 100644
 +              }
 +
 +        if( oldPathExists ) {
-+            // restore it
-+            computePathToDest( ourLiveObject );
++            restoreSavedPath( ourLiveObject );
 +            }
 +
 +        if( foundEmpty ) {
@@ -925,12 +920,10 @@ index 407336b7..5222ada9 100644
 +
 +    moveNearTo( clickDestX, clickDestY );
 +    }
-+
-+
  
- void LivingLifePage::pointerDown( float inX, float inY ) {
-     lastMouseX = inX;
-@@ -21244,7 +22165,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+ 
+ 
+@@ -21369,7 +22283,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -938,7 +931,7 @@ index 407336b7..5222ada9 100644
  
  
      
-@@ -21252,61 +22172,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21377,61 +22290,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1001,7 +994,7 @@ index 407336b7..5222ada9 100644
          }
  
      
-@@ -21669,7 +22535,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21794,7 +22653,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1010,7 +1003,7 @@ index 407336b7..5222ada9 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -21688,193 +22554,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -21813,196 +22672,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1054,6 +1047,10 @@ index 407336b7..5222ada9 100644
 -            int closestDist = 9999999;
 -
 -            char oldPathExists = ( ourLiveObject->pathToDest != NULL );
+-
+-            if( oldPathExists ) {
+-                savePlayerPath( ourLiveObject );
+-                }
 -            
 -            // don't consider dest spot itself generally
 -            int nStart = 1;
@@ -1189,8 +1186,7 @@ index 407336b7..5222ada9 100644
 -            
 -            
 -            if( oldPathExists ) {
--                // restore it
--                computePathToDest( ourLiveObject );
+-                restoreSavedPath( ourLiveObject );
 -                }
 -
 -            if( foundEmpty ) {
@@ -1205,7 +1201,7 @@ index 407336b7..5222ada9 100644
  
          if( canExecute && ! killMode ) {
              
-@@ -21914,47 +22594,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22042,47 +22712,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1256,7 +1252,7 @@ index 407336b7..5222ada9 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -22083,222 +22725,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22211,214 +22843,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1265,7 +1261,15 @@ index 407336b7..5222ada9 100644
 -
 -    
 -    if( mustMove ) {
+-
+-        char oldPathExists = ( ourLiveObject->pathToDest != NULL );
 -        
+-        if( oldPathExists ) {
+-            savePlayerPath( ourLiveObject );
+-            }
+-
+-
+-
 -        int oldXD = ourLiveObject->xd;
 -        int oldYD = ourLiveObject->yd;
 -        
@@ -1273,21 +1277,11 @@ index 407336b7..5222ada9 100644
 -        ourLiveObject->yd = moveDestY;
 -        ourLiveObject->destTruncated = false;
 -
+-
+-
+-        
 -        ourLiveObject->inMotion = true;
 -
--
--        GridPos *oldPathToDest = NULL;
--        int oldPathLength = 0;
--        int oldCurrentPathStep = 0;
--        
--        if( ourLiveObject->pathToDest != NULL ) {
--            oldPathLength = ourLiveObject->pathLength;
--            oldPathToDest = new GridPos[ oldPathLength ];
--
--            memcpy( oldPathToDest, ourLiveObject->pathToDest,
--                    sizeof( GridPos ) * ourLiveObject->pathLength );
--            oldCurrentPathStep = ourLiveObject->currentPathStep;
--            }
 -        
 -
 -        computePathToDest( ourLiveObject );
@@ -1302,14 +1296,9 @@ index 407336b7..5222ada9 100644
 -            if( ourLiveObject->xd == oldXD && ourLiveObject->yd == oldYD ) {
 -                // completely blocked in, no path at all toward dest
 -                
--                if( oldPathToDest != NULL ) {
--                    // restore it
--                    ourLiveObject->pathToDest = oldPathToDest;
--                    ourLiveObject->pathLength = oldPathLength;
--                    ourLiveObject->currentPathStep = oldCurrentPathStep;
--                    oldPathToDest = NULL;
+-                if( oldPathExists ) {
+-                    restoreSavedPath( ourLiveObject );
 -                    }
--                
 -                    
 -
 -                // ignore click
@@ -1318,13 +1307,13 @@ index 407336b7..5222ada9 100644
 -                    delete [] nextActionMessageToSend;
 -                    nextActionMessageToSend = NULL;
 -                    }
--                ourLiveObject->inMotion = false;
+-                
 -                return;
 -                }
 -
--            if( oldPathToDest != NULL ) {
--                delete [] oldPathToDest;
--                oldPathToDest = NULL;
+-            if( oldPathExists ) {
+-                freeSavedPath();
+-                oldPathExists = false;
 -                }
 -            
 -
@@ -1414,9 +1403,8 @@ index 407336b7..5222ada9 100644
 -            }
 -        
 -        
--        if( oldPathToDest != NULL ) {
--            delete [] oldPathToDest;
--            oldPathToDest = NULL;
+-        if( oldPathExists ) {
+-            freeSavedPath();
 -            }
 -            
 -
@@ -1480,10 +1468,10 @@ index 407336b7..5222ada9 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 0034a756..e8df6682 100644
+index ef24e64a..9421c8cc 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -381,6 +381,24 @@ typedef struct PointerHitRecord {
+@@ -383,6 +383,24 @@ typedef struct PointerHitRecord {
  
  
  
@@ -1508,7 +1496,7 @@ index 0034a756..e8df6682 100644
  typedef struct OldArrow {
          int i;
          float heat;
-@@ -876,6 +894,18 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -878,6 +896,18 @@ class LivingLifePage : public GamePage, public ActionListener {
          // forces next pointerDown call to avoid everything but ground clicks
          char mForceGroundClick;
          

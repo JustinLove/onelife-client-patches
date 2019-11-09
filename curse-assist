@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 0fd59e96..4e4782af 100644
+index 6ac5279e..e22fb405 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1631,6 +1631,9 @@ static LiveObject *getGameObject( int inID ) {
@@ -29,7 +29,7 @@ index 0fd59e96..4e4782af 100644
      }
  
  
-@@ -17744,6 +17750,7 @@ void LivingLifePage::step() {
+@@ -17799,6 +17805,7 @@ void LivingLifePage::step() {
                                  char *nameStart = &( firstSpace[1] );
                                  
                                  existing->name = stringDuplicate( nameStart );
@@ -37,7 +37,7 @@ index 0fd59e96..4e4782af 100644
                                  }
                              
                              break;
-@@ -22565,6 +22572,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -22685,6 +22692,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
              break;
          case 9: // tab
@@ -48,7 +48,7 @@ index 0fd59e96..4e4782af 100644
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -23050,10 +23061,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
+@@ -23170,10 +23181,176 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
              delete [] message;
              }
          }
@@ -226,10 +226,10 @@ index 0fd59e96..4e4782af 100644
  
  ExtraMapObject LivingLifePage::copyFromMap( int inMapI ) {
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 51511df5..0034a756 100644
+index eda6a56f..ef24e64a 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -475,6 +475,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -477,6 +477,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          
          virtual void keyUp( unsigned char inASCII );
  

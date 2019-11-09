@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a4cef457..3a598f04 100644
+index c81a76c5..671f246b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -133,6 +133,10 @@ static int ignoreTallObjects = 1;
@@ -310,7 +310,7 @@ index a4cef457..3a598f04 100644
                  doublePair babyHeldPos = holdPos;
                  
                  if( babyO->babyWiggle ) {
-@@ -12899,6 +13141,7 @@ void LivingLifePage::step() {
+@@ -12952,6 +13194,7 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
@@ -318,7 +318,7 @@ index a4cef457..3a598f04 100644
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -13108,6 +13351,14 @@ void LivingLifePage::step() {
+@@ -13161,6 +13404,14 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -333,7 +333,7 @@ index a4cef457..3a598f04 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -14641,6 +14892,7 @@ void LivingLifePage::step() {
+@@ -14694,6 +14945,7 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -341,7 +341,7 @@ index a4cef457..3a598f04 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -17785,6 +18037,8 @@ void LivingLifePage::step() {
+@@ -17840,6 +18092,8 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -350,7 +350,7 @@ index a4cef457..3a598f04 100644
                          }
                      }
                  }
-@@ -22054,6 +22308,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -22172,6 +22426,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -390,7 +390,7 @@ index a4cef457..3a598f04 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -23710,6 +23997,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -23828,6 +24115,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -407,7 +407,7 @@ index a4cef457..3a598f04 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 9cc2cba8..36a2a665 100644
+index bb59a201..e9fd1bab 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -66,6 +66,7 @@ typedef struct LiveObject {
@@ -418,7 +418,7 @@ index 9cc2cba8..36a2a665 100644
          
          // -1 war
          // 0 neutral
-@@ -336,6 +337,8 @@ typedef struct GraveInfo {
+@@ -338,6 +339,8 @@ typedef struct GraveInfo {
          // used to detect when we've moused away, even if not mousing
          // over another grave
          double lastMouseOverTime;
@@ -427,7 +427,7 @@ index 9cc2cba8..36a2a665 100644
      } GraveInfo;
          
  
-@@ -909,6 +912,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -911,6 +914,9 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          bool tryInteractionKeys( char inASCII );
  
@@ -438,7 +438,7 @@ index 9cc2cba8..36a2a665 100644
          LiveObject *getOurLiveObject();
          LiveObject *getLiveObject( int inID );
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index d59be49d..ebcd6386 100644
+index 5fed138e..b737e0c1 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -71,6 +71,8 @@ static char mouthFrameOutputStarted = false;
@@ -499,10 +499,11 @@ index d59be49d..ebcd6386 100644
  
  static char shouldHidePersonShadows = false;
  
-@@ -2433,6 +2463,15 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
-                 animHeadRotDelta *= -1;
-                 }
-             
+@@ -2436,6 +2466,16 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+                 animHeadPos = rotate( animHeadPos, -2 * M_PI * inRot );
+                 animHeadRotDelta += inRot;
+                 }            
++            
 +            // Family hearts
 +            if( obj->person &&
 +                drawWithRelationDistance >= 0 &&
