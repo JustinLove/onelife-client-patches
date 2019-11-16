@@ -161,6 +161,10 @@ Food item descriptions show Yum or Meh. Edible items and some precuros items are
 
 Shows "R.I.P. <name>" in place of "YOU DIED"
 
+### show-burn-rate
+
+Displays a line above the food bar, that shows approximate pip-per-minute drain.
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

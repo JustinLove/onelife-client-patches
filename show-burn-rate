@@ -1,0 +1,82 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 2b56575a..62597039 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -5584,6 +5584,48 @@ void LivingLifePage::drawHungerMaxFillLine( doublePair inAteWordsPos,
+ 
+ 
+ 
++void drawBurnRateLine( doublePair rightEdge,
++                                            double length,
++                                            SpriteHandle *inBarSprites,
++                                            SpriteHandle *inDashSprites ) {
++    
++    
++    
++    doublePair leftEdge = rightEdge;
++    leftEdge.x -= length;
++
++    doublePair dashPos = rightEdge;
++            
++    dashPos.y -= 6;
++    dashPos.x -= 5;
++
++    int numDashes = 0;
++            
++    JenkinsRandomSource dashRandSource( 0 );
++
++    while( dashPos.x > leftEdge.x + 9 ) {
++        
++        drawSprite( inDashSprites[ numDashes %
++                                   NUM_HUNGER_DASHES ], 
++                    dashPos );
++        dashPos.x -= 15;
++        numDashes += 1;
++        
++        // correct shortness of last one
++        if( numDashes % NUM_HUNGER_DASHES == 0 ) {
++            dashPos.x += 3;
++            }
++        }
++            
++    // draw one more to connect to bar
++    //dashPos.x = leftEdge.x + 6;
++    //drawSprite( inDashSprites[ numDashes %
++                               //NUM_HUNGER_DASHES ], 
++                //dashPos );
++    }
++
++
++
+ 
+ static void drawLine( SpriteHandle inSegmentSprite,
+                       doublePair inStart, doublePair inEnd,
+@@ -9740,7 +9782,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+ 
+         for( int i=0; i<ourLiveObject->foodCapacity; i++ ) {
+             doublePair pos = { lastScreenViewCenter.x - 590, 
+-                               lastScreenViewCenter.y - 334 };
++                               lastScreenViewCenter.y - 336 };
+         
+             pos.x += i * 30;
+             drawSprite( 
+@@ -9949,6 +9991,19 @@ void LivingLifePage::draw( doublePair inViewCenter,
+             toggleMultiplicativeBlend( false );
+             }
+ 
++        doublePair burnPos = { lastScreenViewCenter.x - 610, 
++                           lastScreenViewCenter.y - 319 };
++    
++        burnPos.x += ourLiveObject->foodStore * 30;
++        toggleMultiplicativeBlend( true );
++        setDrawColor( 1, 1, 1, 1 );
++
++        drawBurnRateLine( burnPos, 
++                               30.0 * (60.0 / ourLiveObject->foodDrainTime),
++                               mHungerBarSprites,
++                               mHungerDashSprites );
++
++        toggleMultiplicativeBlend( false );
+ 
+         doublePair tipPos = { lastScreenViewCenter.x, 
+                            lastScreenViewCenter.y - 313 };

@@ -1,11 +1,16 @@
 # Changelog - feature changes
 
-## V34
+## v36
+
+- show pip-per-minute burn rate as line above food bar
+- test removing patch to auto move ends. It was causing flip-flop on short moves.
+
+## v34
 
 - using agent `client_wonlife`
 - Supports logging into agent and agentless servers
 
-## V33
+## v33
 
 - patch conflict resolution
 
