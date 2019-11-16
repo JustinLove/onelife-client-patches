@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e148c320..f4b7e7f1 100644
+index 105f7da2..bf506442 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -129,6 +129,8 @@ static int maxDoubleClickDrift = 30;
@@ -11,7 +11,7 @@ index e148c320..f4b7e7f1 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2359,6 +2361,8 @@ LivingLifePage::LivingLifePage()
+@@ -2411,6 +2413,8 @@ LivingLifePage::LivingLifePage()
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -20,7 +20,7 @@ index e148c320..f4b7e7f1 100644
      
      initLiveTriggers();
  
-@@ -4258,6 +4262,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4312,6 +4316,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -39,10 +39,10 @@ index e148c320..f4b7e7f1 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -4379,6 +4395,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
-         
+@@ -4434,6 +4450,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          setAnimationEmotion( inObj->currentEmot );
+         addExtraAnimationEmotions( &( inObj->permanentEmots ) );
 +
 +        if ( showShiverSweat ) {
 +            setAnimationHeat( inObj->heat );
@@ -53,7 +53,7 @@ index e148c320..f4b7e7f1 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -4642,6 +4665,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4697,6 +4720,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  
                  restoreSkipDrawing( heldObject );
                  }
@@ -67,22 +67,22 @@ index e148c320..f4b7e7f1 100644
              
  
              // rideable object
-@@ -4714,6 +4744,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
-                 
-                 
+@@ -4771,6 +4801,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationEmotion( babyO->currentEmot );
-+
+                 addExtraAnimationEmotions( &( babyO->permanentEmots ) );
+ 
 +                if ( showShiverSweat ) {
 +                    setAnimationHeat( inObj->heat );
 +                    }
 +                else {
 +                    setAnimationHeat( 0.5 );
 +                    }
-                 
++                
                  doublePair babyHeldPos = holdPos;
                  
+                 if( babyO->babyWiggle ) {
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index ea0c73d4..5fed138e 100644
+index cab1aacd..57f2e415 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -68,6 +68,9 @@ static char outputMouthFrames = false;
@@ -93,9 +93,9 @@ index ea0c73d4..5fed138e 100644
 +const char *sweatDropFile = "sprites/88.tga"; // - 0.12
 +
  
- 
- 
-@@ -149,6 +152,7 @@ int initAnimationBankStart( char *outRebuildingCache ) {
+ static char shouldFileBeCached( char *inFileName ) {
+     if( strstr( inFileName, ".txt" ) != NULL ) {
+@@ -157,6 +160,7 @@ int initAnimationBankStart( char *outRebuildingCache ) {
          
          }
      
@@ -103,7 +103,7 @@ index ea0c73d4..5fed138e 100644
  
  
      maxID = 0;
-@@ -512,6 +516,9 @@ void freeAnimationBank() {
+@@ -521,6 +525,9 @@ void freeAnimationBank() {
          delete [] mouthShapes;
          mouthShapes = NULL;
          }
@@ -113,7 +113,7 @@ index ea0c73d4..5fed138e 100644
      
      if( mouthShapeFrameList != NULL ) {
          delete [] mouthShapeFrameList;
-@@ -1202,6 +1209,13 @@ void setClothingHighlightFades( float *inFades ) {
+@@ -1219,6 +1226,13 @@ void setClothingHighlightFades( float *inFades ) {
      }
  
  
@@ -127,7 +127,7 @@ index ea0c73d4..5fed138e 100644
  
  static char shouldHidePersonShadows = false;
  
-@@ -3082,6 +3096,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -3107,6 +3121,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  
@@ -176,18 +176,17 @@ index ea0c73d4..5fed138e 100644
          if( ! skipSprite && 
              inClothing.backShoe != NULL && i == backFootIndex ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index a1eead33..7de4df0e 100644
+index be4026ef..34f18413 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
-@@ -445,6 +445,8 @@ char isSoundUsedByAnim( int inSoundID );
- // sets emotion for subsequent drawObjectAnim calls, or NULL for no emotion
- void setAnimationEmotion( Emotion *inEmotion );
+@@ -449,6 +449,7 @@ void setAnimationEmotion( Emotion *inEmotion );
+ // add an extra layer of emotion for drawObjectAnim calls
+ void addExtraAnimationEmotions( SimpleVector<Emotion*> *inList );
  
 +void setAnimationHeat( float heat );
-+
+ 
  
  // sets fade values for clothing highlights of next drawn person
- // or NULL for no clothing highlights
 diff --git a/gameSource/settings/showShiverSweat.ini b/gameSource/settings/showShiverSweat.ini
 new file mode 100644
 index 00000000..d00491fd

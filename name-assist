@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e22fb405..fe3a3cc6 100644
+index fdff4c42..724e4dd5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -22,6 +22,8 @@
@@ -11,7 +11,7 @@ index e22fb405..fe3a3cc6 100644
  #include "../commonSource/fractalNoise.h"
  
  #include "minorGems/util/SimpleVector.h"
-@@ -2384,6 +2386,8 @@ LivingLifePage::LivingLifePage()
+@@ -2436,6 +2438,8 @@ LivingLifePage::LivingLifePage()
      
      initLiveTriggers();
  
@@ -20,7 +20,7 @@ index e22fb405..fe3a3cc6 100644
      for( int i=0; i<4; i++ ) {
          char *name = autoSprintf( "ground_t%d.tga", i );    
          mGroundOverlaySprite[i] = loadSprite( name, false );
-@@ -2749,6 +2753,8 @@ LivingLifePage::~LivingLifePage() {
+@@ -2803,6 +2807,8 @@ LivingLifePage::~LivingLifePage() {
  
      freeLiveTriggers();
  
@@ -29,7 +29,7 @@ index e22fb405..fe3a3cc6 100644
      readyPendingReceivedMessages.deallocateStringElements();
  
      serverFrameMessages.deallocateStringElements();
-@@ -23238,6 +23244,7 @@ void LivingLifePage::fadeErasedCharacters() {
+@@ -23420,6 +23426,7 @@ void LivingLifePage::fadeErasedCharacters() {
      }
  
  
@@ -37,7 +37,7 @@ index e22fb405..fe3a3cc6 100644
  char originalCompletionText[256] = {0};
  unsigned int originalCompletionLength = 0;
  
-@@ -23249,6 +23256,12 @@ const char* nameDetection(const char * const inString ) {
+@@ -23431,6 +23438,12 @@ const char* nameDetection(const char * const inString ) {
      if( textLength > 6 && strncmp( inString, "CURSE ", 6 ) == 0 ) {
          return inString + 6;
          }
@@ -50,7 +50,7 @@ index e22fb405..fe3a3cc6 100644
      else {
          nameText = strrchr( inString, ' ' );
          if( nameText == NULL ) {
-@@ -23310,13 +23323,12 @@ void LivingLifePage::nameCompletion() {
+@@ -23492,13 +23505,12 @@ void LivingLifePage::nameCompletion() {
  
      char *curText = mSayField.getText();
  
@@ -69,7 +69,7 @@ index e22fb405..fe3a3cc6 100644
  
      delete [] curText;
  
-@@ -23329,16 +23341,46 @@ void LivingLifePage::nameCompletion() {
+@@ -23511,16 +23523,46 @@ void LivingLifePage::nameCompletion() {
      // some text to try and find partial name in, try next name
  
      const char* nameText = nameDetection( originalCompletionText );
@@ -120,7 +120,7 @@ index e22fb405..fe3a3cc6 100644
      unsigned int prefixLength = nameText - originalCompletionText;
      if ( prefixLength > 255 ) return;
      strncpy( say, originalCompletionText, prefixLength );
-@@ -23349,6 +23391,7 @@ void LivingLifePage::nameCompletion() {
+@@ -23531,6 +23573,7 @@ void LivingLifePage::nameCompletion() {
      if (maxLength < prefixLength) return;
      strncpy( say + prefixLength, name, maxLength-prefixLength );
      say[maxLength] = 0;

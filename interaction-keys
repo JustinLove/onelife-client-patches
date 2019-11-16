@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ffaa852c..c81a76c5 100644
+index 30c036fd..dec0d3cf 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -137,6 +137,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -85,7 +85,7 @@ index ffaa852c..c81a76c5 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2386,6 +2462,10 @@ LivingLifePage::LivingLifePage()
+@@ -2438,6 +2514,10 @@ LivingLifePage::LivingLifePage()
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
@@ -96,7 +96,7 @@ index ffaa852c..c81a76c5 100644
      
      initLiveTriggers();
  
-@@ -4244,11 +4324,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4298,11 +4378,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
      
          if( inObj->currentPos.x < trueTargetX ) {
              if( inObj->currentSpeed == 0 ) {
@@ -114,7 +114,7 @@ index ffaa852c..c81a76c5 100644
                  inObj->holdingFlip = true;
                  }
              }
-@@ -18939,9 +19025,15 @@ void LivingLifePage::step() {
+@@ -19092,9 +19178,15 @@ void LivingLifePage::step() {
              // don't change flip unless moving substantially in x
              if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
                  if( o->currentMoveDirection.x > 0 ) {
@@ -130,23 +130,7 @@ index ffaa852c..c81a76c5 100644
                      o->holdingFlip = true;
                      }         
                  }
-@@ -19062,6 +19154,7 @@ void LivingLifePage::step() {
-                                 o->waypointX = lrint( worldMouseX / CELL_D );
-                                 o->waypointY = lrint( worldMouseY / CELL_D );
- 
-+                                printf( "close autorun\n" );
-                                 pointerDown( fakeClick.x, fakeClick.y );
-                                 endPos.x = (double)round( fakeClick.x / CELL_D);
-                                 endPos.y = (double)round( fakeClick.y / CELL_D);
-@@ -19069,6 +19162,7 @@ void LivingLifePage::step() {
-                                 o->useWaypoint = false;
-                                 }
-                             else {
-+                                printf( "normal autorun\n" );
-                                 pointerDown( worldMouseX, worldMouseY );
-                                 endPos.x = (double)round( worldMouseX / CELL_D);
-                                 endPos.y = (double)round( worldMouseY / CELL_D);
-@@ -21843,6 +21937,241 @@ static void freeSavedPath() {
+@@ -22023,6 +22115,241 @@ static void freeSavedPath() {
  
  
  
@@ -388,7 +372,7 @@ index ffaa852c..c81a76c5 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -23269,7 +23598,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -23451,7 +23778,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -396,7 +380,7 @@ index ffaa852c..c81a76c5 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -23468,23 +23796,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -23650,23 +23976,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -441,7 +425,7 @@ index ffaa852c..c81a76c5 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -23662,6 +24011,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -23844,6 +24191,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
@@ -452,10 +436,10 @@ index ffaa852c..c81a76c5 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 9421c8cc..bb59a201 100644
+index cc7bab89..e7744b63 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -909,6 +909,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -914,6 +914,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void useOnOtherAt( int clickDestX, int clickDestY, int targetID = 0 );
          void killAt( int clickDestX, int clickDestY, int targetID = 0 );
  
