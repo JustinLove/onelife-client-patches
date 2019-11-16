@@ -1,6 +1,6 @@
 # Changelog - feature changes
 
-## v36
+## v37
 
 - show pip-per-minute burn rate as line above food bar
 - test removing patch to auto move ends. It was causing flip-flop on short moves.
