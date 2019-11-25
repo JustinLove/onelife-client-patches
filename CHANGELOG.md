@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v38
+
+- WIP tool UI
+
 ## v37
 
 - show pip-per-minute burn rate as line above food bar

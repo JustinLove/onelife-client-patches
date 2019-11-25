@@ -1,0 +1,358 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index fa52a88c..523bcff4 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -2705,6 +2705,7 @@ LivingLifePage::LivingLifePage()
+           mObjectPicker( &objectPickable, +510, 90 ) {
+ 
+ 
++
+     if( SettingsManager::getIntSetting( "useSteamUpdate", 0 ) ) {
+         mUsingSteam = true;
+         }
+@@ -2863,6 +2864,20 @@ LivingLifePage::LivingLifePage()
+         mYumSlipPosTargetOffset[i] = mYumSlipHideOffset[i];
+         }
+     
++    for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
++        mToolBoxHideOffset[i].x = -600 + i * 64;
++        mToolBoxHideOffset[i].y = 430;
++        
++        mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++        mToolBoxPosOffset[i] = mToolBoxHideOffset[i];
++        mToolBoxTool[i] = -1;
++        }
++
++    mKnownToolSlips = 0;
++    mKnownToolSlots = 0;
++    mRemainingToolSlots = 0;
++    mTotalToolSlots = 0;
++    mForceToolRefresh = false;
+ 
+     for( int i=0; i<3; i++ ) {    
+         mHungerSlipShowOffsets[i].x = -540;
+@@ -2984,7 +2999,6 @@ LivingLifePage::LivingLifePage()
+     mLiveTutorialTriggerNumber = -1;
+ 
+ 
+-
+     mMap = new int[ mMapD * mMapD ];
+     mMapBiomes = new int[ mMapD * mMapD ];
+     mMapFloors = new int[ mMapD * mMapD ];
+@@ -9852,6 +9866,50 @@ void LivingLifePage::draw( doublePair inViewCenter,
+         }
+ 
+ 
++    for( int i=NUM_TOOL_SHEETS-1; i>=0; i-- ) {
++        if( ! equal( mToolBoxPosOffset[i], mToolBoxHideOffset[i] ) 
++            &&
++            true ) {
++            
++            doublePair toolPos  = 
++                add( mToolBoxPosOffset[i], lastScreenViewCenter );
++            
++
++            setDrawColor( 1, 1, 1, 1 );
++            drawSprite( mYumSlipSprites[(i*723%11)%NUM_YUM_SLIPS], toolPos, 1.0, 0.5 );
++
++            toolPos.y += 3;
++            
++            if( mToolBoxTool[i] > -1 ) {
++                ObjectRecord *knownObject = getObject( mToolBoxTool[i] );
++                doublePair knownObjectDrawPos = toolPos;
++
++                double scale = 120 / (double)getMaxDiameter( knownObject );
++
++                if( !knownObject->person ) {
++                    knownObjectDrawPos = sub( knownObjectDrawPos,
++                                      mult( getObjectVisualCenter( knownObject ), scale) );
++                    }
++
++                setDrawColor( 0.1, 0.1, 0.1, 1 );
++                int limit = knownObject->numSprites;
++                for( int i=0; i<limit; i++ ) {
++                    if( knownObject->spriteSkipDrawing != NULL &&
++                        knownObject->spriteSkipDrawing[i] ) {
++                        continue;
++                        }
++                    doublePair spritePos = mult( knownObject->spritePos[i], scale);
++                    doublePair pos = add( spritePos, knownObjectDrawPos );
++                    int spriteID = knownObject->sprites[i];
++                    double rot = knownObject->spriteRot[i];
++                    drawSpriteAlphaOnly( getSprite( spriteID ), pos, scale, rot, 
++                                knownObject->spriteHFlip[i]);
++                    }
++                }
++            }
++        }
++
++
+ 
+     // now draw tutorial sheets
+     if( mTutorialNumber > 0 || mGlobalMessageShowing )
+@@ -9911,7 +9969,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+ 
+ 
+ 
+-
+     
+     setDrawColor( 0, 0, 0, 1 );
+     for( int i=0; i<mErasedNoteChars.size(); i++ ) {
+@@ -12932,6 +12989,32 @@ void LivingLifePage::step() {
+             }
+         
+ 
++        if( mCurrentHintObjectID != mNextHintObjectID ||
++            mForceHintRefresh || mForceToolRefresh ) {
++            mForceToolRefresh = false;
++
++            ObjectRecord *o = getObject( mNextHintObjectID );
++            int showSlots = mKnownToolSlips + mRemainingToolSlots;
++            float offset = 1220.0 / showSlots;
++            if (offset > 64) offset = 64;
++            int i = 0;
++            if( o && o->toolSetIndex != -1 ) {
++                for( ;i < NUM_TOOL_SHEETS && i < mKnownToolSlips;i++ ) {
++                    mToolBoxHideOffset[i].x = -600 + (int)(i * offset);
++                    mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++                    mToolBoxTargetOffset[i].y -= 100;
++                    }
++                for( int r = 0;i < NUM_TOOL_SHEETS && r < mRemainingToolSlots;r++,i++ ) {
++                    mToolBoxHideOffset[i].x = -600 + (int)(i * offset);
++                    mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++                    mToolBoxTargetOffset[i].y -= 100;
++                    }
++                }
++            for( ;i < NUM_TOOL_SHEETS;i++ ) {
++                mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++                }
++            }
++
+ 
+         if( ( isHintFilterStringInvalid() &&
+               mCurrentHintObjectID != mNextHintObjectID ) ||
+@@ -13138,6 +13221,45 @@ void LivingLifePage::step() {
+         }
+ 
+ 
++
++    for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
++        doublePair target = mToolBoxTargetOffset[i];
++        
++        if( ! equal( mToolBoxPosOffset[i], target) ) {
++            doublePair delta = 
++                sub( target, mToolBoxPosOffset[i] );
++            
++            double d = distance( target, mToolBoxPosOffset[i] );
++            
++            
++            if( d <= 1 ) {
++                mToolBoxPosOffset[i] = target;
++                }
++            else {
++                int speed = frameRateFactor * 4;
++                
++                if( d < 8 ) {
++                    speed = lrint( frameRateFactor * d / 2 );
++                    }
++                
++                if( speed > d ) {
++                    speed = floor( d );
++                    }
++                
++                if( speed < 1 ) {
++                    speed = 1;
++                    }
++                
++                doublePair dir = normalize( delta );
++                
++                mToolBoxPosOffset[i] = 
++                    add( mToolBoxPosOffset[i],
++                         mult( dir, speed ) );
++                }
++            
++            }
++        }
++
+     // should new tutorial sheet be shown?
+     if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
+         && ourObject != NULL ) {
+@@ -13613,7 +13735,34 @@ void LivingLifePage::step() {
+                 char *spaces = replaceAll( lines, "_", " ", &found );
+                 
+                 delete [] lines;
+-                
++
++                int remaining = -1;
++                int total = -1;
++                sscanf( spaces, "YOU LEARNED %*[^.].##%d OF %d TOOL SLOTS ARE LEFT.", &remaining, &total);
++
++                if( total > 0 ) {
++                    mRemainingToolSlots = remaining;
++                    mTotalToolSlots = total;
++                    mKnownToolSlots = total - remaining;
++                    }
++                else if( strncmp( spaces, "YOU LEARNED ", 12 ) == 0 ) {
++                    mRemainingToolSlots = 0;
++                    mKnownToolSlots = mTotalToolSlots;
++                    }
++
++
++                total = -1;
++                sscanf( spaces, "YOUR GENETIC FITNESS SCORE IS %*f##"
++                                "YOU GET %*d BONUS TOOL %*s "
++                                "FOR A TOTAL OF %d %*s", &total);
++                if( total > 0 ) {
++                    mRemainingToolSlots = total;
++                    mTotalToolSlots = total;
++                    mKnownToolSlots = 0;
++                    }
++
++                printf("%d - %d\n", mRemainingToolSlots, mKnownToolSlots);
++                mForceHintRefresh = true;
+ 
+                 mGlobalMessageShowing = true;
+                 mGlobalMessageStartTime = game_getCurrentTime();
+@@ -13723,9 +13872,13 @@ void LivingLifePage::step() {
+                     
+                     if( o != NULL ) {
+                         o->toolLearned = true;
++                        if( !o->isUseDummy && mKnownToolSlips < NUM_TOOL_SHEETS ) {
++                            mToolBoxTool[mKnownToolSlips++] = id;
++                            }
+                         }
+                     }
+                 }
++            printf("tools %d\n", mKnownToolSlips);
+             tokens->deallocateStringElements();
+             delete tokens;
+             }
+@@ -16411,6 +16564,15 @@ void LivingLifePage::step() {
+                                 mNextHintIndex = 
+                                     mHintBookmarks[ mNextHintObjectID ];
+                                 }
++                            mForceToolRefresh = true;
++                            }
++
++                        if( o.id == ourID &&
++                            existing->holdingID == 0 &&
++                            existing->holdingID != oldHeld ) {
++                            for( int i = 0;i < NUM_TOOL_SHEETS;i++ ) {
++                                mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++                                }
+                             }
+                         
+ 
+@@ -21130,6 +21292,17 @@ void LivingLifePage::makeActive( char inFresh ) {
+         }
+     
+     
++    for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
++        mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++        mToolBoxPosOffset[i] = mToolBoxHideOffset[i];
++        mToolBoxTool[i] = -1;
++        }
++
++    mKnownToolSlips = 0;
++    mKnownToolSlots = 0;
++    mRemainingToolSlots = 0;
++    mTotalToolSlots = 0;
++    mForceToolRefresh = false;
+ 
+     savingSpeechEnabled = SettingsManager::getIntSetting( "allowSavingSpeech",
+                                                           0 );
+diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
+index 5a94e2b8..66fc5846 100644
+--- a/gameSource/LivingLifePage.h
++++ b/gameSource/LivingLifePage.h
+@@ -32,6 +32,7 @@
+ 
+ #define NUM_HINT_SHEETS 4
+ 
++#define NUM_TOOL_SHEETS 100
+ 
+ #define NUM_HOME_ARROWS 8
+ 
+@@ -789,7 +790,17 @@ class LivingLifePage : public GamePage, public ActionListener {
+         int mLiveTutorialSheetIndex;
+         int mLiveTutorialTriggerNumber;
+ 
+-
++        // offset from current view center
++        doublePair mToolBoxHideOffset[NUM_TOOL_SHEETS];
++        doublePair mToolBoxPosOffset[NUM_TOOL_SHEETS];
++        doublePair mToolBoxTargetOffset[NUM_TOOL_SHEETS];
++        int mToolBoxTool[NUM_TOOL_SHEETS];
++
++        int mKnownToolSlips;
++        int mKnownToolSlots;
++        int mRemainingToolSlots;
++        int mTotalToolSlots;
++        char mForceToolRefresh;
+ 
+         // relative to map corner, but not necessary in bounds
+         // of locally stored map
+diff --git a/gameSource/objectBank.cpp b/gameSource/objectBank.cpp
+index 9ec14a2b..fe9238b9 100644
+--- a/gameSource/objectBank.cpp
++++ b/gameSource/objectBank.cpp
+@@ -4689,6 +4689,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
+ 
+ 
+ 
++doublePair getObjectVisualCenter( ObjectRecord *inObject ) {
++    double minX = 128;
++    double maxX = -128;
++    double minY = 128;
++    double maxY = -128;
++
++    for( int i=0; i<inObject->numSprites; i++ ) {
++        doublePair pos = inObject->spritePos[i];
++        SpriteRecord *spriteRec = getSpriteRecord( inObject->sprites[i] );
++
++        // don't count transparent sprites as part of size
++        if( spriteRec != NULL && ! spriteRec->multiplicativeBlend ) {
++            double left = pos.x - spriteRec->w/2;
++            double right = pos.x + spriteRec->w/2;
++            double top = pos.y + spriteRec->h/2;
++            double bottom = pos.y - spriteRec->h/2;
++
++            if( left < minX ) {
++                minX = left;
++                }
++            if( right > maxX ) {
++                maxX = right;
++                }
++            if( top > maxY ) {
++                maxY = top;
++                }
++            if( bottom < minY ) {
++                minY = bottom;
++                }
++            }
++        }
++
++    doublePair center = { (maxX + minX)/2, (maxY + minY)/2 };
++    return center;
++    }
++
++
+ int getObjectHeight( int inObjectID ) {
+     ObjectRecord *o = getObject( inObjectID );
+     
+diff --git a/gameSource/objectBank.h b/gameSource/objectBank.h
+index b523b993..11d07d73 100644
+--- a/gameSource/objectBank.h
++++ b/gameSource/objectBank.h
+@@ -711,6 +711,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
+ int getMaxDiameter( ObjectRecord *inObject );
+ 
+ 
++// get the visual center of an object based on
++// sprite position and dimensions
++doublePair getObjectVisualCenter( ObjectRecord *inObject );
++
++
+ // gets estimate of object height from cell center
+ int getObjectHeight( int inObjectID );
+ 

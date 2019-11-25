@@ -165,6 +165,12 @@ Shows "R.I.P. <name>" in place of "YOU DIED"
 
 Displays a line above the food bar, that shows approximate pip-per-minute drain.
 
+### show-learned-tools
+
+Displays your learned tools and an empty slip for each available tool slot along the top of the screen. Similar to yum, the tool UI is only shown when holding or examining a tool. Available slots depends on the text announcements and may not be available after reconnects and such.
+
+This is patch is still work-in-progress, but currently serviceable.
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

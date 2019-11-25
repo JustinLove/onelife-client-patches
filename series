@@ -1,4 +1,4 @@
-# This series applies on GIT commit d3f30c6d9e3c5379b1d665ffb2e2b10ae44d2edd
+# This series applies on GIT commit 824289798fc9370cef840271851c9743eabb2c99
 custom-gitignore
 show-modded-client
 optional-client-tag
@@ -21,3 +21,4 @@ help-overlay
 yum-hover
 show-name-on-death-screen
 show-burn-rate
+show-learned-tools
