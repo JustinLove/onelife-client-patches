@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 3973dcf9..1f1c6f62 100644
+index dd401959..6ff1bc73 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -22,6 +22,8 @@
@@ -29,7 +29,7 @@ index 3973dcf9..1f1c6f62 100644
      readyPendingReceivedMessages.deallocateStringElements();
  
      serverFrameMessages.deallocateStringElements();
-@@ -23750,6 +23756,7 @@ void LivingLifePage::fadeErasedCharacters() {
+@@ -23757,6 +23763,7 @@ void LivingLifePage::fadeErasedCharacters() {
      }
  
  
@@ -37,7 +37,7 @@ index 3973dcf9..1f1c6f62 100644
  char originalCompletionText[256] = {0};
  unsigned int originalCompletionLength = 0;
  
-@@ -23761,6 +23768,12 @@ const char* nameDetection(const char * const inString ) {
+@@ -23768,6 +23775,12 @@ const char* nameDetection(const char * const inString ) {
      if( textLength > 6 && strncmp( inString, "CURSE ", 6 ) == 0 ) {
          return inString + 6;
          }
@@ -50,7 +50,7 @@ index 3973dcf9..1f1c6f62 100644
      else {
          nameText = strrchr( inString, ' ' );
          if( nameText == NULL ) {
-@@ -23822,13 +23835,12 @@ void LivingLifePage::nameCompletion() {
+@@ -23829,13 +23842,12 @@ void LivingLifePage::nameCompletion() {
  
      char *curText = mSayField.getText();
  
@@ -69,7 +69,7 @@ index 3973dcf9..1f1c6f62 100644
  
      delete [] curText;
  
-@@ -23841,16 +23853,46 @@ void LivingLifePage::nameCompletion() {
+@@ -23848,16 +23860,46 @@ void LivingLifePage::nameCompletion() {
      // some text to try and find partial name in, try next name
  
      const char* nameText = nameDetection( originalCompletionText );
@@ -120,7 +120,7 @@ index 3973dcf9..1f1c6f62 100644
      unsigned int prefixLength = nameText - originalCompletionText;
      if ( prefixLength > 255 ) return;
      strncpy( say, originalCompletionText, prefixLength );
-@@ -23861,6 +23903,7 @@ void LivingLifePage::nameCompletion() {
+@@ -23868,6 +23910,7 @@ void LivingLifePage::nameCompletion() {
      if (maxLength < prefixLength) return;
      strncpy( say + prefixLength, name, maxLength-prefixLength );
      say[maxLength] = 0;

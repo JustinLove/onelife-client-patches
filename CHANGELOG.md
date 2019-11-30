@@ -3,6 +3,7 @@
 ## v39
 
 - Tool UI centered, improved physicality, blocks learned messages, settings file.
+- Screen edge push can push farther.
 
 ## v38
 

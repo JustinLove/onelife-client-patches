@@ -22,7 +22,7 @@ Adds setting for which to try first, but updates setting on successful login.
 
 ### screen-edge-push
 
-Putting the pointer near the edge of the screen will nudge it over, up the normal limits used by the game engine.
+Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
 
 Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
 

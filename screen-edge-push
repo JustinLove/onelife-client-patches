@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 375800d9..2b67656c 100644
+index 375800d9..f8d69bc5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -126,6 +126,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -21,7 +21,28 @@ index 375800d9..2b67656c 100644
      
      initLiveTriggers();
  
-@@ -18830,18 +18835,6 @@ void LivingLifePage::step() {
+@@ -18787,6 +18792,10 @@ void LivingLifePage::step() {
+ 
+         doublePair screenTargetPos = 
+             mult( targetObjectPos, CELL_D );
++
++        int viewLeftRightLimit = viewWidth/2;
++        int viewBottomLimit = viewHeight/2;
++        int viewTopLimit = viewHeight/3;
+         
+         if( vogMode ) {
+             // don't adjust camera
+@@ -18799,6 +18808,9 @@ void LivingLifePage::step() {
+             // moving
+ 
+             // push camera out in front
++            viewLeftRightLimit = viewWidth/2;
++            viewBottomLimit = viewHeight/5;
++            viewTopLimit = viewHeight/6;
+             
+ 
+             double moveScale = 40 * cameraFollowsObject->currentSpeed;
+@@ -18830,18 +18842,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -40,30 +61,30 @@ index 375800d9..2b67656c 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -18882,6 +18875,22 @@ void LivingLifePage::step() {
+@@ -18882,6 +18882,22 @@ void LivingLifePage::step() {
              
              }
  
 +        screenCenterPlayerOffsetX -= lastScreenEdge.x * screenEdgePushSpeed;
 +        screenCenterPlayerOffsetY -= lastScreenEdge.y * screenEdgePushSpeed;
 +
-+        if( screenCenterPlayerOffsetX < -viewWidth / 3 ) {
-+            screenCenterPlayerOffsetX =  -viewWidth / 3;
++        if( screenCenterPlayerOffsetX < -viewLeftRightLimit ) {
++            screenCenterPlayerOffsetX =  -viewLeftRightLimit;
 +            }
-+        if( screenCenterPlayerOffsetX >  viewWidth / 3 ) {
-+            screenCenterPlayerOffsetX =  viewWidth / 3;
++        if( screenCenterPlayerOffsetX >  viewLeftRightLimit ) {
++            screenCenterPlayerOffsetX =  viewLeftRightLimit;
 +            }
-+        if( screenCenterPlayerOffsetY < -viewHeight / 5 ) {
-+            screenCenterPlayerOffsetY =  -viewHeight / 5;
++        if( screenCenterPlayerOffsetY < -viewBottomLimit ) {
++            screenCenterPlayerOffsetY =  -viewBottomLimit;
 +            }
-+        if( screenCenterPlayerOffsetY >  viewHeight / 6 ) {
-+            screenCenterPlayerOffsetY =  viewHeight / 6;
++        if( screenCenterPlayerOffsetY >  viewTopLimit ) {
++            screenCenterPlayerOffsetY =  viewTopLimit;
 +            }
 +
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -21105,6 +21114,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -21105,6 +21121,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      
