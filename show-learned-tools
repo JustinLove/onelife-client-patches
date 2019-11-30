@@ -1,8 +1,17 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index fa52a88c..523bcff4 100644
+index 5fa43508..c7adf30e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -2705,6 +2705,7 @@ LivingLifePage::LivingLifePage()
+@@ -141,6 +141,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
+ 
+ static int clickToMoveLockToInteract = 0;
+ 
++static int showLearnedTools = 1;
++
+ 
+ typedef enum interactionKeyType {
+     IK_MOVE,
+@@ -2705,6 +2707,7 @@ LivingLifePage::LivingLifePage()
            mObjectPicker( &objectPickable, +510, 90 ) {
  
  
@@ -10,17 +19,27 @@ index fa52a88c..523bcff4 100644
      if( SettingsManager::getIntSetting( "useSteamUpdate", 0 ) ) {
          mUsingSteam = true;
          }
-@@ -2863,6 +2864,20 @@ LivingLifePage::LivingLifePage()
+@@ -2773,6 +2776,8 @@ LivingLifePage::LivingLifePage()
+ 
+     clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
+ 
++    showLearnedTools = SettingsManager::getIntSetting( "showLearnedTools", 1 );
++
+     interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
+ 
+     initKeybinds();
+@@ -2863,6 +2868,21 @@ LivingLifePage::LivingLifePage()
          mYumSlipPosTargetOffset[i] = mYumSlipHideOffset[i];
          }
      
 +    for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
-+        mToolBoxHideOffset[i].x = -600 + i * 64;
++        mToolBoxHideOffset[i].x = 0;
 +        mToolBoxHideOffset[i].y = 430;
 +        
 +        mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
 +        mToolBoxPosOffset[i] = mToolBoxHideOffset[i];
 +        mToolBoxTool[i] = -1;
++        mToolBoxFreeze[i] = 0;
 +        }
 +
 +    mKnownToolSlips = 0;
@@ -31,7 +50,7 @@ index fa52a88c..523bcff4 100644
  
      for( int i=0; i<3; i++ ) {    
          mHungerSlipShowOffsets[i].x = -540;
-@@ -2984,7 +2999,6 @@ LivingLifePage::LivingLifePage()
+@@ -2984,7 +3004,6 @@ LivingLifePage::LivingLifePage()
      mLiveTutorialTriggerNumber = -1;
  
  
@@ -39,10 +58,97 @@ index fa52a88c..523bcff4 100644
      mMap = new int[ mMapD * mMapD ];
      mMapBiomes = new int[ mMapD * mMapD ];
      mMapFloors = new int[ mMapD * mMapD ];
-@@ -9852,6 +9866,50 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -3600,6 +3619,77 @@ void drawHelpOverlay() {
+ 
+ 
+ 
++doublePair getSayPosition( LiveObject* liveObject ) {
++    doublePair pos;
++    if( liveObject == NULL ) {
++        pos = {0,84};
++        return pos;
++        }
++    pos = mult( liveObject->currentPos, CELL_D );
++
++    pos.y += 84;
++
++    ObjectRecord *displayObj = getObject( liveObject->displayID );
++
++
++    double age = computeCurrentAge( liveObject );
++    
++    doublePair headPos = 
++        displayObj->spritePos[ getHeadIndex( displayObj, age ) ];
++    
++    doublePair bodyPos = 
++        displayObj->spritePos[ getBodyIndex( displayObj, age ) ];
++
++    doublePair frontFootPos = 
++        displayObj->spritePos[ getFrontFootIndex( displayObj, age ) ];
++    
++    headPos = add( headPos, 
++                   getAgeHeadOffset( age, headPos, 
++                                     bodyPos, frontFootPos ) );
++    headPos = add( headPos,
++                   getAgeBodyOffset( age, bodyPos ) );
++    
++    pos.y += headPos.y;
++    return pos;
++    }
++
++
++void LivingLifePage::drawToolSlip( doublePair inPos, int inTool, int slip ) {
++    setDrawColor( 1, 1, 1, 1 );
++
++    drawSprite( mYumSlipSprites[slip%NUM_YUM_SLIPS], inPos, 1.0, 0.5 );
++
++    inPos.y += 3;
++    
++    if( inTool > -1 ) {
++        ObjectRecord *knownObject = getObject( inTool );
++        doublePair knownObjectDrawPos = inPos;
++
++        double scale = 120 / (double)getMaxDiameter( knownObject );
++
++        if( !knownObject->person ) {
++            knownObjectDrawPos = sub( knownObjectDrawPos,
++                              mult( getObjectVisualCenter( knownObject ), scale) );
++            }
++
++        setDrawColor( 0.1, 0.1, 0.1, 1 );
++        int limit = knownObject->numSprites;
++        for( int i=0; i<limit; i++ ) {
++            if( knownObject->spriteSkipDrawing != NULL &&
++                knownObject->spriteSkipDrawing[i] ) {
++                continue;
++                }
++            doublePair spritePos = mult( knownObject->spritePos[i], scale);
++            doublePair pos = add( spritePos, knownObjectDrawPos );
++            int spriteID = knownObject->sprites[i];
++            double rot = knownObject->spriteRot[i];
++            drawSpriteAlphaOnly( getSprite( spriteID ), pos, scale, rot, 
++                        knownObject->spriteHFlip[i]);
++            }
++        }
++    }
++
++
+ SimpleVector<char*> *splitLines( const char *inString,
+                                  double inMaxWidth ) {
+     
+@@ -7792,7 +7882,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+                                 ! o->heldLearned ) {
+                                 // unleared tool
+ 
+-
+                                 if( heldO->heldInHand ) {
+                                     // rotate 180
+                                     
+@@ -9852,6 +9941,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
++    if( showLearnedTools )
 +    for( int i=NUM_TOOL_SHEETS-1; i>=0; i-- ) {
 +        if( ! equal( mToolBoxPosOffset[i], mToolBoxHideOffset[i] ) 
 +            &&
@@ -51,38 +157,8 @@ index fa52a88c..523bcff4 100644
 +            doublePair toolPos  = 
 +                add( mToolBoxPosOffset[i], lastScreenViewCenter );
 +            
++             drawToolSlip( toolPos, mToolBoxTool[i], (i*723%11) );
 +
-+            setDrawColor( 1, 1, 1, 1 );
-+            drawSprite( mYumSlipSprites[(i*723%11)%NUM_YUM_SLIPS], toolPos, 1.0, 0.5 );
-+
-+            toolPos.y += 3;
-+            
-+            if( mToolBoxTool[i] > -1 ) {
-+                ObjectRecord *knownObject = getObject( mToolBoxTool[i] );
-+                doublePair knownObjectDrawPos = toolPos;
-+
-+                double scale = 120 / (double)getMaxDiameter( knownObject );
-+
-+                if( !knownObject->person ) {
-+                    knownObjectDrawPos = sub( knownObjectDrawPos,
-+                                      mult( getObjectVisualCenter( knownObject ), scale) );
-+                    }
-+
-+                setDrawColor( 0.1, 0.1, 0.1, 1 );
-+                int limit = knownObject->numSprites;
-+                for( int i=0; i<limit; i++ ) {
-+                    if( knownObject->spriteSkipDrawing != NULL &&
-+                        knownObject->spriteSkipDrawing[i] ) {
-+                        continue;
-+                        }
-+                    doublePair spritePos = mult( knownObject->spritePos[i], scale);
-+                    doublePair pos = add( spritePos, knownObjectDrawPos );
-+                    int spriteID = knownObject->sprites[i];
-+                    double rot = knownObject->spriteRot[i];
-+                    drawSpriteAlphaOnly( getSprite( spriteID ), pos, scale, rot, 
-+                                knownObject->spriteHFlip[i]);
-+                    }
-+                }
 +            }
 +        }
 +
@@ -90,7 +166,7 @@ index fa52a88c..523bcff4 100644
  
      // now draw tutorial sheets
      if( mTutorialNumber > 0 || mGlobalMessageShowing )
-@@ -9911,7 +9969,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9911,7 +10015,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
  
  
  
@@ -98,10 +174,11 @@ index fa52a88c..523bcff4 100644
      
      setDrawColor( 0, 0, 0, 1 );
      for( int i=0; i<mErasedNoteChars.size(); i++ ) {
-@@ -12932,6 +12989,32 @@ void LivingLifePage::step() {
+@@ -12940,6 +13043,40 @@ void LivingLifePage::step() {
              }
          
  
++        if( showLearnedTools )
 +        if( mCurrentHintObjectID != mNextHintObjectID ||
 +            mForceHintRefresh || mForceToolRefresh ) {
 +            mForceToolRefresh = false;
@@ -110,36 +187,47 @@ index fa52a88c..523bcff4 100644
 +            int showSlots = mKnownToolSlips + mRemainingToolSlots;
 +            float offset = 1220.0 / showSlots;
 +            if (offset > 64) offset = 64;
-+            int i = 0;
++            int left = showSlots * offset / -2;
 +            if( o && o->toolSetIndex != -1 ) {
-+                for( ;i < NUM_TOOL_SHEETS && i < mKnownToolSlips;i++ ) {
-+                    mToolBoxHideOffset[i].x = -600 + (int)(i * offset);
++                int i = 0;
++                int slip = 0;
++                for( ;i < NUM_TOOL_SHEETS && i < mKnownToolSlips;i++,slip++ ) {
++                    mToolBoxHideOffset[i].x = left + (int)(slip * offset);
 +                    mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
 +                    mToolBoxTargetOffset[i].y -= 100;
 +                    }
-+                for( int r = 0;i < NUM_TOOL_SHEETS && r < mRemainingToolSlots;r++,i++ ) {
-+                    mToolBoxHideOffset[i].x = -600 + (int)(i * offset);
++                for( ;i < NUM_TOOL_SHEETS - mRemainingToolSlots;i++ ) {
 +                    mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
-+                    mToolBoxTargetOffset[i].y -= 100;
++                    }
++                for( ;i < NUM_TOOL_SHEETS;i++,slip++ ) {
++                    mToolBoxHideOffset[i].x = left + (int)(slip * offset);
++                    mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++                    mToolBoxTargetOffset[i].y -= 70;
 +                    }
 +                }
-+            for( ;i < NUM_TOOL_SHEETS;i++ ) {
-+                mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++            else {
++                for( int i = 0;i < NUM_TOOL_SHEETS;i++ ) {
++                    mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
++                    }
 +                }
 +            }
 +
  
          if( ( isHintFilterStringInvalid() &&
                mCurrentHintObjectID != mNextHintObjectID ) ||
-@@ -13138,6 +13221,45 @@ void LivingLifePage::step() {
+@@ -13146,6 +13283,49 @@ void LivingLifePage::step() {
          }
  
  
 +
++    if( showLearnedTools )
 +    for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
 +        doublePair target = mToolBoxTargetOffset[i];
-+        
-+        if( ! equal( mToolBoxPosOffset[i], target) ) {
++
++        if( mToolBoxFreeze[i] > 0 ) {
++            mToolBoxFreeze[i] -= frameRateFactor/60.0;
++            }
++        else if( ! equal( mToolBoxPosOffset[i], target) ) {
 +            doublePair delta = 
 +                sub( target, mToolBoxPosOffset[i] );
 +            
@@ -150,11 +238,11 @@ index fa52a88c..523bcff4 100644
 +                mToolBoxPosOffset[i] = target;
 +                }
 +            else {
-+                int speed = frameRateFactor * 4;
++                int speed = lrint( frameRateFactor * d / (64/4)); //frameRateFactor * 4;
 +                
-+                if( d < 8 ) {
-+                    speed = lrint( frameRateFactor * d / 2 );
-+                    }
++                //if( d < 8 ) {
++                    //speed = lrint( frameRateFactor * d / 2 );
++                    //}
 +                
 +                if( speed > d ) {
 +                    speed = floor( d );
@@ -177,7 +265,7 @@ index fa52a88c..523bcff4 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -13613,7 +13735,34 @@ void LivingLifePage::step() {
+@@ -13621,7 +13801,34 @@ void LivingLifePage::step() {
                  char *spaces = replaceAll( lines, "_", " ", &found );
                  
                  delete [] lines;
@@ -213,11 +301,22 @@ index fa52a88c..523bcff4 100644
  
                  mGlobalMessageShowing = true;
                  mGlobalMessageStartTime = game_getCurrentTime();
-@@ -13723,9 +13872,13 @@ void LivingLifePage::step() {
+@@ -13724,16 +13931,23 @@ void LivingLifePage::step() {
+             for( int i=1; i < tokens->size(); i++ ) {
+                 char *tok = tokens->getElementDirect( i );
+                 
++                doublePair pos = sub( getSayPosition( getOurLiveObject() ), lastScreenViewCenter );
+                 int id = 0;
+                 sscanf( tok, "%d", &id );
+                 if( id > 0 ) {
+                     ObjectRecord *o = getObject( id );
                      
-                     if( o != NULL ) {
+-                    if( o != NULL ) {
++                    if( o != NULL && !o->toolLearned ) {
                          o->toolLearned = true;
 +                        if( !o->isUseDummy && mKnownToolSlips < NUM_TOOL_SHEETS ) {
++                            mToolBoxPosOffset[mKnownToolSlips] = pos;
++                            mToolBoxFreeze[mKnownToolSlips] = 2.0;
 +                            mToolBoxTool[mKnownToolSlips++] = id;
 +                            }
                          }
@@ -227,7 +326,7 @@ index fa52a88c..523bcff4 100644
              tokens->deallocateStringElements();
              delete tokens;
              }
-@@ -16411,6 +16564,15 @@ void LivingLifePage::step() {
+@@ -16419,6 +16633,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -243,7 +342,7 @@ index fa52a88c..523bcff4 100644
                              }
                          
  
-@@ -21130,6 +21292,17 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -21142,6 +21365,18 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      
@@ -251,6 +350,7 @@ index fa52a88c..523bcff4 100644
 +        mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
 +        mToolBoxPosOffset[i] = mToolBoxHideOffset[i];
 +        mToolBoxTool[i] = -1;
++        mToolBoxFreeze[i] = 0;
 +        }
 +
 +    mKnownToolSlips = 0;
@@ -262,7 +362,7 @@ index fa52a88c..523bcff4 100644
      savingSpeechEnabled = SettingsManager::getIntSetting( "allowSavingSpeech",
                                                            0 );
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 5a94e2b8..66fc5846 100644
+index 5a94e2b8..aec5f25d 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -32,6 +32,7 @@
@@ -273,7 +373,7 @@ index 5a94e2b8..66fc5846 100644
  
  #define NUM_HOME_ARROWS 8
  
-@@ -789,7 +790,17 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -789,7 +790,20 @@ class LivingLifePage : public GamePage, public ActionListener {
          int mLiveTutorialSheetIndex;
          int mLiveTutorialTriggerNumber;
  
@@ -283,20 +383,23 @@ index 5a94e2b8..66fc5846 100644
 +        doublePair mToolBoxPosOffset[NUM_TOOL_SHEETS];
 +        doublePair mToolBoxTargetOffset[NUM_TOOL_SHEETS];
 +        int mToolBoxTool[NUM_TOOL_SHEETS];
++        double mToolBoxFreeze[NUM_TOOL_SHEETS];
 +
 +        int mKnownToolSlips;
 +        int mKnownToolSlots;
 +        int mRemainingToolSlots;
 +        int mTotalToolSlots;
 +        char mForceToolRefresh;
++
++        void drawToolSlip( doublePair inPos, int inTool, int slip = 0 );
  
          // relative to map corner, but not necessary in bounds
          // of locally stored map
 diff --git a/gameSource/objectBank.cpp b/gameSource/objectBank.cpp
-index 9ec14a2b..fe9238b9 100644
+index 187a5219..fce81e96 100644
 --- a/gameSource/objectBank.cpp
 +++ b/gameSource/objectBank.cpp
-@@ -4689,6 +4689,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
+@@ -4711,6 +4711,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
  
  
  
@@ -341,10 +444,10 @@ index 9ec14a2b..fe9238b9 100644
      ObjectRecord *o = getObject( inObjectID );
      
 diff --git a/gameSource/objectBank.h b/gameSource/objectBank.h
-index b523b993..11d07d73 100644
+index b634c1c4..af6c45a5 100644
 --- a/gameSource/objectBank.h
 +++ b/gameSource/objectBank.h
-@@ -711,6 +711,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
+@@ -717,6 +717,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
  int getMaxDiameter( ObjectRecord *inObject );
  
  
@@ -356,3 +459,10 @@ index b523b993..11d07d73 100644
  // gets estimate of object height from cell center
  int getObjectHeight( int inObjectID );
  
+diff --git a/gameSource/settings/showLearnedTools.ini b/gameSource/settings/showLearnedTools.ini
+new file mode 100644
+index 00000000..d00491fd
+--- /dev/null
++++ b/gameSource/settings/showLearnedTools.ini
+@@ -0,0 +1 @@
++1

@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v39
+
+- Tool UI centered, improved physicality, blocks learned messages, settings file.
+
 ## v38
 
 - WIP tool UI

@@ -169,7 +169,7 @@ Displays a line above the food bar, that shows approximate pip-per-minute drain.
 
 Displays your learned tools and an empty slip for each available tool slot along the top of the screen. Similar to yum, the tool UI is only shown when holding or examining a tool. Available slots depends on the text announcements and may not be available after reconnects and such.
 
-This is patch is still work-in-progress, but currently serviceable.
+`settings/showLearnedTools.ini` (0 to disable this feature)
 
 ### Patch Development
 
