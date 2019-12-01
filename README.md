@@ -171,6 +171,16 @@ Displays your learned tools and an empty slip for each available tool slot along
 
 `settings/showLearnedTools.ini` (0 to disable this feature)
 
+### filter-matches-product
+
+/filter selects all transitions that produce a matching object. So even if you can't spell tattoo, /tat gives you all the tattoo items with their immediate precursors (and potato recipes)
+
+`settings/filterMatchesProduct.ini` (0 to disable this feature)
+
+### time-transition-hints
+
+Shows hints with (time passing) for fires, dough, growing plants, etc so you can see when the thing you need to do is wait.
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

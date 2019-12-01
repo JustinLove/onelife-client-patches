@@ -3,7 +3,9 @@
 ## v39
 
 - Tool UI centered, improved physicality, blocks learned messages, settings file.
-- Screen edge push can push farther.
+- Screen edge push can push farther (while not moving).
+- time transition hints returns; vanilla version didn't really do it.
+- /filter selects all transitions that produce a matching item.
 
 ## v38
 

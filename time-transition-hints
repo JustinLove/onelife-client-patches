@@ -1,0 +1,25 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 8cab2145..3ad7f1a8 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -11262,7 +11262,7 @@ static char getTransHintable( TransRecord *inTrans ) {
+         return false;
+         }
+     
+-    if( inTrans->actor >= 0 && 
++    if( inTrans->actor >= -1 && 
+         ( inTrans->target > 0 || inTrans->target == -1 ) &&
+         ( inTrans->newActor > 0 || inTrans->newTarget > 0 ) ) {
+ 
+@@ -11997,7 +11997,10 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+         
+         int depth = 0;
+             
+-        if( tr->actor > 0 && tr->actor != inObjectID ) {
++        if ( tr->actor == -1 ) {
++            depth = UNREACHABLE;
++            }
++        else if( tr->actor > 0 && tr->actor != inObjectID ) {
+             depth = getObjectDepth( tr->actor );
+             }
+         else if( tr->target > 0 && tr->target != inObjectID ) {

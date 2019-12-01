@@ -22,3 +22,5 @@ yum-hover
 show-name-on-death-screen
 show-burn-rate
 show-learned-tools
+filter-matches-product
+time-transition-hints

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 375800d9..f8d69bc5 100644
+index 375800d9..72645d93 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -126,6 +126,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -36,7 +36,7 @@ index 375800d9..f8d69bc5 100644
              // moving
  
              // push camera out in front
-+            viewLeftRightLimit = viewWidth/2;
++            viewLeftRightLimit = viewWidth/3;
 +            viewBottomLimit = viewHeight/5;
 +            viewTopLimit = viewHeight/6;
              

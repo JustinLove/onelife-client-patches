@@ -1,0 +1,139 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 46e98d10..8cab2145 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -143,6 +143,8 @@ static int clickToMoveLockToInteract = 0;
+ 
+ static int showLearnedTools = 1;
+ 
++static int filterMatchesProduct = 1;
++
+ 
+ typedef enum interactionKeyType {
+     IK_MOVE,
+@@ -2778,6 +2780,8 @@ LivingLifePage::LivingLifePage()
+ 
+     showLearnedTools = SettingsManager::getIntSetting( "showLearnedTools", 1 );
+ 
++    filterMatchesProduct = SettingsManager::getIntSetting( "filterMatchesProduct", 1 );
++
+     interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
+ 
+     initKeybinds();
+@@ -11674,6 +11678,7 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+ 
+     // new logic:
+     // show all trans leading to this target object
++    if( !filterMatchesProduct )
+     if( mLastHintFilterString != NULL ) {
+         
+         SimpleVector<int> hitIDs = findObjectsMatchingWords(
+@@ -11808,6 +11813,100 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+             }
+         }
+     
++    // mod logic
++    // show all direct trans leading to this target object
++    if( filterMatchesProduct )
++    if( mLastHintFilterString != NULL ) {
++        int remaining;
++        ObjectRecord** hitObjects = searchObjects(
++            mLastHintFilterString,
++            0, // don't filter out what we're holding
++            200,
++            &numFilterHits, &remaining );
++
++        if( numFilterHits > 0 ) {
++            filteredTrans.deleteAll();
++            unfilteredTrans.deleteAll();
++
++            for( int i=0; i<numFilterHits; i++ ) {
++                int oID = hitObjects[i]->id;
++                int oD = getObjectDepth( oID );
++
++                int numResults = 0;
++                int numRemain = 0;
++                TransRecord **prodTrans =
++                    searchProduces( oID,
++                                    0,
++                                    200,
++                                    &numResults, &numRemain );
++
++                if( prodTrans != NULL ) {
++                    TransRecord *minDepthTrans = NULL;
++                    int minDepth = UNREACHABLE;
++
++                    for( int r=0; r<numResults; r++ ) {
++
++                        int actor = prodTrans[r]->actor;
++                        int target = prodTrans[r]->target;
++
++                        int actorD = 0;
++                        int targetD = 0;
++
++                        if( actor > 0 ) {
++                            actorD = getObjectDepth( actor );
++                            }
++                        if( target > 0 ) {
++                            targetD = getObjectDepth( target );
++                            }
++
++                        if( actor >= -1 &&
++                            ( actor <= 0 || actorD < oD )
++                            &&
++                            target != 0 && targetD < oD
++                            &&
++                            filteredTrans.getElementIndex( prodTrans[r] )
++                            == -1 ) {
++
++                            if( prodTrans[r]->lastUseTarget ||
++                                prodTrans[r]->lastUseActor ) {
++                                // skip last use transitions
++                                continue;
++                                }
++
++                            // skip dummy versions of transitions, too
++                            if( actor > 0 &&
++                                ( getObject( actor )->isUseDummy ||
++                                  getObject( actor )->isVariableDummy ) ) {
++                                continue;
++                                }
++                            if( target > 0 &&
++                                ( getObject( target )->isUseDummy ||
++                                  getObject( target )->isVariableDummy ) ) {
++                                continue;
++                                }
++
++
++                            int maxDepth = actorD;
++                            if( targetD > maxDepth ) {
++                                maxDepth = targetD;
++                                }
++
++                            if( maxDepth < minDepth ) {
++                                minDepth = maxDepth;
++                                minDepthTrans = prodTrans[r];
++                                }
++                            }
++                        }
++                    if( minDepthTrans != NULL ) {
++                        filteredTrans.push_back( minDepthTrans );
++                        }
++
++                    delete [] prodTrans;
++                    }
++                }
++            unfilteredTrans.push_back_other( &filteredTrans );
++            }
++        }
+ 
+ 
+     int numTrans = filteredTrans.size();
+diff --git a/gameSource/settings/filterMatchesProduct.ini b/gameSource/settings/filterMatchesProduct.ini
+new file mode 100644
+index 00000000..56a6051c
+--- /dev/null
++++ b/gameSource/settings/filterMatchesProduct.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
