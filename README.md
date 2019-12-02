@@ -181,6 +181,10 @@ Displays your learned tools and an empty slip for each available tool slot along
 
 Shows hints with (time passing) for fires, dough, growing plants, etc so you can see when the thing you need to do is wait.
 
+### tolerate-missing-graphic
+
+Skips attempting to draw the hint arrow if the graphic is missing, which it may be in client folders for 2HOL etc. Game crashes otherwise.
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

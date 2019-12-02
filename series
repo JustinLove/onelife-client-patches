@@ -24,3 +24,4 @@ show-burn-rate
 show-learned-tools
 filter-matches-product
 time-transition-hints
+tolerate-missing-graphic

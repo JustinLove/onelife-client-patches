@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v40??
+
+- tolerate missing hint arrow graphic on mod folders (e.g. 2HOL)
+
 ## v39
 
 - Tool UI centered, improved physicality, blocks learned messages, settings file.
