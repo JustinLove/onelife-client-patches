@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6cdf7445..46e98d10 100644
+index d0595c6d..6cc5969e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -141,6 +141,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -11,7 +11,7 @@ index 6cdf7445..46e98d10 100644
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -2705,6 +2707,7 @@ LivingLifePage::LivingLifePage()
+@@ -2747,6 +2749,7 @@ LivingLifePage::LivingLifePage()
            mObjectPicker( &objectPickable, +510, 90 ) {
  
  
@@ -19,7 +19,7 @@ index 6cdf7445..46e98d10 100644
      if( SettingsManager::getIntSetting( "useSteamUpdate", 0 ) ) {
          mUsingSteam = true;
          }
-@@ -2773,6 +2776,8 @@ LivingLifePage::LivingLifePage()
+@@ -2834,6 +2837,8 @@ LivingLifePage::LivingLifePage()
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
  
@@ -28,7 +28,7 @@ index 6cdf7445..46e98d10 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -2863,6 +2868,21 @@ LivingLifePage::LivingLifePage()
+@@ -2931,6 +2936,21 @@ LivingLifePage::LivingLifePage()
          mYumSlipPosTargetOffset[i] = mYumSlipHideOffset[i];
          }
      
@@ -49,8 +49,8 @@ index 6cdf7445..46e98d10 100644
 +    mForceToolRefresh = false;
  
      for( int i=0; i<3; i++ ) {    
-         mHungerSlipShowOffsets[i].x = -540;
-@@ -2984,7 +3004,6 @@ LivingLifePage::LivingLifePage()
+         mHungerSlipShowOffsets[i].x = -558;
+@@ -3052,7 +3072,6 @@ LivingLifePage::LivingLifePage()
      mLiveTutorialTriggerNumber = -1;
  
  
@@ -58,7 +58,7 @@ index 6cdf7445..46e98d10 100644
      mMap = new int[ mMapD * mMapD ];
      mMapBiomes = new int[ mMapD * mMapD ];
      mMapFloors = new int[ mMapD * mMapD ];
-@@ -3600,6 +3619,77 @@ void drawHelpOverlay() {
+@@ -3675,6 +3694,77 @@ void drawHelpOverlay() {
  
  
  
@@ -136,7 +136,7 @@ index 6cdf7445..46e98d10 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -7792,7 +7882,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -8167,7 +8257,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
                                  ! o->heldLearned ) {
                                  // unleared tool
  
@@ -144,7 +144,7 @@ index 6cdf7445..46e98d10 100644
                                  if( heldO->heldInHand ) {
                                      // rotate 180
                                      
-@@ -9852,6 +9941,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10019,6 +10108,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
@@ -166,7 +166,7 @@ index 6cdf7445..46e98d10 100644
  
      // now draw tutorial sheets
      if( mTutorialNumber > 0 || mGlobalMessageShowing )
-@@ -9911,7 +10015,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10078,7 +10182,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
  
  
  
@@ -174,7 +174,7 @@ index 6cdf7445..46e98d10 100644
      
      setDrawColor( 0, 0, 0, 1 );
      for( int i=0; i<mErasedNoteChars.size(); i++ ) {
-@@ -12940,6 +13043,40 @@ void LivingLifePage::step() {
+@@ -13195,6 +13298,40 @@ void LivingLifePage::step() {
              }
          
  
@@ -215,7 +215,7 @@ index 6cdf7445..46e98d10 100644
  
          if( ( isHintFilterStringInvalid() &&
                mCurrentHintObjectID != mNextHintObjectID ) ||
-@@ -13146,6 +13283,49 @@ void LivingLifePage::step() {
+@@ -13401,6 +13538,49 @@ void LivingLifePage::step() {
          }
  
  
@@ -265,7 +265,7 @@ index 6cdf7445..46e98d10 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -13621,9 +13801,51 @@ void LivingLifePage::step() {
+@@ -13876,9 +14056,51 @@ void LivingLifePage::step() {
                  char *spaces = replaceAll( lines, "_", " ", &found );
                  
                  delete [] lines;
@@ -318,7 +318,7 @@ index 6cdf7445..46e98d10 100644
                  mGlobalMessageStartTime = game_getCurrentTime();
                  
                  if( mLiveTutorialSheetIndex >= 0 ) {
-@@ -13651,6 +13873,7 @@ void LivingLifePage::step() {
+@@ -13906,6 +14128,7 @@ void LivingLifePage::step() {
                      (char*)( mTutorialMessage[ mLiveTutorialSheetIndex ] ) );
              
                  mTutorialExtraOffset[ mLiveTutorialSheetIndex ].x = longestLine;
@@ -326,7 +326,7 @@ index 6cdf7445..46e98d10 100644
  
                  
                  delete [] spaces;
-@@ -13724,16 +13947,23 @@ void LivingLifePage::step() {
+@@ -13979,16 +14202,23 @@ void LivingLifePage::step() {
              for( int i=1; i < tokens->size(); i++ ) {
                  char *tok = tokens->getElementDirect( i );
                  
@@ -351,7 +351,7 @@ index 6cdf7445..46e98d10 100644
              tokens->deallocateStringElements();
              delete tokens;
              }
-@@ -16419,6 +16649,15 @@ void LivingLifePage::step() {
+@@ -16765,6 +16995,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -367,7 +367,7 @@ index 6cdf7445..46e98d10 100644
                              }
                          
  
-@@ -21149,6 +21388,18 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -21509,6 +21748,18 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      
@@ -387,7 +387,7 @@ index 6cdf7445..46e98d10 100644
      savingSpeechEnabled = SettingsManager::getIntSetting( "allowSavingSpeech",
                                                            0 );
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 5a94e2b8..aec5f25d 100644
+index c1434a68..fe5c53d7 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -32,6 +32,7 @@
@@ -398,7 +398,7 @@ index 5a94e2b8..aec5f25d 100644
  
  #define NUM_HOME_ARROWS 8
  
-@@ -789,7 +790,20 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -834,7 +835,20 @@ class LivingLifePage : public GamePage, public ActionListener {
          int mLiveTutorialSheetIndex;
          int mLiveTutorialTriggerNumber;
  
@@ -421,10 +421,10 @@ index 5a94e2b8..aec5f25d 100644
          // relative to map corner, but not necessary in bounds
          // of locally stored map
 diff --git a/gameSource/objectBank.cpp b/gameSource/objectBank.cpp
-index 187a5219..fce81e96 100644
+index 38aa64db..fa9fbd58 100644
 --- a/gameSource/objectBank.cpp
 +++ b/gameSource/objectBank.cpp
-@@ -4711,6 +4711,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
+@@ -4720,6 +4720,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
  
  
  

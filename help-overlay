@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9709905b..e5a586cc 100644
+index 99bddc56..eafc15ea 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -217,6 +217,9 @@ void initKeybinds() {
@@ -12,7 +12,7 @@ index 9709905b..e5a586cc 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2733,6 +2736,16 @@ LivingLifePage::LivingLifePage()
+@@ -2794,6 +2797,16 @@ LivingLifePage::LivingLifePage()
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
@@ -29,7 +29,7 @@ index 9709905b..e5a586cc 100644
      
      initLiveTriggers();
  
-@@ -3394,6 +3407,154 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
+@@ -3469,6 +3482,154 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
      }
  
  
@@ -184,7 +184,7 @@ index 9709905b..e5a586cc 100644
  
  
  SimpleVector<char*> *splitLines( const char *inString,
-@@ -6064,6 +6225,13 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -6439,6 +6600,13 @@ void LivingLifePage::draw( doublePair inViewCenter,
                        pos.y - 102 );
              }
          
@@ -198,7 +198,7 @@ index 9709905b..e5a586cc 100644
          return;
          }
  
-@@ -8910,6 +9078,10 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9285,6 +9453,10 @@ void LivingLifePage::draw( doublePair inViewCenter,
              drawFixedShadowStringWhite( translate( "fpsPending" ), pos );
              }
          }
@@ -209,7 +209,7 @@ index 9709905b..e5a586cc 100644
      
      if( showNet ) {
          doublePair pos = lastScreenViewCenter;
-@@ -24641,6 +24813,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25005,6 +25177,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  

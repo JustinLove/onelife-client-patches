@@ -1,6 +1,6 @@
 # Changelog - feature changes
 
-## v40??
+## v40
 
 - tolerate missing hint arrow graphic on mod folders (e.g. 2HOL)
 
