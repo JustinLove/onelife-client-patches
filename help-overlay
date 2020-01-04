@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 99bddc56..eafc15ea 100644
+index 9df67c0c..35e67de7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -217,6 +217,9 @@ void initKeybinds() {
@@ -198,7 +198,7 @@ index 99bddc56..eafc15ea 100644
          return;
          }
  
-@@ -9285,6 +9453,10 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9302,6 +9470,10 @@ void LivingLifePage::draw( doublePair inViewCenter,
              drawFixedShadowStringWhite( translate( "fpsPending" ), pos );
              }
          }
@@ -209,7 +209,7 @@ index 99bddc56..eafc15ea 100644
      
      if( showNet ) {
          doublePair pos = lastScreenViewCenter;
-@@ -25005,6 +25177,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25031,6 +25203,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  

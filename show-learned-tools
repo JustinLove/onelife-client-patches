@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d0595c6d..6cc5969e 100644
+index 383432f5..87f37c56 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -141,6 +141,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -136,7 +136,7 @@ index d0595c6d..6cc5969e 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -8167,7 +8257,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -8184,7 +8274,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
                                  ! o->heldLearned ) {
                                  // unleared tool
  
@@ -144,7 +144,7 @@ index d0595c6d..6cc5969e 100644
                                  if( heldO->heldInHand ) {
                                      // rotate 180
                                      
-@@ -10019,6 +10108,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10036,6 +10125,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
@@ -166,7 +166,7 @@ index d0595c6d..6cc5969e 100644
  
      // now draw tutorial sheets
      if( mTutorialNumber > 0 || mGlobalMessageShowing )
-@@ -10078,7 +10182,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10095,7 +10199,6 @@ void LivingLifePage::draw( doublePair inViewCenter,
  
  
  
@@ -174,7 +174,7 @@ index d0595c6d..6cc5969e 100644
      
      setDrawColor( 0, 0, 0, 1 );
      for( int i=0; i<mErasedNoteChars.size(); i++ ) {
-@@ -13195,6 +13298,40 @@ void LivingLifePage::step() {
+@@ -13214,6 +13317,40 @@ void LivingLifePage::step() {
              }
          
  
@@ -215,7 +215,7 @@ index d0595c6d..6cc5969e 100644
  
          if( ( isHintFilterStringInvalid() &&
                mCurrentHintObjectID != mNextHintObjectID ) ||
-@@ -13401,6 +13538,49 @@ void LivingLifePage::step() {
+@@ -13425,6 +13562,49 @@ void LivingLifePage::step() {
          }
  
  
@@ -265,7 +265,7 @@ index d0595c6d..6cc5969e 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -13876,9 +14056,51 @@ void LivingLifePage::step() {
+@@ -13900,9 +14080,51 @@ void LivingLifePage::step() {
                  char *spaces = replaceAll( lines, "_", " ", &found );
                  
                  delete [] lines;
@@ -318,7 +318,7 @@ index d0595c6d..6cc5969e 100644
                  mGlobalMessageStartTime = game_getCurrentTime();
                  
                  if( mLiveTutorialSheetIndex >= 0 ) {
-@@ -13906,6 +14128,7 @@ void LivingLifePage::step() {
+@@ -13930,6 +14152,7 @@ void LivingLifePage::step() {
                      (char*)( mTutorialMessage[ mLiveTutorialSheetIndex ] ) );
              
                  mTutorialExtraOffset[ mLiveTutorialSheetIndex ].x = longestLine;
@@ -326,7 +326,7 @@ index d0595c6d..6cc5969e 100644
  
                  
                  delete [] spaces;
-@@ -13979,16 +14202,23 @@ void LivingLifePage::step() {
+@@ -14003,16 +14226,23 @@ void LivingLifePage::step() {
              for( int i=1; i < tokens->size(); i++ ) {
                  char *tok = tokens->getElementDirect( i );
                  
@@ -351,7 +351,7 @@ index d0595c6d..6cc5969e 100644
              tokens->deallocateStringElements();
              delete tokens;
              }
-@@ -16765,6 +16995,15 @@ void LivingLifePage::step() {
+@@ -16789,6 +17019,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -367,7 +367,7 @@ index d0595c6d..6cc5969e 100644
                              }
                          
  
-@@ -21509,6 +21748,18 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -21535,6 +21774,18 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      

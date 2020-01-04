@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7874ad33..851c159c 100644
+index 5756b32c..344e39da 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -21703,6 +21703,920 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -21729,6 +21729,920 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
          }
      }
  
@@ -296,8 +296,6 @@ index 7874ad33..851c159c 100644
 +    ourLiveObject->yd = moveDestY;
 +    ourLiveObject->destTruncated = false;
 +
-+    ourLiveObject->inMotion = true;
-+
 +
 +    computePathToDest( ourLiveObject );
 +
@@ -463,6 +461,8 @@ index 7874ad33..851c159c 100644
 +
 +    // start moving before we hear back from server
 +
++
++    ourLiveObject->inMotion = true;
 +
 +
 +    double floorSpeedMod = computePathSpeedMod( ourLiveObject,
@@ -923,7 +923,7 @@ index 7874ad33..851c159c 100644
  
  
  
-@@ -22249,7 +23163,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22275,7 +23189,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -931,7 +931,7 @@ index 7874ad33..851c159c 100644
  
  
      
-@@ -22257,61 +23170,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22283,61 +23196,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -994,7 +994,7 @@ index 7874ad33..851c159c 100644
          }
  
      
-@@ -22674,7 +23533,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22699,7 +23558,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1003,7 +1003,7 @@ index 7874ad33..851c159c 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -22693,196 +23552,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22718,196 +23577,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1201,7 +1201,7 @@ index 7874ad33..851c159c 100644
  
          if( canExecute && ! killMode ) {
              
-@@ -22922,47 +23592,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22947,47 +23617,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1252,7 +1252,7 @@ index 7874ad33..851c159c 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -23091,214 +23723,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23116,216 +23748,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1280,8 +1280,6 @@ index 7874ad33..851c159c 100644
 -
 -
 -        
--        ourLiveObject->inMotion = true;
--
 -        
 -
 -        computePathToDest( ourLiveObject );
@@ -1447,6 +1445,10 @@ index 7874ad33..851c159c 100644
 -        delete [] message;
 -
 -        // start moving before we hear back from server
+-
+-        
+-        ourLiveObject->inMotion = true;
+-
 -
 -
 -

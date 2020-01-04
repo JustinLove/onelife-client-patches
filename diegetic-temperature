@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 730c9c94..fec69558 100644
+index 98a8dee8..cc6a3963 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -129,6 +129,8 @@ static int maxDoubleClickDrift = 30;
@@ -81,7 +81,7 @@ index 730c9c94..fec69558 100644
                  
                  if( babyO->babyWiggle ) {
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 1c269688..51e4578b 100644
+index 5cadd784..5ada12cc 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -71,6 +71,9 @@ static char outputMouthFrames = false;
@@ -126,7 +126,7 @@ index 1c269688..51e4578b 100644
  
  static char shouldHidePersonShadows = false;
  
-@@ -3201,6 +3215,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -3200,6 +3214,47 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  
