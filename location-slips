@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 1fe55a24..3a11f708 100644
+index fde6762b..11680ea3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -511,6 +511,31 @@ static void removeHomeLocation( int inX, int inY ) {

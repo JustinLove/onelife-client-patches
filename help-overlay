@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6309a872..b66e9ee8 100644
+index 6309a872..2332631c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -217,6 +217,9 @@ void initKeybinds() {
@@ -7,7 +7,7 @@ index 6309a872..b66e9ee8 100644
  
  
 +static char showHelpOverlay = false;
-+static char showHelpOverlayKey = 'h';
++static char showHelpOverlayKey = '\\';
 +
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
@@ -223,8 +223,8 @@ index 6309a872..b66e9ee8 100644
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/settings/showHelpOverlayKey.ini b/gameSource/settings/showHelpOverlayKey.ini
 new file mode 100644
-index 00000000..6e9f0da1
+index 00000000..57ddad2a
 --- /dev/null
 +++ b/gameSource/settings/showHelpOverlayKey.ini
 @@ -0,0 +1 @@
-+h
++\

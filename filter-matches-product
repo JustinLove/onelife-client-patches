@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 85dee01e..cf55e035 100644
+index 02a7ca89..8a3f0ac7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -143,6 +143,8 @@ static int clickToMoveLockToInteract = 0;

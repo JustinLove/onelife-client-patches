@@ -3,6 +3,7 @@
 ## v42
 
 - reworked location slips with multiple bells and maps
+- changed *default* help overlay key to '\' (I keep hitting 'h' by accident)
 
 ## v40
 

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cf55e035..41e7b3a6 100644
+index 8a3f0ac7..a24e26d4 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -11485,7 +11485,7 @@ static char getTransHintable( TransRecord *inTrans ) {

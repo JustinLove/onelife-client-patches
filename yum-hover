@@ -1,10 +1,10 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b66e9ee8..28c2891e 100644
+index 2332631c..5cf671ee 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -220,6 +220,46 @@ void initKeybinds() {
  static char showHelpOverlay = false;
- static char showHelpOverlayKey = 'h';
+ static char showHelpOverlayKey = '\\';
  
 +typedef enum yumType {
 +    YT_INEDIBLE,
