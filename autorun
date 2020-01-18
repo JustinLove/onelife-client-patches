@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 20fb5e82..cc1354f8 100644
+index b01bf8e0..836fa694 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -115,9 +115,17 @@ static JenkinsRandomSource remapRandSource( 340403 );
@@ -236,7 +236,7 @@ index 20fb5e82..cc1354f8 100644
          
          // continuous movement mode
  
-@@ -23198,11 +23279,17 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -23207,11 +23288,17 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          return;
          }
  
@@ -259,7 +259,7 @@ index 20fb5e82..cc1354f8 100644
          
          // treat the up as one final click (at closest next path position
          // to where they currently are)
-@@ -23224,6 +23311,7 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -23233,6 +23320,7 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          }
  
      mouseDown = false;

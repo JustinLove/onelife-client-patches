@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9218970a..ecc36966 100644
+index 2eb755fb..6388e892 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -137,6 +137,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -372,7 +372,7 @@ index 9218970a..ecc36966 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -24177,7 +24504,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -24186,7 +24513,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -380,7 +380,7 @@ index 9218970a..ecc36966 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -24376,23 +24702,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -24385,23 +24711,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -425,7 +425,7 @@ index 9218970a..ecc36966 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -24570,6 +24917,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -24579,6 +24926,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }

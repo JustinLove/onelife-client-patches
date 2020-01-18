@@ -185,6 +185,14 @@ Shows hints with (time passing) for fires, dough, growing plants, etc so you can
 
 Skips attempting to draw the hint arrow if the graphic is missing, which it may be in client folders for 2HOL etc. Game crashes otherwise.
 
+### location-slips
+
+Reworks location markers.
+
+- Home slips are standard white. You still only have one at a time.
+- Map slips are blue, you can have more than one, standard lifetime
+- Bell slips are gold, you can have more than one
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

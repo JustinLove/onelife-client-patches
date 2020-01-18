@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cc1354f8..98a8dee8 100644
+index 836fa694..43358cb9 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -127,6 +127,8 @@ static unsigned int minMouseDownFrames = 30;

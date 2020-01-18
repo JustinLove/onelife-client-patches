@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v42
+
+- reworked location slips with multiple bells and maps
+
 ## v40
 
 - tolerate missing hint arrow graphic on mod folders (e.g. 2HOL)

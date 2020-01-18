@@ -1,0 +1,631 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 1fe55a24..3a11f708 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -511,6 +511,31 @@ static void removeHomeLocation( int inX, int inY ) {
+     }
+ 
+ 
++void LivingLifePage::removeLocationSlip( int inX, int inY ) {
++    for( int i=0; i<mLocationSlips.size(); i++ ) {
++        GridPos p = mLocationSlips.getElementDirect( i ).pos;
++
++        if( p.x == inX && p.y == inY ) {
++            mLocationSlips.deleteElement( i );
++            break;
++            }
++        }
++    }
++
++
++void LivingLifePage::setLocationSlipExpiration( int seconds ) {
++    for( int i=0; i<mLocationSlips.size(); i++ ) {
++        LocationSlip *r = mLocationSlips.getElement( i );
++
++        if( r != NULL && r->temporary &&
++            r->temporaryExpireETA == 0 ) {
++            r->temporaryExpireETA =
++                game_getCurrentTime() + 60;
++            }
++        }
++    }
++
++
+ static void removeAllTempHomeLocations() {
+     for( int i=0; i<homePosStack.size(); i++ ) {
+         if( homePosStack.getElementDirect( i ).temporary ) {
+@@ -537,6 +562,19 @@ static void addHomeLocation( int inX, int inY ) {
+     }
+ 
+ 
++void LivingLifePage::addLocationSlip( int inX, int inY ) {
++    removeLocationSlip( inX, inY );
++    GridPos newPos = { inX, inY };
++    LocationSlip p;
++    p.pos = newPos;
++    p.ancient = false;
++    p.temporary = false;
++    p.posOffset.x = p.targetOffset.x = p.hideOffset.x = -41 + 64*mLocationSlips.size();
++    p.posOffset.y = p.targetOffset.y = p.hideOffset.y = -360;
++
++    mLocationSlips.push_front( p );
++    }
++
+ 
+ static void addTempHomeLocation( int inX, int inY ) {
+     removeAllTempHomeLocations();
+@@ -554,6 +592,23 @@ static void addTempHomeLocation( int inX, int inY ) {
+     }
+ 
+ 
++void LivingLifePage::addTempLocationSlip( int inX, int inY ) {
++    removeLocationSlip( inX, inY );
++    GridPos newPos = { inX, inY };
++    LocationSlip p;
++    p.pos = newPos;
++    p.ancient = false;
++    p.temporary = true;
++    // no expiration for now
++    // until we drop the map
++    p.temporaryExpireETA = 0;
++    p.posOffset.x = p.targetOffset.x = p.hideOffset.x = -41 + 64*mLocationSlips.size();
++    p.posOffset.y = p.targetOffset.y = p.hideOffset.y = -360;
++
++    mLocationSlips.push_back( p );
++    }
++
++
+ 
+ static void addAncientHomeLocation( int inX, int inY ) {
+     removeHomeLocation( inX, inY );
+@@ -577,8 +632,23 @@ static void addAncientHomeLocation( int inX, int inY ) {
+     }
+ 
+ 
++void LivingLifePage::addAncientLocationSlip( int inX, int inY ) {
++    removeLocationSlip( inX, inY );
++    GridPos newPos = { inX, inY };
++    LocationSlip p;
++    p.pos = newPos;
++    p.ancient = true;
++    p.temporary = false;
++    p.posOffset.x = p.targetOffset.x = p.hideOffset.x = -41 + 64*mLocationSlips.size();
++    p.posOffset.y = p.targetOffset.y = p.hideOffset.y = -360;
++
++    mLocationSlips.push_back( p );
++    }
++
++
+ 
+ 
++static int getArrowIndex( doublePair vector );
+ 
+ 
+ // returns if -1 no home needs to be shown (home unknown)
+@@ -628,8 +698,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
+             return -1;
+             }
+         }
+-    
+-    
++    return getArrowIndex( vector );
++    }
++
++
++
++// returns 0..7 index of arrow
++static int getArrowIndex( doublePair vector ) {
+     double a = angle( vector );
+ 
+     // north is 0
+@@ -2926,6 +3001,8 @@ LivingLifePage::LivingLifePage()
+     mHomeSlipShowDelta[1] = 68;
+     
+ 
++    mLocationSlips.deleteAll();
++
+ 
+     for( int i=0; i<NUM_YUM_SLIPS; i++ ) {    
+         mYumSlipHideOffset[i].x = -600;
+@@ -6643,6 +6720,220 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
+ 
+ 
+ 
++void LivingLifePage::drawLocationSlip( int inIndex ) {
++    LocationSlip* locationSlip = mLocationSlips.getElement(inIndex);
++    if( locationSlip == NULL ) return;
++
++    if( equal( locationSlip->posOffset, locationSlip->hideOffset ) ) return;
++
++    doublePair slipPos = add( locationSlip->posOffset, lastScreenViewCenter );
++
++    LiveObject *ourLiveObject = getOurLiveObject();
++    if( ourLiveObject == NULL ) return;
++
++    if( locationSlip->temporary ) {
++        setDrawColor( 122.0/255, 126.0/255, 244.0/255, 1 );
++        }
++    else if( locationSlip->ancient ) {
++        setDrawColor( 255.0/255, 227.0/255, 50.0/255, 1 );
++        }
++    else {
++        setDrawColor( 1, 1, 1, 1 );
++        }
++
++    drawSprite( mHomeSlip2Sprite, slipPos, 1.0, 0.0 );
++
++    GridPos p = locationSlip->pos;
++    doublePair targetPos = { (double)p.x, (double)p.y };
++    doublePair vector = sub( targetPos, ourLiveObject->currentPos );
++
++    doublePair arrowPos = slipPos;
++
++    arrowPos.y += 35;
++
++    int arrowIndex = getArrowIndex( vector );
++
++    if( arrowIndex == -1 ||
++        ! locationSlip->arrowStates[arrowIndex].solid ) {
++        // solid change
++
++        // fade any solid
++
++        int foundSolid = -1;
++        for( int i=0; i<NUM_HOME_ARROWS; i++ ) {
++            if( locationSlip->arrowStates[i].solid ) {
++                locationSlip->arrowStates[i].solid = false;
++                foundSolid = i;
++                }
++            }
++        if( foundSolid != -1 ) {
++            for( int i=0; i<NUM_HOME_ARROWS; i++ ) {
++                if( i != foundSolid ) {
++                    locationSlip->arrowStates[i].fade -= 0.0625;
++                    if( locationSlip->arrowStates[i].fade < 0 ) {
++                        locationSlip->arrowStates[i].fade = 0;
++                        }
++                    }
++                }
++            }
++        }
++
++    if( arrowIndex != -1 ) {
++        locationSlip->arrowStates[arrowIndex].solid = true;
++        locationSlip->arrowStates[arrowIndex].fade = 1.0;
++        }
++
++    toggleMultiplicativeBlend( true );
++
++    toggleAdditiveTextureColoring( true );
++
++    for( int i=0; i<NUM_HOME_ARROWS; i++ ) {
++        HomeArrow a = locationSlip->arrowStates[i];
++
++        if( ! a.solid ) {
++
++            float v = 1.0 - a.fade;
++            setDrawColor( v, v, v, 1 );
++            drawSprite( mHomeArrowErasedSprites[i], arrowPos );
++            }
++        }
++
++    toggleAdditiveTextureColoring( false );
++
++
++
++    if( arrowIndex != -1 ) {
++
++
++        setDrawColor( 1, 1, 1, 1 );
++
++        drawSprite( mHomeArrowSprites[arrowIndex], arrowPos );
++        }
++
++    toggleMultiplicativeBlend( false );
++
++    char drawTopAsErased = true;
++    arrowPos.y -= 25;
++
++    double dist = length( vector );
++
++    if( dist > 1000 ) {
++        drawTopAsErased = false;
++
++        setDrawColor( 0, 0, 0, 1 );
++
++        char *distString = NULL;
++
++        double thousands = dist / 1000;
++
++        if( thousands < 1000 ) {
++            if( thousands < 10 ) {
++                distString = autoSprintf( "%.1fK", thousands );
++                }
++            else {
++                distString = autoSprintf( "%.0fK",
++                                          thousands );
++                }
++            }
++        else {
++            double millions = dist / 1000000;
++            if( millions < 1000 ) {
++                if( millions < 10 ) {
++                    distString = autoSprintf( "%.1fM", millions );
++                    }
++                else {
++                    distString = autoSprintf( "%.0fM", millions );
++                    }
++                }
++            else {
++                double billions = dist / 1000000000;
++
++                distString = autoSprintf( "%.1fG", billions );
++                }
++            }
++
++
++
++        pencilFont->drawString( distString, arrowPos, alignCenter );
++
++        char alreadyOld = false;
++
++        for( int i=0; i<locationSlip->previousDistStrings.size(); i++ ) {
++            char *oldString =
++                locationSlip->previousDistStrings.getElementDirect( i );
++
++            if( strcmp( oldString, distString ) == 0 ) {
++                // hit
++                alreadyOld = true;
++                // move to top
++                locationSlip->previousDistStrings.deleteElement( i );
++                locationSlip->previousDistStrings.push_back( oldString );
++
++                locationSlip->previousDistFades.deleteElement( i );
++                locationSlip->previousDistFades.push_back( 1.0f );
++                break;
++                }
++            }
++
++        if( ! alreadyOld ) {
++            // put new one top
++            locationSlip->previousDistStrings.push_back( distString );
++            locationSlip->previousDistFades.push_back( 1.0f );
++
++            // fade old ones
++            for( int i=0; i<locationSlip->previousDistFades.size() - 1;
++                 i++ ) {
++                float fade =
++                    locationSlip->previousDistFades.getElementDirect( i );
++
++                if( fade > 0.5 ) {
++                    fade -= 0.20;
++                    }
++                else {
++                    fade -= 0.1;
++                    }
++
++                *( locationSlip->previousDistFades.getElement( i ) ) =
++                    fade;
++
++                if( fade <= 0 ) {
++                    locationSlip->previousDistFades.deleteElement( i );
++                    locationSlip->previousDistStrings.
++                        deallocateStringElement( i );
++                    i--;
++                    }
++                }
++            }
++        else {
++            delete [] distString;
++            }
++        }
++
++    int numPrevious = locationSlip->previousDistStrings.size();
++
++    if( numPrevious > 1 ||
++        ( numPrevious == 1 && drawTopAsErased ) ) {
++
++        int limit = locationSlip->previousDistStrings.size() - 1;
++
++        if( drawTopAsErased ) {
++            limit += 1;
++            }
++        for( int i=0; i<limit; i++ ) {
++            float fade =
++                locationSlip->previousDistFades.getElementDirect( i );
++            char *string =
++                locationSlip->previousDistStrings.getElementDirect( i );
++
++            setDrawColor( 0, 0, 0, fade * pencilErasedFontExtraFade );
++            pencilErasedFont->drawString(
++                string, arrowPos, alignCenter );
++            }
++        }
++    }
++
++
++
+ typedef struct DrawOrderRecord {
+         char person;
+         // if person
+@@ -9824,15 +10115,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+ 
+ 
+     for( int j=0; j<2; j++ ) {
+-        doublePair slipPos = add( mHomeSlipPosOffset[j], lastScreenViewCenter );
++        //doublePair slipPos = add( mHomeSlipPosOffset[j], lastScreenViewCenter );
+         
+         if( ! equal( mHomeSlipPosOffset[j], mHomeSlipHideOffset[j] ) ) {
+-            drawHomeSlip( slipPos, j );
++            //drawHomeSlip( slipPos, j );
+             }
+         }
+ 
+ 
+ 
++    for( int j=0; j<mLocationSlips.size(); j++ ) {
++        drawLocationSlip( j );
++        }
++
++
++
+     int lineSpacing = 20;
+ 
+     doublePair notePos = add( mNotePaperPosOffset, lastScreenViewCenter );
+@@ -13247,6 +13544,41 @@ void LivingLifePage::step() {
+                 mHomeSlipPosTargetOffset[j].y = mHomeSlipHideOffset[j].y;
+                 }
+             }
++
++        char foundFirstHome = false;
++        for( int j=0; j<mLocationSlips.size(); j++ ) {
++            LocationSlip* locationSlip = mLocationSlips.getElement(j);
++            if( locationSlip == NULL ) continue;
++            char home =
++                ! locationSlip->temporary &&
++                ! locationSlip->ancient;
++            char expired =
++                locationSlip->temporary &&
++                locationSlip->temporaryExpireETA != 0 &&
++                locationSlip->temporaryExpireETA < game_getCurrentTime();
++            char hidden =
++              expired ||
++              ( home && foundFirstHome );
++            GridPos p = locationSlip->pos;
++            doublePair targetPos = { (double)p.x, (double)p.y };
++            doublePair vector = sub( targetPos, ourObject->currentPos );
++            locationSlip->targetOffset.x = locationSlip->hideOffset.x = -41 + 64*j;
++            double dist = length( vector );
++            if( ! apocalypseInProgress && ! hidden && dist > 5 ) {
++                locationSlip->targetOffset.y =
++                    locationSlip->hideOffset.y + 50;
++
++                char longDistance = dist > 1000;
++
++                if( longDistance ) {
++                    locationSlip->targetOffset.y += 20;
++                    }
++                }
++            else {
++                locationSlip->targetOffset.y = locationSlip->hideOffset.y;
++                }
++            if( home ) foundFirstHome = true;
++            }
+         
+         int cm = ourObject->currentMouseOverClothingIndex;
+         if( cm != -1 ) {
+@@ -13358,6 +13690,65 @@ void LivingLifePage::step() {
+             }        
+         }
+     
++
++
++    // update location slip positions
++    for( int j=mLocationSlips.size()-1;j>=0; j-- ) {
++        LocationSlip* locationSlip = mLocationSlips.getElement( j );
++        if( locationSlip == NULL ) continue;
++        if( ! equal( locationSlip->posOffset, locationSlip->targetOffset ) ) {
++            doublePair delta =
++                sub( locationSlip->targetOffset, locationSlip->posOffset );
++
++            double d = distance( locationSlip->targetOffset,
++                                 locationSlip->posOffset );
++
++
++            if( d <= 1 ) {
++                locationSlip->posOffset = locationSlip->targetOffset;
++                if( equal( locationSlip->targetOffset, locationSlip->hideOffset ) ) {
++                    // fully hidden
++                    if (locationSlip->temporary &&
++                        locationSlip->temporaryExpireETA != 0 &&
++                        locationSlip->temporaryExpireETA < game_getCurrentTime() ) {
++                        mLocationSlips.deleteElement( j );
++                        }
++                    else {
++                        // clear all arrow states
++                        for( int i=0; i<NUM_HOME_ARROWS; i++ ) {
++                            locationSlip->arrowStates[i].solid = false;
++                            locationSlip->arrowStates[i].fade = 0;
++                            }
++
++                        // clear old dist strings too
++                        locationSlip->previousDistStrings.deallocateStringElements();
++                        locationSlip->previousDistFades.deleteAll();
++                        }
++                    }
++                }
++            else {
++                int speed = frameRateFactor * 4;
++
++                if( d < 8 ) {
++                    speed = lrint( frameRateFactor * d / 2 );
++                    }
++
++                if( speed > d ) {
++                    speed = floor( d );
++                    }
++
++                if( speed < 1 ) {
++                    speed = 1;
++                    }
++
++                doublePair dir = normalize( delta );
++
++                locationSlip->posOffset = 
++                    add( locationSlip->posOffset,
++                         mult( dir, speed ) );
++                }
++            }
++        }
+     
+     
+ 
+@@ -14536,6 +14927,7 @@ void LivingLifePage::step() {
+             apocalypseDisplayProgress = 0;
+             apocalypseInProgress = false;
+             homePosStack.deleteAll();
++            mLocationSlips.deleteAll();
+ 
+             clearToolLearnedStatus();
+ 
+@@ -14564,6 +14956,7 @@ void LivingLifePage::step() {
+                     
+                     if( d > 32 ) {
+                         addAncientHomeLocation( posX, posY );
++                        addAncientLocationSlip( posX, posY );
+                         
+                         // play sound in distance
+                         ObjectRecord *monObj = getObject( monumentID );
+@@ -15058,6 +15451,7 @@ void LivingLifePage::step() {
+ 
+                         // home markers invalid now
+                         homePosStack.deleteAll();
++                        mLocationSlips.deleteAll();
+                         }
+                     }
+                 }            
+@@ -15590,6 +15984,7 @@ void LivingLifePage::step() {
+                         printf( "Found starting home marker at %d,%d\n",
+                                 closestX, closestY );
+                         addHomeLocation( closestX, closestY );
++                        addLocationSlip( closestX, closestY );
+                         }
+                     }
+                 
+@@ -16053,11 +16448,13 @@ void LivingLifePage::step() {
+                                     getObject( newID )->homeMarker ) {
+                                     
+                                     addHomeLocation( x, y );
++                                    addLocationSlip( x, y );
+                                     addedOrRemoved = true;
+                                     }
+                                 else if( old > 0 &&
+                                          getObject( old )->homeMarker ) {
+                                     removeHomeLocation( x, y );
++                                    removeLocationSlip( x, y );
+                                     addedOrRemoved = true;
+                                     }
+                                 
+@@ -16093,6 +16490,8 @@ void LivingLifePage::step() {
+                                                     
+                                                     removeHomeLocation(
+                                                         rx, ry );
++                                                    removeLocationSlip(
++                                                        rx, ry );
+                                                     }
+                                                 }
+                                             }
+@@ -16750,6 +17149,8 @@ void LivingLifePage::step() {
+                                 r->temporaryExpireETA = 
+                                     game_getCurrentTime() + 60;
+                                 }
++
++                            setLocationSlipExpiration( 60 );
+                             }
+                         
+                         
+@@ -18629,6 +19030,17 @@ void LivingLifePage::step() {
+                     oldHomePosStack.deleteAll();
+                     }
+                 homePosStack.push_back_other( &oldHomePosStack );
++                for( int i=0; i<homePosStack.size(); i++ ) {
++                    HomePos p = homePosStack.getElementDirect( i );
++                    if( p.temporary ) {
++                        }
++                    else if( p.ancient ) {
++                        addAncientLocationSlip( p.pos.x, p.pos.y );
++                        }
++                    else {
++                        addLocationSlip( p.pos.x, p.pos.y );
++                        }
++                    }
+ 
+                 lastPlayerID = ourID;
+ 
+@@ -19349,6 +19761,7 @@ void LivingLifePage::step() {
+                                                               &mapX, &mapY );
+                                         if( numRead == 2 ) {
+                                             addTempHomeLocation( mapX, mapY );
++                                            addTempLocationSlip( mapX, mapY );
+                                             }
+ 
+                                         // trim it off
+@@ -21933,6 +22346,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+         }
+     
+ 
++    mLocationSlips.deleteAll();
++
++
+     mLastKnownNoteLines.deallocateStringElements();
+     mErasedNoteChars.deleteAll();
+     mErasedNoteCharOffsets.deleteAll();
+diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
+index fe5c53d7..88e88b14 100644
+--- a/gameSource/LivingLifePage.h
++++ b/gameSource/LivingLifePage.h
+@@ -465,6 +465,21 @@ typedef struct HomeArrow {
+         
+ 
+ 
++typedef struct LocationSlip {
++        GridPos pos;
++        char ancient;
++        char temporary;
++        // 0 if not set
++        double temporaryExpireETA;
++        HomeArrow arrowStates[ NUM_HOME_ARROWS ];
++        SimpleVector<char*> previousDistStrings;
++        SimpleVector<float> previousDistFades;
++        doublePair hideOffset;
++        doublePair posOffset;
++        doublePair targetOffset;
++    } LocationSlip;
++
++
+ // for objects moving in-transit in special cases where we can't store
+ // them in the map (if they're moving onto an occupied space that should
+ // only change when they're done moving)
+@@ -723,6 +738,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+ 
+         double mHomeSlipShowDelta[2];
+ 
++
++        SimpleVector<LocationSlip> mLocationSlips;
++
+         
+         SimpleVector<char*> mLastKnownNoteLines;
+         
+@@ -1092,6 +1110,12 @@ class LivingLifePage : public GamePage, public ActionListener {
+         char isBadBiome( int inMapI );
+ 
+         void drawHomeSlip( doublePair inSlipPos, int inIndex = 0 );
++        void drawLocationSlip( int inIndex );
++        void removeLocationSlip( int inX, int inY );
++        void setLocationSlipExpiration( int seconds );
++        void addLocationSlip( int inX, int inY );
++        void addTempLocationSlip( int inX, int inY );
++        void addAncientLocationSlip( int inX, int inY );
+         
+ 
+         void updateLeadership();
