@@ -24,3 +24,4 @@ settings/interactionKeys.ini
 settings/showHelpOverlayKey.ini
 settings/showLearnedTools.ini
 settings/filterMatchesProduct.ini
+settings/locationSlipColors.ini

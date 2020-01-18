@@ -191,7 +191,14 @@ Reworks location markers.
 
 - Home slips are standard white. You still only have one at a time.
 - Map slips are blue, you can have more than one, standard lifetime
-- Bell slips are gold, you can have more than one
+- Bell slips are gold and apoc towers are red, you can have more than one
+
+Since monument colors require object specific information, they are settable in 
+
+`settings/locationSlipColors.ini`
+
+Format is
+`objectID r g b`
 
 ### Patch Development
 
