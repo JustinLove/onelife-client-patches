@@ -189,7 +189,7 @@ Skips attempting to draw the hint arrow if the graphic is missing, which it may 
 
 Reworks location markers.
 
-- Home slips are standard white. You still only have one at a time.
+- Home slips are standard white. There can be up to 7 on screen, the most recent has the 'home' art.
 - Map slips are blue, you can have more than one, standard lifetime
 - Bell slips are gold and apoc towers are red, you can have more than one
 

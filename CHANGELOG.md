@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v43
+
+- location slips bells are on the side, trying multiple home markers with most recent using the 'home' art.
+
 ## v42
 
 - reworked location slips with multiple bells and maps
