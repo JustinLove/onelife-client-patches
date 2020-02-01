@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## 44
+
+- fix family hearts for sideways babies
+
 ## v43
 
 - location slips bells are on the side, trying multiple home markers with most recent using the 'home' art.
