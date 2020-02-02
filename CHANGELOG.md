@@ -3,7 +3,7 @@
 ## v44
 
 - age scaling patch, e.g. for nicer display on 2HOL
-- hotfix for chracters jumping around while running
+- hotfix for characters jumping around while running
 - fix family hearts for sideways babies
 
 ## v43

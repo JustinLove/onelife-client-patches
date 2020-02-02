@@ -216,7 +216,7 @@ e.g.
 
 `120 60` - if the server reports 120, show as 60
 
-## patch-random-running
+### patch-random-running
 
 Hotfix for characters jumping around while running
 
