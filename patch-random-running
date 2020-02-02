@@ -1,0 +1,17 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index baf1fed5..c65168f2 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -2297,12 +2297,6 @@ void LivingLifePage::computePathToDest( LiveObject *inObject ) {
+             start = inObject->pathToDest[ closestI ];
+             }
+         }
+-    else {
+-        // no path exists to find closest point on
+-        // our last known grid position is our closest point
+-        start.x = inObject->xServer;
+-        start.y = inObject->yServer;
+-        }
+     
+     
+     int startInd = getMapIndex( start.x, start.y );

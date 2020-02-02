@@ -25,3 +25,5 @@ settings/showHelpOverlayKey.ini
 settings/showLearnedTools.ini
 settings/filterMatchesProduct.ini
 settings/locationSlipColors.ini
+settings/ageScaling.ini
+settings/ageScaling2hol.ini

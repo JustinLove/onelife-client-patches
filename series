@@ -26,3 +26,5 @@ filter-matches-product
 time-transition-hints
 tolerate-missing-graphic
 location-slips
+age-scaling
+patch-random-running

@@ -1,0 +1,245 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 03ae8b61..baf1fed5 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -1453,8 +1453,8 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
+         return inObj->age;
+         }
+     else {
+-        return inObj->age + 
+-            inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime );
++        return computeDisplayAge( inObj->age +
++            inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime ) );
+         }
+     }
+ 
+@@ -1473,9 +1473,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
+                 // baby cries for 5 seconds each time they speak
+             
+                 // update age using clock
+-                return inObj->tempAgeOverride + 
++                return computeDisplayAge( inObj->tempAgeOverride +
+                     inObj->ageRate * 
+-                    ( curTime - inObj->tempAgeOverrideSetTime );
++                    ( curTime - inObj->tempAgeOverrideSetTime ) );
+                 }
+             else {
+                 // temp override over
+diff --git a/gameSource/ageControl.cpp b/gameSource/ageControl.cpp
+index ec88099b..c71282da 100644
+--- a/gameSource/ageControl.cpp
++++ b/gameSource/ageControl.cpp
+@@ -1,4 +1,6 @@
+ #include "ageControl.h"
++#include "minorGems/util/SimpleVector.h"
++#include "minorGems/util/stringUtils.h"
+ 
+ #include <math.h>
+ 
+@@ -11,6 +13,7 @@ static double oldHeadDownFactor = 0.35;
+ 
+ static double oldHeadForwardFactor = 2;
+ 
++static SimpleVector<doublePair> ageScaling;
+ 
+ #include "minorGems/util/SettingsManager.h"
+ 
+@@ -27,7 +30,9 @@ void initAgeControl() {
+ 
+     oldHeadForwardFactor = 
+         SettingsManager::getFloatSetting( "oldHeadForwardFactor", 2 );
+-    
++
++    initAgeScaling();
++
+     }
+ 
+ 
+@@ -94,3 +99,86 @@ doublePair getAgeBodyOffset( double inAge, doublePair inBodySpritePos ) {
+     return (doublePair){ 0, 0 };
+     }
+ 
++
++void initAgeScaling() {
++    char *cont = SettingsManager::getSettingContents( "ageScaling", "" );
++
++    ageScaling.deleteAll();
++
++    if( strcmp( cont, "" ) == 0 ) {
++        delete [] cont;
++        return;
++        }
++
++    int numParts;
++    char **parts = split( cont, "\n", &numParts );
++    delete [] cont;
++
++    for( int i=0; i<numParts; i++ ) {
++        if( strcmp( parts[i], "" ) != 0 ) {
++
++            float serverAge;
++            float displayAge;
++            int numRead = sscanf( parts[i], "%f %f",
++                                  &serverAge, &displayAge );
++            if( numRead == 2 ) {
++                doublePair point = { serverAge, displayAge };
++                printf("age scale %lf %lf\n", point.x, point.y);
++                ageScaling.push_back( point );
++                }
++            }
++        delete [] parts[i];
++        }
++    delete [] parts;
++    }
++
++
++double computeDisplayAge( double serverAge ) {
++    doublePair start = {0,0};
++    for( int i = 0;i < ageScaling.size();i++ ) {
++        doublePair end = ageScaling.getElementDirect(i);
++
++        if( start.x <= serverAge && serverAge < end.x ){
++            double serverDelta = serverAge - start.x;
++            double serverRange = end.x - start.x;
++            double fraction;
++            if( serverRange == 0 ) {
++                fraction = 0;
++                }
++            else {
++                fraction = serverDelta / serverRange;
++                }
++            double displayRange = end.y - start.y;
++            double displayAge = start.y + displayRange*fraction;
++            return displayAge;
++            }
++
++        start = end;
++        }
++    return serverAge;
++    }
++
++double computeServerAge( double displayAge ) {
++    doublePair start = {0,0};
++    for( int i = 0;i < ageScaling.size();i++ ) {
++        doublePair end = ageScaling.getElementDirect(i);
++
++        if( start.y <= displayAge && displayAge < end.y ){
++            double displayDelta = displayAge - start.y;
++            double displayRange = end.y - start.y;
++            double fraction;
++            if( displayRange == 0 ) {
++                fraction = 0;
++                }
++            else {
++                fraction = displayDelta / displayRange;
++                }
++            double serverRange = end.x - start.x;
++            double serverAge = start.x + serverRange*fraction;
++            return serverAge;
++            }
++
++        start = end;
++        }
++    return displayAge;
++    }
+diff --git a/gameSource/ageControl.h b/gameSource/ageControl.h
+index 328068e0..60314b81 100644
+--- a/gameSource/ageControl.h
++++ b/gameSource/ageControl.h
+@@ -10,3 +10,9 @@ doublePair getAgeHeadOffset( double inAge, doublePair inHeadSpritePos,
+                              doublePair inFrontFootSpritePos );
+ 
+ doublePair getAgeBodyOffset( double inAge, doublePair inBodySpritePos );
++
++void initAgeScaling();
++
++double computeDisplayAge( double serverAge );
++
++double computeServerAge( double displayAge );
+diff --git a/gameSource/musicPlayer2.cpp b/gameSource/musicPlayer2.cpp
+index 83666f74..d6a4227e 100644
+--- a/gameSource/musicPlayer2.cpp
++++ b/gameSource/musicPlayer2.cpp
+@@ -1,3 +1,4 @@
++#include "ageControl.h"
+ #include "minorGems/game/game.h"
+ #include <math.h>
+ 
+@@ -71,25 +72,27 @@ void initMusicPlayer() {
+ 
+ // returns an asynch file read handle, or -1 on failure
+ static int startNextAgeFileRead( double inAge ) {
+-    int nextFiveBlock = ceil( inAge / 5 );
++    double inDisplayAge = computeDisplayAge( inAge );
++    int nextFiveBlock = ceil( inDisplayAge / 5 );
+     
+ 
+     // too close to that age transition,
+     // start on next
+-    if( nextFiveBlock * 5 < inAge + 60 * ageRate ) {
++    if( nextFiveBlock * 5 < inDisplayAge + 60 * ageRate ) {
+         nextFiveBlock += 1;
+         }
+     
+-    ageNextMusicDone = nextFiveBlock * 5;
++    double displayAgeNextMusicDone = nextFiveBlock * 5;
+ 
+-    if( ageNextMusicDone == 60 ) {
++    if( displayAgeNextMusicDone == 60 ) {
+         // special case, end of life
+         // have music end 5 seconds after end of life
+         // so there's an ubrupt cut off of the music with the YOU DIED
+         // screen
+-        ageNextMusicDone += 10 * ageRate;
++        displayAgeNextMusicDone += 10 * ageRate;
+         }
+-    
++
++    ageNextMusicDone = computeServerAge( displayAgeNextMusicDone );
+ 
+     char *searchString = autoSprintf( "_%02d.ogg", nextFiveBlock );
+ 
+@@ -146,7 +149,7 @@ void restartMusic( double inAge, double inAgeRate, char inForceNow ) {
+     musicStarted = false;
+     forceStartNow = inForceNow;
+     
+-    age = inAge;
++    age = computeServerAge( inAge );
+     ageRate = inAgeRate;
+     
+     samplesSeenSinceAgeSet = 0;
+@@ -171,7 +174,7 @@ void restartMusic( double inAge, double inAgeRate, char inForceNow ) {
+     musicOGGPlaying = false;
+ 
+ 
+-    asyncLoadHandle = startNextAgeFileRead( inAge );
++    asyncLoadHandle = startNextAgeFileRead( age );
+     
+     
+     musicStarted = true;
+diff --git a/gameSource/settings/ageScaling.ini b/gameSource/settings/ageScaling.ini
+new file mode 100644
+index 00000000..31550ada
+--- /dev/null
++++ b/gameSource/settings/ageScaling.ini
+@@ -0,0 +1,7 @@
++3 3 pick up most things
++5 5 can be picked up
++14 14 fertile
++20 20 mature (affects character display)
++40 40 infertile
++57 57 hunger dings stop
++60 60 dead
+diff --git a/gameSource/settings/ageScaling2hol.ini b/gameSource/settings/ageScaling2hol.ini
+new file mode 100644
+index 00000000..a51bcf56
+--- /dev/null
++++ b/gameSource/settings/ageScaling2hol.ini
+@@ -0,0 +1,7 @@
++3 3 pick up most things
++5 5 can be picked up
++14 14 fertile
++20 20 mature (affects character display)
++40 40 infertile
++117 57 hunger dings stop
++120 60 dead

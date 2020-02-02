@@ -200,6 +200,26 @@ Since monument colors require object specific information, they are settable in
 Format is
 `objectID r g b`
 
+### age-scaling
+
+Clientside age scaling for e.g. Two Hours One Life, where you currently spend half your life old and wrinkled. Allows settings multipel scaling segments, an example file is provided for 2HOL
+
+`settings/ageScaling.ini` - Client uses this files, shows do-nothing settings for vanilla.
+`settings/ageScaling2hol.ini` - 2HOL example settings - copy to `ageScaling.ini` to use
+
+File format:
+`serverAge displayAge optional comment, rest of line ignored`
+
+e.g.
+
+`3 3` - if the server reports 3, show as 3
+
+`120 60` - if the server reports 120, show as 60
+
+## patch-random-running
+
+Hotfix for characters jumping around while running
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.
