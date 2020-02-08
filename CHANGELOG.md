@@ -4,6 +4,7 @@
 
 - correct 2hol infertile age
 - remove hotfix for running patch
+- location-slips is disabled until it can be updated for baby/leader/follower
 
 ## v44
 

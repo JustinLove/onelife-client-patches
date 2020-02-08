@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ddb4dc33..7889e294 100644
+index d702506c..2f921072 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -443,6 +443,67 @@ static SimpleVector<HomePos> oldHomePosStack;

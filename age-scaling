@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7889e294..2f921072 100644
+index ddb4dc33..d702506c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1504,8 +1504,8 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
+@@ -1358,8 +1358,8 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
          return inObj->age;
          }
      else {
@@ -13,7 +13,7 @@ index 7889e294..2f921072 100644
          }
      }
  
-@@ -1524,9 +1524,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
+@@ -1378,9 +1378,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
                  // baby cries for 5 seconds each time they speak
              
                  // update age using clock
