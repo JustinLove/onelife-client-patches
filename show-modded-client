@@ -199,7 +199,7 @@ index 00000000..a0d2d2fa
 +    };
 +
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index a8263e98..b309b286 100644
+index bebc0ea1..ba9977f0 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
@@ -227,7 +227,7 @@ index a8263e98..b309b286 100644
  #include "LoadingPage.h"
  #include "AutoUpdatePage.h"
  #include "LivingLifePage.h"
-@@ -138,6 +141,7 @@ int serverSequenceNumber = 0;
+@@ -140,6 +143,7 @@ int serverSequenceNumber = 0;
  
  
  FinalMessagePage *finalMessagePage;
@@ -235,7 +235,7 @@ index a8263e98..b309b286 100644
  
  ServerActionPage *getServerAddressPage;
  
-@@ -263,12 +267,12 @@ char isNonIntegerScalingAllowed() {
+@@ -265,12 +269,12 @@ char isNonIntegerScalingAllowed() {
  
  
  const char *getWindowTitle() {
@@ -250,7 +250,7 @@ index a8263e98..b309b286 100644
      }
  
  int getAppVersion() {
-@@ -358,6 +362,22 @@ static void updateDataVersionNumber() {
+@@ -360,6 +364,22 @@ static void updateDataVersionNumber() {
      }
  
  
@@ -273,7 +273,7 @@ index a8263e98..b309b286 100644
  
  
  #define SETTINGS_HASH_SALT "another_loss"
-@@ -462,6 +482,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -464,6 +484,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      initAgeControl();
      
      updateDataVersionNumber();
@@ -281,7 +281,7 @@ index a8263e98..b309b286 100644
  
  
      AppLog::printOutNextMessage();
-@@ -623,6 +644,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
+@@ -625,6 +646,7 @@ void initFrameDrawer( int inWidth, int inHeight, int inTargetFrameRate,
      
      
      finalMessagePage = new FinalMessagePage;
@@ -289,7 +289,7 @@ index a8263e98..b309b286 100644
      loadingPage = new LoadingPage;
      autoUpdatePage = new AutoUpdatePage;
      livingLifePage = NULL;
-@@ -723,6 +745,7 @@ void freeFrameDrawer() {
+@@ -725,6 +747,7 @@ void freeFrameDrawer() {
      delete getServerAddressPage;
      
      delete finalMessagePage;
@@ -297,7 +297,7 @@ index a8263e98..b309b286 100644
      delete loadingPage;
      delete autoUpdatePage;
      if( livingLifePage != NULL ) {
-@@ -1633,8 +1656,24 @@ void drawFrame( char inUpdate ) {
+@@ -1689,8 +1712,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  
@@ -324,7 +324,7 @@ index a8263e98..b309b286 100644
                  }
              }
          else if( currentGamePage == settingsPage ) {
-@@ -2092,6 +2131,15 @@ void drawFrame( char inUpdate ) {
+@@ -2148,6 +2187,15 @@ void drawFrame( char inUpdate ) {
                  quitGame();
                  }
              }

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cb6ae89c..0061da3e 100644
+index d04f1358..8c3ae7b5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -21788,6 +21788,920 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -22145,6 +22145,952 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
          }
      }
  
@@ -520,6 +520,38 @@ index cb6ae89c..0061da3e 100644
 +            }
 +        }
 +
++    if( !canExecute && getObject( destID )->wide ) {
++        // can't reach main tile on wide object
++        // can we reach a side-wing?
++        // only check where we're actually standing
++        // this is a rare case where we're trapped by a wide object
++        // no problem in making user walk as close as possible manually
++        // to try to escape (so we don't need to overhaul all movement
++        // code to deal with wide objects)
++        ObjectRecord *destO = getObject( destID );
++
++        for( int r=0; r<destO->leftBlockingRadius; r++ ) {
++            int testX = clickDestX - r - 1;
++            if( isGridAdjacent( testX, clickDestY,
++                                ourLiveObject->xd, ourLiveObject->yd ) ) {
++                canExecute = true;
++                break;
++                }
++            }
++
++        if( ! canExecute )
++        for( int r=0; r<destO->rightBlockingRadius; r++ ) {
++            int testX = clickDestX + r + 1;
++            if( isGridAdjacent( testX, clickDestY,
++                                ourLiveObject->xd, ourLiveObject->yd ) ) {
++                canExecute = true;
++                break;
++                }
++            }
++        if( canExecute ) {
++            playerActionTargetNotAdjacent = true;
++            }
++        }
 +
 +    if( ! canExecute ) {
 +        // need to move to empty adjacent first, if it exists
@@ -923,7 +955,7 @@ index cb6ae89c..0061da3e 100644
  
  
  
-@@ -22343,7 +23257,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22705,7 +23651,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -931,7 +963,7 @@ index cb6ae89c..0061da3e 100644
  
  
      
-@@ -22351,61 +23264,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22713,61 +23658,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -994,7 +1026,7 @@ index cb6ae89c..0061da3e 100644
          }
  
      
-@@ -22767,7 +23626,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23129,7 +24020,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1003,7 +1035,7 @@ index cb6ae89c..0061da3e 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -22786,196 +23645,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23148,230 +24039,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1199,9 +1231,43 @@ index cb6ae89c..0061da3e 100644
 -        
 +        char canExecute = moveNearTo( clickDestX, clickDestY );
  
-         if( canExecute && ! killMode ) {
-             
-@@ -23015,47 +23685,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+-        if( !canExecute && getObject( destID )->wide ) {
+-            // can't reach main tile on wide object
+-            // can we reach a side-wing?
+-            // only check where we're actually standing
+-            // this is a rare case where we're trapped by a wide object
+-            // no problem in making user walk as close as possible manually
+-            // to try to escape (so we don't need to overhaul all movement
+-            // code to deal with wide objects)
+-            ObjectRecord *destO = getObject( destID );
+-            
+-            for( int r=0; r<destO->leftBlockingRadius; r++ ) {
+-                int testX = clickDestX - r - 1;
+-                if( isGridAdjacent( testX, clickDestY,
+-                                    ourLiveObject->xd, ourLiveObject->yd ) ) {
+-                    canExecute = true;
+-                    break;
+-                    }
+-                }
+-            
+-            if( ! canExecute )
+-            for( int r=0; r<destO->rightBlockingRadius; r++ ) {
+-                int testX = clickDestX + r + 1;
+-                if( isGridAdjacent( testX, clickDestY,
+-                                    ourLiveObject->xd, ourLiveObject->yd ) ) {
+-                    canExecute = true;
+-                    break;
+-                    }
+-                }
+-            if( canExecute ) {
+-                mustMove = false;
+-                playerActionTargetNotAdjacent = true;
+-                }
+-            }
+         
+         
+ 
+@@ -23413,47 +24082,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1252,7 +1318,7 @@ index cb6ae89c..0061da3e 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -23184,216 +23816,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23582,216 +24213,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1470,10 +1536,10 @@ index cb6ae89c..0061da3e 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index dfc4e341..d6f261dd 100644
+index 69e3b6f0..28ef2560 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -425,6 +425,24 @@ typedef struct PointerHitRecord {
+@@ -432,6 +432,24 @@ typedef struct PointerHitRecord {
  
  
  
@@ -1498,7 +1564,7 @@ index dfc4e341..d6f261dd 100644
  typedef struct OldArrow {
          int i;
          float heat;
-@@ -928,6 +946,18 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -939,6 +957,18 @@ class LivingLifePage : public GamePage, public ActionListener {
          // forces next pointerDown call to avoid everything but ground clicks
          char mForceGroundClick;
          
