@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v45
+
+- correct 2hol infertile age
+
 ## v44
 
 - age scaling patch, e.g. for nicer display on 2HOL

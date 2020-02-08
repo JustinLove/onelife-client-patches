@@ -232,7 +232,7 @@ index 00000000..31550ada
 +60 60 dead
 diff --git a/gameSource/settings/ageScaling2hol.ini b/gameSource/settings/ageScaling2hol.ini
 new file mode 100644
-index 00000000..a51bcf56
+index 00000000..f6257a97
 --- /dev/null
 +++ b/gameSource/settings/ageScaling2hol.ini
 @@ -0,0 +1,7 @@
@@ -240,6 +240,6 @@ index 00000000..a51bcf56
 +5 5 can be picked up
 +14 14 fertile
 +20 20 mature (affects character display)
-+40 40 infertile
++104 40 infertile
 +117 57 hunger dings stop
 +120 60 dead
