@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d04f1358..8c3ae7b5 100644
+index d04f1358..08cd100e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -22145,6 +22145,952 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -22145,6 +22145,959 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
          }
      }
  
@@ -281,6 +281,9 @@ index d04f1358..8c3ae7b5 100644
 +void LivingLifePage::moveTo(int moveDestX, int moveDestY) {
 +    LiveObject *ourLiveObject = getOurLiveObject();
 +
++    // prepare for various calls to computePathToDest below
++    findClosestPathSpot( ourLiveObject );
++
 +    char oldPathExists = ( ourLiveObject->pathToDest != NULL );
 +
 +    if( oldPathExists ) {
@@ -528,6 +531,10 @@ index d04f1358..8c3ae7b5 100644
 +        // no problem in making user walk as close as possible manually
 +        // to try to escape (so we don't need to overhaul all movement
 +        // code to deal with wide objects)
++
++        // prepare for various calls to computePathToDest below
++        findClosestPathSpot( ourLiveObject );
++
 +        ObjectRecord *destO = getObject( destID );
 +
 +        for( int r=0; r<destO->leftBlockingRadius; r++ ) {
@@ -955,7 +962,16 @@ index d04f1358..8c3ae7b5 100644
  
  
  
-@@ -22705,7 +23651,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22342,8 +23295,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+         }
+     
+ 
+-    // prepare for various calls to computePathToDest below
+-    findClosestPathSpot( ourLiveObject );
+     
+     
+ 
+@@ -22705,7 +23656,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -963,7 +979,7 @@ index d04f1358..8c3ae7b5 100644
  
  
      
-@@ -22713,61 +23658,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22713,61 +23663,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1026,7 +1042,7 @@ index d04f1358..8c3ae7b5 100644
          }
  
      
-@@ -23129,7 +24020,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23129,7 +24025,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1035,7 +1051,7 @@ index d04f1358..8c3ae7b5 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -23148,230 +24039,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23148,230 +24044,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1267,7 +1283,7 @@ index d04f1358..8c3ae7b5 100644
          
          
  
-@@ -23413,47 +24082,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23413,47 +24087,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1318,7 +1334,7 @@ index d04f1358..8c3ae7b5 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -23582,216 +24213,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23582,216 +24218,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
