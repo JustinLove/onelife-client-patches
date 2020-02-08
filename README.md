@@ -216,10 +216,6 @@ e.g.
 
 `120 60` - if the server reports 120, show as 60
 
-### patch-random-running
-
-Hotfix for characters jumping around while running
-
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

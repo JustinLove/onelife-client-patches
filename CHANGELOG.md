@@ -3,6 +3,7 @@
 ## v45
 
 - correct 2hol infertile age
+- remove hotfix for running patch
 
 ## v44
 
