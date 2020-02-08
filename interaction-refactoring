@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d04f1358..08cd100e 100644
+index c78cf8cb..16db0d18 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -22145,6 +22145,959 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -22204,6 +22204,959 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
          }
      }
  
@@ -962,7 +962,7 @@ index d04f1358..08cd100e 100644
  
  
  
-@@ -22342,8 +23295,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22401,8 +23354,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -971,7 +971,7 @@ index d04f1358..08cd100e 100644
      
      
  
-@@ -22705,7 +23656,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22764,7 +23715,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -979,7 +979,7 @@ index d04f1358..08cd100e 100644
  
  
      
-@@ -22713,61 +23663,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22772,61 +23722,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1042,7 +1042,7 @@ index d04f1358..08cd100e 100644
          }
  
      
-@@ -23129,7 +24025,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23188,7 +24084,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1051,7 +1051,7 @@ index d04f1358..08cd100e 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -23148,230 +24044,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23207,230 +24103,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1283,7 +1283,7 @@ index d04f1358..08cd100e 100644
          
          
  
-@@ -23413,47 +24087,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23472,47 +24146,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1334,7 +1334,7 @@ index d04f1358..08cd100e 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -23582,216 +24218,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23641,216 +24277,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1552,10 +1552,10 @@ index d04f1358..08cd100e 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 69e3b6f0..28ef2560 100644
+index 80b473ac..b2232ba1 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -432,6 +432,24 @@ typedef struct PointerHitRecord {
+@@ -434,6 +434,24 @@ typedef struct PointerHitRecord {
  
  
  
@@ -1580,7 +1580,7 @@ index 69e3b6f0..28ef2560 100644
  typedef struct OldArrow {
          int i;
          float heat;
-@@ -939,6 +957,18 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -941,6 +959,18 @@ class LivingLifePage : public GamePage, public ActionListener {
          // forces next pointerDown call to avoid everything but ground clicks
          char mForceGroundClick;
          
