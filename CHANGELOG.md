@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v48
+
+- Location slips are back. Babies are pink, and follower/leader are badge color.
+
 ## v45
 
 - correct 2hol infertile age

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6afffe7c..5eb98e1f 100644
+index fe56adac..bbdb8bc6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -130,6 +130,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;

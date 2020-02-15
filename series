@@ -1,4 +1,4 @@
-# This series applies on GIT commit 6f05108cc8a572294c6f468876288ddc03d6cb4c
+# This series applies on GIT commit 7ace55dc2692360f5bf29254af8a4fd3d8705565
 custom-gitignore
 show-modded-client
 optional-client-tag
@@ -26,3 +26,4 @@ filter-matches-product
 time-transition-hints
 tolerate-missing-graphic
 age-scaling
+location-slips
