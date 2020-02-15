@@ -141,9 +141,12 @@ w take/cycle in backpack
 
 Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
 
+Shows a gold ball above players who count for gene score, aka +FAMILY+ from the /FAM command.
+
 There are keybinds to increase (= aka ushifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
 
-`settings/showRelationDistance.ini` (0 to disable this feature)
+`settings/showRelationDistance.ini` (0 to disable hearts)
+`settings/showGenticFamily.ini` (0 to disable gold disks)
 `settings/playerMarkKey.ini`
 `settings/playerUnmarkKey.ini`
 

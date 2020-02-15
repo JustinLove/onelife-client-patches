@@ -3,6 +3,8 @@
 ## v48
 
 - Location slips are back. Babies are pink, and follower/leader are badge color.
+- There is now a gold disk above players who score aka +FAMILY+
+- Family hearts above hat.
 
 ## v45
 

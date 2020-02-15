@@ -1,19 +1,20 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e4c61eff..7d96fb1e 100644
+index e4c61eff..c8376645 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -137,6 +137,10 @@ static int ignoreTallObjects = 1;
+@@ -137,6 +137,11 @@ static int ignoreTallObjects = 1;
  
  static int showShiverSweat = 1;
  
 +static int showRelationDistance = 1;
++static int showGeneticFamily = 1;
 +static char playerMarkKey = '=';
 +static char playerUnmarkKey = '-';
 +
  static int preferObjectsOverPlayersWithScreenLock = 1;
  
  static int clickToMoveLockToInteract = 0;
-@@ -916,9 +920,181 @@ char *getRelationName( LiveObject *inOurObject, LiveObject *inTheirObject ) {
+@@ -916,10 +921,182 @@ char *getRelationName( LiveObject *inOurObject, LiveObject *inTheirObject ) {
  
  
  
@@ -144,21 +145,21 @@ index e4c61eff..7d96fb1e 100644
 +    if( distance != expectedDistance ) {
 +        printf( "------------------- ERROR ----------------\n" );
 +        }
-+
-+
+ 
+ 
 +    delete [] name;
 +    ourLin->deleteAll();
 +    theirLin->deleteAll();
 +}
-+
+ 
  
 +void testRelations() {
 +    SimpleVector<int> ourLin;
 +    SimpleVector<int> theirLin;
- 
++
 +    ourLin.push_back(2);
 +    testRelation( &ourLin, &theirLin, "mother", 0 );
- 
++
 +    theirLin.push_back(1);
 +    testRelation( &ourLin, &theirLin, "child", 0 );
 +
@@ -192,14 +193,16 @@ index e4c61eff..7d96fb1e 100644
 +
 +    quitGame();
 +    }
- 
++
  
  // base speed for animations that aren't speeded up or slowed down
-@@ -2660,6 +2836,27 @@ LivingLifePage::LivingLifePage()
+ // when player moving at a different speed, anim speed is modified
+@@ -2660,6 +2837,28 @@ LivingLifePage::LivingLifePage()
  
      showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
  
 +    showRelationDistance = SettingsManager::getIntSetting( "showRelationDistance", 1 );
++    showGeneticFamily = SettingsManager::getIntSetting( "showGeneticFamily", 1 );
 +
 +    char *markKeyString = SettingsManager::getStringSetting( "playerMarkKey" );
 +
@@ -223,7 +226,7 @@ index e4c61eff..7d96fb1e 100644
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
  
      openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
-@@ -2985,6 +3182,8 @@ LivingLifePage::LivingLifePage()
+@@ -2985,6 +3184,8 @@ LivingLifePage::LivingLifePage()
      if( ! tutorialDone ) {
          mTutorialNumber = 1;
          }
@@ -232,7 +235,7 @@ index e4c61eff..7d96fb1e 100644
      }
  
  
-@@ -3350,6 +3549,7 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
+@@ -3350,6 +3551,7 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
  
  
  
@@ -240,7 +243,7 @@ index e4c61eff..7d96fb1e 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -4306,6 +4506,27 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4306,6 +4508,47 @@ void LivingLifePage::drawMapCell( int inMapI,
  
                  }
  
@@ -265,10 +268,30 @@ index e4c61eff..7d96fb1e 100644
 +                }
 +            }
 +
++        if ( showGeneticFamily ) {
++            char* des = obj->description;
++
++            if( strstr( des, "origGrave" ) != NULL ) {
++                for( int g=0; g<mGraveInfo.size(); g++ ) {
++                    GraveInfo *gI = mGraveInfo.getElement( g );
++                    
++                    if( gI->isGeneticFamily &&
++                        gI->worldPos.x == inScreenX / CELL_D &&
++                        gI->worldPos.y == inScreenY / CELL_D ) {
++                            doublePair offset = {0, 20};
++                            offset = add( offset, passPos );
++                            drawGeneticFamily( offset, 0.0 );
++
++                            break;
++                        }
++                    }
++                }
++            }
++
          if( mMapContainedStacks[ inMapI ].size() > 0 ) {
              int *stackArray = 
                  mMapContainedStacks[ inMapI ].getElementArray();
-@@ -4801,6 +5022,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4801,6 +5044,15 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          else {
              setAnimationHeat( 0.5 );
              }
@@ -279,10 +302,12 @@ index e4c61eff..7d96fb1e 100644
 +        else {
 +            setAnimationRelationDistance( -1 );
 +            }
++
++        setAnimationGeneticFamily( showGeneticFamily && inObj->isGeneticFamily );
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5093,6 +5321,14 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5093,6 +5345,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationBadgeColor( inObj->badgeColor );
                  }
  
@@ -292,12 +317,14 @@ index e4c61eff..7d96fb1e 100644
 +            else {
 +                setAnimationRelationDistance( -1 );
 +                }
++
++            setAnimationGeneticFamily( showGeneticFamily && inObj->isGeneticFamily );
 +            
 +
              // rideable object
              holdingPos =
                  drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -5174,6 +5410,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5174,6 +5436,15 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                      setAnimationHeat( 0.5 );
                      }
                  
@@ -307,19 +334,22 @@ index e4c61eff..7d96fb1e 100644
 +                else {
 +                    setAnimationRelationDistance( -1 );
 +                    }
++
++                setAnimationGeneticFamily( showGeneticFamily && babyO->isGeneticFamily );
 +                
                  doublePair babyHeldPos = holdPos;
                  
                  if( babyO->babyWiggle ) {
-@@ -13806,6 +14049,7 @@ void LivingLifePage::step() {
+@@ -13806,6 +14077,8 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
 +                    g.relationDistance = gravePerson->relationDistance;
++                    g.isGeneticFamily = gravePerson->isGeneticFamily;
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -14015,6 +14259,14 @@ void LivingLifePage::step() {
+@@ -14015,6 +14288,14 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -334,7 +364,7 @@ index e4c61eff..7d96fb1e 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -15658,6 +15910,7 @@ void LivingLifePage::step() {
+@@ -15658,6 +15939,7 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -342,7 +372,7 @@ index e4c61eff..7d96fb1e 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -19104,6 +19357,8 @@ void LivingLifePage::step() {
+@@ -19104,6 +19386,8 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -351,7 +381,7 @@ index e4c61eff..7d96fb1e 100644
                          }
                      }
                  }
-@@ -23590,6 +23845,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -23590,6 +23874,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -391,7 +421,7 @@ index e4c61eff..7d96fb1e 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -25326,6 +25614,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25326,6 +25643,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -408,7 +438,7 @@ index e4c61eff..7d96fb1e 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 6d2ec116..4f2f0688 100644
+index 6d2ec116..82714974 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -66,6 +66,7 @@ typedef struct LiveObject {
@@ -419,16 +449,17 @@ index 6d2ec116..4f2f0688 100644
          
          // -1 war
          // 0 neutral
-@@ -389,6 +390,8 @@ typedef struct GraveInfo {
+@@ -389,6 +390,9 @@ typedef struct GraveInfo {
          // used to detect when we've moused away, even if not mousing
          // over another grave
          double lastMouseOverTime;
 +
 +        int relationDistance;
++        char isGeneticFamily;
      } GraveInfo;
          
  
-@@ -974,6 +977,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -974,6 +978,9 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          bool tryInteractionKeys( char inASCII );
  
@@ -439,42 +470,50 @@ index 6d2ec116..4f2f0688 100644
          LiveObject *getOurLiveObject();
          LiveObject *getLiveObject( int inID );
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 5ada12cc..2ee2fe06 100644
+index 5ada12cc..67279d4a 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
-@@ -74,6 +74,8 @@ static char mouthFrameOutputStarted = false;
+@@ -74,6 +74,11 @@ static char mouthFrameOutputStarted = false;
  static SpriteHandle sweatDrop;
  const char *sweatDropFile = "sprites/88.tga"; // - 0.12
  
 +static SpriteHandle loveHeart;
-+const char *loveHeartFile = "sprites/2521.tga"; // - 0.12
++const char *loveHeartFile = "sprites/2521.tga";
++
++static SpriteHandle goldBall;
++const char *goldBallFile = "sprites/1115.tga";
  
  static char shouldFileBeCached( char *inFileName ) {
      if( strstr( inFileName, ".txt" ) != NULL ) {
-@@ -165,6 +167,8 @@ int initAnimationBankStart( char *outRebuildingCache ) {
+@@ -165,6 +170,10 @@ int initAnimationBankStart( char *outRebuildingCache ) {
      
      sweatDrop = loadSpriteBase( sweatDropFile, false );
  
 +    loveHeart = loadSpriteBase( loveHeartFile, false );
 +
++    goldBall = loadSpriteBase( goldBallFile, false );
++
  
      maxID = 0;
  
-@@ -531,6 +535,9 @@ void freeAnimationBank() {
+@@ -531,6 +540,12 @@ void freeAnimationBank() {
  
      freeSprite( sweatDrop );
      sweatDrop = NULL;
 +
 +    freeSprite( loveHeart );
 +    loveHeart = NULL;
++
++    freeSprite( goldBall );
++    goldBall = NULL;
      
      if( mouthShapeFrameList != NULL ) {
          delete [] mouthShapeFrameList;
-@@ -1254,6 +1261,29 @@ void setAnimationHeat( float heat ) {
+@@ -1254,6 +1269,48 @@ void setAnimationHeat( float heat ) {
      }
  
  
-+static float drawWithRelationDistance = -1;
++static float drawWithRelationDistance = false;
 +
 +void setAnimationRelationDistance( int distance ) {
 +    drawWithRelationDistance = distance;
@@ -497,40 +536,74 @@ index 5ada12cc..2ee2fe06 100644
 +    }
 +
 +
++static float drawWithGeneticFamily = false;
++
++void setAnimationGeneticFamily( char isGeneticFamily ) {
++    drawWithGeneticFamily = isGeneticFamily;
++    }
++
++void drawGeneticFamily( doublePair inPos, double inRot ) {
++    // Genetic Family
++    setDrawColor( 1, 1, 1, 1 );
++    setDrawFade(0.5);
++    drawSprite( goldBall,
++                inPos,
++                0.5,
++                inRot,
++                false);
++    setDrawFade(1.0);
++    }
++
++
  
  static char shouldHidePersonShadows = false;
  
-@@ -2477,6 +2507,17 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
-                 animHeadPos = rotate( animHeadPos, -2 * M_PI * inRot );
-                 animHeadRotDelta += inRot;
-                 }            
-+            
-+            // Family hearts
-+            if( obj->person &&
-+                drawWithRelationDistance >= 0 &&
-+                drawWithRelationDistance < 3 ) {
-+                doublePair offset = {0, 50};
-+                offset = rotate( offset, -2 * M_PI * animHeadRotDelta );
-+                offset = add( offset, animHeadPos );
-+                offset = add( offset, inPos );
-+                drawRelationDistance( drawWithRelationDistance, offset, animHeadRotDelta );
-+                }
-             }
+@@ -3432,6 +3489,29 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+         }
  
-         
+ 
++        // Genetic Family
++        if( obj->person &&
++            drawWithGeneticFamily ) {
++            doublePair offset = {0, 50};
++            offset = rotate( offset, -2 * M_PI * animHeadRotDelta );
++            offset = add( offset, animHeadPos );
++            offset = add( offset, inPos );
++            drawGeneticFamily( offset, animHeadRotDelta );
++            }
++
++
++        // Family hearts
++        if( obj->person &&
++            drawWithRelationDistance >= 0 &&
++            drawWithRelationDistance < 3 ) {
++            doublePair offset = {0, 50};
++            offset = rotate( offset, -2 * M_PI * animHeadRotDelta );
++            offset = add( offset, animHeadPos );
++            offset = add( offset, inPos );
++            drawRelationDistance( drawWithRelationDistance, offset, animHeadRotDelta );
++            }
++
++
+     
+     if( animLayerFades != NULL ) {
+         delete [] animLayerFades;
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index 6e78fd8c..b5a8258f 100644
+index 6e78fd8c..69c2c429 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
-@@ -459,6 +459,8 @@ void setAnimationHeat( float heat );
+@@ -459,7 +459,11 @@ void setAnimationHeat( float heat );
  void setAnimationBadge( int inBadgeID, char inBareBadge = false );
  void setAnimationBadgeColor( FloatColor inBadgeColor );
  
-+void setAnimationRelationDistance( int ditance );
-+void drawRelationDistance( int ditance, doublePair inPos, double inRot );
++void setAnimationRelationDistance( int distance );
++void drawRelationDistance( int distance, doublePair inPos, double inRot );
  
++void setAnimationGeneticFamily( char isGeneticFamily );
++void drawGeneticFamily( doublePair inPos, double inRot );
  
  // sets fade values for clothing highlights of next drawn person
+ // or NULL for no clothing highlights
 diff --git a/gameSource/settings/playerMarkKey.ini b/gameSource/settings/playerMarkKey.ini
 new file mode 100644
 index 00000000..d82b2311
@@ -545,6 +618,14 @@ index 00000000..39cdd0de
 +++ b/gameSource/settings/playerUnmarkKey.ini
 @@ -0,0 +1 @@
 +-
+diff --git a/gameSource/settings/showGeneticFamily.ini b/gameSource/settings/showGeneticFamily.ini
+new file mode 100644
+index 00000000..56a6051c
+--- /dev/null
++++ b/gameSource/settings/showGeneticFamily.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
 diff --git a/gameSource/settings/showRelationDistance.ini b/gameSource/settings/showRelationDistance.ini
 new file mode 100644
 index 00000000..d00491fd
