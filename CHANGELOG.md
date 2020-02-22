@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## v49
+
+- Fix awkward pathing bug
+- Bonus feature: path to front of wall shelves when approaching from behind.
+
 ## v48
 
 - Location slips are back. Babies are pink, and follower/leader are badge color.

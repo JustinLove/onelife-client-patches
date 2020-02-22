@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a25a4a14..33d897cd 100644
+index a25a4a14..635d45f7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -22204,6 +22204,959 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -22204,6 +22204,975 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
          }
      }
  
@@ -500,9 +500,14 @@ index a25a4a14..33d897cd 100644
 +
 +    char canExecute = false;
 +    char sideAccess = false;
++    char noBackAccess = false;
 +
 +    if( destID > 0 && getObject( destID )->sideAccess ) {
 +        sideAccess = true;
++        }
++
++    if( destID > 0 && getObject( destID )->noBackAccess ) {
++        noBackAccess = true;
 +        }
 +
 +
@@ -521,6 +526,12 @@ index a25a4a14..33d897cd 100644
 +            // trying to access side-access object from N or S
 +            canExecute = false;
 +            }
++
++        if( noBackAccess &&
++            clickDestY < ourLiveObject->yd ) {
++            // trying to from N
++            canExecute = false;
++            }
 +        }
 +
 +    if( !canExecute && getObject( destID )->wide ) {
@@ -531,9 +542,6 @@ index a25a4a14..33d897cd 100644
 +        // no problem in making user walk as close as possible manually
 +        // to try to escape (so we don't need to overhaul all movement
 +        // code to deal with wide objects)
-+
-+        // prepare for various calls to computePathToDest below
-+        findClosestPathSpot( ourLiveObject );
 +
 +        ObjectRecord *destO = getObject( destID );
 +
@@ -565,6 +573,9 @@ index a25a4a14..33d897cd 100644
 +
 +        // also consider spot itself in some cases
 +
++        // prepare for various calls to computePathToDest below
++        findClosestPathSpot( ourLiveObject );
++
 +        int moveDestX = clickDestX;
 +        int moveDestY = clickDestY;
 +
@@ -588,6 +599,10 @@ index a25a4a14..33d897cd 100644
 +        if( sideAccess ) {
 +            // don't consider N or S neighbors
 +            nLimit = 3;
++            }
++        else if( noBackAccess ) {
++            // don't consider N neighbor
++            nLimit = 4;
 +            }
 +        else if( destID > 0 &&
 +                 ourLiveObject->holdingID == 0 &&
@@ -680,6 +695,7 @@ index a25a4a14..33d897cd 100644
 +
 +          if( !foundEmpty &&
 +              ! sideAccess &&
++              ! noBackAccess &&
 +              nStart > 0 &&
 +              (destID == 0 ||
 +                ! getObject( destID )->blocksWalking ) ) {
@@ -962,7 +978,7 @@ index a25a4a14..33d897cd 100644
  
  
  
-@@ -22401,8 +23354,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22401,8 +23370,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -971,7 +987,7 @@ index a25a4a14..33d897cd 100644
      
      
  
-@@ -22764,7 +23715,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22764,7 +23731,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -979,7 +995,7 @@ index a25a4a14..33d897cd 100644
  
  
      
-@@ -22772,61 +23722,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22772,61 +23738,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1042,7 +1058,7 @@ index a25a4a14..33d897cd 100644
          }
  
      
-@@ -23188,7 +24084,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23188,7 +24100,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1051,7 +1067,7 @@ index a25a4a14..33d897cd 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -23207,230 +24103,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23207,230 +24119,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1283,7 +1299,7 @@ index a25a4a14..33d897cd 100644
          
          
  
-@@ -23472,47 +24146,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23472,47 +24162,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1334,7 +1350,7 @@ index a25a4a14..33d897cd 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -23641,216 +24277,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23641,216 +24293,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
