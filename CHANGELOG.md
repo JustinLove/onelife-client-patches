@@ -5,6 +5,7 @@
 - Fix awkward pathing bug
 - Bonus feature: path to front of wall shelves when approaching from behind.
 - Allow viewing names of objects in bad biomes
+- Replaces custom help screen with changes to ESC screen
 
 ## v48
 

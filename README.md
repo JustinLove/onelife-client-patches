@@ -154,7 +154,7 @@ There are keybinds to increase (= aka ushifted +) or decrease (-) hearts for pla
 
 ### help-overlay
 
-Shows a help overlay for interaction keys and emote keys. Default keybind is '\', change in `settings/showHelpOverlayKey.ini`
+Changes the ESC overlay to include mod keys and help
 
 ### yum-hover
 

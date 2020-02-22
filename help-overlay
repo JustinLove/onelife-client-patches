@@ -1,71 +1,15 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 866ea679..6d3911db 100644
+index 866ea679..68f3a7ff 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -222,6 +222,9 @@ void initKeybinds() {
+@@ -3550,6 +3550,59 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
      }
  
  
-+static char showHelpOverlay = false;
-+static char showHelpOverlayKey = '\\';
-+
- static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
- 
- 
-@@ -2871,6 +2874,16 @@ LivingLifePage::LivingLifePage()
-     interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
- 
-     initKeybinds();
-+
-+    char *keyString = SettingsManager::getStringSetting( "showHelpOverlayKey" );
-+
-+    if( keyString != NULL ) {
-+        if( strlen( keyString ) == 1 ) {
-+            showHelpOverlayKey = keyString[0];
-+            }
-+        delete [] keyString;
-+        }
-+
-     
-     initLiveTriggers();
- 
-@@ -3550,6 +3563,154 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
-     }
- 
- 
-+void drawHelpEmotionKeys( doublePair messagePos ) {
-+    double lineSpacing = 30;
-+    double indent = 60;
-+    double columnWidth = 300;
-+
-+    char letters[2];
-+    letters[1] = 0;
-+
-+    messagePos.x += columnWidth/2;
-+    mainFont->drawString( "Emotes: Alt+ or Ctrl+", 
-+                           messagePos, alignCenter );
-+    messagePos.x -= columnWidth/2;
-+    messagePos.y -= lineSpacing;
-+
-+    Emotion *e = getEmotion(0);
-+    for( int index = 0; (e = getEmotion(index)) != NULL && e->triggerWord && index < 200; index++ ) {
-+        if( e->triggerKey == 0) continue;
-+        letters[0] = e->triggerKey;
-+        mainFont->drawString( letters, 
-+                               messagePos, alignLeft );
-+        messagePos.x += indent;
-+        mainFontReview->drawString( e->triggerWord, 
-+                               messagePos, alignLeft );
-+        messagePos.x -= indent;
-+        messagePos.y -= lineSpacing;
-+        }
-+    }
-+
-+
 +void drawHelpInteractionKeys( doublePair messagePos ) {
 +    double lineSpacing = 30;
 +    double indent = 60;
-+    double columnWidth = 600;
++    double columnWidth = 400;
 +
 +    char letters[2];
 +    letters[1] = 0;
@@ -115,8 +59,38 @@ index 866ea679..6d3911db 100644
 +    messagePos.y -= lineSpacing;
 +    }
 +
+ 
+ 
+ SimpleVector<char*> *splitLines( const char *inString,
+diff --git a/gameSource/game.cpp b/gameSource/game.cpp
+index d62e501b..d5e92dc9 100644
+--- a/gameSource/game.cpp
++++ b/gameSource/game.cpp
+@@ -829,43 +829,86 @@ void freeFrameDrawer() {
+ static void drawFrameNoUpdate( char inUpdate );
+ 
+ 
++void drawPauseEmotionKeys( doublePair messagePos ) {
++    double lineSpacing = 30;
+ 
++    char letters[2];
++    letters[1] = 0;
 +
-+void drawHelpSayKeys( doublePair messagePos ) {
++    mainFont->drawString( "Alt+ or Ctrl+",
++                           messagePos, alignCenter );
++    messagePos.y -= lineSpacing;
++
++    Emotion *e = getEmotion(0);
++    for( int index = 0; (e = getEmotion(index)) != NULL && e->triggerWord && index < 200; index++ ) {
++        if( e->triggerKey == 0) continue;
++        letters[0] = e->triggerKey;
++        mainFont->drawString( letters,
++                               messagePos, alignLeft );
++        messagePos.y -= lineSpacing;
++        }
++    }
++
++void drawPauseSayKeys( doublePair messagePos ) {
 +    double lineSpacing = 30;
 +    double indent = 60;
 +
@@ -133,98 +107,89 @@ index 866ea679..6d3911db 100644
 +    messagePos.y -= lineSpacing;
 +    }
 +
-+
-+
-+void drawHelpOverlay() {
-+    double lineSpacing = 30;
-+    double indent = 60;
-+
-+    setDrawColor( 0, 0, 0, 0.5 );
-+    drawRect( lastScreenViewCenter, 640, 360 );
-+
-+    setDrawColor( 1, 1, 1, 1 );
-+
-+    doublePair messagePos = lastScreenViewCenter;
-+    messagePos.y += 300;
-+
-+    char letters[2];
-+    letters[0] = showHelpOverlayKey;
-+    letters[1] = 0;
-+
-+    messagePos.x -= indent;
-+    mainFont->drawString( letters, 
-+                           messagePos, alignLeft );
-+    messagePos.x += indent;
-+    mainFontReview->drawString( "Toggle Help", 
-+                           messagePos, alignLeft );
-+
-+    messagePos.y -= lineSpacing*2;
-+
-+    // ------------------ interaction keys -----------------
-+    messagePos.x -= 600;
-+    drawHelpInteractionKeys( messagePos );
-+
-+    // ------------------ show relation keys -----------------
-+    messagePos.y -= 420;
-+    drawHelpMarkKeys( messagePos );
-+    messagePos.y += 420;
-+
-+    // ------------------ emotion keys -----------------
-+    messagePos.x += 900;
-+    drawHelpEmotionKeys( messagePos );
-+
-+    // ------------------ say management keys-----------------
-+    messagePos.x -= 400;
-+    messagePos.y -= 475;
-+    drawHelpSayKeys( messagePos );
-+    messagePos.y += 475;
-+
-+    }
-+
++void drawHelpInteractionKeys( doublePair messagePos );
++void drawHelpMarkKeys( doublePair messagePos );
  
+ static void drawPauseScreen() {
  
- SimpleVector<char*> *splitLines( const char *inString,
-@@ -6619,6 +6780,13 @@ void LivingLifePage::draw( doublePair inViewCenter,
-                       pos.y - 102 );
-             }
+     double viewHeight = viewHeightFraction * viewWidth;
++    double rectWidth = viewHeight / 3;
++    double rectHeight = viewHeight / 2.2;
+ 
+     setDrawColor( 1, 1, 1, 0.5 * pauseScreenFade );
          
-+        doublePair helpPos = pos;
-+        helpPos.y -= 100;
-+        drawMessage( "h for keyboard help", helpPos );
-+        if( showHelpOverlay ) {
-+            drawHelpOverlay();
-+            }
-+    
-         return;
-         }
+-    drawSquare( lastScreenViewCenter, 1.05 * ( viewHeight / 3 ) );
++    drawRect( lastScreenViewCenter, 1.05 * rectWidth, 1.05 * rectHeight );
+         
  
-@@ -9482,6 +9650,10 @@ void LivingLifePage::draw( doublePair inViewCenter,
-             drawFixedShadowStringWhite( translate( "fpsPending" ), pos );
-             }
-         }
+     setDrawColor( 0.2, 0.2, 0.2, 0.85 * pauseScreenFade  );
+         
+-    drawSquare( lastScreenViewCenter, viewHeight / 3 );
++    drawRect( lastScreenViewCenter, rectWidth, rectHeight );
+         
+ 
+     setDrawColor( 1, 1, 1, pauseScreenFade );
+ 
+     doublePair messagePos = lastScreenViewCenter;
+ 
+-    messagePos.y += 4.5  * (viewHeight / 15);
++    messagePos.y += 6.0  * (viewHeight / 15);
+ 
+     mainFont->drawString( translate( "pauseMessage1" ), 
+                            messagePos, alignCenter );
+         
+-    messagePos.y -= 1.25 * (viewHeight / 15);
++    messagePos.y -= 1 * (viewHeight / 15);
+     mainFont->drawString( translate( "pauseMessage2" ), 
+                            messagePos, alignCenter );
+ 
+ 
+     if( currentGamePage == livingLifePage ) {
+         
+-        doublePair drawPos = { -9, 0 };
++        doublePair drawPos = { -220, 140 };
+         
+         drawPos = add( drawPos, lastScreenViewCenter );
+ 
+-        drawSprite( instructionsSprite, drawPos );
++        //drawSprite( instructionsSprite, drawPos );
++        drawHelpInteractionKeys( drawPos );
++        drawPos.y -= 400;
++        drawHelpMarkKeys( drawPos );
+ 
+         TextAlignment a = getMessageAlign();
+ 
+@@ -894,6 +937,10 @@ static void drawPauseScreen() {
+         drawMessage( translate( "commandHintsA" ), drawPos, false, 
+                      pauseScreenFade );
+ 
++        drawPos.x += 200;
++        drawPos.y -= 222;
++        drawPauseEmotionKeys( drawPos );
 +
-+    if( showHelpOverlay ) {
-+        drawHelpOverlay();
-+        }
+ 
+ 
+         drawPos = lastScreenViewCenter;
+@@ -918,6 +965,9 @@ static void drawPauseScreen() {
+         setMessageAlign( alignLeft );
+         drawMessage( translate( "commandHintsB" ), drawPos, false, 
+                      pauseScreenFade );
++
++        drawPos.y -= viewHeight * 0.82;
++        drawMessage( "F1  Pause say##Shift+Backspace## Cancel say", drawPos, false, pauseScreenFade );
+         
+         setMessageAlign( a );
+         }
+@@ -1125,11 +1175,7 @@ static void drawPauseScreen() {
+ 
+     messagePos = lastScreenViewCenter;
+ 
+-    messagePos.y -= 3.75 * ( viewHeight / 15 );
+-    //mainFont->drawString( translate( "pauseMessage3" ), 
+-    //                      messagePos, alignCenter );
+-
+-    messagePos.y -= 0.625 * (viewHeight / 15);
++    messagePos.y += 4 * ( viewHeight / 15 );
+ 
+     const char* quitMessageKey = "pauseMessage3";
      
-     if( showNet ) {
-         doublePair pos = lastScreenViewCenter;
-@@ -25668,6 +25840,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
-             keyHandledByKeybind = true;
-             }
- 
-+        if( inASCII == showHelpOverlayKey ) {
-+            showHelpOverlay = !showHelpOverlay;
-+            keyHandledByKeybind = true;
-+            }
-+
-         // inspired by Awbz OneLife+
-         if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
-               || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
-diff --git a/gameSource/settings/showHelpOverlayKey.ini b/gameSource/settings/showHelpOverlayKey.ini
-new file mode 100644
-index 00000000..57ddad2a
---- /dev/null
-+++ b/gameSource/settings/showHelpOverlayKey.ini
-@@ -0,0 +1 @@
-+\
