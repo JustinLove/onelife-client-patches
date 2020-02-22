@@ -1,0 +1,12 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index d20a4bfd..34468805 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -11257,6 +11257,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+         
+         char badBiome = false;
+         if( mCurMouseOverBiome != -1 &&
++            mCurMouseOverID == 0 &&
+             mBadBiomeIndices.getElementIndex( mCurMouseOverBiome ) 
+             != -1 ) {
+             badBiome = true;
