@@ -3,6 +3,7 @@
 ## v50
 
 - New players have a gosling on their head.
+- Shows the use count of water buckets, bushes, piles, etc.
 - Use server-provided tool slot info instead of message parsing
 
 ## v49

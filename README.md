@@ -230,6 +230,14 @@ e.g.
 
 Allows viewing object names when hovering in bad biomes
 
+## show-use-count
+
+Shows the remaining uses of water buckets, bushes, piles, etc.
+
+Piles are defined by a category object id, defined in 
+
+`settings/categoryPile.ini`
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

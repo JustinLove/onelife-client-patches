@@ -28,3 +28,4 @@ settings/filterMatchesProduct.ini
 settings/ageScaling.ini
 settings/ageScaling2hol.ini
 settings/locationSlipColors.ini
+settings/categoryPile.ini

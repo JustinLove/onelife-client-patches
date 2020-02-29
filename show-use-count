@@ -1,0 +1,68 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 637ccce8..a924086f 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -144,6 +144,8 @@ static double newPlayerMessageTime = 0;
+ static char playerMarkKey = '=';
+ static char playerUnmarkKey = '-';
+ 
++static int categoryPile = 1600;
++
+ static int preferObjectsOverPlayersWithScreenLock = 1;
+ 
+ static int clickToMoveLockToInteract = 0;
+@@ -3102,6 +3104,7 @@ LivingLifePage::LivingLifePage()
+         delete [] markKeyString;
+         }
+ 
++    categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
+ 
+     preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
+ 
+@@ -11617,6 +11620,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
+                     desToDelete = des;
+                     }
+ 
++                if( o->isUseDummy || o->numUses > 1 ) {
++                    int uses = o->numUses;
++                    int parentId = idToDescribe;
++                    if( o->isUseDummy ) {
++                        uses = o->thisUseDummyIndex + 1;
++                        parentId = o->useDummyParent;
++                        }
++
++                    ReverseCategoryRecord* rr = getReverseCategory( parentId );
++                    if( rr != NULL) {
++                        for( int i=0; i < rr->categoryIDSet.size(); i++ ) {
++                            if( rr->categoryIDSet.getElementDirect( i ) == categoryPile ) {
++                                uses += 1;
++                                break;
++                                }
++                            }
++                        }
++
++                    char *newDes = NULL;
++
++                    newDes =
++                        autoSprintf( "%d - %s",
++                                     uses,
++                                     des);
++
++                    if( desToDelete != NULL ) {
++                        delete [] desToDelete;
++                        }
++                    des = newDes;
++                    desToDelete = des;
++                    }
++
+                 }
+             
+             char *stringUpper = stringToUpperCase( des );
+diff --git a/gameSource/settings/categoryPile.ini b/gameSource/settings/categoryPile.ini
+new file mode 100644
+index 00000000..f5624aea
+--- /dev/null
++++ b/gameSource/settings/categoryPile.ini
+@@ -0,0 +1 @@
++1600
+\ No newline at end of file
