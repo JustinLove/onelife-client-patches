@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ab6052b4..b3e9a4b5 100644
+index 24efe56d..39fe6f01 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -11288,6 +11288,15 @@ char *LivingLifePage::getDeathReason() {
+@@ -11311,6 +11311,15 @@ char *LivingLifePage::getDeathReason() {
      }
  
  
@@ -31,7 +31,7 @@ index 82714974..fab422b0 100644
          // prevent a jitter when frameRateFactor changes due to fps lag
          void adjustAllFrameCounts( double inOldFrameRateFactor,
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index d5e92dc9..fc4b3f47 100644
+index 49c02da3..a40e8b13 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1267,6 +1267,8 @@ static void startConnecting() {

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dbd9f261..45c8db08 100644
+index a87a92f6..0888d2a2 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -146,6 +146,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -11,7 +11,7 @@ index dbd9f261..45c8db08 100644
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -2908,6 +2910,8 @@ LivingLifePage::LivingLifePage()
+@@ -2917,6 +2919,8 @@ LivingLifePage::LivingLifePage()
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
  
@@ -20,7 +20,7 @@ index dbd9f261..45c8db08 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -2996,6 +3000,21 @@ LivingLifePage::LivingLifePage()
+@@ -3005,6 +3009,18 @@ LivingLifePage::LivingLifePage()
          mYumSlipPosTargetOffset[i] = mYumSlipHideOffset[i];
          }
      
@@ -35,14 +35,11 @@ index dbd9f261..45c8db08 100644
 +        }
 +
 +    mKnownToolSlips = 0;
-+    mKnownToolSlots = 0;
-+    mRemainingToolSlots = 0;
-+    mTotalToolSlots = 0;
 +    mForceToolRefresh = false;
  
      for( int i=0; i<3; i++ ) {    
          mHungerSlipShowOffsets[i].x = -558;
-@@ -3649,6 +3668,77 @@ void drawHelpMarkKeys( doublePair messagePos ) {
+@@ -3658,6 +3674,77 @@ void drawHelpMarkKeys( doublePair messagePos ) {
  
  
  
@@ -120,7 +117,7 @@ index dbd9f261..45c8db08 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -10098,6 +10188,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10107,6 +10194,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
@@ -142,7 +139,7 @@ index dbd9f261..45c8db08 100644
  
      // now draw tutorial sheets
      if( mTutorialNumber > 0 || mGlobalMessageShowing )
-@@ -13281,6 +13386,40 @@ void LivingLifePage::step() {
+@@ -13304,6 +13406,41 @@ void LivingLifePage::step() {
              }
          
  
@@ -152,7 +149,8 @@ index dbd9f261..45c8db08 100644
 +            mForceToolRefresh = false;
 +
 +            ObjectRecord *o = getObject( mNextHintObjectID );
-+            int showSlots = mKnownToolSlips + mRemainingToolSlots;
++            int remainingSlots = (totalToolSlots - usedToolSlots);
++            int showSlots = mKnownToolSlips + remainingSlots;
 +            float offset = 1220.0 / showSlots;
 +            if (offset > 64) offset = 64;
 +            int left = showSlots * offset / -2;
@@ -164,7 +162,7 @@ index dbd9f261..45c8db08 100644
 +                    mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
 +                    mToolBoxTargetOffset[i].y -= 100;
 +                    }
-+                for( ;i < NUM_TOOL_SHEETS - mRemainingToolSlots;i++ ) {
++                for( ;i < NUM_TOOL_SHEETS - remainingSlots;i++ ) {
 +                    mToolBoxTargetOffset[i] = mToolBoxHideOffset[i];
 +                    }
 +                for( ;i < NUM_TOOL_SHEETS;i++,slip++ ) {
@@ -183,7 +181,7 @@ index dbd9f261..45c8db08 100644
  
          if( ( isHintFilterStringInvalid() &&
                mCurrentHintObjectID != mNextHintObjectID ) ||
-@@ -13492,6 +13631,49 @@ void LivingLifePage::step() {
+@@ -13515,6 +13652,49 @@ void LivingLifePage::step() {
          }
  
  
@@ -233,19 +231,12 @@ index dbd9f261..45c8db08 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -13970,6 +14152,49 @@ void LivingLifePage::step() {
+@@ -13993,6 +14173,19 @@ void LivingLifePage::step() {
                  
  
                  mGlobalMessageShowing = true;
 +
-+                int remaining = -1;
-+                int total = -1;
-+                sscanf( spaces, "YOU LEARNED %*[^.].##%d OF %d TOOL SLOTS ARE LEFT.", &remaining, &total);
-+
-+                if( total > 0 ) {
-+                    mRemainingToolSlots = remaining;
-+                    mTotalToolSlots = total;
-+                    mKnownToolSlots = total - remaining;
++                if( strncmp( spaces, "YOU LEARNED ", 12 ) == 0 ) {
 +                    mForceToolRefresh = true;
 +                    mGlobalMessageShowing = false;
 +                    if( mTutorialSound != NULL ) {
@@ -253,29 +244,6 @@ index dbd9f261..45c8db08 100644
 +                                             0.18 * getSoundEffectsLoudness(), 
 +                                             0.5 );
 +                        }
-+                    }
-+                else if( strncmp( spaces, "YOU LEARNED ", 12 ) == 0 ) {
-+                    mRemainingToolSlots = 0;
-+                    mKnownToolSlots = mTotalToolSlots;
-+                    mForceToolRefresh = true;
-+                    mGlobalMessageShowing = false;
-+                    if( mTutorialSound != NULL ) {
-+                            playSoundSprite( mTutorialSound, 
-+                                             0.18 * getSoundEffectsLoudness(), 
-+                                             0.5 );
-+                        }
-+                    }
-+
-+
-+                total = -1;
-+                sscanf( spaces, "YOUR GENETIC FITNESS SCORE IS %*f##"
-+                                "YOU GET %*d BONUS TOOL %*s "
-+                                "FOR A TOTAL OF %d %*s", &total);
-+                if( total > 0 ) {
-+                    mRemainingToolSlots = total;
-+                    mTotalToolSlots = total;
-+                    mKnownToolSlots = 0;
-+                    mForceToolRefresh = true;
 +                    }
 +
 +
@@ -283,7 +251,7 @@ index dbd9f261..45c8db08 100644
                  mGlobalMessageStartTime = game_getCurrentTime();
                  
                  if( mLiveTutorialSheetIndex >= 0 ) {
-@@ -13997,6 +14222,7 @@ void LivingLifePage::step() {
+@@ -14020,6 +14213,7 @@ void LivingLifePage::step() {
                      (char*)( mTutorialMessage[ mLiveTutorialSheetIndex ] ) );
              
                  mTutorialExtraOffset[ mLiveTutorialSheetIndex ].x = longestLine;
@@ -291,7 +259,7 @@ index dbd9f261..45c8db08 100644
  
                  
                  delete [] spaces;
-@@ -14070,13 +14296,19 @@ void LivingLifePage::step() {
+@@ -14093,13 +14287,19 @@ void LivingLifePage::step() {
              for( int i=1; i < tokens->size(); i++ ) {
                  char *tok = tokens->getElementDirect( i );
                  
@@ -312,7 +280,15 @@ index dbd9f261..45c8db08 100644
                          }
                      }
                  }
-@@ -16898,6 +17130,15 @@ void LivingLifePage::step() {
+@@ -14151,6 +14351,7 @@ void LivingLifePage::step() {
+             if( numRead == 2 ) {
+                 usedToolSlots = numSlotsUsed;
+                 totalToolSlots = numTotalSlots;
++                mForceToolRefresh = true;
+                 }
+             }
+         else if( type == SEQUENCE_NUMBER ) {
+@@ -16941,6 +17142,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -328,7 +304,7 @@ index dbd9f261..45c8db08 100644
                              }
                          
  
-@@ -21921,6 +22162,18 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -21968,6 +22178,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      
@@ -340,15 +316,12 @@ index dbd9f261..45c8db08 100644
 +        }
 +
 +    mKnownToolSlips = 0;
-+    mKnownToolSlots = 0;
-+    mRemainingToolSlots = 0;
-+    mTotalToolSlots = 0;
 +    mForceToolRefresh = false;
  
      savingSpeechEnabled = SettingsManager::getIntSetting( "allowSavingSpeech",
                                                            0 );
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index fab422b0..2228590a 100644
+index fab422b0..fea374f3 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -32,6 +32,7 @@
@@ -359,11 +332,10 @@ index fab422b0..2228590a 100644
  
  #define NUM_HOME_ARROWS 8
  
-@@ -844,7 +845,20 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -844,7 +845,17 @@ class LivingLifePage : public GamePage, public ActionListener {
          int mLiveTutorialSheetIndex;
          int mLiveTutorialTriggerNumber;
  
--
 +        // offset from current view center
 +        doublePair mToolBoxHideOffset[NUM_TOOL_SHEETS];
 +        doublePair mToolBoxPosOffset[NUM_TOOL_SHEETS];
@@ -372,17 +344,14 @@ index fab422b0..2228590a 100644
 +        double mToolBoxFreeze[NUM_TOOL_SHEETS];
 +
 +        int mKnownToolSlips;
-+        int mKnownToolSlots;
-+        int mRemainingToolSlots;
-+        int mTotalToolSlots;
 +        char mForceToolRefresh;
-+
+ 
 +        void drawToolSlip( doublePair inPos, int inTool, int slip = 0 );
  
          // relative to map corner, but not necessary in bounds
          // of locally stored map
 diff --git a/gameSource/objectBank.cpp b/gameSource/objectBank.cpp
-index ed0b3efc..af118420 100644
+index 71db1ce0..664bf152 100644
 --- a/gameSource/objectBank.cpp
 +++ b/gameSource/objectBank.cpp
 @@ -4742,6 +4742,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
@@ -430,7 +399,7 @@ index ed0b3efc..af118420 100644
      ObjectRecord *o = getObject( inObjectID );
      
 diff --git a/gameSource/objectBank.h b/gameSource/objectBank.h
-index 41b03e97..9eeb7657 100644
+index c2f4cfc0..88b3ac5a 100644
 --- a/gameSource/objectBank.h
 +++ b/gameSource/objectBank.h
 @@ -723,6 +723,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,

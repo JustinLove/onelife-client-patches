@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v50
+
+- Use server-provided tool slot info instead of message parsing
+
 ## v49
 
 - Fix awkward pathing bug
