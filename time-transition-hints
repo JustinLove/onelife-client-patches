@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b3e53c6f..f6089dbe 100644
+index f802fb90..0c3e08ef 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -11572,7 +11572,7 @@ static char getTransHintable( TransRecord *inTrans ) {
+@@ -11575,7 +11575,7 @@ static char getTransHintable( TransRecord *inTrans ) {
          return false;
          }
      
@@ -11,7 +11,7 @@ index b3e53c6f..f6089dbe 100644
          ( inTrans->target > 0 || inTrans->target == -1 ) &&
          ( inTrans->newActor > 0 || inTrans->newTarget > 0 ) ) {
  
-@@ -12307,7 +12307,10 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -12310,7 +12310,10 @@ int LivingLifePage::getNumHints( int inObjectID ) {
          
          int depth = 0;
              

@@ -2,6 +2,7 @@
 
 ## v50
 
+- New players have a gosling on their head.
 - Use server-provided tool slot info instead of message parsing
 
 ## v49

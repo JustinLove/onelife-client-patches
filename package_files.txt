@@ -12,6 +12,7 @@ settings/ignoreTallObjects.ini
 settings/showShiverSweat.ini
 settings/showRelationDistance.ini
 settings/showGeneticFamily.ini
+settings/showNewPlayers.ini
 settings/playerMarkKey.ini
 settings/playerUnmarkKey.ini
 settings/preferObjectsOverPlayersWithScreenLock.ini

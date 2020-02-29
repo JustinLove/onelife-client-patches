@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 58afa5c0..b3e53c6f 100644
+index 200ca726..f802fb90 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -148,6 +148,8 @@ static int clickToMoveLockToInteract = 0;
+@@ -150,6 +150,8 @@ static int clickToMoveLockToInteract = 0;
  
  static int showLearnedTools = 1;
  
@@ -11,7 +11,7 @@ index 58afa5c0..b3e53c6f 100644
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -2921,6 +2923,8 @@ LivingLifePage::LivingLifePage()
+@@ -2924,6 +2926,8 @@ LivingLifePage::LivingLifePage()
  
      showLearnedTools = SettingsManager::getIntSetting( "showLearnedTools", 1 );
  
@@ -20,7 +20,7 @@ index 58afa5c0..b3e53c6f 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -11984,6 +11988,7 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -11987,6 +11991,7 @@ int LivingLifePage::getNumHints( int inObjectID ) {
  
      // new logic:
      // show all trans leading to this target object
@@ -28,7 +28,7 @@ index 58afa5c0..b3e53c6f 100644
      if( mLastHintFilterString != NULL ) {
          
          SimpleVector<int> hitIDs = findObjectsMatchingWords(
-@@ -12118,6 +12123,100 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -12121,6 +12126,100 @@ int LivingLifePage::getNumHints( int inObjectID ) {
              }
          }
      
