@@ -53,7 +53,7 @@ index da9a0ff4..47017767 100644
              delete [] message;
              return;
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index acd963da..c5834456 100644
+index acd963da..4eeada33 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -136,6 +136,9 @@ char *userTwinCode = NULL;
@@ -75,27 +75,43 @@ index acd963da..c5834456 100644
      
      if( SettingsManager::getIntSetting( "useCustomServer", 0 ) ) {
          usingCustomServer = true;
-@@ -1956,6 +1961,12 @@ void drawFrame( char inUpdate ) {
+@@ -1956,19 +1961,26 @@ void drawFrame( char inUpdate ) {
              }
          else if( currentGamePage == livingLifePage ) {
              if( livingLifePage->checkSignal( "loginFailed" ) ) {
+-                lastScreenViewCenter.x = 0;
+-                lastScreenViewCenter.y = 0;
 +                if( !triedAlternateLogin ) {
 +                    triedAlternateLogin = true;
 +                    usingClientTag = !usingClientTag;
 +                    currentGamePage->base_makeActive( true );
 +                    }
 +                else {
-                 lastScreenViewCenter.x = 0;
-                 lastScreenViewCenter.y = 0;
++                    lastScreenViewCenter.x = 0;
++                    lastScreenViewCenter.y = 0;
  
-@@ -1985,6 +1996,7 @@ void drawFrame( char inUpdate ) {
+-                setViewCenterPosition( lastScreenViewCenter.x, 
+-                                       lastScreenViewCenter.y );
+-                
+-                currentGamePage = existingAccountPage;
+-                
+-                existingAccountPage->setStatus( "loginFailed", true );
++                    setViewCenterPosition( lastScreenViewCenter.x, 
++                                           lastScreenViewCenter.y );
  
-                 currentGamePage->base_makeActive( true );
+-                existingAccountPage->setStatusPositiion( true );
++                    currentGamePage = existingAccountPage;
+ 
+-                currentGamePage->base_makeActive( true );
++                    existingAccountPage->setStatus( "loginFailed", true );
++
++                    existingAccountPage->setStatusPositiion( true );
++
++                    currentGamePage->base_makeActive( true );
++                    }
                  }
-+                }
-             else if( livingLifePage->checkSignal( "noLifeTokens" ) ) {
+             else if( livingLifePage->checkSignal( "reconnectFailed" ) ) {
                  lastScreenViewCenter.x = 0;
-                 lastScreenViewCenter.y = 0;
 diff --git a/gameSource/settings/usingClientTag.ini b/gameSource/settings/usingClientTag.ini
 new file mode 100644
 index 00000000..d00491fd

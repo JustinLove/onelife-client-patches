@@ -63,7 +63,7 @@ index c18740b1..de4c0e00 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index c5834456..c4d4d8d7 100644
+index 4eeada33..e43279f8 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -829,43 +829,86 @@ void freeFrameDrawer() {
