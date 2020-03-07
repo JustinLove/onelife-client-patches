@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## v53
+
+- Add "USES" to the uses item description
+- Baby location slips are your skin color
+
 ## v50
 
 - New players have a gosling on their head.

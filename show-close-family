@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 639a9e60..c18740b1 100644
+index 639a9e60..f59fc0a9 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -137,6 +137,13 @@ static int ignoreTallObjects = 1;
@@ -25,12 +25,12 @@ index 639a9e60..c18740b1 100644
 +                       int ourID, int theirID,
 +                       double ourAge, double theirAge ) {
 +    
-+
+ 
 +    if( ourLin->size() == 0 && theirLin->size() == 0 ) {
 +        // both eve, no relation
 +        return -1;
 +        }
-+
+ 
 +    int cousinNum = 0;
 +    int cousinRemovedNum = 0;
 +    
@@ -40,7 +40,7 @@ index 639a9e60..c18740b1 100644
 +            return i + 1;
 +            }
 +        }
-+
+ 
 +    for( int i=0; i<ourLin->size(); i++ ) {
 +        if( ourLin->getElementDirect( i ) == theirID ) {
 +            // ancestor
@@ -181,18 +181,18 @@ index 639a9e60..c18740b1 100644
 +    theirLin.push_back(4);
 +    theirLin.push_back(3);
 +    testRelation( &ourLin, &theirLin, "neice", 2 );
- 
++
 +    ourLin.push_back(4);
 +    ourLin.push_back(3);
 +    theirLin.push_back(3);
 +    testRelation( &ourLin, &theirLin, "aunt", 2 );
- 
++
 +    ourLin.push_back(4);
 +    ourLin.push_back(3);
 +    theirLin.push_back(5);
 +    theirLin.push_back(3);
 +    testRelation( &ourLin, &theirLin, "first cousin", 3 );
- 
++
 +    quitGame();
 +    }
  
@@ -349,16 +349,17 @@ index 639a9e60..c18740b1 100644
                  mGlobalMessageShowing = true;
                  mGlobalMessageStartTime = game_getCurrentTime();
                  
-@@ -13868,6 +14149,8 @@ void LivingLifePage::step() {
+@@ -13868,6 +14149,9 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
 +                    g.relationDistance = gravePerson->relationDistance;
 +                    g.isGeneticFamily = gravePerson->isGeneticFamily;
++                    g.wasPlayerID = playerID;
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -14077,6 +14360,14 @@ void LivingLifePage::step() {
+@@ -14077,6 +14361,16 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -370,10 +371,12 @@ index 639a9e60..c18740b1 100644
 +                    playerID,
 +                    ourLiveObject->age,
 +                    age );
++                g.isGeneticFamily = g.relationDistance >= 0 && g.relationDistance <= 1;
++                g.wasPlayerID = playerID;
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -15720,6 +16011,8 @@ void LivingLifePage::step() {
+@@ -15720,6 +16014,8 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -382,7 +385,24 @@ index 639a9e60..c18740b1 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -19166,6 +19459,11 @@ void LivingLifePage::step() {
+@@ -17730,6 +18026,16 @@ void LivingLifePage::step() {
+                                       &( o.id ),
+                                       &( o.holdingID ) );
+                     
++                    char *reasonPos = strstr( lines[i], "reason_SID" );
++                    if( reasonPos != NULL ) {
++                        for( int g=0; g<mGraveInfo.size(); g++ ) {
++                            GraveInfo *gI = mGraveInfo.getElement( g );
++                            if( gI && gI->wasPlayerID == o.id ) {
++                                gI->isGeneticFamily = false;
++                                }
++                            }
++                        }
++
+                     
+                     for( int i=0; i<gameObjects.size(); i++ ) {
+                         
+@@ -19166,6 +19472,11 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -394,7 +414,7 @@ index 639a9e60..c18740b1 100644
                          }
                      }
                  }
-@@ -23672,6 +23970,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -23672,6 +23983,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -434,7 +454,7 @@ index 639a9e60..c18740b1 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -25408,6 +25739,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25408,6 +25752,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -451,7 +471,7 @@ index 639a9e60..c18740b1 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 6d2ec116..d8f610bd 100644
+index 6d2ec116..9acbf4ef 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -66,6 +66,8 @@ typedef struct LiveObject {
@@ -463,17 +483,18 @@ index 6d2ec116..d8f610bd 100644
          
          // -1 war
          // 0 neutral
-@@ -389,6 +391,9 @@ typedef struct GraveInfo {
+@@ -389,6 +391,10 @@ typedef struct GraveInfo {
          // used to detect when we've moused away, even if not mousing
          // over another grave
          double lastMouseOverTime;
 +
 +        int relationDistance;
 +        char isGeneticFamily;
++        int wasPlayerID;
      } GraveInfo;
          
  
-@@ -974,6 +979,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -974,6 +980,9 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          bool tryInteractionKeys( char inASCII );
  
