@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index fe38fafa..45452b5c 100644
+index fe38fafa..0df8a454 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -452,6 +452,72 @@ static SimpleVector<HomePos> oldHomePosStack;
+@@ -452,6 +452,76 @@ static SimpleVector<HomePos> oldHomePosStack;
  // used on reconnect to decide whether to delete old home positions
  static int lastPlayerID = -1;
  
@@ -16,6 +16,8 @@ index fe38fafa..45452b5c 100644
 +static FloatColor indigo = { 122.0/255, 126.0/255, 244.0/255, 1 };
 +static FloatColor pink = { 250.0/255, 144.0/255, 146.0/255, 1 };
 +static SimpleVector<SlipColor> locationSlipColors;
++
++static int locationSlipsEnabled = 1;
 +
 +static const char* textBaby = "baby";
 +static const char* textLead = "lead";
@@ -35,6 +37,8 @@ index fe38fafa..45452b5c 100644
 +#define LOCATION_SLIP_ARROW 35
 +
 +void initLocationSlips() {
++    locationSlipsEnabled = SettingsManager::getIntSetting( "locationSlipsEnabled", 1 );
++
 +    char *cont = SettingsManager::getSettingContents( "locationSlipColors", "" );
 +
 +    locationSlipColors.deleteAll();
@@ -75,7 +79,7 @@ index fe38fafa..45452b5c 100644
  
  
  static void processHomePosStack() {
-@@ -530,6 +596,31 @@ static void removeHomeLocation( int inX, int inY ) {
+@@ -530,6 +600,31 @@ static void removeHomeLocation( int inX, int inY ) {
      }
  
  
@@ -107,7 +111,7 @@ index fe38fafa..45452b5c 100644
  static void removeAllTempHomeLocations() {
      for( int i=0; i<homePosStack.size(); i++ ) {
          if( homePosStack.getElementDirect( i ).temporary ) {
-@@ -556,6 +647,20 @@ static void addHomeLocation( int inX, int inY ) {
+@@ -556,6 +651,20 @@ static void addHomeLocation( int inX, int inY ) {
      }
  
  
@@ -128,7 +132,7 @@ index fe38fafa..45452b5c 100644
  
  static void addTempHomeLocation( int inX, int inY, 
                                   char inPerson, int inPersonID,
-@@ -588,6 +693,60 @@ static void addTempHomeLocation( int inX, int inY,
+@@ -588,6 +697,60 @@ static void addTempHomeLocation( int inX, int inY,
      }
  
  
@@ -189,7 +193,7 @@ index fe38fafa..45452b5c 100644
  
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
-@@ -602,6 +761,19 @@ static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
+@@ -602,6 +765,19 @@ static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
  
  
  
@@ -209,7 +213,7 @@ index fe38fafa..45452b5c 100644
  static void addAncientHomeLocation( int inX, int inY ) {
      removeHomeLocation( inX, inY );
  
-@@ -624,8 +796,31 @@ static void addAncientHomeLocation( int inX, int inY ) {
+@@ -624,9 +800,32 @@ static void addAncientHomeLocation( int inX, int inY ) {
      }
  
  
@@ -234,14 +238,15 @@ index fe38fafa..45452b5c 100644
 +    mLocationSlips.push_front( p );
 +    }
 +
-+
+ 
  
  
 +static int getArrowIndex( doublePair vector );
- 
++
  
  // returns if -1 no home needs to be shown (home unknown)
-@@ -688,8 +883,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
+ // otherwise, returns 0..7 index of arrow
+@@ -688,8 +887,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
              return -1;
              }
          }
@@ -257,7 +262,7 @@ index fe38fafa..45452b5c 100644
      double a = angle( vector );
  
      // north is 0
-@@ -2942,6 +3142,8 @@ LivingLifePage::LivingLifePage()
+@@ -2942,6 +3146,8 @@ LivingLifePage::LivingLifePage()
  
      initBecomesFood();
  
@@ -266,7 +271,7 @@ index fe38fafa..45452b5c 100644
      initLiveTriggers();
  
      initNames();
-@@ -3008,6 +3210,8 @@ LivingLifePage::LivingLifePage()
+@@ -3008,6 +3214,8 @@ LivingLifePage::LivingLifePage()
      mHomeSlipShowDelta[1] = 68;
      
  
@@ -275,7 +280,7 @@ index fe38fafa..45452b5c 100644
  
      for( int i=0; i<NUM_YUM_SLIPS; i++ ) {    
          mYumSlipHideOffset[i].x = -600;
-@@ -6734,6 +6938,262 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
+@@ -6734,6 +6942,262 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
  
  
  
@@ -538,31 +543,28 @@ index fe38fafa..45452b5c 100644
  typedef struct DrawOrderRecord {
          char person;
          // if person
-@@ -9905,15 +10365,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9904,6 +10368,12 @@ void LivingLifePage::draw( doublePair inViewCenter,
+     
  
  
++    if( locationSlipsEnabled ) {
++        for( int j=0; j<mLocationSlips.size(); j++ ) {
++            drawLocationSlip( j );
++            }
++        }
++    else {
      for( int j=0; j<2; j++ ) {
--        doublePair slipPos = add( mHomeSlipPosOffset[j], lastScreenViewCenter );
-+        //doublePair slipPos = add( mHomeSlipPosOffset[j], lastScreenViewCenter );
+         doublePair slipPos = add( mHomeSlipPosOffset[j], lastScreenViewCenter );
          
-         if( ! equal( mHomeSlipPosOffset[j], mHomeSlipHideOffset[j] ) ) {
--            drawHomeSlip( slipPos, j );
-+            //drawHomeSlip( slipPos, j );
+@@ -9911,6 +10381,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+             drawHomeSlip( slipPos, j );
              }
          }
- 
- 
- 
-+    for( int j=0; j<mLocationSlips.size(); j++ ) {
-+        drawLocationSlip( j );
 +        }
-+
-+
-+
-     int lineSpacing = 20;
  
-     doublePair notePos = add( mNotePaperPosOffset, lastScreenViewCenter );
-@@ -13353,6 +13819,77 @@ void LivingLifePage::step() {
+ 
+ 
+@@ -13353,6 +13824,77 @@ void LivingLifePage::step() {
                  mHomeSlipPosTargetOffset[j].y = mHomeSlipHideOffset[j].y;
                  }
              }
@@ -640,7 +642,7 @@ index fe38fafa..45452b5c 100644
          
          int cm = ourObject->currentMouseOverClothingIndex;
          if( cm != -1 ) {
-@@ -13465,6 +14002,65 @@ void LivingLifePage::step() {
+@@ -13465,6 +14007,65 @@ void LivingLifePage::step() {
              }        
          }
      
@@ -706,7 +708,7 @@ index fe38fafa..45452b5c 100644
      
      
  
-@@ -14682,6 +15278,7 @@ void LivingLifePage::step() {
+@@ -14682,6 +15283,7 @@ void LivingLifePage::step() {
              apocalypseDisplayProgress = 0;
              apocalypseInProgress = false;
              homePosStack.deleteAll();
@@ -714,7 +716,7 @@ index fe38fafa..45452b5c 100644
  
              clearToolLearnedStatus();
  
-@@ -14710,6 +15307,7 @@ void LivingLifePage::step() {
+@@ -14710,6 +15312,7 @@ void LivingLifePage::step() {
                      
                      if( d > 32 ) {
                          addAncientHomeLocation( posX, posY );
@@ -722,7 +724,7 @@ index fe38fafa..45452b5c 100644
                          
                          // play sound in distance
                          ObjectRecord *monObj = getObject( monumentID );
-@@ -15208,6 +15806,7 @@ void LivingLifePage::step() {
+@@ -15208,6 +15811,7 @@ void LivingLifePage::step() {
  
                          // home markers invalid now
                          homePosStack.deleteAll();
@@ -730,7 +732,7 @@ index fe38fafa..45452b5c 100644
                          }
                      }
                  }            
-@@ -15740,6 +16339,7 @@ void LivingLifePage::step() {
+@@ -15740,6 +16344,7 @@ void LivingLifePage::step() {
                          printf( "Found starting home marker at %d,%d\n",
                                  closestX, closestY );
                          addHomeLocation( closestX, closestY );
@@ -738,7 +740,7 @@ index fe38fafa..45452b5c 100644
                          }
                      }
                  
-@@ -16203,11 +16803,13 @@ void LivingLifePage::step() {
+@@ -16203,11 +16808,13 @@ void LivingLifePage::step() {
                                      getObject( newID )->homeMarker ) {
                                      
                                      addHomeLocation( x, y );
@@ -752,7 +754,7 @@ index fe38fafa..45452b5c 100644
                                      addedOrRemoved = true;
                                      }
                                  
-@@ -16243,6 +16845,8 @@ void LivingLifePage::step() {
+@@ -16243,6 +16850,8 @@ void LivingLifePage::step() {
                                                      
                                                      removeHomeLocation(
                                                          rx, ry );
@@ -761,7 +763,7 @@ index fe38fafa..45452b5c 100644
                                                      }
                                                  }
                                              }
-@@ -16907,6 +17511,8 @@ void LivingLifePage::step() {
+@@ -16907,6 +17516,8 @@ void LivingLifePage::step() {
                                  r->temporaryExpireETA = 
                                      game_getCurrentTime() + 60;
                                  }
@@ -770,7 +772,7 @@ index fe38fafa..45452b5c 100644
                              }
                          
                          
-@@ -18147,6 +18753,10 @@ void LivingLifePage::step() {
+@@ -18147,6 +18758,10 @@ void LivingLifePage::step() {
                                  existing->id,
                                  lrint( existing->currentPos.x ),
                                  lrint( existing->currentPos.y ) );
@@ -781,7 +783,7 @@ index fe38fafa..45452b5c 100644
                              }
                          if( existing->holdingID < 0 ) {
                              int babyID = - existing->holdingID;
-@@ -18155,6 +18765,10 @@ void LivingLifePage::step() {
+@@ -18155,6 +18770,10 @@ void LivingLifePage::step() {
                                  babyID,
                                  lrint( existing->currentPos.x ),
                                  lrint( existing->currentPos.y ) );
@@ -792,7 +794,7 @@ index fe38fafa..45452b5c 100644
                              }
                          
  
-@@ -18835,6 +19449,17 @@ void LivingLifePage::step() {
+@@ -18835,6 +19454,17 @@ void LivingLifePage::step() {
                      oldHomePosStack.deleteAll();
                      }
                  homePosStack.push_back_other( &oldHomePosStack );
@@ -810,7 +812,7 @@ index fe38fafa..45452b5c 100644
  
                  lastPlayerID = ourID;
  
-@@ -18983,6 +19608,10 @@ void LivingLifePage::step() {
+@@ -18983,6 +19613,10 @@ void LivingLifePage::step() {
                                      existing->id,
                                      lrint( existing->currentPos.x ),
                                      lrint( existing->currentPos.y ) );
@@ -821,7 +823,7 @@ index fe38fafa..45452b5c 100644
                                  }
                              if( existing->holdingID < 0 ) {
                                  int babyID = - existing->holdingID;
-@@ -18991,6 +19620,10 @@ void LivingLifePage::step() {
+@@ -18991,6 +19625,10 @@ void LivingLifePage::step() {
                                      babyID,
                                      lrint( existing->currentPos.x ),
                                      lrint( existing->currentPos.y ) );
@@ -832,7 +834,7 @@ index fe38fafa..45452b5c 100644
                                  }
  
  
-@@ -19629,7 +20262,7 @@ void LivingLifePage::step() {
+@@ -19629,7 +20267,7 @@ void LivingLifePage::step() {
                                                      " *baby %d", &personID );
  
                                              babyPos[0] = '\0';
@@ -841,7 +843,7 @@ index fe38fafa..45452b5c 100644
                                              }
  
  
-@@ -19648,7 +20281,7 @@ void LivingLifePage::step() {
+@@ -19648,7 +20286,7 @@ void LivingLifePage::step() {
                                                      " *leader %d", &personID );
  
                                                  leaderPos[0] = '\0';
@@ -850,7 +852,7 @@ index fe38fafa..45452b5c 100644
                                                  }
                                              }
  
-@@ -19669,7 +20302,7 @@ void LivingLifePage::step() {
+@@ -19669,7 +20307,7 @@ void LivingLifePage::step() {
                                                          &personID );
  
                                                  follPos[0] = '\0';
@@ -859,7 +861,7 @@ index fe38fafa..45452b5c 100644
                                                  }
                                              }
                                          
-@@ -19680,6 +20313,10 @@ void LivingLifePage::step() {
+@@ -19680,6 +20318,10 @@ void LivingLifePage::step() {
                                                                   person,
                                                                   personID,
                                                                   personKey );
@@ -870,7 +872,7 @@ index fe38fafa..45452b5c 100644
                                              }
  
                                          if( personID != -1 && baby) {
-@@ -22381,6 +23018,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22381,6 +23023,9 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
  
@@ -945,3 +947,11 @@ index 00000000..2fa54d5d
 +2484 244 16 8
 +2481 244 16 8
 +2482 244 16 8
+diff --git a/gameSource/settings/locationSlipsEnabled.ini b/gameSource/settings/locationSlipsEnabled.ini
+new file mode 100644
+index 00000000..56a6051c
+--- /dev/null
++++ b/gameSource/settings/locationSlipsEnabled.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file

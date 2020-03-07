@@ -2,8 +2,9 @@
 
 ## v53
 
-- Add "USES" to the uses item description
+- Location slips can be disabled with a setting file
 - Baby location slips are your skin color
+- Add "USES" to the uses item description
 
 ## v50
 
