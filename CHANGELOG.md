@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v54?
+
+- Seems level 2 apoc tower was missing from slip colors
+
 ## v53
 
 - Location slips can be disabled with a setting file
