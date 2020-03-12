@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index da9a0ff4..47017767 100644
+index fa616f1f..c0755ec3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -101,6 +101,8 @@ extern int userTwinCount;
@@ -11,7 +11,7 @@ index da9a0ff4..47017767 100644
  static char vogMode = false;
  static doublePair vogPos = { 0, 0 };
  
-@@ -13500,6 +13502,7 @@ void LivingLifePage::step() {
+@@ -13591,6 +13593,7 @@ void LivingLifePage::step() {
                  }
  
  
@@ -19,7 +19,7 @@ index da9a0ff4..47017767 100644
              if( strlen( userEmail ) <= 80 ) {    
                  outMessage = autoSprintf( "%s %s %-80s %s %s %d%s#",
                                            loginWord,
-@@ -13516,6 +13519,24 @@ void LivingLifePage::step() {
+@@ -13607,6 +13610,24 @@ void LivingLifePage::step() {
                                            clientTag, tempEmail, pwHash, keyHash,
                                            mTutorialNumber, twinExtra );
                  }
@@ -44,7 +44,7 @@ index da9a0ff4..47017767 100644
              
              delete [] tempEmail;
              delete [] twinExtra;
-@@ -13536,6 +13557,7 @@ void LivingLifePage::step() {
+@@ -13627,6 +13648,7 @@ void LivingLifePage::step() {
              waitForFrameMessages = true;
  
              SettingsManager::setSetting( "loginSuccess", 1 );
