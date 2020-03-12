@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c9006526..155f140b 100644
+index 5f8c509a..9babc61b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -474,6 +474,78 @@ static SimpleVector<HomePos> oldHomePosStack;
@@ -836,7 +836,7 @@ index c9006526..155f140b 100644
                                  }
  
  
-@@ -19720,7 +20360,7 @@ void LivingLifePage::step() {
+@@ -19729,7 +20369,7 @@ void LivingLifePage::step() {
                                                      " *baby %d", &personID );
  
                                              babyPos[0] = '\0';
@@ -845,7 +845,7 @@ index c9006526..155f140b 100644
                                              }
  
  
-@@ -19739,7 +20379,7 @@ void LivingLifePage::step() {
+@@ -19748,7 +20388,7 @@ void LivingLifePage::step() {
                                                      " *leader %d", &personID );
  
                                                  leaderPos[0] = '\0';
@@ -854,7 +854,7 @@ index c9006526..155f140b 100644
                                                  }
                                              }
  
-@@ -19760,7 +20400,7 @@ void LivingLifePage::step() {
+@@ -19769,7 +20409,7 @@ void LivingLifePage::step() {
                                                          &personID );
  
                                                  follPos[0] = '\0';
@@ -863,7 +863,7 @@ index c9006526..155f140b 100644
                                                  }
                                              }
  
-@@ -19790,6 +20430,10 @@ void LivingLifePage::step() {
+@@ -19799,6 +20439,10 @@ void LivingLifePage::step() {
                                                                   person,
                                                                   personID,
                                                                   personKey );
@@ -874,7 +874,7 @@ index c9006526..155f140b 100644
                                              }
  
                                          if( personID != -1 && baby) {
-@@ -22497,6 +23141,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22541,6 +23185,9 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
  

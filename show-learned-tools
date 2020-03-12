@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c026bec1..527ec2e2 100644
+index 33602649..c37cc6f8 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -148,6 +148,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -305,7 +305,7 @@ index c026bec1..527ec2e2 100644
                              }
                          
  
-@@ -22130,6 +22341,15 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22174,6 +22385,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      

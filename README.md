@@ -102,8 +102,6 @@ k /shock
 
 Rewrite of some portions of pointer down and command issuing, depended on by other patches.
 
-Bonus feature: walk to front of wall shelves when approaching from behind.
-
 ### drag-drop-use
 
 Allows holding the mouse button when picking up an item, once the character is shown as holding the item, the cursor will show the item, and it can be released on another tile to use the item there. Handy for water-to-crops, soil-to-crops, moving things, etc.
