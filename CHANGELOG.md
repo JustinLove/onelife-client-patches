@@ -1,6 +1,6 @@
 # Changelog - feature changes
 
-## v54?
+## v54
 
 - Seems level 2 apoc tower was missing from slip colors
 - No change, but walk to front of shelves is now vanilla.
