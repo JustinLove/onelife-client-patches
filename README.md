@@ -201,6 +201,7 @@ Reworks location markers.
 - Expert slips the target player's skin color
 - Follower/Leader slips are badge color
 - Bell slips are gold and apoc towers are red, you can have more than one
+- Homeland slips are stone gray
 
 `settings/locationsSlipsEnabled.ini` (0 to disable this feature)
 
