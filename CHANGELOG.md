@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v55?
+
+- Expert location slips are target player's skin color
+
 ## v54
 
 - Seems level 2 apoc tower was missing from slip colors

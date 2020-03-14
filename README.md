@@ -198,6 +198,7 @@ Reworks location markers.
 - Home slips are standard white. There can be up to 7 on screen, the most recent has the 'home' art.
 - Map slips are blue, you can have more than one, standard lifetime
 - Baby slips are your skin color
+- Expert slips the target player's skin color
 - Follower/Leader slips are badge color
 - Bell slips are gold and apoc towers are red, you can have more than one
 
