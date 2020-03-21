@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c3cc9c9e..3f0e1f03 100644
+index c3cc9c9e..21ccba68 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -150,6 +150,8 @@ static int clickToMoveLockToInteract = 0;
@@ -28,7 +28,7 @@ index c3cc9c9e..3f0e1f03 100644
      if( mLastHintFilterString != NULL ) {
          
          SimpleVector<int> hitIDs = findObjectsMatchingWords(
-@@ -12246,6 +12251,100 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -12246,6 +12251,101 @@ int LivingLifePage::getNumHints( int inObjectID ) {
              }
          }
      
@@ -124,6 +124,7 @@ index c3cc9c9e..3f0e1f03 100644
 +                    }
 +                }
 +            unfilteredTrans.push_back_other( &filteredTrans );
++            delete [] hitObjects;
 +            }
 +        }
  
