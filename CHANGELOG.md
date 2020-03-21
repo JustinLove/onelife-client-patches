@@ -4,6 +4,7 @@
 
 - Expert location slips are target player's skin color
 - Homelands are grey bell slips. May revise visibility.
+- Old slips will fade and yellow a bit
 
 ## v54
 

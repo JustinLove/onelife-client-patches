@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 5f8c509a..5787b7ff 100644
+index 59d31e76..70e290eb 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -474,6 +474,80 @@ static SimpleVector<HomePos> oldHomePosStack;
+@@ -474,6 +474,81 @@ static SimpleVector<HomePos> oldHomePosStack;
  // used on reconnect to decide whether to delete old home positions
  static int lastPlayerID = -1;
  
@@ -16,6 +16,7 @@ index 5f8c509a..5787b7ff 100644
 +static FloatColor indigo = { 122.0/255, 126.0/255, 244.0/255, 1 };
 +static FloatColor pink = { 250.0/255, 144.0/255, 146.0/255, 1 };
 +static FloatColor stone = { 128.0/255, 125.0/255, 149.0/255, 1 };
++static FloatColor sepia = { 203.0/255, 165.0/255, 114.0/255, 1 };
 +static SimpleVector<SlipColor> locationSlipColors;
 +
 +static int locationSlipsEnabled = 1;
@@ -83,7 +84,7 @@ index 5f8c509a..5787b7ff 100644
  
  
  static void processHomePosStack() {
-@@ -552,6 +626,31 @@ static void removeHomeLocation( int inX, int inY ) {
+@@ -552,6 +627,31 @@ static void removeHomeLocation( int inX, int inY ) {
      }
  
  
@@ -115,7 +116,7 @@ index 5f8c509a..5787b7ff 100644
  static void removeAllTempHomeLocations() {
      for( int i=0; i<homePosStack.size(); i++ ) {
          if( homePosStack.getElementDirect( i ).temporary ) {
-@@ -578,6 +677,20 @@ static void addHomeLocation( int inX, int inY ) {
+@@ -631,6 +731,23 @@ static char doesNewTempLocationTrumpPrevious( const char *inPersonKey ) {
      }
  
  
@@ -127,8 +128,11 @@ index 5f8c509a..5787b7ff 100644
 +    p.ancient = false;
 +    p.temporary = false;
 +    p.labeled = true;
-+    p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_HOME_X, LOCATION_SLIP_BOTTOM_Y};
++    p.tempPerson = false;
++    p.temporaryExpireETA = 0;
++    p.creationTime = game_getCurrentTime();
 +    p.slipColor = { 1, 1, 1, 1 };
++    p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_HOME_X, LOCATION_SLIP_BOTTOM_Y};
 +
 +    mLocationSlips.push_front( p );
 +    }
@@ -136,13 +140,14 @@ index 5f8c509a..5787b7ff 100644
  
  static void addTempHomeLocation( int inX, int inY, 
                                   char inPerson, int inPersonID,
-@@ -610,6 +723,62 @@ static void addTempHomeLocation( int inX, int inY,
+@@ -669,6 +786,64 @@ static void addTempHomeLocation( int inX, int inY,
      }
  
  
 +void LivingLifePage::addTempLocationSlip( int inX, int inY,
 +                                          char inPerson, int inPersonID,
-+                                          const char *inPersonKey ) {
++                                          const char *inPersonKey,
++                                          int inAge ) {
 +    removeLocationSlip( inX, inY );
 +    GridPos newPos = { inX, inY };
 +    LocationSlip p;
@@ -154,6 +159,7 @@ index 5f8c509a..5787b7ff 100644
 +    // until we drop the map
 +    p.temporaryExpireETA = 0;
 +    p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_MAP_X, LOCATION_SLIP_BOTTOM_Y};
++    p.creationTime = game_getCurrentTime() - inAge;
 +    p.slipColor = indigo;
 +
 +    p.tempPerson = inPerson;
@@ -199,7 +205,7 @@ index 5f8c509a..5787b7ff 100644
  
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
-@@ -624,6 +793,19 @@ static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
+@@ -683,6 +858,19 @@ static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
  
  
  
@@ -219,7 +225,7 @@ index 5f8c509a..5787b7ff 100644
  static void addAncientHomeLocation( int inX, int inY ) {
      removeHomeLocation( inX, inY );
  
-@@ -646,8 +828,46 @@ static void addAncientHomeLocation( int inX, int inY ) {
+@@ -705,8 +893,55 @@ static void addAncientHomeLocation( int inX, int inY ) {
      }
  
  
@@ -231,8 +237,10 @@ index 5f8c509a..5787b7ff 100644
 +    p.ancient = true;
 +    p.temporary = false;
 +    p.labeled = false;
++    p.tempPerson = false;
 +    p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
 +    p.slipColor = gold;
++    p.creationTime = game_getCurrentTime();
 +    for( int i = 0; i < locationSlipColors.size();i++ ) {
 +        SlipColor color = locationSlipColors.getElementDirect(i);
 +        if( color.objectID == monumentID ) {
@@ -245,7 +253,7 @@ index 5f8c509a..5787b7ff 100644
 +    }
 +
 +
-+void LivingLifePage::addHomelandLocationSlip( int inX, int inY ) {
++void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFamilyName ) {
 +    removeLocationSlip( inX, inY );
 +    GridPos newPos = { inX, inY };
 +    LocationSlip p;
@@ -253,7 +261,14 @@ index 5f8c509a..5787b7ff 100644
 +    p.ancient = true;
 +    p.temporary = false;
 +    p.labeled = false;
++    p.tempPerson = false;
 +    p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
++    if( inFamilyName ) {
++        p.creationTime = game_getCurrentTime();
++        }
++    else {
++        p.creationTime = game_getCurrentTime() - 60 * 60;
++        }
 +    p.slipColor = stone;
 +
 +    mLocationSlips.push_front( p );
@@ -266,7 +281,7 @@ index 5f8c509a..5787b7ff 100644
  
  
  // returns if -1 no home needs to be shown (home unknown)
-@@ -710,8 +930,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
+@@ -769,8 +1004,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
              return -1;
              }
          }
@@ -282,7 +297,7 @@ index 5f8c509a..5787b7ff 100644
      double a = angle( vector );
  
      // north is 0
-@@ -2968,6 +3193,8 @@ LivingLifePage::LivingLifePage()
+@@ -3027,6 +3267,8 @@ LivingLifePage::LivingLifePage()
  
      initBecomesFood();
  
@@ -291,7 +306,7 @@ index 5f8c509a..5787b7ff 100644
      initLiveTriggers();
  
      initNames();
-@@ -3034,6 +3261,8 @@ LivingLifePage::LivingLifePage()
+@@ -3093,6 +3335,8 @@ LivingLifePage::LivingLifePage()
      mHomeSlipShowDelta[1] = 68;
      
  
@@ -300,7 +315,7 @@ index 5f8c509a..5787b7ff 100644
  
      for( int i=0; i<NUM_YUM_SLIPS; i++ ) {    
          mYumSlipHideOffset[i].x = -600;
-@@ -6765,6 +6994,262 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
+@@ -6824,6 +7068,270 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
  
  
  
@@ -315,7 +330,14 @@ index 5f8c509a..5787b7ff 100644
 +    LiveObject *ourLiveObject = getOurLiveObject();
 +    if( ourLiveObject == NULL ) return;
 +
-+    setDrawColor( locationSlip->slipColor );
++    double age = (game_getCurrentTime() - locationSlip->creationTime);
++    float f = (age / (age + 60*60)) * 0.5;
++    FloatColor color = locationSlip->slipColor;
++    setDrawColor(
++        color.r + (sepia.r - color.r) * f,
++        color.g + (sepia.g - color.g) * f,
++        color.b + (sepia.b - color.b) * f,
++        1 );
 +
 +    char labeled = locationSlip->labeled;
 +    char rightSide = locationSlip->ancient;
@@ -390,18 +412,19 @@ index 5f8c509a..5787b7ff 100644
 +            }
 +        }
 +
-+    toggleAdditiveTextureColoring( false );
 +
 +
 +
 +    if( arrowIndex != -1 ) {
 +
 +
-+        setDrawColor( 1, 1, 1, 1 );
++        float v = (age / (age + 60*60)) * 0.5;
++        setDrawColor( v, v, v, 1 );
 +
 +        drawSprite( mHomeArrowSprites[arrowIndex], arrowPos );
 +        }
 +
++    toggleAdditiveTextureColoring( false );
 +    toggleMultiplicativeBlend( false );
 +
 +    char drawTopAsErased = true;
@@ -563,7 +586,7 @@ index 5f8c509a..5787b7ff 100644
  typedef struct DrawOrderRecord {
          char person;
          // if person
-@@ -9935,6 +10420,12 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9994,6 +10502,12 @@ void LivingLifePage::draw( doublePair inViewCenter,
      
  
  
@@ -576,7 +599,7 @@ index 5f8c509a..5787b7ff 100644
      for( int j=0; j<2; j++ ) {
          doublePair slipPos = add( mHomeSlipPosOffset[j], lastScreenViewCenter );
          
-@@ -9942,6 +10433,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10001,6 +10515,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
              drawHomeSlip( slipPos, j );
              }
          }
@@ -584,7 +607,7 @@ index 5f8c509a..5787b7ff 100644
  
  
  
-@@ -13413,6 +13905,77 @@ void LivingLifePage::step() {
+@@ -13472,6 +13987,77 @@ void LivingLifePage::step() {
                  mHomeSlipPosTargetOffset[j].y = mHomeSlipHideOffset[j].y;
                  }
              }
@@ -662,7 +685,7 @@ index 5f8c509a..5787b7ff 100644
          
          int cm = ourObject->currentMouseOverClothingIndex;
          if( cm != -1 ) {
-@@ -13525,6 +14088,65 @@ void LivingLifePage::step() {
+@@ -13584,6 +14170,65 @@ void LivingLifePage::step() {
              }        
          }
      
@@ -728,16 +751,25 @@ index 5f8c509a..5787b7ff 100644
      
      
  
-@@ -14570,6 +15192,8 @@ void LivingLifePage::step() {
+@@ -14620,6 +15265,7 @@ void LivingLifePage::step() {
+                     if( strcmp( famName, "0" ) != 0 ) {
+                         h->familyName = stringDuplicate( famName );
+                         }
++                    addHomelandLocationSlip( x, y, h->familyName );
+                     }
+                 else {
+                     char *newFamName = NULL;
+@@ -14628,7 +15274,9 @@ void LivingLifePage::step() {
+                         }
                      Homeland h = { x, y, newFamName };
                      homelands.push_back( h );
++                    addHomelandLocationSlip( x, y, h.familyName );
                      }
 +
-+                addHomelandLocationSlip( x, y );
                  }
              }
          else if( type == SEQUENCE_NUMBER ) {
-@@ -14773,6 +15397,7 @@ void LivingLifePage::step() {
+@@ -14832,6 +15480,7 @@ void LivingLifePage::step() {
              apocalypseDisplayProgress = 0;
              apocalypseInProgress = false;
              homePosStack.deleteAll();
@@ -745,7 +777,7 @@ index 5f8c509a..5787b7ff 100644
  
              clearToolLearnedStatus();
  
-@@ -14801,6 +15426,7 @@ void LivingLifePage::step() {
+@@ -14860,6 +15509,7 @@ void LivingLifePage::step() {
                      
                      if( d > 32 ) {
                          addAncientHomeLocation( posX, posY );
@@ -753,7 +785,7 @@ index 5f8c509a..5787b7ff 100644
                          
                          // play sound in distance
                          ObjectRecord *monObj = getObject( monumentID );
-@@ -15299,6 +15925,7 @@ void LivingLifePage::step() {
+@@ -15358,6 +16008,7 @@ void LivingLifePage::step() {
  
                          // home markers invalid now
                          homePosStack.deleteAll();
@@ -761,7 +793,7 @@ index 5f8c509a..5787b7ff 100644
                          }
                      }
                  }            
-@@ -15831,6 +16458,7 @@ void LivingLifePage::step() {
+@@ -15890,6 +16541,7 @@ void LivingLifePage::step() {
                          printf( "Found starting home marker at %d,%d\n",
                                  closestX, closestY );
                          addHomeLocation( closestX, closestY );
@@ -769,7 +801,7 @@ index 5f8c509a..5787b7ff 100644
                          }
                      }
                  
-@@ -16294,11 +16922,13 @@ void LivingLifePage::step() {
+@@ -16353,11 +17005,13 @@ void LivingLifePage::step() {
                                      getObject( newID )->homeMarker ) {
                                      
                                      addHomeLocation( x, y );
@@ -783,7 +815,7 @@ index 5f8c509a..5787b7ff 100644
                                      addedOrRemoved = true;
                                      }
                                  
-@@ -16334,6 +16964,8 @@ void LivingLifePage::step() {
+@@ -16393,6 +17047,8 @@ void LivingLifePage::step() {
                                                      
                                                      removeHomeLocation(
                                                          rx, ry );
@@ -792,7 +824,7 @@ index 5f8c509a..5787b7ff 100644
                                                      }
                                                  }
                                              }
-@@ -16998,6 +17630,8 @@ void LivingLifePage::step() {
+@@ -17057,6 +17713,8 @@ void LivingLifePage::step() {
                                  r->temporaryExpireETA = 
                                      game_getCurrentTime() + 60;
                                  }
@@ -801,7 +833,7 @@ index 5f8c509a..5787b7ff 100644
                              }
                          
                          
-@@ -18238,6 +18872,10 @@ void LivingLifePage::step() {
+@@ -18297,6 +18955,10 @@ void LivingLifePage::step() {
                                  existing->id,
                                  lrint( existing->currentPos.x ),
                                  lrint( existing->currentPos.y ) );
@@ -812,7 +844,7 @@ index 5f8c509a..5787b7ff 100644
                              }
                          if( existing->holdingID < 0 ) {
                              int babyID = - existing->holdingID;
-@@ -18246,6 +18884,10 @@ void LivingLifePage::step() {
+@@ -18305,6 +18967,10 @@ void LivingLifePage::step() {
                                  babyID,
                                  lrint( existing->currentPos.x ),
                                  lrint( existing->currentPos.y ) );
@@ -823,7 +855,7 @@ index 5f8c509a..5787b7ff 100644
                              }
                          
  
-@@ -18926,6 +19568,17 @@ void LivingLifePage::step() {
+@@ -18985,6 +19651,17 @@ void LivingLifePage::step() {
                      oldHomePosStack.deleteAll();
                      }
                  homePosStack.push_back_other( &oldHomePosStack );
@@ -841,7 +873,7 @@ index 5f8c509a..5787b7ff 100644
  
                  lastPlayerID = ourID;
  
-@@ -19074,6 +19727,10 @@ void LivingLifePage::step() {
+@@ -19133,6 +19810,10 @@ void LivingLifePage::step() {
                                      existing->id,
                                      lrint( existing->currentPos.x ),
                                      lrint( existing->currentPos.y ) );
@@ -852,7 +884,7 @@ index 5f8c509a..5787b7ff 100644
                                  }
                              if( existing->holdingID < 0 ) {
                                  int babyID = - existing->holdingID;
-@@ -19082,6 +19739,10 @@ void LivingLifePage::step() {
+@@ -19141,6 +19822,10 @@ void LivingLifePage::step() {
                                      babyID,
                                      lrint( existing->currentPos.x ),
                                      lrint( existing->currentPos.y ) );
@@ -863,7 +895,7 @@ index 5f8c509a..5787b7ff 100644
                                  }
  
  
-@@ -19729,7 +20390,7 @@ void LivingLifePage::step() {
+@@ -19788,7 +20473,7 @@ void LivingLifePage::step() {
                                                      " *baby %d", &personID );
  
                                              babyPos[0] = '\0';
@@ -872,7 +904,7 @@ index 5f8c509a..5787b7ff 100644
                                              }
  
  
-@@ -19748,7 +20409,7 @@ void LivingLifePage::step() {
+@@ -19807,7 +20492,7 @@ void LivingLifePage::step() {
                                                      " *leader %d", &personID );
  
                                                  leaderPos[0] = '\0';
@@ -881,7 +913,7 @@ index 5f8c509a..5787b7ff 100644
                                                  }
                                              }
  
-@@ -19769,7 +20430,7 @@ void LivingLifePage::step() {
+@@ -19828,7 +20513,7 @@ void LivingLifePage::step() {
                                                          &personID );
  
                                                  follPos[0] = '\0';
@@ -890,7 +922,7 @@ index 5f8c509a..5787b7ff 100644
                                                  }
                                              }
  
-@@ -19787,7 +20448,7 @@ void LivingLifePage::step() {
+@@ -19846,7 +20531,7 @@ void LivingLifePage::step() {
                                                          &personID );
  
                                                  expertPos[0] = '\0';
@@ -899,18 +931,19 @@ index 5f8c509a..5787b7ff 100644
                                                  }
                                              }
                                          
-@@ -19799,6 +20460,10 @@ void LivingLifePage::step() {
+@@ -19858,6 +20543,11 @@ void LivingLifePage::step() {
                                                                   person,
                                                                   personID,
                                                                   personKey );
 +                                            addTempLocationSlip( mapX, mapY,
 +                                                                 person,
 +                                                                 personID,
-+                                                                 personKey );
++                                                                 personKey,
++                                                                 mapAge );
                                              }
  
                                          if( personID != -1 && baby) {
-@@ -22541,6 +23206,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22600,6 +23290,9 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
  
@@ -921,10 +954,10 @@ index 5f8c509a..5787b7ff 100644
      mErasedNoteChars.deleteAll();
      mErasedNoteCharOffsets.deleteAll();
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index e84babf5..a491aa81 100644
+index e84babf5..49ed8a6d 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -477,6 +477,26 @@ typedef struct HomeArrow {
+@@ -477,6 +477,27 @@ typedef struct HomeArrow {
          
  
  
@@ -938,6 +971,7 @@ index e84babf5..a491aa81 100644
 +        const char *tempPersonKey;
 +        // 0 if not set
 +        double temporaryExpireETA;
++        double creationTime;
 +        FloatColor slipColor;
 +        HomeArrow arrowStates[ NUM_HOME_ARROWS ];
 +        SimpleVector<char*> previousDistStrings;
@@ -951,7 +985,7 @@ index e84babf5..a491aa81 100644
  // for objects moving in-transit in special cases where we can't store
  // them in the map (if they're moving onto an occupied space that should
  // only change when they're done moving)
-@@ -735,6 +755,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -735,6 +756,9 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          double mHomeSlipShowDelta[2];
  
@@ -961,7 +995,7 @@ index e84babf5..a491aa81 100644
          
          SimpleVector<char*> mLastKnownNoteLines;
          
-@@ -1105,6 +1128,14 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1105,6 +1129,14 @@ class LivingLifePage : public GamePage, public ActionListener {
          char isBadBiome( int inMapI );
  
          void drawHomeSlip( doublePair inSlipPos, int inIndex = 0 );
@@ -969,10 +1003,10 @@ index e84babf5..a491aa81 100644
 +        void removeLocationSlip( int inX, int inY );
 +        void setLocationSlipExpiration( int seconds );
 +        void addLocationSlip( int inX, int inY );
-+        void addTempLocationSlip( int inX, int inY, char inPerson, int inPersonID, const char* inPersonKey );
++        void addTempLocationSlip( int inX, int inY, char inPerson, int inPersonID, const char* inPersonKey, int inAge );
 +        void updatePersonLocationSlip( int inPersonID, int inX, int inY );
 +        void addAncientLocationSlip( int inX, int inY, int monumentID );
-+        void addHomelandLocationSlip( int inX, int inY );
++        void addHomelandLocationSlip( int inX, int inY, const char* inFamilyName );
          
  
          void updateLeadership();
