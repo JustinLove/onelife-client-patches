@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e356bbfc..89d0e052 100644
+index 7cad3632..6ffac839 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -130,6 +130,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -21,7 +21,7 @@ index e356bbfc..89d0e052 100644
      
      initLiveTriggers();
  
-@@ -19885,6 +19890,10 @@ void LivingLifePage::step() {
+@@ -19937,6 +19942,10 @@ void LivingLifePage::step() {
  
          doublePair screenTargetPos = 
              mult( targetObjectPos, CELL_D );
@@ -32,7 +32,7 @@ index e356bbfc..89d0e052 100644
          
          if( vogMode ) {
              // don't adjust camera
-@@ -19897,6 +19906,9 @@ void LivingLifePage::step() {
+@@ -19949,6 +19958,9 @@ void LivingLifePage::step() {
              // moving
  
              // push camera out in front
@@ -42,7 +42,7 @@ index e356bbfc..89d0e052 100644
              
  
              double moveScale = 40 * cameraFollowsObject->currentSpeed;
-@@ -19928,18 +19940,6 @@ void LivingLifePage::step() {
+@@ -19980,18 +19992,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -61,7 +61,7 @@ index e356bbfc..89d0e052 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -19980,6 +19980,22 @@ void LivingLifePage::step() {
+@@ -20032,6 +20032,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -84,7 +84,7 @@ index e356bbfc..89d0e052 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -22255,6 +22271,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -22307,6 +22323,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      

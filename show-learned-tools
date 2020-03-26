@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9dcd32b7..c3cc9c9e 100644
+index af99a928..c92d75e2 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -148,6 +148,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -289,7 +289,7 @@ index 9dcd32b7..c3cc9c9e 100644
                  }
              }
          else if( type == HOMELAND ) {
-@@ -17124,6 +17326,15 @@ void LivingLifePage::step() {
+@@ -17133,6 +17335,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -305,7 +305,7 @@ index 9dcd32b7..c3cc9c9e 100644
                              }
                          
  
-@@ -22233,6 +22444,15 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22285,6 +22496,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      
@@ -352,10 +352,10 @@ index 59de4d6b..e84babf5 100644
          // relative to map corner, but not necessary in bounds
          // of locally stored map
 diff --git a/gameSource/objectBank.cpp b/gameSource/objectBank.cpp
-index 9a53c660..cbb624b0 100644
+index cd185ad0..8aa46f4c 100644
 --- a/gameSource/objectBank.cpp
 +++ b/gameSource/objectBank.cpp
-@@ -4885,6 +4885,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
+@@ -4888,6 +4888,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
  
  
  

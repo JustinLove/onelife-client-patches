@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ed6acb51..e356bbfc 100644
+index dce8de2f..7cad3632 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -101,6 +101,8 @@ extern int userTwinCount;

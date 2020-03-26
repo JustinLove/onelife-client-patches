@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 5b0ac6c1..17975539 100644
+index 3c5695c4..e3e30036 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -141,6 +141,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -114,7 +114,7 @@ index 5b0ac6c1..17975539 100644
                  inObj->holdingFlip = true;
                  }
              }
-@@ -20548,9 +20634,15 @@ void LivingLifePage::step() {
+@@ -20600,9 +20686,15 @@ void LivingLifePage::step() {
              // don't change flip unless moving substantially in x
              if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
                  if( o->currentMoveDirection.x > 0 ) {
@@ -130,7 +130,7 @@ index 5b0ac6c1..17975539 100644
                      o->holdingFlip = true;
                      }         
                  }
-@@ -23569,6 +23661,241 @@ static void freeSavedPath() {
+@@ -23621,6 +23713,241 @@ static void freeSavedPath() {
  
  
  
@@ -372,7 +372,7 @@ index 5b0ac6c1..17975539 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -25032,7 +25359,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25084,7 +25411,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -380,7 +380,7 @@ index 5b0ac6c1..17975539 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -25294,23 +25620,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25346,23 +25672,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -425,7 +425,7 @@ index 5b0ac6c1..17975539 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -25488,6 +25835,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -25540,6 +25887,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }

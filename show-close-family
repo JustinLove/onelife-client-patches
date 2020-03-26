@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 17975539..5e3bf6fa 100644
+index e3e30036..cbba93f1 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -137,6 +137,13 @@ static int ignoreTallObjects = 1;
@@ -376,7 +376,7 @@ index 17975539..5e3bf6fa 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -15870,6 +16164,8 @@ void LivingLifePage::step() {
+@@ -15879,6 +16173,8 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -385,7 +385,7 @@ index 17975539..5e3bf6fa 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -17880,6 +18176,16 @@ void LivingLifePage::step() {
+@@ -17889,6 +18185,16 @@ void LivingLifePage::step() {
                                        &( o.id ),
                                        &( o.holdingID ) );
                      
@@ -402,7 +402,7 @@ index 17975539..5e3bf6fa 100644
                      
                      for( int i=0; i<gameObjects.size(); i++ ) {
                          
-@@ -19379,6 +19685,11 @@ void LivingLifePage::step() {
+@@ -19410,6 +19716,11 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -414,7 +414,7 @@ index 17975539..5e3bf6fa 100644
                          }
                      }
                  }
-@@ -23896,6 +24207,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -23948,6 +24259,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -454,7 +454,7 @@ index 17975539..5e3bf6fa 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -25652,6 +25996,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25704,6 +26048,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
