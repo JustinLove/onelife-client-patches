@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 358160e1..516914c0 100644
+index 5014fcba..82c073c5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -474,6 +474,82 @@ static SimpleVector<HomePos> oldHomePosStack;
@@ -141,7 +141,7 @@ index 358160e1..516914c0 100644
  
  static void addTempHomeLocation( int inX, int inY, 
                                   char inPerson, int inPersonID,
-@@ -669,6 +787,64 @@ static void addTempHomeLocation( int inX, int inY,
+@@ -675,6 +793,70 @@ static void addTempHomeLocation( int inX, int inY,
      }
  
  
@@ -172,7 +172,13 @@ index 358160e1..516914c0 100644
 +    if( inPerson ) {
 +        LiveObject *ourLiveObject = getOurLiveObject();
 +        // person pointer does not depend on held map
-+        p.temporaryExpireETA = game_getCurrentTime() + 60;
++        if( inPersonKey == textExpt ) {
++            // 3 minutes total when searching for an expert
++            p.temporaryExpireETA = game_getCurrentTime() + 180;
++            }
++        else {
++            p.temporaryExpireETA = game_getCurrentTime() + 60;
++            }
 +        p.personID = inPersonID;
 +        if( inPersonKey == textLead || inPersonKey == textSupp ) {
 +            p.tempPersonKey = inPersonKey;
@@ -206,7 +212,7 @@ index 358160e1..516914c0 100644
  
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
-@@ -683,6 +859,19 @@ static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
+@@ -689,6 +871,19 @@ static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
  
  
  
@@ -226,7 +232,7 @@ index 358160e1..516914c0 100644
  static void addAncientHomeLocation( int inX, int inY ) {
      removeHomeLocation( inX, inY );
  
-@@ -705,8 +894,55 @@ static void addAncientHomeLocation( int inX, int inY ) {
+@@ -711,10 +906,57 @@ static void addAncientHomeLocation( int inX, int inY ) {
      }
  
  
@@ -249,7 +255,7 @@ index 358160e1..516914c0 100644
 +            break;
 +            }
 +        }
-+
+ 
 +    mLocationSlips.push_front( p );
 +    }
 +
@@ -274,15 +280,17 @@ index 358160e1..516914c0 100644
 +
 +    mLocationSlips.push_front( p );
 +    }
-+
-+
  
  
+ 
++
 +static int getArrowIndex( doublePair vector );
- 
- 
++
++
  // returns if -1 no home needs to be shown (home unknown)
-@@ -769,8 +1005,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
+ // otherwise, returns 0..7 index of arrow
+ static int getHomeDir( doublePair inCurrentPlayerPos, 
+@@ -775,8 +1017,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
              return -1;
              }
          }
@@ -298,7 +306,7 @@ index 358160e1..516914c0 100644
      double a = angle( vector );
  
      // north is 0
-@@ -3027,6 +3268,8 @@ LivingLifePage::LivingLifePage()
+@@ -3033,6 +3280,8 @@ LivingLifePage::LivingLifePage()
  
      initBecomesFood();
  
@@ -307,7 +315,7 @@ index 358160e1..516914c0 100644
      initLiveTriggers();
  
      initNames();
-@@ -3093,6 +3336,8 @@ LivingLifePage::LivingLifePage()
+@@ -3099,6 +3348,8 @@ LivingLifePage::LivingLifePage()
      mHomeSlipShowDelta[1] = 68;
      
  
@@ -316,7 +324,7 @@ index 358160e1..516914c0 100644
  
      for( int i=0; i<NUM_YUM_SLIPS; i++ ) {    
          mYumSlipHideOffset[i].x = -600;
-@@ -6824,6 +7069,270 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
+@@ -6830,6 +7081,270 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
  
  
  
@@ -587,7 +595,7 @@ index 358160e1..516914c0 100644
  typedef struct DrawOrderRecord {
          char person;
          // if person
-@@ -9994,6 +10503,12 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10000,6 +10515,12 @@ void LivingLifePage::draw( doublePair inViewCenter,
      
  
  
@@ -600,7 +608,7 @@ index 358160e1..516914c0 100644
      for( int j=0; j<2; j++ ) {
          doublePair slipPos = add( mHomeSlipPosOffset[j], lastScreenViewCenter );
          
-@@ -10001,6 +10516,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10007,6 +10528,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
              drawHomeSlip( slipPos, j );
              }
          }
@@ -608,7 +616,7 @@ index 358160e1..516914c0 100644
  
  
  
-@@ -13473,6 +13989,77 @@ void LivingLifePage::step() {
+@@ -13479,6 +14001,77 @@ void LivingLifePage::step() {
                  mHomeSlipPosTargetOffset[j].y = mHomeSlipHideOffset[j].y;
                  }
              }
@@ -686,7 +694,7 @@ index 358160e1..516914c0 100644
          
          int cm = ourObject->currentMouseOverClothingIndex;
          if( cm != -1 ) {
-@@ -13585,6 +14172,65 @@ void LivingLifePage::step() {
+@@ -13591,6 +14184,65 @@ void LivingLifePage::step() {
              }        
          }
      
@@ -752,7 +760,7 @@ index 358160e1..516914c0 100644
      
      
  
-@@ -14621,6 +15267,7 @@ void LivingLifePage::step() {
+@@ -14627,6 +15279,7 @@ void LivingLifePage::step() {
                      if( strcmp( famName, "0" ) != 0 ) {
                          h->familyName = stringDuplicate( famName );
                          }
@@ -760,7 +768,7 @@ index 358160e1..516914c0 100644
                      }
                  else {
                      char *newFamName = NULL;
-@@ -14629,7 +15276,9 @@ void LivingLifePage::step() {
+@@ -14635,7 +15288,9 @@ void LivingLifePage::step() {
                          }
                      Homeland h = { x, y, newFamName };
                      homelands.push_back( h );
@@ -770,7 +778,7 @@ index 358160e1..516914c0 100644
                  }
              }
          else if( type == SEQUENCE_NUMBER ) {
-@@ -14833,6 +15482,7 @@ void LivingLifePage::step() {
+@@ -14839,6 +15494,7 @@ void LivingLifePage::step() {
              apocalypseDisplayProgress = 0;
              apocalypseInProgress = false;
              homePosStack.deleteAll();
@@ -778,7 +786,7 @@ index 358160e1..516914c0 100644
  
              clearToolLearnedStatus();
  
-@@ -14861,6 +15511,7 @@ void LivingLifePage::step() {
+@@ -14867,6 +15523,7 @@ void LivingLifePage::step() {
                      
                      if( d > 32 ) {
                          addAncientHomeLocation( posX, posY );
@@ -786,7 +794,7 @@ index 358160e1..516914c0 100644
                          
                          // play sound in distance
                          ObjectRecord *monObj = getObject( monumentID );
-@@ -15359,6 +16010,7 @@ void LivingLifePage::step() {
+@@ -15365,6 +16022,7 @@ void LivingLifePage::step() {
  
                          // home markers invalid now
                          homePosStack.deleteAll();
@@ -794,7 +802,7 @@ index 358160e1..516914c0 100644
                          }
                      }
                  }            
-@@ -15891,6 +16543,7 @@ void LivingLifePage::step() {
+@@ -15897,6 +16555,7 @@ void LivingLifePage::step() {
                          printf( "Found starting home marker at %d,%d\n",
                                  closestX, closestY );
                          addHomeLocation( closestX, closestY );
@@ -802,7 +810,7 @@ index 358160e1..516914c0 100644
                          }
                      }
                  
-@@ -16363,11 +17016,13 @@ void LivingLifePage::step() {
+@@ -16369,11 +17028,13 @@ void LivingLifePage::step() {
                                      getObject( newID )->homeMarker ) {
                                      
                                      addHomeLocation( x, y );
@@ -816,7 +824,7 @@ index 358160e1..516914c0 100644
                                      addedOrRemoved = true;
                                      }
                                  
-@@ -16403,6 +17058,8 @@ void LivingLifePage::step() {
+@@ -16409,6 +17070,8 @@ void LivingLifePage::step() {
                                                      
                                                      removeHomeLocation(
                                                          rx, ry );
@@ -825,7 +833,7 @@ index 358160e1..516914c0 100644
                                                      }
                                                  }
                                              }
-@@ -17067,6 +17724,8 @@ void LivingLifePage::step() {
+@@ -17073,6 +17736,8 @@ void LivingLifePage::step() {
                                  r->temporaryExpireETA = 
                                      game_getCurrentTime() + 60;
                                  }
@@ -834,7 +842,7 @@ index 358160e1..516914c0 100644
                              }
                          
                          
-@@ -18307,6 +18966,10 @@ void LivingLifePage::step() {
+@@ -18313,6 +18978,10 @@ void LivingLifePage::step() {
                                  existing->id,
                                  lrint( existing->currentPos.x ),
                                  lrint( existing->currentPos.y ) );
@@ -845,7 +853,7 @@ index 358160e1..516914c0 100644
                              }
                          if( existing->holdingID < 0 ) {
                              int babyID = - existing->holdingID;
-@@ -18315,6 +18978,10 @@ void LivingLifePage::step() {
+@@ -18321,6 +18990,10 @@ void LivingLifePage::step() {
                                  babyID,
                                  lrint( existing->currentPos.x ),
                                  lrint( existing->currentPos.y ) );
@@ -856,7 +864,7 @@ index 358160e1..516914c0 100644
                              }
                          
  
-@@ -18995,6 +19662,17 @@ void LivingLifePage::step() {
+@@ -19001,6 +19674,17 @@ void LivingLifePage::step() {
                      oldHomePosStack.deleteAll();
                      }
                  homePosStack.push_back_other( &oldHomePosStack );
@@ -874,7 +882,7 @@ index 358160e1..516914c0 100644
  
                  lastPlayerID = ourID;
  
-@@ -19143,6 +19821,10 @@ void LivingLifePage::step() {
+@@ -19149,6 +19833,10 @@ void LivingLifePage::step() {
                                      existing->id,
                                      lrint( existing->currentPos.x ),
                                      lrint( existing->currentPos.y ) );
@@ -885,7 +893,7 @@ index 358160e1..516914c0 100644
                                  }
                              if( existing->holdingID < 0 ) {
                                  int babyID = - existing->holdingID;
-@@ -19151,6 +19833,10 @@ void LivingLifePage::step() {
+@@ -19157,6 +19845,10 @@ void LivingLifePage::step() {
                                      babyID,
                                      lrint( existing->currentPos.x ),
                                      lrint( existing->currentPos.y ) );
@@ -896,7 +904,7 @@ index 358160e1..516914c0 100644
                                  }
  
  
-@@ -19798,7 +20484,7 @@ void LivingLifePage::step() {
+@@ -19804,7 +20496,7 @@ void LivingLifePage::step() {
                                                      " *baby %d", &personID );
  
                                              babyPos[0] = '\0';
@@ -905,7 +913,7 @@ index 358160e1..516914c0 100644
                                              }
  
  
-@@ -19817,7 +20503,7 @@ void LivingLifePage::step() {
+@@ -19823,7 +20515,7 @@ void LivingLifePage::step() {
                                                      " *leader %d", &personID );
  
                                                  leaderPos[0] = '\0';
@@ -914,7 +922,7 @@ index 358160e1..516914c0 100644
                                                  }
                                              }
  
-@@ -19838,7 +20524,7 @@ void LivingLifePage::step() {
+@@ -19844,7 +20536,7 @@ void LivingLifePage::step() {
                                                          &personID );
  
                                                  follPos[0] = '\0';
@@ -923,7 +931,7 @@ index 358160e1..516914c0 100644
                                                  }
                                              }
                                          
-@@ -19858,7 +20544,7 @@ void LivingLifePage::step() {
+@@ -19864,7 +20556,7 @@ void LivingLifePage::step() {
                                                          &personID );
  
                                                  expertPos[0] = '\0';
@@ -932,7 +940,7 @@ index 358160e1..516914c0 100644
                                                  
                                                  expert = true;
                                                  }
-@@ -19878,7 +20564,7 @@ void LivingLifePage::step() {
+@@ -19884,7 +20576,7 @@ void LivingLifePage::step() {
                                                          &personID );
  
                                                  ownerPos[0] = '\0';
@@ -941,19 +949,24 @@ index 358160e1..516914c0 100644
                                                  }
                                              }
                                          
-@@ -19890,6 +20576,11 @@ void LivingLifePage::step() {
+@@ -19896,6 +20588,16 @@ void LivingLifePage::step() {
                                                                   person,
                                                                   personID,
                                                                   personKey );
-+                                            addTempLocationSlip( mapX, mapY,
-+                                                                 person,
-+                                                                 personID,
-+                                                                 personKey,
-+                                                                 mapAge );
++                                            if( personKey == textExpt && personID == 0 ) {
++                                                addHomelandLocationSlip( mapX, mapY, personKey );
++                                                }
++                                            else {
++                                                addTempLocationSlip( mapX, mapY,
++                                                                     person,
++                                                                     personID,
++                                                                     personKey,
++                                                                     mapAge );
++                                                }
                                              }
  
                                          if( personID != -1 && baby) {
-@@ -22653,6 +23344,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22659,6 +23361,9 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
  
