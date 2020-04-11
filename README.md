@@ -43,6 +43,7 @@ Changes the hit detection of large objects (mainly trees) so they they only dete
 Characters shiver when cold, and get a sweat drop when hot. This applies to all characters, although the client does not receive temperature updates for other players who are standing still.
 
 `settings/showShiverSweat.ini` (0 to disable this feature)
+`settings/sweatDropSprite.ini`
 
 ### click-through-heads
 
@@ -148,8 +149,11 @@ Shows a gosling on the head of new players (fuzzily defined as closely related b
 There are keybinds to increase (= aka ushifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
 
 `settings/showRelationDistance.ini` (0 to disable hearts)
+`settings/closeFamilySprite.ini`
 `settings/showGenticFamily.ini` (0 to disable gold disks)
+`settings/geneticFamilySprite.ini`
 `settings/showNewPlayers.ini` (0 to disable goslings)
+`settings/newPlayeObject.ini`
 `settings/playerMarkKey.ini`
 `settings/playerUnmarkKey.ini`
 
@@ -239,6 +243,10 @@ Shows the remaining uses of water buckets, bushes, piles, etc.
 Piles are defined by a category object id, defined in 
 
 `settings/categoryPile.ini`
+
+## object-search
+
+Search filter (/) also puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer.
 
 ### Patch Development
 

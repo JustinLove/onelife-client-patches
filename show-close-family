@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index acb9897b..213a6412 100644
+index 166972fa..89111bba 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -137,6 +137,13 @@ static int ignoreTallObjects = 1;
@@ -198,13 +198,16 @@ index acb9897b..213a6412 100644
  
  
  // base speed for animations that aren't speeded up or slowed down
-@@ -2766,6 +2945,29 @@ LivingLifePage::LivingLifePage()
- 
+@@ -2767,6 +2946,32 @@ LivingLifePage::LivingLifePage()
      showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
+     setAnimationSweatSprite( SettingsManager::getIntSetting( "sweatDropSprite", 88 ) );
  
 +    showRelationDistance = SettingsManager::getIntSetting( "showRelationDistance", 1 );
++    setAnimationCloseFamilySprite( SettingsManager::getIntSetting( "closeFamilySprite", 2521 ) );
 +    showGeneticFamily = SettingsManager::getIntSetting( "showGeneticFamily", 1 );
++    setAnimationGeneticFamilySprite( SettingsManager::getIntSetting( "geneticFamilySprite", 1115 ) );
 +    showNewPlayers = SettingsManager::getIntSetting( "showNewPlayers", 1 );
++    setAnimationNewPlayerObject( SettingsManager::getIntSetting( "newPlayerMarkerObject", 1255 ) );
 +
 +    char *markKeyString = SettingsManager::getStringSetting( "playerMarkKey" );
 +
@@ -228,7 +231,7 @@ index acb9897b..213a6412 100644
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
  
      openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
-@@ -3091,6 +3293,8 @@ LivingLifePage::LivingLifePage()
+@@ -3092,6 +3297,8 @@ LivingLifePage::LivingLifePage()
      if( ! tutorialDone ) {
          mTutorialNumber = 1;
          }
@@ -237,7 +240,7 @@ index acb9897b..213a6412 100644
      }
  
  
-@@ -4417,6 +4621,47 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4418,6 +4625,47 @@ void LivingLifePage::drawMapCell( int inMapI,
  
                  }
  
@@ -285,7 +288,7 @@ index acb9897b..213a6412 100644
          if( mMapContainedStacks[ inMapI ].size() > 0 ) {
              int *stackArray = 
                  mMapContainedStacks[ inMapI ].getElementArray();
-@@ -4912,6 +5157,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4913,6 +5161,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          else {
              setAnimationHeat( 0.5 );
              }
@@ -302,7 +305,7 @@ index acb9897b..213a6412 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5204,6 +5459,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5205,6 +5463,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationBadgeColor( inObj->badgeColor );
                  }
  
@@ -320,7 +323,7 @@ index acb9897b..213a6412 100644
              // rideable object
              holdingPos =
                  drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -5285,6 +5551,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5286,6 +5555,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                      setAnimationHeat( 0.5 );
                      }
                  
@@ -337,7 +340,7 @@ index acb9897b..213a6412 100644
                  doublePair babyHeldPos = holdPos;
                  
                  if( babyO->babyWiggle ) {
-@@ -13568,6 +13844,11 @@ void LivingLifePage::step() {
+@@ -13569,6 +13848,11 @@ void LivingLifePage::step() {
                  delete [] lines;
                  
  
@@ -349,7 +352,7 @@ index acb9897b..213a6412 100644
                  mGlobalMessageShowing = true;
                  mGlobalMessageStartTime = game_getCurrentTime();
                  
-@@ -14024,6 +14305,9 @@ void LivingLifePage::step() {
+@@ -14025,6 +14309,9 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
@@ -359,7 +362,7 @@ index acb9897b..213a6412 100644
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -14233,6 +14517,16 @@ void LivingLifePage::step() {
+@@ -14234,6 +14521,16 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -376,7 +379,7 @@ index acb9897b..213a6412 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -15885,6 +16179,8 @@ void LivingLifePage::step() {
+@@ -15886,6 +16183,8 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -385,7 +388,7 @@ index acb9897b..213a6412 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -17895,6 +18191,16 @@ void LivingLifePage::step() {
+@@ -17896,6 +18195,16 @@ void LivingLifePage::step() {
                                        &( o.id ),
                                        &( o.holdingID ) );
                      
@@ -402,7 +405,7 @@ index acb9897b..213a6412 100644
                      
                      for( int i=0; i<gameObjects.size(); i++ ) {
                          
-@@ -19416,6 +19722,11 @@ void LivingLifePage::step() {
+@@ -19417,6 +19726,11 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -414,7 +417,7 @@ index acb9897b..213a6412 100644
                          }
                      }
                  }
-@@ -23954,6 +24265,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -23955,6 +24269,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -454,7 +457,7 @@ index acb9897b..213a6412 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -25710,6 +26054,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25711,6 +26058,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -505,53 +508,23 @@ index 6d2ec116..9acbf4ef 100644
          LiveObject *getOurLiveObject();
          LiveObject *getLiveObject( int inID );
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index a5c37f08..e161cc56 100644
+index 1e1e2c57..3184e95b 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
-@@ -74,6 +74,11 @@ static char mouthFrameOutputStarted = false;
- static SpriteHandle sweatDrop;
- const char *sweatDropFile = "sprites/88.tga"; // - 0.12
- 
-+static SpriteHandle loveHeart;
-+const char *loveHeartFile = "sprites/2521.tga";
-+
-+static SpriteHandle goldBall;
-+const char *goldBallFile = "sprites/1115.tga";
- 
- static char shouldFileBeCached( char *inFileName ) {
-     if( strstr( inFileName, ".txt" ) != NULL ) {
-@@ -165,6 +170,10 @@ int initAnimationBankStart( char *outRebuildingCache ) {
-     
-     sweatDrop = loadSpriteBase( sweatDropFile, false );
- 
-+    loveHeart = loadSpriteBase( loveHeartFile, false );
-+
-+    goldBall = loadSpriteBase( goldBallFile, false );
-+
- 
-     maxID = 0;
- 
-@@ -531,6 +540,12 @@ void freeAnimationBank() {
- 
-     freeSprite( sweatDrop );
-     sweatDrop = NULL;
-+
-+    freeSprite( loveHeart );
-+    loveHeart = NULL;
-+
-+    freeSprite( goldBall );
-+    goldBall = NULL;
-     
-     if( mouthShapeFrameList != NULL ) {
-         delete [] mouthShapeFrameList;
-@@ -1254,6 +1269,55 @@ void setAnimationHeat( float heat ) {
+@@ -1253,6 +1253,78 @@ void setAnimationSweatSprite( int spriteID ) {
+     sweatDropSprite = spriteID;
      }
- 
  
 +static float drawWithRelationDistance = false;
 +
 +void setAnimationRelationDistance( int distance ) {
 +    drawWithRelationDistance = distance;
++    }
++
++static int closeFamilySprite = 2521;
++
++void setAnimationCloseFamilySprite( int spriteID ) {
++    closeFamilySprite = spriteID;
 +    }
 +
 +void drawRelationDistance( int distance, doublePair inPos, double inRot ) {
@@ -561,11 +534,14 @@ index a5c37f08..e161cc56 100644
 +
 +        setDrawColor( 1, 1, 1, 1 );
 +        setDrawFade(0.5);
-+        drawSprite( loveHeart,
-+                    inPos,
-+                    (distance == 0) ? 5.0 : (3.0 / distance),
-+                    inRot,
-+                    false);
++        SpriteHandle loveHeart = getSprite( closeFamilySprite );
++        if( loveHeart != NULL) {
++            drawSprite( loveHeart,
++                        inPos,
++                        (distance == 0) ? 5.0 : (3.0 / distance),
++                        inRot,
++                        false);
++            }
 +        setDrawFade(1.0);
 +        }
 +    }
@@ -577,15 +553,24 @@ index a5c37f08..e161cc56 100644
 +    drawWithGeneticFamily = isGeneticFamily;
 +    }
 +
++static int geneticFamilySprite = 1115;
++
++void setAnimationGeneticFamilySprite( int spriteID ) {
++    geneticFamilySprite = spriteID;
++    }
++
 +void drawGeneticFamily( doublePair inPos, double inRot ) {
 +    // Genetic Family
 +    setDrawColor( 1, 1, 1, 1 );
 +    setDrawFade(0.5);
-+    drawSprite( goldBall,
-+                inPos,
-+                0.5,
-+                inRot,
-+                false);
++    SpriteHandle goldBall = getSprite( geneticFamilySprite );
++    if( goldBall != NULL) {
++        drawSprite( goldBall,
++                    inPos,
++                    0.5,
++                    inRot,
++                    false);
++        }
 +    setDrawFade(1.0);
 +    }
 +
@@ -597,10 +582,15 @@ index a5c37f08..e161cc56 100644
 +    drawWithNewPlayer = isNewPlayer;
 +    }
 +
++
++void setAnimationNewPlayerObject( int objectID ) {
++    newPlayerObject = objectID;
++    }
++
  
  static char shouldHidePersonShadows = false;
  
-@@ -3431,6 +3495,60 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -3433,6 +3505,60 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
                          NULL );
          }
  
@@ -662,23 +652,50 @@ index a5c37f08..e161cc56 100644
      
      if( animLayerFades != NULL ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index 6e78fd8c..ffee9852 100644
+index 1a926d5a..fddaaf36 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
-@@ -459,7 +459,13 @@ void setAnimationHeat( float heat );
+@@ -460,7 +460,16 @@ void setAnimationSweatSprite( int spriteID );
  void setAnimationBadge( int inBadgeID, char inBareBadge = false );
  void setAnimationBadgeColor( FloatColor inBadgeColor );
  
 +void setAnimationRelationDistance( int distance );
++void setAnimationCloseFamilySprite( int spriteID );
 +void drawRelationDistance( int distance, doublePair inPos, double inRot );
  
 +void setAnimationGeneticFamily( char isGeneticFamily );
++void setAnimationGeneticFamilySprite( int spriteID );
 +void drawGeneticFamily( doublePair inPos, double inRot );
 +
 +void setAnimationNewPlayer( char isNewPlayer );
++void setAnimationNewPlayerObject( int objectID );
  
  // sets fade values for clothing highlights of next drawn person
  // or NULL for no clothing highlights
+diff --git a/gameSource/settings/closeFamilySprite.ini b/gameSource/settings/closeFamilySprite.ini
+new file mode 100644
+index 00000000..4ad837a9
+--- /dev/null
++++ b/gameSource/settings/closeFamilySprite.ini
+@@ -0,0 +1 @@
++2521
+\ No newline at end of file
+diff --git a/gameSource/settings/geneticFamilySprite.ini b/gameSource/settings/geneticFamilySprite.ini
+new file mode 100644
+index 00000000..03a524df
+--- /dev/null
++++ b/gameSource/settings/geneticFamilySprite.ini
+@@ -0,0 +1 @@
++1115
+\ No newline at end of file
+diff --git a/gameSource/settings/newPlayerMarkerObject.ini b/gameSource/settings/newPlayerMarkerObject.ini
+new file mode 100644
+index 00000000..b8d1607c
+--- /dev/null
++++ b/gameSource/settings/newPlayerMarkerObject.ini
+@@ -0,0 +1 @@
++1255
+\ No newline at end of file
 diff --git a/gameSource/settings/playerMarkKey.ini b/gameSource/settings/playerMarkKey.ini
 new file mode 100644
 index 00000000..d82b2311

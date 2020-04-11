@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## v57
+
+- Object fitler (/) will search for that object. It has an arrow, and a location slip when farther away (but still only in the map buffer area)
+- new settings: sweatDropSprite, closeFamilySprite, geneticFamilySprite, and newPlayerObject
+
 ## v55
 
 - Expert location slips are target player's skin color

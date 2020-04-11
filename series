@@ -1,4 +1,4 @@
-# This series applies on GIT commit 454d23a6e3eef39c96dff18122b7088a2c888185
+# This series applies on GIT commit 3e8345b5e37796213350d4236f558b6ec2717f37
 custom-gitignore
 show-modded-client
 optional-client-tag
@@ -29,3 +29,4 @@ age-scaling
 location-slips
 show-bad-biome-objects
 show-use-count
+object-search
