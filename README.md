@@ -153,7 +153,7 @@ There are keybinds to increase (= aka ushifted +) or decrease (-) hearts for pla
 `settings/showGenticFamily.ini` (0 to disable gold disks)
 `settings/geneticFamilySprite.ini`
 `settings/showNewPlayers.ini` (0 to disable goslings)
-`settings/newPlayerObject.ini`
+`settings/newPlayerMarkerObject.ini`
 `settings/playerMarkKey.ini`
 `settings/playerUnmarkKey.ini`
 

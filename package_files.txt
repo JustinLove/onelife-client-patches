@@ -16,7 +16,7 @@ settings/closeFamilySprite.ini
 settings/showGeneticFamily.ini
 settings/geneticFamilySprite.ini
 settings/showNewPlayers.ini
-settings/newPlayerObject.ini
+settings/newPlayerMarkerObject.ini
 settings/playerMarkKey.ini
 settings/playerUnmarkKey.ini
 settings/preferObjectsOverPlayersWithScreenLock.ini
