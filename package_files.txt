@@ -10,9 +10,13 @@ settings/usingClientTag.ini
 settings/maxDoubleClickFrames.ini
 settings/ignoreTallObjects.ini
 settings/showShiverSweat.ini
+settings/sweatDropSprite.ini
 settings/showRelationDistance.ini
+settings/closeFamilySprite.ini
 settings/showGeneticFamily.ini
+settings/geneticFamilySprite.ini
 settings/showNewPlayers.ini
+settings/newPlayeObject.ini
 settings/playerMarkKey.ini
 settings/playerUnmarkKey.ini
 settings/preferObjectsOverPlayersWithScreenLock.ini
