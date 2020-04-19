@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## v62
+
+- Temporary location slips have a pointer to the spot when close
+- Person search: /character name, or press the key ('t' by default) when the cursor is over them gives a temporary location slip to the person. When someone says "follow me", you can.
+
 ## v57
 
 - Object fitler (/) will search for that object. It has an arrow, and a location slip when farther away (but still only in the map buffer area)

@@ -19,6 +19,7 @@ settings/showNewPlayers.ini
 settings/newPlayerMarkerObject.ini
 settings/playerMarkKey.ini
 settings/playerUnmarkKey.ini
+settings/playerTrackKey.ini
 settings/preferObjectsOverPlayersWithScreenLock.ini
 settings/openSayFieldOnTypingLower.ini
 settings/openSayFieldOnTypingUpper.ini

@@ -1,0 +1,135 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index af5891c5..3a2d179c 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -144,6 +144,8 @@ static double newPlayerMessageTime = 0;
+ static char playerMarkKey = '=';
+ static char playerUnmarkKey = '-';
+ 
++static char playerTrackKey = 't';
++
+ static int categoryPile = 1600;
+ 
+ static int preferObjectsOverPlayersWithScreenLock = 1;
+@@ -2464,6 +2466,26 @@ SimpleVector<char*> knownNames;
+ static int tabNameCompletion = 1;
+ 
+ 
++LiveObject* livingNameMatch( const char * const inString ) {
++    unsigned int textLength = strlen(inString);
++
++    if( textLength == 0 ) return NULL;
++
++    for( int i=0;i < gameObjects.size()-1; i++ ) {
++        LiveObject *o = gameObjects.getElement( i );
++        if ( o == NULL || o->name == NULL ) continue;
++        char * name = o->name;
++        unsigned int nameLength = strlen(name);
++        if( textLength >= nameLength && strncmp( inString + (textLength - nameLength), name, nameLength )
++            == 0 ) {
++            return o;
++            }
++        }
++
++    return NULL;
++    }
++
++
+ extern char autoAdjustFramerate;
+ extern int baseFramesPerSecond;
+ 
+@@ -3399,6 +3421,15 @@ LivingLifePage::LivingLifePage()
+         delete [] markKeyString;
+         }
+ 
++    char *trackKeyString = SettingsManager::getStringSetting( "playerTrackKey" );
++
++    if( trackKeyString != NULL ) {
++        if( strlen( trackKeyString ) == 1 ) {
++            playerTrackKey = trackKeyString[0];
++            }
++        delete [] trackKeyString;
++        }
++
+     categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
+ 
+     preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
+@@ -25944,6 +25975,22 @@ void LivingLifePage::playerUnmark() {
+     }
+ 
+ 
++void LivingLifePage::playerTrack() {
++    PersonHitRecord p;
++    checkForPersonHit(p);
++    if( p.targetID > 0 ) {
++        LiveObject* target = getLiveObject( p.targetID );
++        if( target ) {
++            addTempLocationSlip(
++                target->xd, target->yd,
++                true, target->id,
++                textBaby,
++                0);
++            }
++        }
++    }
++
++
+ void LivingLifePage::pointerDown( float inX, float inY ) {
+     lastMouseX = inX;
+     lastMouseY = inY;
+@@ -27581,8 +27628,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+                             
+                                 if( filterStringLen > 0 ) {
+                                     // not blank
+-                                    mHintFilterString = 
+-                                        stringDuplicate( trimmedFilterString );
++
++                                    LiveObject* obj = livingNameMatch( trimmedFilterString );
++                                    if( obj ) {
++                                        if ( !( obj->xd == 1977 && obj->yd == 1977 ) ) {
++                                            addTempLocationSlip(
++                                                obj->xd, obj->yd,
++                                                true, obj->id,
++                                                textBaby,
++                                                0);
++                                            }
++                                        }
++                                    else {
++                                        mHintFilterString =
++                                            stringDuplicate( trimmedFilterString );
++                                        }
+                                     }
+                             
+                                 delete [] trimmedFilterString;
+@@ -27711,6 +27771,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+             keyHandledByKeybind = true;
+             }
+ 
++        if( inASCII == playerTrackKey ) {
++            playerTrack();
++            keyHandledByKeybind = true;
++            }
++
+         // inspired by Awbz OneLife+
+         if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
+               || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
+diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
+index e1e9ac98..9b0c57f5 100644
+--- a/gameSource/LivingLifePage.h
++++ b/gameSource/LivingLifePage.h
+@@ -1028,6 +1028,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+         void playerMark();
+         void playerUnmark();
+ 
++        void playerTrack();
++
+ 
+         LiveObject *getOurLiveObject();
+         LiveObject *getLiveObject( int inID );
+diff --git a/gameSource/settings/playerTrackKey.ini b/gameSource/settings/playerTrackKey.ini
+new file mode 100644
+index 00000000..718f4d2f
+--- /dev/null
++++ b/gameSource/settings/playerTrackKey.ini
+@@ -0,0 +1 @@
++t
