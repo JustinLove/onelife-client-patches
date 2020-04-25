@@ -53,7 +53,7 @@ index 8dd26981..a6011f3b 100644
              delete [] message;
              return;
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 2acb128d..533beea9 100644
+index 833a5bec..7c063ab7 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -136,6 +136,9 @@ char *userTwinCode = NULL;

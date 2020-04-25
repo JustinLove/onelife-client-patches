@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a6ca2097..af5891c5 100644
+index a6ca2097..029461e1 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -484,6 +484,7 @@ typedef struct {
@@ -95,7 +95,7 @@ index a6ca2097..af5891c5 100644
 +        if( oID < 1 ) continue;
 +        oID = getObjectParent( oID );
 +        int index = mSoughtObjects.getElementIndex( oID );
-+        if( index <= 0 ) {
++        if( index < 0 ) {
 +            int numCont = mMapContainedStacks[i].size();
 +
 +            for( int j=0; j<numCont && index <= 0; j++ ) {
@@ -112,7 +112,7 @@ index a6ca2097..af5891c5 100644
 +                    }
 +                }
 +            }
-+        if( index > 0 ) {
++        if( index >= 0 ) {
 +            int wx = i % mMapD + mMapOffsetX - mMapD / 2;
 +            int wy = i / mMapD + mMapOffsetY - mMapD / 2;
 +            doublePair pos = {(double)wx, (double)wy};
@@ -154,7 +154,7 @@ index a6ca2097..af5891c5 100644
 +            for( int i=0; i<hits; i++ ) {
 +                int oID = hitObjects[i]->id;
 +                mSoughtObjects.push_back(oID);
-+                printf("hit %d\n", oID);
++                //printf("hit %d\n", oID);
 +                }
 +            delete [] hitObjects;
 +            findInMap();
