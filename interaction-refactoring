@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 2a874706..cdc56c9b 100644
+index 442a5341..27b45a12 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -22639,6 +22639,980 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -22653,6 +22653,1005 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
          }
      }
  
@@ -532,6 +532,31 @@ index 2a874706..cdc56c9b 100644
 +            // trying to access noBackAccess object from N
 +            canExecute = false;
 +            }
++
++        if( canExecute && 
++            clickDestX == ourLiveObject->xd && 
++            clickDestY == ourLiveObject->yd ) {
++            // access from where we're standing
++
++            // make sure result is non-blocking
++            // (else walk to an empty spot before executing action)
++            if( destID > 0 ) {
++
++                int newDestID = 0;
++
++                TransRecord *useTrans = 
++                    getTrans( ourLiveObject->holdingID, destID );
++
++                if( useTrans != NULL ) {
++                    newDestID = useTrans->newTarget;
++                    }
++
++                if( newDestID > 0 && 
++                    getObject( newDestID )->blocksWalking ) {
++                    canExecute = false;
++                    }
++                }
++            }
 +        }
 +
 +    if( !canExecute && getObject( destID )->wide ) {
@@ -983,7 +1008,7 @@ index 2a874706..cdc56c9b 100644
  
  
  
-@@ -22836,8 +23810,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22850,8 +23849,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -992,7 +1017,7 @@ index 2a874706..cdc56c9b 100644
      
      
  
-@@ -23199,7 +24171,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23213,7 +24210,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -1000,7 +1025,7 @@ index 2a874706..cdc56c9b 100644
  
  
      
-@@ -23207,61 +24178,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23221,61 +24217,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1063,7 +1088,7 @@ index 2a874706..cdc56c9b 100644
          }
  
      
-@@ -23623,7 +24540,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23637,7 +24579,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1072,7 +1097,7 @@ index 2a874706..cdc56c9b 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -23642,251 +24559,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23656,276 +24598,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1109,6 +1134,31 @@ index 2a874706..cdc56c9b 100644
 -                ( clickDestY < ourLiveObject->yd ) ) {
 -                // trying to access noBackAccess object from N
 -                canExecute = false;
+-                }
+-
+-            if( canExecute && 
+-                clickDestX == ourLiveObject->xd && 
+-                clickDestY == ourLiveObject->yd ) {
+-                // access from where we're standing
+-                
+-                // make sure result is non-blocking
+-                // (else walk to an empty spot before executing action)
+-                if( destID > 0 ) {
+-                    
+-                    int newDestID = 0;
+-                    
+-                    TransRecord *useTrans = 
+-                        getTrans( ourLiveObject->holdingID, destID );
+-                    
+-                    if( useTrans != NULL ) {
+-                        newDestID = useTrans->newTarget;
+-                        }
+-                    
+-                    if( newDestID > 0 && 
+-                        getObject( newDestID )->blocksWalking ) {
+-                        canExecute = false;
+-                        }
+-                    }
 -                }
 -            }
 -
@@ -1325,7 +1375,7 @@ index 2a874706..cdc56c9b 100644
          
          
  
-@@ -23928,47 +24602,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23967,47 +24641,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1376,7 +1426,7 @@ index 2a874706..cdc56c9b 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -24117,216 +24753,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24156,216 +24792,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }

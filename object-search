@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a6ca2097..029461e1 100644
+index 980432da..a93342e4 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -484,6 +484,7 @@ typedef struct {
@@ -79,7 +79,7 @@ index a6ca2097..029461e1 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      if( inFamilyName ) {
          p.creationTime = game_getCurrentTime();
-@@ -3195,6 +3230,56 @@ void LivingLifePage::clearMap() {
+@@ -3198,6 +3233,56 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -136,7 +136,7 @@ index a6ca2097..029461e1 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( false ),
-@@ -12994,6 +13079,28 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -12997,6 +13082,28 @@ int LivingLifePage::getNumHints( int inObjectID ) {
          }
  
  
@@ -165,7 +165,7 @@ index a6ca2097..029461e1 100644
      int numTrans = filteredTrans.size();
  
      int numRelevant = numTrans;
-@@ -16632,6 +16739,8 @@ void LivingLifePage::step() {
+@@ -16635,6 +16742,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -174,7 +174,7 @@ index a6ca2097..029461e1 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17524,6 +17633,7 @@ void LivingLifePage::step() {
+@@ -17527,6 +17636,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -182,7 +182,7 @@ index a6ca2097..029461e1 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -17857,6 +17967,8 @@ void LivingLifePage::step() {
+@@ -17860,6 +17970,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -191,7 +191,7 @@ index a6ca2097..029461e1 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -23402,6 +23514,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23416,6 +23528,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
