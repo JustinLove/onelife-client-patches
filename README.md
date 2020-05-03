@@ -257,7 +257,7 @@ Search for a person's name with /character name (or a prefix), or by press 't' w
 
 ## name-labels
 
-Shows a name label to the side of characters of interest. Show for peole you name yourself, and for those you hover for a second (e.g. looked at their hname)
+Shows a name label to the side of characters of interest. Show for people you name yourself, and for those you hover for a second (e.g. looked at their hname)
 
 `settings/showNameLabels.ini` - 0 to disable this feature
 
