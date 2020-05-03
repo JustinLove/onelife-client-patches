@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v63
+
+- name labels for characters you name or hover for a moment.
+
 ## v62
 
 - Temporary location slips have a pointer to the spot when close

@@ -35,3 +35,4 @@ settings/ageScaling2hol.ini
 settings/locationSlipColors.ini
 settings/locationSlipsEnabled.ini
 settings/categoryPile.ini
+settings/showNameLabels.ini

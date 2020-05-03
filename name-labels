@@ -1,0 +1,482 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index a75a65a0..ffa5061f 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -271,6 +271,9 @@ static yumType isYummy( int inObjectID ) {
+     }
+ 
+ 
++static char* lastNamed = NULL;
++static int showNameLabels = 1;
++
+ 
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
+@@ -3469,6 +3472,10 @@ LivingLifePage::LivingLifePage()
+ 
+     initLocationSlips();
+ 
++    showNameLabels = SettingsManager::getIntSetting( "showNameLabels", 1 );
++
++    initDrawUtils();
++
+     initLiveTriggers();
+ 
+     initNames();
+@@ -4646,6 +4653,199 @@ void LivingLifePage::drawChalkBackgroundString( doublePair inPos,
+ 
+ 
+ 
++// forces uppercase
++void LivingLifePage::drawNameLabel( doublePair inPos, 
++                                    const char *inString,
++                                    double inFade,
++                                    LiveObject *inSpeaker) {
++
++    doublePair targetPos = inPos;
++    doublePair labelPos = inPos;
++
++    int width = 250;
++    int widthLimit = 250;
++
++    char *stringUpper = stringToUpperCase( inString );
++
++    if( inSpeaker->relationDistance != -1 ) {
++        char *firstSpace = strstr( stringUpper, " " );
++        if( firstSpace != NULL) firstSpace[0] = 0;
++        }
++
++    SimpleVector<char*> *lines = splitLines( stringUpper, widthLimit );
++
++    double fullWidth = 
++        handwritingFont->measureString( stringUpper );
++
++    delete [] stringUpper;
++
++    if( fullWidth < width ) {
++        width = (int)fullWidth;
++        }
++
++    labelPos.x -= width / 2;
++    labelPos.y += 64;
++
++    targetPos.y -= 32;
++
++
++    if( lines->size() == 0 ) {
++        delete lines;
++        return;
++        }
++
++
++
++    double lineSpacing = handwritingFont->getFontHeight() / 2 + 5;
++
++    double firstLineY =  labelPos.y + ( lines->size() - 1 ) * lineSpacing;
++
++    if( firstLineY > lastScreenViewCenter.y + 330 ) {
++        // off top of screen
++        firstLineY = lastScreenViewCenter.y + 330;
++        labelPos.y = firstLineY;
++        }
++
++    if( labelPos.y < lastScreenViewCenter.y - 280 ) {
++        // off bottom of screen
++        double lastLineY = lastScreenViewCenter.y - 280;
++
++        firstLineY = lastLineY + ( lines->size() - 1 ) * lineSpacing;
++        labelPos.y = firstLineY;
++        }
++
++
++    double widestLine = 0;
++    for( int i=0; i<lines->size(); i++ ) {
++        char *line = lines->getElementDirect( i );
++
++        double length = handwritingFont->measureString( line );
++        if( length > widestLine ) {
++            widestLine = length;
++            }
++        }
++
++    if( inSpeaker->nameLabelTarget == 0 ) {
++        if( targetPos.x < lastScreenViewCenter.x ) {
++            inSpeaker->nameLabelOffset = inSpeaker->nameLabelTarget = widestLine/2 + 32;
++            }
++        else {
++            inSpeaker->nameLabelOffset = inSpeaker->nameLabelTarget = - ( widestLine/2 + 32 );
++            }
++        }
++
++    if( targetPos.x < lastScreenViewCenter.x - 215 ) {
++        inSpeaker->nameLabelTarget = widestLine/2 + 32;
++        }
++    else if ( targetPos.x > lastScreenViewCenter.x + 215 ) {
++        inSpeaker->nameLabelTarget = - (widestLine/2 + 32);
++        }
++
++    if ( inSpeaker->nameLabelOffset < inSpeaker->nameLabelTarget ) {
++        inSpeaker->nameLabelOffset += 20 * frameRateFactor;
++        if ( inSpeaker->nameLabelOffset > inSpeaker->nameLabelTarget ) {
++            inSpeaker->nameLabelOffset = inSpeaker->nameLabelTarget;
++            }
++        }
++    if ( inSpeaker->nameLabelOffset > inSpeaker->nameLabelTarget ) {
++        inSpeaker->nameLabelOffset -= 20 * frameRateFactor;
++        if ( inSpeaker->nameLabelOffset < inSpeaker->nameLabelTarget ) {
++            inSpeaker->nameLabelOffset = inSpeaker->nameLabelTarget;
++            }
++        }
++
++    labelPos.x += inSpeaker->nameLabelOffset;
++
++    if( labelPos.x < lastScreenViewCenter.x - 615 ) {
++        labelPos.x = lastScreenViewCenter.x - 615;
++        }
++    if( labelPos.x + widestLine > lastScreenViewCenter.x + 610 ) {
++        labelPos.x = lastScreenViewCenter.x + 610 - widestLine;
++        }
++
++
++    if( mFloorSplitSprite ){
++        doublePair anchor = labelPos;
++        if( inPos.x < lastScreenViewCenter.x ){
++            anchor.x += width*0.3;
++            }
++        else {
++            anchor.x += width*0.7;
++            }
++        doublePair line = sub( anchor, targetPos );
++        double len = length( line ) - 64;
++        doublePair linePos = add(targetPos, mult( line, 0.6 ) );
++        setDrawColor( 1, 1, 1, 1 );
++        startAddingToStencil( false, true );
++        drawCircle( linePos, len/2 );
++        startDrawingThroughStencil( false );
++        setDrawColor( 1, 1, 1, 0.5 );
++        drawSprite( mFloorSplitSprite, linePos, 1,
++          -angle( line ) / ( 2 * M_PI ) + .25  );
++        stopStencil();
++        }
++
++
++
++    setDrawColor( 1, 1, 1, inFade );
++
++
++
++    // with a fixed seed
++    JenkinsRandomSource blotRandSource( 0 );
++
++    for( int i=0; i<lines->size(); i++ ) {
++        char *line = lines->getElementDirect( i );
++
++
++        double length = handwritingFont->measureString( line );
++
++        int numBlots = lrint( 0.25 + length / 20 ) + 1;
++
++        doublePair blotSpacing = { 20, 0 };
++
++        doublePair firstBlot = 
++            { labelPos.x, firstLineY - i * lineSpacing};
++
++
++        if( numBlots == 1 ) {
++            // center first and only blot on line of text 
++            // (probably one char of text)
++            firstBlot.x += length / 2;
++            }
++        else {
++            // stretch blots so they just perfectly cover this line
++            blotSpacing.x = length / ( numBlots - 1 );
++            }
++
++
++        for( int b=0; b<numBlots; b++ ) {
++            doublePair blotPos = add( firstBlot, mult( blotSpacing, b ) );
++        
++            double rot = blotRandSource.getRandomDouble();
++            drawSprite( mChalkBlotSprite, blotPos, 1.0, rot );
++            }
++        }
++
++
++    setDrawColor( 0, 0, 0, inFade );
++
++
++
++    for( int i=0; i<lines->size(); i++ ) {
++        char *line = lines->getElementDirect( i );
++
++        doublePair lineStart = 
++            { labelPos.x, firstLineY - i * lineSpacing};
++
++        handwritingFont->drawString( line, lineStart, alignLeft );
++        delete [] line;
++        }
++
++    delete lines;
++    }
++
++
+ 
+ typedef struct OffScreenSound {
+         doublePair pos;
+@@ -5483,7 +5683,9 @@ int LivingLifePage::getMapIndex( int inWorldX, int inWorldY ) {
+ ObjectAnimPack LivingLifePage::drawLiveObject( 
+     LiveObject *inObj,
+     SimpleVector<LiveObject *> *inSpeakers,
+-    SimpleVector<doublePair> *inSpeakersPos ) {    
++    SimpleVector<doublePair> *inSpeakersPos,
++    SimpleVector<LiveObject *> *inNamed,
++    SimpleVector<doublePair> *inNamedPos ) {    
+ 
+ 
+     ObjectAnimPack returnPack;
+@@ -6276,6 +6478,10 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+                     inSpeakers->push_back( babyO );
+                     inSpeakersPos->push_back( holdPos );
+                     }
++                if( babyO->name != NULL ) {
++                    inNamed->push_back( babyO );
++                    inNamedPos->push_back( holdPos );
++                    }
+                 }
+             }
+         else if( inObj->numContained == 0 ) {
+@@ -6329,6 +6535,11 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+         inSpeakersPos->push_back( pos );
+         }
+ 
++    if( inObj->name != NULL ) {
++        inNamed->push_back( inObj );
++        inNamedPos->push_back( pos );
++        }
++
+     if( inObj->id == ourID ) {
+         setClothingHighlightFades( NULL );
+         }
+@@ -8584,6 +8795,8 @@ void LivingLifePage::draw( doublePair inViewCenter,
+     SimpleVector<LiveObject *> speakers;
+     SimpleVector<doublePair> speakersPos;
+ 
++    SimpleVector<LiveObject *> named;
++    SimpleVector<doublePair> namedPos;
+ 
+     // draw long path for our character
+     
+@@ -9117,7 +9330,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+                 ignoreWatchedObjectDraw( true );
+ 
+                 ObjectAnimPack heldPack =
+-                    drawLiveObject( o, &speakers, &speakersPos );
++                    drawLiveObject( o, &speakers, &speakersPos, &named, &namedPos );
+                 
+                 if( heldPack.inObjectID != -1 ) {
+                     // holding something, not drawn yet
+@@ -9591,6 +9804,45 @@ void LivingLifePage::draw( doublePair inViewCenter,
+         
+ 
+ 
++    // name labels
++    if( showNameLabels && ! takingPhoto )
++    for( int i=0; i<named.size(); i++ ) {
++        LiveObject *o = named.getElementDirect( i );
++
++        if( !o->nameKnown ) continue;
++
++        doublePair pos = namedPos.getElementDirect( i );
++
++        doublePair textPos = pos;
++
++        ObjectRecord *displayObj = getObject( o->displayID );
++
++
++        double age = computeCurrentAge( o );
++
++        doublePair headPos = 
++            displayObj->spritePos[ getHeadIndex( displayObj, age ) ];
++        
++        doublePair bodyPos = 
++            displayObj->spritePos[ getBodyIndex( displayObj, age ) ];
++
++        doublePair frontFootPos = 
++            displayObj->spritePos[ getFrontFootIndex( displayObj, age ) ];
++        
++        headPos = add( headPos, 
++                       getAgeHeadOffset( age, headPos, 
++                                         bodyPos, frontFootPos ) );
++        headPos = add( headPos,
++                       getAgeBodyOffset( age, bodyPos ) );
++        
++        textPos.y += headPos.y;
++
++        drawNameLabel( textPos, o->name, 
++                       1.0,
++                       o );
++        }
++
++
+     
+     if( ! takingPhoto )
+     for( int i=0; i<speakers.size(); i++ ) {
+@@ -9675,6 +9927,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+         }
+     
+ 
++
+     if( showFPS ) runningPixelCount += endCountingSpritePixelsDrawn();
+ 
+     
+@@ -14003,6 +14256,13 @@ void LivingLifePage::step() {
+             }
+         }
+     
++    if( mCurMouseOverPersonID > 0 &&
++        game_getCurrentTime() - mMouseOverChangeTime > 1 ) {
++        LiveObject* targetPlayer = getLiveObject( mCurMouseOverPersonID );
++        if( targetPlayer ) {
++            targetPlayer->nameKnown = true;
++            }
++        }
+ 
+     if( mGlobalMessageShowing ) {
+         
+@@ -17726,6 +17986,9 @@ void LivingLifePage::step() {
+                 o.lineageEveID = -1;
+ 
+                 o.name = NULL;
++                o.nameKnown = false;
++                o.nameLabelOffset = 0;
++                o.nameLabelTarget = 0;
+                 o.relationName = NULL;
+                 o.relationDistance = -1;
+                 o.newPlayer = false;
+@@ -20765,6 +21028,14 @@ void LivingLifePage::step() {
+                                             existing->currentPos.y ) );
+                                     }
+ 
++                                if( existing->id == ourID ) {
++                                    // look for naming phrase
++                                    if( strncmp( existing->currentSpeech, "YOU ARE ", 8 ) == 0 ) {
++                                        if( lastNamed ) delete [] lastNamed;
++                                        lastNamed = stringDuplicate( existing->currentSpeech + 8 );
++                                        }
++                                    }
++
+                                 if( existing->id == ourID ) {
+                                     // look for map metadata
+                                     char *starPos =
+@@ -21489,6 +21760,19 @@ void LivingLifePage::step() {
+                                 
+                                 existing->name = stringDuplicate( nameStart );
+                                 knownNames.push_back(stringDuplicate( nameStart ));
++                                if( lastNamed ) {
++                                    unsigned int textLength = strlen( lastNamed );
++
++                                    if( textLength != 0 ) {
++                                        unsigned int nameLength = strlen(existing->name);
++                                        if( nameLength >= textLength && strncmp( lastNamed, existing->name, textLength )
++                                            == 0 ) {
++                                            existing->nameKnown = true;
++                                            delete [] lastNamed;
++                                            lastNamed = NULL;
++                                            }
++                                        }
++                                    }
+                                 }
+                             
+                             break;
+@@ -23523,6 +23807,8 @@ void LivingLifePage::makeActive( char inFresh ) {
+     mLastMouseOverID = 0;
+     mCurMouseOverID = 0;
+     mCurMouseOverBiome = -1;
++    mCurMouseOverPersonID = 0;
++    mMouseOverChangeTime = 0;
+     mCurMouseOverFade = 0;
+     mCurMouseOverBehind = false;
+     mCurMouseOverPerson = false;
+@@ -24507,6 +24793,9 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+ 
+     ourLiveObject->currentMouseOverClothingIndex = -1;
+     
++    int previousMouseOverID = mCurMouseOverPersonID;
++    mCurMouseOverPersonID = 0;
++
+     if( destID == 0 ) {
+         if( p.hitSelf ) {
+             mCurMouseOverSelf = true;
+@@ -24540,6 +24829,7 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+             // store negative in place so that we can show their relation
+             // string
+             mCurMouseOverID = - p.hitOtherPersonID;
++            mCurMouseOverPersonID = p.hitOtherPersonID;
+             mCurMouseOverBiome = -1;
+             }
+         }
+@@ -24620,6 +24910,10 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+         mCurMouseOverBehind = false;
+         mLastMouseOverFade = 1.0f;
+         }
++
++    if( previousMouseOverID != mCurMouseOverPersonID ) {
++        mMouseOverChangeTime = game_getCurrentTime();
++        }
+     
+     float spanX = viewWidth/2 - CELL_D/2;
+     float spanY = viewHeight/2 - CELL_D/2;
+diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
+index 361e845f..def8116f 100644
+--- a/gameSource/LivingLifePage.h
++++ b/gameSource/LivingLifePage.h
+@@ -65,6 +65,9 @@ typedef struct LiveObject {
+         char sick;
+         
+         char *name;
++        char nameKnown;
++        double nameLabelTarget;
++        double nameLabelOffset;
+ 
+         char *relationName;
+         int relationDistance;
+@@ -943,6 +946,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+         int mLastMouseOverID;
+         int mCurMouseOverID;
+         int mCurMouseOverBiome;
++
++        int mCurMouseOverPersonID;
++        double mMouseOverChangeTime;
+         
+         float mCurMouseOverFade;
+         
+@@ -1047,6 +1053,10 @@ class LivingLifePage : public GamePage, public ActionListener {
+                                         FloatColor *inForceBlotColor = NULL,
+                                         FloatColor *inForceTextColor = NULL );
+         
++        void drawNameLabel( doublePair inPos, 
++                            const char *inString,
++                            double inFade,
++                            LiveObject *inSpeaker = NULL);
+         
+         void drawOffScreenSounds();
+         
+@@ -1057,7 +1067,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+         ObjectAnimPack drawLiveObject( 
+             LiveObject *inObj,
+             SimpleVector<LiveObject *> *inSpeakers,
+-            SimpleVector<doublePair> *inSpeakersPos );
++            SimpleVector<doublePair> *inSpeakersPos,
++            SimpleVector<LiveObject *> *inNamed,
++            SimpleVector<doublePair> *inNamedPos );
+         
+ 
+         void drawMapCell( int inMapI, 
+diff --git a/gameSource/settings/showNameLabels.ini b/gameSource/settings/showNameLabels.ini
+new file mode 100644
+index 00000000..56a6051c
+--- /dev/null
++++ b/gameSource/settings/showNameLabels.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file

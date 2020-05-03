@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 980432da..a93342e4 100644
+index 980432da..56b7ef37 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -484,6 +484,7 @@ typedef struct {
@@ -26,7 +26,7 @@ index 980432da..a93342e4 100644
      // no expiration for now
      // until we drop the map
      p.temporaryExpireETA = 0;
-@@ -884,6 +887,36 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -884,6 +887,47 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
  
  
  
@@ -59,11 +59,22 @@ index 980432da..a93342e4 100644
 +    }
 +
 +
++void LivingLifePage::removeSearchLocationSlip() {
++    for( int i=0; i<mLocationSlips.size(); i++ ) {
++        LocationSlip *p = mLocationSlips.getElement( i );
++
++        if( p->search ) {
++            p->temporaryExpireETA = game_getCurrentTime();
++            return;
++            }
++        }
++  }
++
 +
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
          HomePos *p = homePosStack.getElement( i );
-@@ -963,6 +996,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
+@@ -963,6 +1007,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
      p.temporary = false;
      p.labeled = false;
      p.tempPerson = false;
@@ -71,7 +82,7 @@ index 980432da..a93342e4 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.pointerBounce = 0;
      p.pointerFade = 0;
-@@ -991,6 +1025,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
+@@ -991,6 +1036,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
      p.tempPerson = false;
      p.pointerBounce = 0;
      p.pointerFade = 0;
@@ -79,7 +90,7 @@ index 980432da..a93342e4 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      if( inFamilyName ) {
          p.creationTime = game_getCurrentTime();
-@@ -3198,6 +3233,56 @@ void LivingLifePage::clearMap() {
+@@ -3198,6 +3244,56 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -136,12 +147,13 @@ index 980432da..a93342e4 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( false ),
-@@ -12997,6 +13082,28 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -12997,6 +13093,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
          }
  
  
++    mSoughtObjects.deleteAll();
++    removeSearchLocationSlip();
 +    if( mLastHintFilterString != NULL ) {
-+        mSoughtObjects.deleteAll();
 +        int remaining;
 +        int hits;
 +        ObjectRecord** hitObjects = searchObjects(
@@ -165,7 +177,7 @@ index 980432da..a93342e4 100644
      int numTrans = filteredTrans.size();
  
      int numRelevant = numTrans;
-@@ -16635,6 +16742,8 @@ void LivingLifePage::step() {
+@@ -16635,6 +16754,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -174,7 +186,7 @@ index 980432da..a93342e4 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17527,6 +17636,7 @@ void LivingLifePage::step() {
+@@ -17527,6 +17648,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -182,7 +194,7 @@ index 980432da..a93342e4 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -17860,6 +17970,8 @@ void LivingLifePage::step() {
+@@ -17860,6 +17982,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -191,7 +203,7 @@ index 980432da..a93342e4 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -23416,6 +23528,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23416,6 +23540,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -199,8 +211,17 @@ index 980432da..a93342e4 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
+@@ -23483,7 +23608,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+     mCurrentHintObjectID = 0;
+     mCurrentHintIndex = 0;
+     
+-    mNextHintObjectID = 0;
++    mNextHintObjectID = 1; // object search doesn't work when this is 0
+     mNextHintIndex = 0;
+     
+     
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index e65452b9..e1e9ac98 100644
+index e65452b9..18591039 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -485,6 +485,7 @@ typedef struct LocationSlip {
@@ -229,11 +250,12 @@ index e65452b9..e1e9ac98 100644
          SimpleVector<TransRecord *> mLastHintSortedList;
          int mLastHintSortedSourceID;
          char *mLastHintFilterString;
-@@ -1138,6 +1143,7 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1138,6 +1143,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void setLocationSlipExpiration( int seconds );
          void addLocationSlip( int inX, int inY );
          void addTempLocationSlip( int inX, int inY, char inPerson, int inPersonID, const char* inPersonKey, int inAge );
 +        void addSearchLocationSlip( int inX, int inY );
++        void removeSearchLocationSlip();
          void updateLocationSlip( LocationSlip* locationSlip, int inX, int inY );
          void updatePersonLocationSlip( int inPersonID, int inX, int inY );
          void addAncientLocationSlip( int inX, int inY, int monumentID );

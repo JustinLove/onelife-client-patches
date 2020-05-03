@@ -255,6 +255,12 @@ Search for a person's name with /character name (or a prefix), or by press 't' w
 
 `settings/playerTrackKey.ini`
 
+## name-labels
+
+Shows a name label to the side of characters of interest. Show for peole you name yourself, and for those you hover for a second (e.g. looked at their hname)
+
+`settings/showNameLabels.ini` - 0 to disable this feature
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.
