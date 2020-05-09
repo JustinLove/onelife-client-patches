@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d865d18c..6d2c71a7 100644
+index 58ed55f8..82d432ca 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -130,6 +130,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -11,7 +11,7 @@ index d865d18c..6d2c71a7 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -2673,6 +2675,9 @@ LivingLifePage::LivingLifePage()
+@@ -2676,6 +2678,9 @@ LivingLifePage::LivingLifePage()
  
      // allow ctrl-v to paste into chat from clipboard
      mSayField.usePasteShortcut( true );
@@ -21,7 +21,7 @@ index d865d18c..6d2c71a7 100644
      
      initLiveTriggers();
  
-@@ -20005,6 +20010,10 @@ void LivingLifePage::step() {
+@@ -20038,6 +20043,10 @@ void LivingLifePage::step() {
  
          doublePair screenTargetPos = 
              mult( targetObjectPos, CELL_D );
@@ -32,7 +32,7 @@ index d865d18c..6d2c71a7 100644
          
          if( vogMode ) {
              // don't adjust camera
-@@ -20017,6 +20026,9 @@ void LivingLifePage::step() {
+@@ -20050,6 +20059,9 @@ void LivingLifePage::step() {
              // moving
  
              // push camera out in front
@@ -42,7 +42,7 @@ index d865d18c..6d2c71a7 100644
              
  
              double moveScale = 40 * cameraFollowsObject->currentSpeed;
-@@ -20048,18 +20060,6 @@ void LivingLifePage::step() {
+@@ -20081,18 +20093,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -61,7 +61,7 @@ index d865d18c..6d2c71a7 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -20100,6 +20100,22 @@ void LivingLifePage::step() {
+@@ -20133,6 +20133,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -84,7 +84,7 @@ index d865d18c..6d2c71a7 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -22418,6 +22434,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -22458,6 +22474,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      

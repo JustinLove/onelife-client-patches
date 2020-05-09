@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 442a5341..27b45a12 100644
+index 72a1b32c..c2c2db5c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -22653,6 +22653,1005 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
+@@ -22693,6 +22693,1005 @@ char LivingLifePage::getCellBlocksWalking( int inMapX, int inMapY ) {
          }
      }
  
@@ -1008,7 +1008,7 @@ index 442a5341..27b45a12 100644
  
  
  
-@@ -22850,8 +23849,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -22890,8 +23889,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -1017,7 +1017,7 @@ index 442a5341..27b45a12 100644
      
      
  
-@@ -23213,7 +24210,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23253,7 +24250,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -1025,7 +1025,7 @@ index 442a5341..27b45a12 100644
  
  
      
-@@ -23221,61 +24217,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23261,61 +24257,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1088,7 +1088,7 @@ index 442a5341..27b45a12 100644
          }
  
      
-@@ -23637,7 +24579,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23677,7 +24619,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1097,7 +1097,7 @@ index 442a5341..27b45a12 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -23656,276 +24598,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23696,276 +24638,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1375,7 +1375,7 @@ index 442a5341..27b45a12 100644
          
          
  
-@@ -23967,47 +24641,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24007,47 +24681,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1426,7 +1426,7 @@ index 442a5341..27b45a12 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -24156,216 +24792,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24196,216 +24832,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
@@ -1644,7 +1644,7 @@ index 442a5341..27b45a12 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 5b9b813d..f34be436 100644
+index 0226710f..f1aada05 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -436,6 +436,24 @@ typedef struct PointerHitRecord {
