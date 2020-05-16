@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6f829692..7269858b 100644
+index 0a4621dc..59e53cb5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -131,6 +131,8 @@ static unsigned int minMouseDownFrames = 30;
+@@ -133,6 +133,8 @@ static unsigned int minMouseDownFrames = 30;
  static unsigned int maxDoubleClickFrames = 30;
  static int maxDoubleClickDrift = 30;
  
@@ -11,7 +11,7 @@ index 6f829692..7269858b 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2692,6 +2694,8 @@ LivingLifePage::LivingLifePage()
+@@ -2694,6 +2696,8 @@ LivingLifePage::LivingLifePage()
  
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
@@ -20,7 +20,7 @@ index 6f829692..7269858b 100644
      
      initLiveTriggers();
  
-@@ -21870,7 +21874,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -21883,7 +21887,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
          // all short objects are mouse-through-able
          
          if( oID > 0 && 
@@ -30,7 +30,7 @@ index 6f829692..7269858b 100644
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -21981,8 +21986,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -21994,8 +21999,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
@@ -43,7 +43,7 @@ index 6f829692..7269858b 100644
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -21993,7 +22000,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -22006,7 +22013,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 431a5c5e..e1f6d366 100644
+index d4920041..a9545bd8 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -11476,6 +11476,15 @@ char *LivingLifePage::getDeathReason() {
+@@ -11478,6 +11478,15 @@ char *LivingLifePage::getDeathReason() {
      }
  
  
@@ -19,7 +19,7 @@ index 431a5c5e..e1f6d366 100644
  void LivingLifePage::handleOurDeath( char inDisconnect ) {
      
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index df017284..75bb65fe 100644
+index 8c7046d5..89414144 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -531,6 +531,7 @@ class LivingLifePage : public GamePage, public ActionListener {
@@ -31,7 +31,7 @@ index df017284..75bb65fe 100644
          // prevent a jitter when frameRateFactor changes due to fps lag
          void adjustAllFrameCounts( double inOldFrameRateFactor,
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index f98ae201..b25c839b 100644
+index ee6826cd..b3e892ad 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1267,6 +1267,8 @@ static void startConnecting() {

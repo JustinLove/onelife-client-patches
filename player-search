@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 0943bbbb..d9143f3e 100644
+index 4217d7f2..dde50e04 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -144,6 +144,8 @@ static double newPlayerMessageTime = 0;
+@@ -146,6 +146,8 @@ static double newPlayerMessageTime = 0;
  static char playerMarkKey = '=';
  static char playerUnmarkKey = '-';
  
@@ -11,7 +11,7 @@ index 0943bbbb..d9143f3e 100644
  static int categoryPile = 1600;
  
  static int preferObjectsOverPlayersWithScreenLock = 1;
-@@ -2478,6 +2480,26 @@ SimpleVector<char*> knownNames;
+@@ -2480,6 +2482,26 @@ SimpleVector<char*> knownNames;
  static int tabNameCompletion = 1;
  
  
@@ -38,7 +38,7 @@ index 0943bbbb..d9143f3e 100644
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
  
-@@ -3416,6 +3438,15 @@ LivingLifePage::LivingLifePage()
+@@ -3418,6 +3440,15 @@ LivingLifePage::LivingLifePage()
          delete [] markKeyString;
          }
  
@@ -54,7 +54,7 @@ index 0943bbbb..d9143f3e 100644
      categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
-@@ -26035,6 +26066,22 @@ void LivingLifePage::playerUnmark() {
+@@ -26048,6 +26079,22 @@ void LivingLifePage::playerUnmark() {
      }
  
  
@@ -77,7 +77,7 @@ index 0943bbbb..d9143f3e 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -27672,8 +27719,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -27925,8 +27972,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                              
                                  if( filterStringLen > 0 ) {
                                      // not blank
@@ -101,7 +101,7 @@ index 0943bbbb..d9143f3e 100644
                                      }
                              
                                  delete [] trimmedFilterString;
-@@ -27802,6 +27862,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28055,6 +28115,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  
@@ -114,7 +114,7 @@ index 0943bbbb..d9143f3e 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index a3151478..158e8dd5 100644
+index 7ec25f73..7d2941fc 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -1028,6 +1028,8 @@ class LivingLifePage : public GamePage, public ActionListener {
