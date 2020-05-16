@@ -63,7 +63,7 @@ index 56e3e7b1..052c5e4a 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 1abb9b86..ee6826cd 100644
+index 1abb9b86..aa9f82c9 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -829,43 +829,86 @@ void freeFrameDrawer() {
@@ -159,28 +159,33 @@ index 1abb9b86..ee6826cd 100644
  
          TextAlignment a = getMessageAlign();
  
-@@ -894,6 +937,10 @@ static void drawPauseScreen() {
+@@ -894,6 +937,16 @@ static void drawPauseScreen() {
          drawMessage( translate( "commandHintsA" ), drawPos, false, 
                       pauseScreenFade );
  
-+        drawPos.x += 200;
-+        drawPos.y -= 222;
++        drawPos.x += 100;
++        drawPos.y -= 52;
++        drawMessage( "F1:Pause say", drawPos, false, pauseScreenFade );
++        drawPos.y -= 100;
++        drawMessage( "Shift+Bksp## Cancel say", drawPos, false, pauseScreenFade );
++
++        drawPos.x += 100;
++        drawPos.y -= 70;
 +        drawPauseEmotionKeys( drawPos );
 +
  
  
          drawPos = lastScreenViewCenter;
-@@ -918,6 +965,9 @@ static void drawPauseScreen() {
+@@ -918,7 +971,7 @@ static void drawPauseScreen() {
          setMessageAlign( alignLeft );
          drawMessage( translate( "commandHintsB" ), drawPos, false, 
                       pauseScreenFade );
+-        
 +
-+        drawPos.y -= viewHeight * 0.82;
-+        drawMessage( "F1  Pause say##Shift+Backspace## Cancel say", drawPos, false, pauseScreenFade );
-         
          setMessageAlign( a );
          }
-@@ -1125,11 +1175,7 @@ static void drawPauseScreen() {
+     
+@@ -1125,11 +1178,7 @@ static void drawPauseScreen() {
  
      messagePos = lastScreenViewCenter;
  
