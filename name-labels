@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dde50e04..a861abd9 100644
+index dde50e04..aa8d93c9 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -273,6 +273,9 @@ static yumType isYummy( int inObjectID ) {
@@ -437,24 +437,6 @@ index dde50e04..a861abd9 100644
      
      float spanX = viewWidth/2 - CELL_D/2;
      float spanY = viewHeight/2 - CELL_D/2;
-@@ -27445,7 +27750,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
-     bool keyHandledByCase = false;
-     
-     switch( inASCII ) {
--        /*
-+        
-         // useful for testing
-         case '+':
-             getOurLiveObject()->displayID = getRandomPersonObject();
-@@ -27459,7 +27764,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
-         case '~':
-             getOurLiveObject()->age -= 1;
-             break;
--        */
-+        
-         case 'V':
-             if( ! mSayField.isFocused() &&
-                 serverSocketConnected &&
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
 index 7d2941fc..600ac004 100644
 --- a/gameSource/LivingLifePage.h
