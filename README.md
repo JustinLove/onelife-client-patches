@@ -261,6 +261,12 @@ Shows a name label to the side of characters of interest. Show for people you na
 
 `settings/showNameLabels.ini` - 0 to disable this feature
 
+## time-based-hunger-dings
+
+Starvation notices are based on time to starvation instead of food boxes, making them relative to clothing etc.
+
+`settings/starvationAlarmTime.ini` - number of seconds for starving state (twice that for hungry). Set to 0 to disable this feature.
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

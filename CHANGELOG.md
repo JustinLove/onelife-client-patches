@@ -2,6 +2,7 @@
 
 ## v65?
 
+- hunger dings are based on time to starvation instead of food boxes, making them relative to your clothing etc.
 - fix yum hover for yumID
 
 ## v63

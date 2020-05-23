@@ -1,0 +1,142 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index a2f5d692..881d8eae 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -273,6 +273,9 @@ static char* lastNamed = NULL;
+ static int showNameLabels = 1;
+ 
+ 
++static int starvationAlarmTime = 45;
++
++
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
+ 
+@@ -3475,6 +3478,8 @@ LivingLifePage::LivingLifePage()
+ 
+     showNameLabels = SettingsManager::getIntSetting( "showNameLabels", 1 );
+ 
++    starvationAlarmTime = SettingsManager::getIntSetting( "starvationAlarmTime", 45 );
++
+     initDrawUtils();
+ 
+     initLiveTriggers();
+@@ -22278,7 +22283,10 @@ void LivingLifePage::step() {
+ 
+ 
+                     double curAge = computeCurrentAge( ourLiveObject );
+-                    
++                    if( starvationAlarmTime > 0 && ourLiveObject->foodDrainTime > 0 ){
++                        timeBasedHungerDings( true );
++                        }
++                    else
+                     if( curAge < 3 ) {
+                         mHungerSlipVisible = 0;
+                         // special case for babies
+@@ -22363,6 +22371,9 @@ void LivingLifePage::step() {
+                         &( ourLiveObject->foodDrainTime ),
+                         &( ourLiveObject->indoorBonusTime ) );
+                 
++                if( starvationAlarmTime > 0 && ourLiveObject->foodDrainTime > 0 ){
++                    timeBasedHungerDings( false );
++                    }
+                 }
+             }
+         
+@@ -23831,6 +23842,67 @@ static void dummyFunctionA() {
+ 
+ 
+ 
++void LivingLifePage::timeBasedHungerDings( char foodChanged ){
++    LiveObject* ourLiveObject = getOurLiveObject();
++
++    if( ourLiveObject == NULL ) return;
++
++    double curAge = computeCurrentAge( ourLiveObject );
++    double starvationTime = (ourLiveObject->foodStore + mYumBonus) * ourLiveObject->foodDrainTime;
++
++    if( ourLiveObject->foodStore == 
++        ourLiveObject->foodCapacity ) {
++
++        mPulseHungerSound = false;
++
++        mHungerSlipVisible = 0;
++        }
++    else if( starvationTime < starvationAlarmTime &&
++             curAge >= 57.33 ) {
++        mHungerSlipVisible = 2;
++        mPulseHungerSound = false;
++        }
++    else if( starvationTime < starvationAlarmTime &&
++             curAge < 57.33 ) {
++
++        // don't play hunger sounds at end of life
++        // because it interrupts our end-of-life song
++        // currently it's 2:37 long
++
++
++        // quiet music so hunger sound can be heard
++        setMusicLoudness( 0 );
++        mHungerSlipVisible = 2;
++
++        if( ourLiveObject->foodStore > 0 ) {
++
++            if( ourLiveObject->foodStore > 1 && starvationTime > starvationAlarmTime*0.5 ) {
++                if( mHungerSound != NULL && foodChanged ) {
++                    // make sure it can be heard
++                    // even if paused
++                    setSoundLoudness( 1.0 );
++                    playSoundSprite( mHungerSound, 
++                                     getSoundEffectsLoudness(),
++                                     // middle
++                                     0.5 );
++                    }
++                mPulseHungerSound = false;
++                }
++            else {
++                mPulseHungerSound = true;
++                }
++            }
++        }
++    else if( starvationTime <= starvationAlarmTime*2 ) {
++        mHungerSlipVisible = 1;
++        mPulseHungerSound = false;
++        }
++    else {
++        mHungerSlipVisible = -1;
++        }
++    }
++
++
+ char LivingLifePage::isSameFloor( int inFloor, GridPos inFloorPos, 
+                                   int inDX, int inDY ) {    
+     GridPos nextStep = inFloorPos;
+diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
+index 600ac004..7957160f 100644
+--- a/gameSource/LivingLifePage.h
++++ b/gameSource/LivingLifePage.h
+@@ -571,7 +571,7 @@ class LivingLifePage : public GamePage, public ActionListener {
+                            double inViewSize );
+         
+         virtual void step();
+-  
++
+         virtual void makeActive( char inFresh );
+         
+ 
+@@ -1011,6 +1011,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+ 
+         double computePathSpeedMod( LiveObject *inObject, int inPathLength );
+         
++        void timeBasedHungerDings( char foodChanged );
++  
+         // check if same floor is present when we take a step in x or y
+         char isSameFloor( int inFloor, GridPos inFloorPos, int inDX, int inDY );
+         
+diff --git a/gameSource/settings/starvationAlarmTime.ini b/gameSource/settings/starvationAlarmTime.ini
+new file mode 100644
+index 00000000..ea90ee31
+--- /dev/null
++++ b/gameSource/settings/starvationAlarmTime.ini
+@@ -0,0 +1 @@
++45
