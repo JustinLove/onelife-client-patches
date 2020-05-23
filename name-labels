@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dde50e04..aa8d93c9 100644
+index 829a9b75..a2f5d692 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -273,6 +273,9 @@ static yumType isYummy( int inObjectID ) {
+@@ -269,6 +269,9 @@ static yumType isYummy( int inObjectID ) {
      }
  
  
@@ -12,7 +12,7 @@ index dde50e04..aa8d93c9 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -3474,6 +3477,10 @@ LivingLifePage::LivingLifePage()
+@@ -3470,6 +3473,10 @@ LivingLifePage::LivingLifePage()
  
      initLocationSlips();
  
@@ -23,7 +23,7 @@ index dde50e04..aa8d93c9 100644
      initLiveTriggers();
  
      initNames();
-@@ -4651,6 +4658,205 @@ void LivingLifePage::drawChalkBackgroundString( doublePair inPos,
+@@ -4647,6 +4654,205 @@ void LivingLifePage::drawChalkBackgroundString( doublePair inPos,
  
  
  
@@ -229,7 +229,7 @@ index dde50e04..aa8d93c9 100644
  
  typedef struct OffScreenSound {
          doublePair pos;
-@@ -5488,7 +5694,9 @@ int LivingLifePage::getMapIndex( int inWorldX, int inWorldY ) {
+@@ -5484,7 +5690,9 @@ int LivingLifePage::getMapIndex( int inWorldX, int inWorldY ) {
  ObjectAnimPack LivingLifePage::drawLiveObject( 
      LiveObject *inObj,
      SimpleVector<LiveObject *> *inSpeakers,
@@ -240,7 +240,7 @@ index dde50e04..aa8d93c9 100644
  
  
      ObjectAnimPack returnPack;
-@@ -6281,6 +6489,10 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -6277,6 +6485,10 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                      inSpeakers->push_back( babyO );
                      inSpeakersPos->push_back( holdPos );
                      }
@@ -251,7 +251,7 @@ index dde50e04..aa8d93c9 100644
                  }
              }
          else if( inObj->numContained == 0 ) {
-@@ -6334,6 +6546,11 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -6330,6 +6542,11 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          inSpeakersPos->push_back( pos );
          }
  
@@ -263,7 +263,7 @@ index dde50e04..aa8d93c9 100644
      if( inObj->id == ourID ) {
          setClothingHighlightFades( NULL );
          }
-@@ -8589,6 +8806,8 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -8585,6 +8802,8 @@ void LivingLifePage::draw( doublePair inViewCenter,
      SimpleVector<LiveObject *> speakers;
      SimpleVector<doublePair> speakersPos;
  
@@ -272,7 +272,7 @@ index dde50e04..aa8d93c9 100644
  
      // draw long path for our character
      
-@@ -9122,7 +9341,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9118,7 +9337,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
                  ignoreWatchedObjectDraw( true );
  
                  ObjectAnimPack heldPack =
@@ -281,7 +281,7 @@ index dde50e04..aa8d93c9 100644
                  
                  if( heldPack.inObjectID != -1 ) {
                      // holding something, not drawn yet
-@@ -9596,6 +9815,49 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9592,6 +9811,49 @@ void LivingLifePage::draw( doublePair inViewCenter,
          
  
  
@@ -331,7 +331,7 @@ index dde50e04..aa8d93c9 100644
      
      if( ! takingPhoto )
      for( int i=0; i<speakers.size(); i++ ) {
-@@ -9680,6 +9942,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -9676,6 +9938,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
      
  
@@ -399,7 +399,7 @@ index dde50e04..aa8d93c9 100644
                                  }
                              
                              break;
-@@ -23576,6 +23871,8 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23575,6 +23870,8 @@ void LivingLifePage::makeActive( char inFresh ) {
      mLastMouseOverID = 0;
      mCurMouseOverID = 0;
      mCurMouseOverBiome = -1;
@@ -408,7 +408,7 @@ index dde50e04..aa8d93c9 100644
      mCurMouseOverFade = 0;
      mCurMouseOverBehind = false;
      mCurMouseOverPerson = false;
-@@ -24560,6 +24857,9 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -24559,6 +24856,9 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
  
      ourLiveObject->currentMouseOverClothingIndex = -1;
      
@@ -418,7 +418,7 @@ index dde50e04..aa8d93c9 100644
      if( destID == 0 ) {
          if( p.hitSelf ) {
              mCurMouseOverSelf = true;
-@@ -24593,6 +24893,7 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -24592,6 +24892,7 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
              // store negative in place so that we can show their relation
              // string
              mCurMouseOverID = - p.hitOtherPersonID;
@@ -426,7 +426,7 @@ index dde50e04..aa8d93c9 100644
              mCurMouseOverBiome = -1;
              }
          }
-@@ -24673,6 +24974,10 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -24672,6 +24973,10 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mCurMouseOverBehind = false;
          mLastMouseOverFade = 1.0f;
          }

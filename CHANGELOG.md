@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v65?
+
+- fix yum hover for yumID
+
 ## v63
 
 - name labels for characters you name or hover for a moment.

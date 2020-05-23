@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 052c5e4a..d4920041 100644
+index ea7c2dac..a7eccd60 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -226,6 +226,46 @@ void initKeybinds() {
+@@ -228,6 +228,40 @@ void initKeybinds() {
      }
  
  
@@ -30,12 +30,6 @@ index 052c5e4a..d4920041 100644
 +        return YT_INEDIBLE;
 +        }
 +
-+    ObjectRecord *o = getObject( objectID );
-+
-+    if( o == NULL ) {
-+        return YT_INEDIBLE;
-+        }
-+
 +    for( int i=0; i<yummyFoodChain.size(); i++ ) {
 +        if( objectID == yummyFoodChain.getElementDirect(i) ) {
 +            return YT_MEH;
@@ -49,7 +43,7 @@ index 052c5e4a..d4920041 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -3012,6 +3052,10 @@ LivingLifePage::LivingLifePage()
+@@ -3014,6 +3048,10 @@ LivingLifePage::LivingLifePage()
  
      initKeybinds();
      
@@ -60,7 +54,7 @@ index 052c5e4a..d4920041 100644
      initLiveTriggers();
  
      initNames();
-@@ -4669,6 +4713,11 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4671,6 +4709,11 @@ void LivingLifePage::drawMapCell( int inMapI,
          for( int i=startPass; i<numPasses; i++ ) {
              
              doublePair passPos = pos;
@@ -72,7 +66,7 @@ index 052c5e4a..d4920041 100644
              
              if( highlight ) {
                  
-@@ -4791,8 +4840,8 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4793,8 +4836,8 @@ void LivingLifePage::drawMapCell( int inMapI,
  
          if( highlight ) {
              
@@ -82,7 +76,7 @@ index 052c5e4a..d4920041 100644
          
              toggleAdditiveBlend( true );
              
-@@ -4812,7 +4861,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4814,7 +4857,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // opaque portion
                      startDrawingThroughStencil( false );
  
@@ -101,7 +95,7 @@ index 052c5e4a..d4920041 100644
                      
                      drawSquare( squarePos, squareRad );
                      
-@@ -4826,7 +4885,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4828,7 +4881,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // now first fringe is isolated in stencil
                      startDrawingThroughStencil( false );
  
@@ -120,7 +114,7 @@ index 052c5e4a..d4920041 100644
  
                      drawSquare( squarePos, squareRad );
  
-@@ -4840,7 +4909,17 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4842,7 +4905,17 @@ void LivingLifePage::drawMapCell( int inMapI,
                      // now second fringe is isolated in stencil
                      startDrawingThroughStencil( false );
                      
@@ -139,7 +133,7 @@ index 052c5e4a..d4920041 100644
                      
                      drawSquare( squarePos, squareRad );
                      
-@@ -11004,6 +11083,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11006,6 +11079,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
                          desToDelete = des;
                          }
                      }
@@ -162,7 +156,7 @@ index 052c5e4a..d4920041 100644
  
                  
  
-@@ -12414,6 +12509,84 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
+@@ -12416,6 +12505,88 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
  
  
  
@@ -171,6 +165,10 @@ index 052c5e4a..d4920041 100644
 +
 +    ObjectRecord* obj = getObject( objectID );
 +    if( obj == NULL ) return -1;
++
++    if( obj->yumParentID != -1 ) {
++        return obj->yumParentID;
++        }
 +
 +    if( obj->isUseDummy ) {
 +        objectID = obj->useDummyParent;
@@ -247,7 +245,7 @@ index 052c5e4a..d4920041 100644
  // inNewID > 0
  static char shouldCreationSoundPlay( int inOldID, int inNewID ) {
      if( inOldID == inNewID ) {
-@@ -20279,6 +20452,9 @@ void LivingLifePage::step() {
+@@ -20281,6 +20452,9 @@ void LivingLifePage::step() {
                      }
                  
                  if( mYumMultiplier != oldYumMultiplier ) {
@@ -257,11 +255,14 @@ index 052c5e4a..d4920041 100644
                      int oldSlipIndex = -1;
                      int newSlipIndex = 0;
                      
-@@ -20400,6 +20576,12 @@ void LivingLifePage::step() {
+@@ -20402,6 +20576,15 @@ void LivingLifePage::step() {
                  
                      if( lastAteID != 0 ) {
                          ObjectRecord *lastAteObj = getObject( lastAteID );
-+                        if( lastAteObj->isUseDummy ) {
++                        if( lastAteObj->yumParentID != -1 ) {
++                            yummyFoodChain.push_back( lastAteObj->yumParentID );
++                            }
++                        else if( lastAteObj->isUseDummy ) {
 +                            yummyFoodChain.push_back( lastAteObj->useDummyParent );
 +                            }
 +                        else {
@@ -270,7 +271,7 @@ index 052c5e4a..d4920041 100644
                          
                          char *strUpper = stringToUpperCase(
                              lastAteObj->description );
-@@ -22290,6 +22472,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22288,6 +22471,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          mYumSlipNumberToShow[i] = 0;
          }
      

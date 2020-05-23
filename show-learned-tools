@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 53d2c72e..0b9e145b 100644
+index 422bc90d..ff4ebb77 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -150,6 +150,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
+@@ -152,6 +152,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
  
  static int clickToMoveLockToInteract = 0;
  
@@ -11,7 +11,7 @@ index 53d2c72e..0b9e145b 100644
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -3048,6 +3050,8 @@ LivingLifePage::LivingLifePage()
+@@ -3044,6 +3046,8 @@ LivingLifePage::LivingLifePage()
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
  
@@ -20,7 +20,7 @@ index 53d2c72e..0b9e145b 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -3136,6 +3140,18 @@ LivingLifePage::LivingLifePage()
+@@ -3132,6 +3136,18 @@ LivingLifePage::LivingLifePage()
          mYumSlipPosTargetOffset[i] = mYumSlipHideOffset[i];
          }
      
@@ -39,7 +39,7 @@ index 53d2c72e..0b9e145b 100644
  
      for( int i=0; i<3; i++ ) {    
          mHungerSlipShowOffsets[i].x = -558;
-@@ -3793,6 +3809,78 @@ void drawHelpMarkKeys( doublePair messagePos ) {
+@@ -3789,6 +3805,78 @@ void drawHelpMarkKeys( doublePair messagePos ) {
      }
  
  
@@ -118,7 +118,7 @@ index 53d2c72e..0b9e145b 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -10245,6 +10333,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10241,6 +10329,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
@@ -305,7 +305,7 @@ index 53d2c72e..0b9e145b 100644
                              }
                          
  
-@@ -22453,6 +22664,15 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22452,6 +22663,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      
@@ -352,10 +352,10 @@ index 89414144..7bf71cad 100644
          // relative to map corner, but not necessary in bounds
          // of locally stored map
 diff --git a/gameSource/objectBank.cpp b/gameSource/objectBank.cpp
-index e05edb05..86735874 100644
+index 3628d875..7e78abd3 100644
 --- a/gameSource/objectBank.cpp
 +++ b/gameSource/objectBank.cpp
-@@ -4917,6 +4917,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
+@@ -4932,6 +4932,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
  
  
  
@@ -400,10 +400,10 @@ index e05edb05..86735874 100644
      ObjectRecord *o = getObject( inObjectID );
      
 diff --git a/gameSource/objectBank.h b/gameSource/objectBank.h
-index 1011bfe1..bf8658ba 100644
+index 93f31d54..6fc5af73 100644
 --- a/gameSource/objectBank.h
 +++ b/gameSource/objectBank.h
-@@ -739,6 +739,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
+@@ -744,6 +744,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
  int getMaxDiameter( ObjectRecord *inObject );
  
  

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b08f5288..0a8bebd9 100644
+index 1b30f781..76fb71e5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -132,6 +132,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+@@ -134,6 +134,8 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  static float lastMouseX = 0;
  static float lastMouseY = 0;
  
@@ -11,7 +11,7 @@ index b08f5288..0a8bebd9 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -2678,6 +2680,9 @@ LivingLifePage::LivingLifePage()
+@@ -2680,6 +2682,9 @@ LivingLifePage::LivingLifePage()
  
      // allow ctrl-v to paste into chat from clipboard
      mSayField.usePasteShortcut( true );
@@ -21,7 +21,7 @@ index b08f5288..0a8bebd9 100644
      
      initLiveTriggers();
  
-@@ -20050,6 +20055,10 @@ void LivingLifePage::step() {
+@@ -20048,6 +20053,10 @@ void LivingLifePage::step() {
  
          doublePair screenTargetPos = 
              mult( targetObjectPos, CELL_D );
@@ -32,7 +32,7 @@ index b08f5288..0a8bebd9 100644
          
          if( vogMode ) {
              // don't adjust camera
-@@ -20062,6 +20071,9 @@ void LivingLifePage::step() {
+@@ -20060,6 +20069,9 @@ void LivingLifePage::step() {
              // moving
  
              // push camera out in front
@@ -42,7 +42,7 @@ index b08f5288..0a8bebd9 100644
              
  
              double moveScale = 40 * cameraFollowsObject->currentSpeed;
-@@ -20093,18 +20105,6 @@ void LivingLifePage::step() {
+@@ -20091,18 +20103,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -61,7 +61,7 @@ index b08f5288..0a8bebd9 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -20145,6 +20145,22 @@ void LivingLifePage::step() {
+@@ -20143,6 +20143,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -84,7 +84,7 @@ index b08f5288..0a8bebd9 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -22471,6 +22487,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -22469,6 +22485,20 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mLastMouseOverFade = 1.0f;
          }
      

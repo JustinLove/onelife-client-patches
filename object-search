@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index bcbfaf84..4217d7f2 100644
+index 08d1bc4b..1a31461c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -486,6 +486,7 @@ typedef struct {
+@@ -482,6 +482,7 @@ typedef struct {
  static FloatColor gold = { 255.0/255, 227.0/255, 50.0/255, 1 };
  static FloatColor blood = { 244.0/255, 16.0/255, 8.0/255, 1 };
  static FloatColor indigo = { 122.0/255, 126.0/255, 244.0/255, 1 };
@@ -10,7 +10,7 @@ index bcbfaf84..4217d7f2 100644
  static FloatColor pink = { 250.0/255, 144.0/255, 146.0/255, 1 };
  static FloatColor stone = { 128.0/255, 125.0/255, 149.0/255, 1 };
  static FloatColor sepia = { 203.0/255, 165.0/255, 114.0/255, 1 };
-@@ -757,6 +758,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
+@@ -753,6 +754,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
      p.temporary = false;
      p.labeled = true;
      p.tempPerson = false;
@@ -18,7 +18,7 @@ index bcbfaf84..4217d7f2 100644
      p.temporaryExpireETA = 0;
      p.creationTime = game_getCurrentTime();
      p.pointerBounce = 0;
-@@ -833,6 +835,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -829,6 +831,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
      p.ancient = false;
      p.temporary = true;
      p.labeled = false;
@@ -26,7 +26,7 @@ index bcbfaf84..4217d7f2 100644
      // no expiration for now
      // until we drop the map
      p.temporaryExpireETA = 0;
-@@ -889,6 +892,47 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -885,6 +888,47 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
  
  
  
@@ -74,7 +74,7 @@ index bcbfaf84..4217d7f2 100644
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
          HomePos *p = homePosStack.getElement( i );
-@@ -968,6 +1012,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
+@@ -964,6 +1008,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
      p.temporary = false;
      p.labeled = false;
      p.tempPerson = false;
@@ -82,7 +82,7 @@ index bcbfaf84..4217d7f2 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.pointerBounce = 0;
      p.pointerFade = 0;
-@@ -996,6 +1041,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
+@@ -992,6 +1037,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
      p.tempPerson = false;
      p.pointerBounce = 0;
      p.pointerFade = 0;
@@ -90,7 +90,7 @@ index bcbfaf84..4217d7f2 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      if( inFamilyName ) {
          p.creationTime = game_getCurrentTime();
-@@ -3203,6 +3249,56 @@ void LivingLifePage::clearMap() {
+@@ -3199,6 +3245,56 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -147,7 +147,7 @@ index bcbfaf84..4217d7f2 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( false ),
-@@ -13002,6 +13098,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -12998,6 +13094,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
          }
  
  
@@ -203,7 +203,7 @@ index bcbfaf84..4217d7f2 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -23469,6 +23593,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23468,6 +23592,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -211,7 +211,7 @@ index bcbfaf84..4217d7f2 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -23536,7 +23661,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23535,7 +23660,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      

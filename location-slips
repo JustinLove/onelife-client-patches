@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9fb6a19f..3c87f6af 100644
+index 6daf70e0..78255ee1 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -476,6 +476,83 @@ static SimpleVector<HomePos> oldHomePosStack;
+@@ -472,6 +472,83 @@ static SimpleVector<HomePos> oldHomePosStack;
  // used on reconnect to decide whether to delete old home positions
  static int lastPlayerID = -1;
  
@@ -86,7 +86,7 @@ index 9fb6a19f..3c87f6af 100644
  
  
  static void processHomePosStack() {
-@@ -554,6 +631,31 @@ static void removeHomeLocation( int inX, int inY ) {
+@@ -550,6 +627,31 @@ static void removeHomeLocation( int inX, int inY ) {
      }
  
  
@@ -118,7 +118,7 @@ index 9fb6a19f..3c87f6af 100644
  static void removeAllTempHomeLocations() {
      for( int i=0; i<homePosStack.size(); i++ ) {
          if( homePosStack.getElementDirect( i ).temporary ) {
-@@ -644,6 +746,25 @@ static char doesNewTempLocationTrumpPrevious( const char *inPersonKey ) {
+@@ -640,6 +742,25 @@ static char doesNewTempLocationTrumpPrevious( const char *inPersonKey ) {
      }
  
  
@@ -144,7 +144,7 @@ index 9fb6a19f..3c87f6af 100644
  
  static void addTempHomeLocation( int inX, int inY, 
                                   char inPerson, int inPersonID,
-@@ -699,6 +820,72 @@ static void addTempHomeLocation( int inX, int inY,
+@@ -695,6 +816,72 @@ static void addTempHomeLocation( int inX, int inY,
      }
  
  
@@ -217,7 +217,7 @@ index 9fb6a19f..3c87f6af 100644
  
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
-@@ -713,6 +900,41 @@ static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
+@@ -709,6 +896,41 @@ static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
  
  
  
@@ -259,7 +259,7 @@ index 9fb6a19f..3c87f6af 100644
  static void addAncientHomeLocation( int inX, int inY ) {
      removeHomeLocation( inX, inY );
  
-@@ -735,8 +957,59 @@ static void addAncientHomeLocation( int inX, int inY ) {
+@@ -731,8 +953,59 @@ static void addAncientHomeLocation( int inX, int inY ) {
      }
  
  
@@ -319,7 +319,7 @@ index 9fb6a19f..3c87f6af 100644
  
  
  // returns if -1 no home needs to be shown (home unknown)
-@@ -799,8 +1072,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
+@@ -795,8 +1068,13 @@ static int getHomeDir( doublePair inCurrentPlayerPos,
              return -1;
              }
          }
@@ -335,7 +335,7 @@ index 9fb6a19f..3c87f6af 100644
      double a = angle( vector );
  
      // north is 0
-@@ -3064,6 +3342,8 @@ LivingLifePage::LivingLifePage()
+@@ -3060,6 +3338,8 @@ LivingLifePage::LivingLifePage()
  
      initBecomesFood();
  
@@ -344,7 +344,7 @@ index 9fb6a19f..3c87f6af 100644
      initLiveTriggers();
  
      initNames();
-@@ -3130,6 +3410,8 @@ LivingLifePage::LivingLifePage()
+@@ -3126,6 +3406,8 @@ LivingLifePage::LivingLifePage()
      mHomeSlipShowDelta[1] = 68;
      
  
@@ -353,7 +353,7 @@ index 9fb6a19f..3c87f6af 100644
  
      for( int i=0; i<NUM_YUM_SLIPS; i++ ) {    
          mYumSlipHideOffset[i].x = -600;
-@@ -6861,6 +7143,270 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
+@@ -6857,6 +7139,270 @@ void LivingLifePage::drawHomeSlip( doublePair inSlipPos, int inIndex ) {
  
  
  
@@ -624,7 +624,7 @@ index 9fb6a19f..3c87f6af 100644
  typedef struct DrawOrderRecord {
          char person;
          // if person
-@@ -8772,6 +9318,32 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -8768,6 +9314,32 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
      
  
@@ -657,7 +657,7 @@ index 9fb6a19f..3c87f6af 100644
      char pointerDrawn[2] = { false, false };
  
      if( mHintArrowSprite )
-@@ -10031,6 +10603,12 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10027,6 +10599,12 @@ void LivingLifePage::draw( doublePair inViewCenter,
      
  
  
@@ -670,7 +670,7 @@ index 9fb6a19f..3c87f6af 100644
      for( int j=0; j<2; j++ ) {
          doublePair slipPos = add( mHomeSlipPosOffset[j], lastScreenViewCenter );
          
-@@ -10038,6 +10616,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10034,6 +10612,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
              drawHomeSlip( slipPos, j );
              }
          }
@@ -1052,7 +1052,7 @@ index 9fb6a19f..3c87f6af 100644
                                              }
  
                                          if( personID != -1 && baby) {
-@@ -22821,6 +23595,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22820,6 +23594,9 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
  
