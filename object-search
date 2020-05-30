@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 08d1bc4b..1a31461c 100644
+index 75f8605b..88e4cf95 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -482,6 +482,7 @@ typedef struct {
@@ -90,7 +90,7 @@ index 08d1bc4b..1a31461c 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      if( inFamilyName ) {
          p.creationTime = game_getCurrentTime();
-@@ -3199,6 +3245,56 @@ void LivingLifePage::clearMap() {
+@@ -3203,6 +3249,56 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -147,7 +147,7 @@ index 08d1bc4b..1a31461c 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( false ),
-@@ -12998,6 +13094,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -13002,6 +13098,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
          }
  
  
@@ -177,7 +177,7 @@ index 08d1bc4b..1a31461c 100644
      int numTrans = filteredTrans.size();
  
      int numRelevant = numTrans;
-@@ -16662,6 +16781,8 @@ void LivingLifePage::step() {
+@@ -16707,6 +16826,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -186,7 +186,7 @@ index 08d1bc4b..1a31461c 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17554,6 +17675,7 @@ void LivingLifePage::step() {
+@@ -17599,6 +17720,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -194,7 +194,7 @@ index 08d1bc4b..1a31461c 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -17887,6 +18009,8 @@ void LivingLifePage::step() {
+@@ -17932,6 +18054,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -203,7 +203,7 @@ index 08d1bc4b..1a31461c 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -23468,6 +23592,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23546,6 +23670,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -211,7 +211,7 @@ index 08d1bc4b..1a31461c 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -23535,7 +23660,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23613,7 +23738,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -221,10 +221,10 @@ index 08d1bc4b..1a31461c 100644
      
      
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index edcf4370..7ec25f73 100644
+index e0247485..15fef0a0 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -485,6 +485,7 @@ typedef struct LocationSlip {
+@@ -489,6 +489,7 @@ typedef struct LocationSlip {
          char temporary;
          char labeled;
          char tempPerson;
@@ -232,7 +232,7 @@ index edcf4370..7ec25f73 100644
          int personID;
          const char *tempPersonKey;
          // 0 if not set
-@@ -545,6 +546,7 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -549,6 +550,7 @@ class LivingLifePage : public GamePage, public ActionListener {
          ~LivingLifePage();
          
          void clearMap();
@@ -240,7 +240,7 @@ index edcf4370..7ec25f73 100644
          
          // enabled tutorail next time a connection loads
          void runTutorial();
-@@ -837,6 +839,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -841,6 +843,9 @@ class LivingLifePage : public GamePage, public ActionListener {
          SimpleVector<OldHintArrow> mOldHintArrows;
  
  
@@ -250,7 +250,7 @@ index edcf4370..7ec25f73 100644
          SimpleVector<TransRecord *> mLastHintSortedList;
          int mLastHintSortedSourceID;
          char *mLastHintFilterString;
-@@ -1138,6 +1143,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1142,6 +1147,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void setLocationSlipExpiration( int seconds );
          void addLocationSlip( int inX, int inY );
          void addTempLocationSlip( int inX, int inY, char inPerson, int inPersonID, const char* inPersonKey, int inAge );
