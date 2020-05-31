@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 40d6a8f5..c36eef58 100644
+index 236716d9..5df1ceea 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -141,6 +141,13 @@ static int ignoreTallObjects = 1;
@@ -16,7 +16,7 @@ index 40d6a8f5..c36eef58 100644
  static int preferObjectsOverPlayersWithScreenLock = 1;
  
  static int clickToMoveLockToInteract = 0;
-@@ -1034,9 +1041,181 @@ char *getRelationName( LiveObject *inOurObject, LiveObject *inTheirObject ) {
+@@ -1038,9 +1045,181 @@ char *getRelationName( LiveObject *inOurObject, LiveObject *inTheirObject ) {
  
  
  
@@ -198,7 +198,7 @@ index 40d6a8f5..c36eef58 100644
  
  
  // base speed for animations that aren't speeded up or slowed down
-@@ -2800,6 +2979,32 @@ LivingLifePage::LivingLifePage()
+@@ -2804,6 +2983,32 @@ LivingLifePage::LivingLifePage()
      showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
      setAnimationSweatSprite( SettingsManager::getIntSetting( "sweatDropSprite", 88 ) );
  
@@ -231,7 +231,7 @@ index 40d6a8f5..c36eef58 100644
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
  
      openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
-@@ -3125,6 +3330,8 @@ LivingLifePage::LivingLifePage()
+@@ -3129,6 +3334,8 @@ LivingLifePage::LivingLifePage()
      if( ! tutorialDone ) {
          mTutorialNumber = 1;
          }
@@ -240,7 +240,7 @@ index 40d6a8f5..c36eef58 100644
      }
  
  
-@@ -4451,6 +4658,47 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4455,6 +4662,47 @@ void LivingLifePage::drawMapCell( int inMapI,
  
                  }
  
@@ -288,7 +288,7 @@ index 40d6a8f5..c36eef58 100644
          if( mMapContainedStacks[ inMapI ].size() > 0 ) {
              int *stackArray = 
                  mMapContainedStacks[ inMapI ].getElementArray();
-@@ -4946,6 +5194,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4950,6 +5198,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          else {
              setAnimationHeat( 0.5 );
              }
@@ -305,7 +305,7 @@ index 40d6a8f5..c36eef58 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5238,6 +5496,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5242,6 +5500,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationBadgeColor( inObj->badgeColor );
                  }
  
@@ -323,7 +323,7 @@ index 40d6a8f5..c36eef58 100644
              // rideable object
              holdingPos =
                  drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -5319,6 +5588,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5323,6 +5592,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                      setAnimationHeat( 0.5 );
                      }
                  
@@ -340,7 +340,7 @@ index 40d6a8f5..c36eef58 100644
                  doublePair babyHeldPos = holdPos;
                  
                  if( babyO->babyWiggle ) {
-@@ -12309,6 +12588,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -12313,6 +12592,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
      char *spaces = replaceAll( lines, "_", " ", &found );
      
      delete [] lines;
@@ -352,7 +352,7 @@ index 40d6a8f5..c36eef58 100644
      
      
      mGlobalMessageShowing = true;
-@@ -14120,6 +14404,9 @@ void LivingLifePage::step() {
+@@ -14128,6 +14412,9 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
@@ -362,7 +362,7 @@ index 40d6a8f5..c36eef58 100644
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -14329,6 +14616,16 @@ void LivingLifePage::step() {
+@@ -14337,6 +14624,16 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -379,7 +379,7 @@ index 40d6a8f5..c36eef58 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -15983,6 +16280,8 @@ void LivingLifePage::step() {
+@@ -16026,6 +16323,8 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -388,7 +388,7 @@ index 40d6a8f5..c36eef58 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -17998,6 +18297,16 @@ void LivingLifePage::step() {
+@@ -18041,6 +18340,16 @@ void LivingLifePage::step() {
                                        &( o.id ),
                                        &( o.holdingID ) );
                      
@@ -405,7 +405,7 @@ index 40d6a8f5..c36eef58 100644
                      
                      for( int i=0; i<gameObjects.size(); i++ ) {
                          
-@@ -19574,6 +19883,11 @@ void LivingLifePage::step() {
+@@ -19617,6 +19926,11 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -417,7 +417,7 @@ index 40d6a8f5..c36eef58 100644
                          }
                      }
                  }
-@@ -24240,6 +24554,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -24302,6 +24616,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -457,7 +457,7 @@ index 40d6a8f5..c36eef58 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26244,6 +26591,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26306,6 +26653,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  

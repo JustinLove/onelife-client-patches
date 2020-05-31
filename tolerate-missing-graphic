@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b457df41..691aa044 100644
+index 1d11ee2b..fa0f9a47 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -2979,7 +2979,7 @@ LivingLifePage::LivingLifePage()
+@@ -2983,7 +2983,7 @@ LivingLifePage::LivingLifePage()
      
  
      mHomeSlipSprites[0] = mHomeSlipSprite;
@@ -11,7 +11,7 @@ index b457df41..691aa044 100644
      
  
      mForceGroundClick = false;
-@@ -8774,6 +8774,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -8778,6 +8778,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
  
      char pointerDrawn[2] = { false, false };
  
@@ -19,7 +19,7 @@ index b457df41..691aa044 100644
      for( int i=0; i<2; i++ ) {
          
          if( ! takingPhoto && mCurrentHintTargetObject[i] > 0 ) {
-@@ -8850,6 +8851,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -8854,6 +8855,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
              }
          }
      

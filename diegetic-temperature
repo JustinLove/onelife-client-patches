@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a364cad6..859e54ba 100644
+index 458b71b6..1d4cd3f1 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -137,6 +137,8 @@ static int maxDoubleClickDrift = 30;
@@ -11,7 +11,7 @@ index a364cad6..859e54ba 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2704,6 +2706,9 @@ LivingLifePage::LivingLifePage()
+@@ -2708,6 +2710,9 @@ LivingLifePage::LivingLifePage()
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -21,7 +21,7 @@ index a364cad6..859e54ba 100644
      
      initLiveTriggers();
  
-@@ -4660,6 +4665,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4664,6 +4669,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -40,7 +40,7 @@ index a364cad6..859e54ba 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -4808,6 +4825,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4812,6 +4829,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          setAnimationEmotion( inObj->currentEmot );
          addExtraAnimationEmotions( &( inObj->permanentEmots ) );
@@ -54,7 +54,7 @@ index a364cad6..859e54ba 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5088,6 +5112,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5092,6 +5116,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  restoreSkipDrawing( heldObject );
                  }
  
@@ -67,7 +67,7 @@ index a364cad6..859e54ba 100644
              
              setAnimationBadge( badge );
              if( badge != -1 ) {
-@@ -5168,6 +5198,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5172,6 +5202,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationEmotion( babyO->currentEmot );
                  addExtraAnimationEmotions( &( babyO->permanentEmots ) );
  

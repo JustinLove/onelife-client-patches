@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 75f8605b..88e4cf95 100644
+index 7222dfc0..f5e13ea0 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -482,6 +482,7 @@ typedef struct {
+@@ -486,6 +486,7 @@ typedef struct {
  static FloatColor gold = { 255.0/255, 227.0/255, 50.0/255, 1 };
  static FloatColor blood = { 244.0/255, 16.0/255, 8.0/255, 1 };
  static FloatColor indigo = { 122.0/255, 126.0/255, 244.0/255, 1 };
@@ -10,7 +10,7 @@ index 75f8605b..88e4cf95 100644
  static FloatColor pink = { 250.0/255, 144.0/255, 146.0/255, 1 };
  static FloatColor stone = { 128.0/255, 125.0/255, 149.0/255, 1 };
  static FloatColor sepia = { 203.0/255, 165.0/255, 114.0/255, 1 };
-@@ -753,6 +754,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
+@@ -757,6 +758,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
      p.temporary = false;
      p.labeled = true;
      p.tempPerson = false;
@@ -18,7 +18,7 @@ index 75f8605b..88e4cf95 100644
      p.temporaryExpireETA = 0;
      p.creationTime = game_getCurrentTime();
      p.pointerBounce = 0;
-@@ -829,6 +831,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -833,6 +835,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
      p.ancient = false;
      p.temporary = true;
      p.labeled = false;
@@ -26,7 +26,7 @@ index 75f8605b..88e4cf95 100644
      // no expiration for now
      // until we drop the map
      p.temporaryExpireETA = 0;
-@@ -885,6 +888,47 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -889,6 +892,47 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
  
  
  
@@ -74,7 +74,7 @@ index 75f8605b..88e4cf95 100644
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
          HomePos *p = homePosStack.getElement( i );
-@@ -964,6 +1008,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
+@@ -968,6 +1012,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
      p.temporary = false;
      p.labeled = false;
      p.tempPerson = false;
@@ -82,7 +82,7 @@ index 75f8605b..88e4cf95 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.pointerBounce = 0;
      p.pointerFade = 0;
-@@ -992,6 +1037,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
+@@ -996,6 +1041,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
      p.tempPerson = false;
      p.pointerBounce = 0;
      p.pointerFade = 0;
@@ -90,7 +90,7 @@ index 75f8605b..88e4cf95 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      if( inFamilyName ) {
          p.creationTime = game_getCurrentTime();
-@@ -3203,6 +3249,56 @@ void LivingLifePage::clearMap() {
+@@ -3207,6 +3253,56 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -147,7 +147,7 @@ index 75f8605b..88e4cf95 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( false ),
-@@ -13002,6 +13098,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -13006,6 +13102,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
          }
  
  
@@ -177,7 +177,7 @@ index 75f8605b..88e4cf95 100644
      int numTrans = filteredTrans.size();
  
      int numRelevant = numTrans;
-@@ -16707,6 +16826,8 @@ void LivingLifePage::step() {
+@@ -16750,6 +16869,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -186,7 +186,7 @@ index 75f8605b..88e4cf95 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17599,6 +17720,7 @@ void LivingLifePage::step() {
+@@ -17642,6 +17763,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -194,7 +194,7 @@ index 75f8605b..88e4cf95 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -17932,6 +18054,8 @@ void LivingLifePage::step() {
+@@ -17975,6 +18097,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -203,7 +203,7 @@ index 75f8605b..88e4cf95 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -23546,6 +23670,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23603,6 +23727,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -211,7 +211,7 @@ index 75f8605b..88e4cf95 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -23613,7 +23738,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23670,7 +23795,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 5b20d5dd..af97a6ca 100644
+index e09633b6..70096534 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -152,6 +152,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -11,7 +11,7 @@ index 5b20d5dd..af97a6ca 100644
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -3048,6 +3050,8 @@ LivingLifePage::LivingLifePage()
+@@ -3052,6 +3054,8 @@ LivingLifePage::LivingLifePage()
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
  
@@ -20,7 +20,7 @@ index 5b20d5dd..af97a6ca 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -3136,6 +3140,18 @@ LivingLifePage::LivingLifePage()
+@@ -3140,6 +3144,18 @@ LivingLifePage::LivingLifePage()
          mYumSlipPosTargetOffset[i] = mYumSlipHideOffset[i];
          }
      
@@ -39,7 +39,7 @@ index 5b20d5dd..af97a6ca 100644
  
      for( int i=0; i<3; i++ ) {    
          mHungerSlipShowOffsets[i].x = -558;
-@@ -3793,6 +3809,78 @@ void drawHelpMarkKeys( doublePair messagePos ) {
+@@ -3797,6 +3813,78 @@ void drawHelpMarkKeys( doublePair messagePos ) {
      }
  
  
@@ -118,7 +118,7 @@ index 5b20d5dd..af97a6ca 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -10245,6 +10333,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10249,6 +10337,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
@@ -140,7 +140,7 @@ index 5b20d5dd..af97a6ca 100644
  
      // now draw tutorial sheets
      if( mTutorialNumber > 0 || mGlobalMessageShowing )
-@@ -12884,6 +12987,19 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -12888,6 +12991,19 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
      
      
      mGlobalMessageShowing = true;
@@ -160,7 +160,7 @@ index 5b20d5dd..af97a6ca 100644
      mGlobalMessageStartTime = game_getCurrentTime();
      
      if( mLiveTutorialSheetIndex >= 0 ) {
-@@ -12911,6 +13027,7 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -12915,6 +13031,7 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
          (char*)( mTutorialMessage[ mLiveTutorialSheetIndex ] ) );
      
      mTutorialExtraOffset[ mLiveTutorialSheetIndex ].x = longestLine;
@@ -168,7 +168,7 @@ index 5b20d5dd..af97a6ca 100644
      
      
      delete [] spaces;
-@@ -13548,6 +13665,41 @@ void LivingLifePage::step() {
+@@ -13552,6 +13669,41 @@ void LivingLifePage::step() {
              }
          
  
@@ -210,7 +210,7 @@ index 5b20d5dd..af97a6ca 100644
  
          if( ( isHintFilterStringInvalid() &&
                mCurrentHintObjectID != mNextHintObjectID ) ||
-@@ -13759,6 +13911,49 @@ void LivingLifePage::step() {
+@@ -13763,6 +13915,49 @@ void LivingLifePage::step() {
          }
  
  
@@ -260,7 +260,7 @@ index 5b20d5dd..af97a6ca 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -14295,13 +14490,19 @@ void LivingLifePage::step() {
+@@ -14299,13 +14494,19 @@ void LivingLifePage::step() {
              for( int i=1; i < tokens->size(); i++ ) {
                  char *tok = tokens->getElementDirect( i );
                  
@@ -281,7 +281,7 @@ index 5b20d5dd..af97a6ca 100644
                          }
                      }
                  }
-@@ -14354,6 +14555,7 @@ void LivingLifePage::step() {
+@@ -14358,6 +14559,7 @@ void LivingLifePage::step() {
              if( numRead == 2 ) {
                  usedToolSlots = numSlotsUsed;
                  totalToolSlots = numTotalSlots;
@@ -289,7 +289,7 @@ index 5b20d5dd..af97a6ca 100644
                  }
              }
          else if( type == HOMELAND ) {
-@@ -17239,6 +17441,15 @@ void LivingLifePage::step() {
+@@ -17282,6 +17484,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -305,7 +305,7 @@ index 5b20d5dd..af97a6ca 100644
                              }
                          
  
-@@ -22530,6 +22741,15 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22587,6 +22798,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      
