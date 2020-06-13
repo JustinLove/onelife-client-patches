@@ -1,0 +1,21 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index e462305c..7bd57af2 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -21177,7 +21177,7 @@ void LivingLifePage::step() {
+ 
+ 
+ 
+-    if( ourLiveObject != NULL ) {
++    if( usingClientTag && ourLiveObject != NULL ) {
+         if( ourLiveObject->holdingFlip != ourLiveObject->lastFlipSent &&
+             currentTime - ourLiveObject->lastFlipSendTime > 2 ) {
+             
+@@ -24937,6 +24937,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+                                     
+                                     showPlayerLabel( leadO, leaderLabel, eta );
+                                     }
++                                if( usingClientTag )
+                                 sendToServerSocket( (char*)"LEAD 0 0#" );
+                                 }
+                             else if( strstr( typedText,

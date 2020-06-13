@@ -20,6 +20,10 @@ Adds setting for which to try first, but updates setting on successful login.
 
 `settings/usingClientTag.ini`
 
+### compat-disable-messages
+
+Disables new client messages that will cause the server to boot a client. This is mainly for 2hol, so it reuses the client tag flag from the previous patch.
+
 ### screen-edge-push
 
 Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.

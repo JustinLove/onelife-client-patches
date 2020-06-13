@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7222dfc0..f5e13ea0 100644
+index e1d016fb..dc102a27 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -486,6 +486,7 @@ typedef struct {
@@ -147,7 +147,7 @@ index 7222dfc0..f5e13ea0 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( false ),
-@@ -13006,6 +13102,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -13011,6 +13107,29 @@ int LivingLifePage::getNumHints( int inObjectID ) {
          }
  
  
@@ -177,7 +177,7 @@ index 7222dfc0..f5e13ea0 100644
      int numTrans = filteredTrans.size();
  
      int numRelevant = numTrans;
-@@ -16750,6 +16869,8 @@ void LivingLifePage::step() {
+@@ -16757,6 +16876,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -186,7 +186,7 @@ index 7222dfc0..f5e13ea0 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17642,6 +17763,7 @@ void LivingLifePage::step() {
+@@ -17649,6 +17770,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -194,7 +194,7 @@ index 7222dfc0..f5e13ea0 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -17975,6 +18097,8 @@ void LivingLifePage::step() {
+@@ -17982,6 +18104,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -203,7 +203,7 @@ index 7222dfc0..f5e13ea0 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -23603,6 +23727,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23608,6 +23732,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -211,7 +211,7 @@ index 7222dfc0..f5e13ea0 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -23670,7 +23795,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23675,7 +23800,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      

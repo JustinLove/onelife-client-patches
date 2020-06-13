@@ -2,6 +2,7 @@
 custom-gitignore
 show-modded-client
 optional-client-tag
+compat-disable-messages
 screen-edge-push
 autorun
 click-through-trees

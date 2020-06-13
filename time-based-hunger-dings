@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 0194acb3..2b19dac9 100644
+index 18bd25c0..b05e6eee 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -273,6 +273,9 @@ static char* lastNamed = NULL;
@@ -12,7 +12,7 @@ index 0194acb3..2b19dac9 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -3483,6 +3486,8 @@ LivingLifePage::LivingLifePage()
+@@ -3488,6 +3491,8 @@ LivingLifePage::LivingLifePage()
  
      showNameLabels = SettingsManager::getIntSetting( "showNameLabels", 1 );
  
@@ -21,7 +21,7 @@ index 0194acb3..2b19dac9 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -22386,7 +22391,10 @@ void LivingLifePage::step() {
+@@ -22393,7 +22398,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index 0194acb3..2b19dac9 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -22471,6 +22479,9 @@ void LivingLifePage::step() {
+@@ -22478,6 +22486,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index 0194acb3..2b19dac9 100644
                  }
              }
          
-@@ -23978,6 +23989,67 @@ static void dummyFunctionA() {
+@@ -23983,6 +23994,71 @@ static void dummyFunctionA() {
  
  
  
@@ -52,53 +52,57 @@ index 0194acb3..2b19dac9 100644
 +
 +    if( ourLiveObject == NULL ) return;
 +
++    int currentFood = ourLiveObject->foodStore + mYumBonus;
 +    double curAge = computeCurrentAge( ourLiveObject );
-+    double starvationTime = (ourLiveObject->foodStore + mYumBonus) * ourLiveObject->foodDrainTime;
++    double starvationTime = currentFood * ourLiveObject->foodDrainTime;
 +
-+    if( ourLiveObject->foodStore == 
-+        ourLiveObject->foodCapacity ) {
++    char swanSong = curAge >= 57.33;
++    char held = ourLiveObject->heldByAdultID != -1;
++    char noFood = currentFood < 1;
++    char full = currentFood == ourLiveObject->foodCapacity;
++    char hungry = starvationTime <= starvationAlarmTime*2;
++    char starving = starvationTime <= starvationAlarmTime || currentFood <= 4;
++    char starvationImmanent = starvationTime <= starvationAlarmTime*0.5;
++    char urgent = (starvationImmanent && !held) || noFood;
++
++
++    if( full ) {
 +
 +        mPulseHungerSound = false;
 +
 +        mHungerSlipVisible = 0;
 +        }
-+    else if( starvationTime < starvationAlarmTime &&
-+             curAge >= 57.33 ) {
-+        mHungerSlipVisible = 2;
-+        mPulseHungerSound = false;
-+        }
-+    else if( starvationTime < starvationAlarmTime &&
-+             curAge < 57.33 ) {
-+
++    else if( starving && swanSong ) {
 +        // don't play hunger sounds at end of life
 +        // because it interrupts our end-of-life song
 +        // currently it's 2:37 long
 +
++        mHungerSlipVisible = 2;
++        mPulseHungerSound = false;
++        }
++    else if( starving && !swanSong ) {
 +
 +        // quiet music so hunger sound can be heard
 +        setMusicLoudness( 0 );
 +        mHungerSlipVisible = 2;
 +
-+        if( ourLiveObject->foodStore > 0 ) {
-+
-+            if( ourLiveObject->foodStore > 1 && starvationTime > starvationAlarmTime*0.5 ) {
-+                if( mHungerSound != NULL && foodChanged ) {
-+                    // make sure it can be heard
-+                    // even if paused
-+                    setSoundLoudness( 1.0 );
-+                    playSoundSprite( mHungerSound, 
-+                                     getSoundEffectsLoudness(),
-+                                     // middle
-+                                     0.5 );
-+                    }
-+                mPulseHungerSound = false;
++        if( urgent ) {
++            mPulseHungerSound = true;
++            }
++        else {
++            if( mHungerSound != NULL && foodChanged ) {
++                // make sure it can be heard
++                // even if paused
++                setSoundLoudness( 1.0 );
++                playSoundSprite( mHungerSound,
++                                 getSoundEffectsLoudness(),
++                                 // middle
++                                 0.5 );
 +                }
-+            else {
-+                mPulseHungerSound = true;
-+                }
++            mPulseHungerSound = false;
 +            }
 +        }
-+    else if( starvationTime <= starvationAlarmTime*2 ) {
++    else if( hungry ) {
 +        mHungerSlipVisible = 1;
 +        mPulseHungerSound = false;
 +        }
