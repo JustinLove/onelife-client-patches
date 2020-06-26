@@ -251,11 +251,11 @@ Piles are defined by a category object id, defined in
 
 ## object-search
 
-Search filter (/) also puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer.
+Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer.
 
 ## person-search
 
-Search for a person's name with /character name (or a prefix), or by press 't' with the cursor over them to get a temporary location slip to them. If someone says "Follow me", you can.
+Search for a person's name with `:character name` (or a prefix), or by press 't' with the cursor over them to get a temporary location slip to them. If someone says "Follow me", you can.
 
 `settings/playerTrackKey.ini`
 

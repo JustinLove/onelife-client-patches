@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 18bd25c0..b05e6eee 100644
+index 8f410328..301d445f 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -273,6 +273,9 @@ static char* lastNamed = NULL;
@@ -21,7 +21,7 @@ index 18bd25c0..b05e6eee 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -22393,7 +22398,10 @@ void LivingLifePage::step() {
+@@ -22376,7 +22381,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index 18bd25c0..b05e6eee 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -22478,6 +22486,9 @@ void LivingLifePage::step() {
+@@ -22461,6 +22469,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index 18bd25c0..b05e6eee 100644
                  }
              }
          
-@@ -23983,6 +23994,71 @@ static void dummyFunctionA() {
+@@ -23973,6 +23984,71 @@ static void dummyFunctionA() {
  
  
  
@@ -116,7 +116,7 @@ index 18bd25c0..b05e6eee 100644
                                    int inDX, int inDY ) {    
      GridPos nextStep = inFloorPos;
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 72bb75a7..c14c6e69 100644
+index b38db74e..f5e89466 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -575,7 +575,7 @@ class LivingLifePage : public GamePage, public ActionListener {
@@ -128,7 +128,7 @@ index 72bb75a7..c14c6e69 100644
          virtual void makeActive( char inFresh );
          
  
-@@ -1015,6 +1015,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1016,6 +1016,8 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          double computePathSpeedMod( LiveObject *inObject, int inPathLength );
          

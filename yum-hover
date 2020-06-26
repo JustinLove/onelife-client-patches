@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d70f977b..c19b775a 100644
+index 26801859..3f9d2340 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -228,6 +228,40 @@ void initKeybinds() {
@@ -271,7 +271,7 @@ index d70f977b..c19b775a 100644
                          
                          char *strUpper = stringToUpperCase(
                              lastAteObj->description );
-@@ -22428,6 +22611,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22435,6 +22618,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          mYumSlipNumberToShow[i] = 0;
          }
      

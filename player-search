@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dc102a27..22b76888 100644
+index e2da13d1..452c4506 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -148,6 +148,8 @@ static double newPlayerMessageTime = 0;
@@ -20,7 +20,7 @@ index dc102a27..22b76888 100644
 +
 +    if( textLength == 0 ) return NULL;
 +
-+    for( int i=0;i < gameObjects.size()-1; i++ ) {
++    for( int i=0;i < gameObjects.size(); i++ ) {
 +        LiveObject *o = gameObjects.getElement( i );
 +        if ( o == NULL || o->name == NULL ) continue;
 +        char * name = o->name;
@@ -54,7 +54,7 @@ index dc102a27..22b76888 100644
      categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
-@@ -26218,6 +26249,22 @@ void LivingLifePage::playerUnmark() {
+@@ -26208,6 +26239,22 @@ void LivingLifePage::playerUnmark() {
      }
  
  
@@ -77,31 +77,40 @@ index dc102a27..22b76888 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -28102,8 +28149,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28103,7 +28150,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                              
                                  if( filterStringLen > 0 ) {
                                      // not blank
 -                                    mHintFilterString = 
--                                        stringDuplicate( trimmedFilterString );
-+
-+                                    LiveObject* obj = livingNameMatch( trimmedFilterString );
-+                                    if( obj ) {
-+                                        if ( !( obj->xd == 1977 && obj->yd == 1977 ) ) {
-+                                            addTempLocationSlip(
-+                                                obj->xd, obj->yd,
-+                                                true, obj->id,
-+                                                textBaby,
-+                                                0);
-+                                            }
-+                                        }
-+                                    else {
-+                                        mHintFilterString =
-+                                            stringDuplicate( trimmedFilterString );
-+                                        }
++                                    mHintFilterString =
+                                         stringDuplicate( trimmedFilterString );
                                      }
                              
-                                 delete [] trimmedFilterString;
-@@ -28232,6 +28292,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28134,8 +28181,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+ 
+                         if( filterStringLen > 0 ) {
+                             // not blank
+-                            mObjectSearchString = 
+-                                stringDuplicate( trimmedFilterString );
++                            // player search
++                            LiveObject* obj = livingNameMatch( trimmedFilterString );
++                            if( obj ) {
++                                if ( !( obj->xd == 1977 && obj->yd == 1977 ) ) {
++                                    addTempLocationSlip(
++                                        obj->xd, obj->yd,
++                                        true, obj->id,
++                                        textBaby,
++                                        0);
++                                    }
++                                }
++                            else {
++                                mObjectSearchString = 
++                                    stringDuplicate( trimmedFilterString );
++                                }
+                             }
+ 
+                         delete [] trimmedFilterString;
+@@ -28281,6 +28341,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  
@@ -114,10 +123,10 @@ index dc102a27..22b76888 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 15fef0a0..bfad228a 100644
+index 4a3441d1..b932eae2 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -1032,6 +1032,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1033,6 +1033,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void playerMark();
          void playerUnmark();
  

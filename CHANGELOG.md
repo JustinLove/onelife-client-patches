@@ -1,8 +1,9 @@
 # Changelog - feature changes
 
-## v67?
+## v67
 
 - patch to block new client messages, e.g. for 2hol
+- player search and object search use : instead of /
 
 ## v65
 
