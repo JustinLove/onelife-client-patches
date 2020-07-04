@@ -1,6 +1,6 @@
 # Changelog - feature changes
 
-## v68?
+## v68
 
 - screen edge push combined with new camera movement as camera-control
 - hold 'c' to move the screen view around with the loaded area of the map
