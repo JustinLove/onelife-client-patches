@@ -270,11 +270,11 @@ index fbdfbeca..20ab3a31 100644
   ${CRC32_O} \
 + ${SET_MOUSE_O} \
  
-diff --git a/gameSource/settings/camerakey.ini b/gameSource/settings/camerakey.ini
+diff --git a/gameSource/settings/cameraKey.ini b/gameSource/settings/cameraKey.ini
 new file mode 100644
 index 00000000..f2ad6c76
 --- /dev/null
-+++ b/gameSource/settings/camerakey.ini
++++ b/gameSource/settings/cameraKey.ini
 @@ -0,0 +1 @@
 +c
 diff --git a/gameSource/settings/screenEdgePushSpeed.ini b/gameSource/settings/screenEdgePushSpeed.ini
