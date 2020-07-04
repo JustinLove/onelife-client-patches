@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 40ff0c0f..9d925a7e 100644
+index 88c5b1ff..87092c92 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1858,6 +1858,9 @@ static LiveObject *getGameObject( int inID ) {
+@@ -1856,6 +1856,9 @@ static LiveObject *getGameObject( int inID ) {
      }
  
  
@@ -12,7 +12,7 @@ index 40ff0c0f..9d925a7e 100644
  
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
-@@ -2731,6 +2734,8 @@ LivingLifePage::LivingLifePage()
+@@ -2722,6 +2725,8 @@ LivingLifePage::LivingLifePage()
  
      openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
      openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
@@ -21,7 +21,7 @@ index 40ff0c0f..9d925a7e 100644
      
      initLiveTriggers();
  
-@@ -3098,6 +3103,7 @@ void LivingLifePage::clearLiveObjects() {
+@@ -3103,6 +3108,7 @@ void LivingLifePage::clearLiveObjects() {
          }
      
      gameObjects.deleteAll();
@@ -29,7 +29,7 @@ index 40ff0c0f..9d925a7e 100644
      }
  
  
-@@ -19617,6 +19623,7 @@ void LivingLifePage::step() {
+@@ -19852,6 +19858,7 @@ void LivingLifePage::step() {
                                  char *nameStart = &( firstSpace[1] );
                                  
                                  existing->name = stringDuplicate( nameStart );
@@ -37,7 +37,7 @@ index 40ff0c0f..9d925a7e 100644
                                  }
                              
                              break;
-@@ -24984,6 +24991,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25244,6 +25251,10 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  }
              break;
          case 9: // tab
@@ -48,7 +48,7 @@ index 40ff0c0f..9d925a7e 100644
              if( mCurrentHintObjectID != 0 ) {
                  
                  int num = getNumHints( mCurrentHintObjectID );
-@@ -25661,10 +25672,185 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
+@@ -25921,10 +25932,185 @@ void LivingLifePage::actionPerformed( GUIComponent *inTarget ) {
              delete [] message;
              }
          }
@@ -235,7 +235,7 @@ index 40ff0c0f..9d925a7e 100644
  
  ExtraMapObject LivingLifePage::copyFromMap( int inMapI ) {
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index e45e7fdf..16fd5be7 100644
+index c3cac067..2212689d 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -534,6 +534,8 @@ class LivingLifePage : public GamePage, public ActionListener {

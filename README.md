@@ -24,12 +24,6 @@ Adds setting for which to try first, but updates setting on successful login.
 
 Disables new client messages that will cause the server to boot a client. This is mainly for 2hol, so it reuses the client tag flag from the previous patch.
 
-### screen-edge-push
-
-Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
-
-Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
-
 ### autorun
 
 Double-click to enable an auto-run mode. Dotted line trails will always be shown while active. Click again or catch your cursor to stop.
@@ -141,6 +135,16 @@ x examine
 r put/take in backpack
 e put in backpack
 w take/cycle in backpack
+
+### camera-control
+
+Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
+
+Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
+
+Holding 'c' will allow you to pan your view around within the map buffer.
+
+`settings/cameraKey.ini` to change the key, or remove to disable.
 
 ### show-close-family
 

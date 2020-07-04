@@ -1,9 +1,8 @@
-# This series applies on GIT commit 8f136a97e75f484cfc8ff1fde9b9d9e7ba0b8cab
+# This series applies on GIT commit defe946b940c3bae1837da74b2cd88fb8291cb85
 custom-gitignore
 show-modded-client
 optional-client-tag
 compat-disable-messages
-screen-edge-push
 autorun
 click-through-trees
 diegetic-temperature
@@ -17,6 +16,7 @@ interaction-refactoring
 drag-drop-use
 click-to-move-lock-to-interact
 interaction-keys
+camera-control
 show-close-family
 help-overlay
 yum-hover

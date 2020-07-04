@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 68cdd35f..e462305c 100644
+index 616f7ecb..4c8e7d56 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -103,6 +103,8 @@ extern int userTwinCount;
@@ -11,7 +11,7 @@ index 68cdd35f..e462305c 100644
  static char vogMode = false;
  static char vogModeActuallyOn = false;
  
-@@ -13755,6 +13757,7 @@ void LivingLifePage::step() {
+@@ -13940,6 +13942,7 @@ void LivingLifePage::step() {
                  }
  
  
@@ -19,7 +19,7 @@ index 68cdd35f..e462305c 100644
              if( strlen( userEmail ) <= 80 ) {    
                  outMessage = autoSprintf( "%s %s %-80s %s %s %d%s#",
                                            loginWord,
-@@ -13771,6 +13774,24 @@ void LivingLifePage::step() {
+@@ -13956,6 +13959,24 @@ void LivingLifePage::step() {
                                            clientTag, tempEmail, pwHash, keyHash,
                                            mTutorialNumber, twinExtra );
                  }
@@ -44,7 +44,7 @@ index 68cdd35f..e462305c 100644
              
              delete [] tempEmail;
              delete [] twinExtra;
-@@ -13791,6 +13812,7 @@ void LivingLifePage::step() {
+@@ -13976,6 +13997,7 @@ void LivingLifePage::step() {
              waitForFrameMessages = true;
  
              SettingsManager::setSetting( "loginSuccess", 1 );
@@ -53,7 +53,7 @@ index 68cdd35f..e462305c 100644
              delete [] message;
              return;
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index d469be02..9f2d8be0 100644
+index 30653144..da9e3d29 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -136,6 +136,9 @@ char *userTwinCode = NULL;

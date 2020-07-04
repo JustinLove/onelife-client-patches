@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 8f410328..301d445f 100644
+index 7cf101e6..a3b8271f 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -273,6 +273,9 @@ static char* lastNamed = NULL;
+@@ -284,6 +284,9 @@ static char* lastNamed = NULL;
  static int showNameLabels = 1;
  
  
@@ -12,7 +12,7 @@ index 8f410328..301d445f 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -3488,6 +3491,8 @@ LivingLifePage::LivingLifePage()
+@@ -3516,6 +3519,8 @@ LivingLifePage::LivingLifePage()
  
      showNameLabels = SettingsManager::getIntSetting( "showNameLabels", 1 );
  
@@ -21,7 +21,7 @@ index 8f410328..301d445f 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -22376,7 +22381,10 @@ void LivingLifePage::step() {
+@@ -22685,7 +22690,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index 8f410328..301d445f 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -22461,6 +22469,9 @@ void LivingLifePage::step() {
+@@ -22770,6 +22778,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index 8f410328..301d445f 100644
                  }
              }
          
-@@ -23973,6 +23984,71 @@ static void dummyFunctionA() {
+@@ -24311,6 +24322,71 @@ static void dummyFunctionA() {
  
  
  
@@ -116,7 +116,7 @@ index 8f410328..301d445f 100644
                                    int inDX, int inDY ) {    
      GridPos nextStep = inFloorPos;
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index b38db74e..f5e89466 100644
+index 8567897b..9b965212 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -575,7 +575,7 @@ class LivingLifePage : public GamePage, public ActionListener {
@@ -128,7 +128,7 @@ index b38db74e..f5e89466 100644
          virtual void makeActive( char inFresh );
          
  
-@@ -1016,6 +1016,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1031,6 +1031,8 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          double computePathSpeedMod( LiveObject *inObject, int inPathLength );
          

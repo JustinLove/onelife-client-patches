@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 3d800ebe..e2da13d1 100644
+index f2147e0f..e3c4620f 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -486,6 +486,7 @@ typedef struct {
+@@ -499,6 +499,7 @@ typedef struct {
  static FloatColor gold = { 255.0/255, 227.0/255, 50.0/255, 1 };
  static FloatColor blood = { 244.0/255, 16.0/255, 8.0/255, 1 };
  static FloatColor indigo = { 122.0/255, 126.0/255, 244.0/255, 1 };
@@ -10,7 +10,7 @@ index 3d800ebe..e2da13d1 100644
  static FloatColor pink = { 250.0/255, 144.0/255, 146.0/255, 1 };
  static FloatColor stone = { 128.0/255, 125.0/255, 149.0/255, 1 };
  static FloatColor sepia = { 203.0/255, 165.0/255, 114.0/255, 1 };
-@@ -757,6 +758,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
+@@ -770,6 +771,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
      p.temporary = false;
      p.labeled = true;
      p.tempPerson = false;
@@ -18,7 +18,7 @@ index 3d800ebe..e2da13d1 100644
      p.temporaryExpireETA = 0;
      p.creationTime = game_getCurrentTime();
      p.pointerBounce = 0;
-@@ -833,6 +835,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -846,6 +848,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
      p.ancient = false;
      p.temporary = true;
      p.labeled = false;
@@ -26,7 +26,7 @@ index 3d800ebe..e2da13d1 100644
      // no expiration for now
      // until we drop the map
      p.temporaryExpireETA = 0;
-@@ -889,6 +892,47 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -902,6 +905,47 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
  
  
  
@@ -74,7 +74,7 @@ index 3d800ebe..e2da13d1 100644
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
          HomePos *p = homePosStack.getElement( i );
-@@ -968,6 +1012,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
+@@ -981,6 +1025,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
      p.temporary = false;
      p.labeled = false;
      p.tempPerson = false;
@@ -82,7 +82,7 @@ index 3d800ebe..e2da13d1 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.pointerBounce = 0;
      p.pointerFade = 0;
-@@ -996,6 +1041,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
+@@ -1009,6 +1054,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
      p.tempPerson = false;
      p.pointerBounce = 0;
      p.pointerFade = 0;
@@ -90,7 +90,7 @@ index 3d800ebe..e2da13d1 100644
      p.posOffset = p.targetOffset = p.hideOffset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      if( inFamilyName ) {
          p.creationTime = game_getCurrentTime();
-@@ -3207,6 +3253,56 @@ void LivingLifePage::clearMap() {
+@@ -3224,6 +3270,56 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -147,7 +147,7 @@ index 3d800ebe..e2da13d1 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( false ),
-@@ -3234,7 +3330,7 @@ LivingLifePage::LivingLifePage()
+@@ -3251,7 +3347,7 @@ LivingLifePage::LivingLifePage()
            mChalkBlotSprite( loadWhiteSprite( "chalkBlot.tga" ) ),
            mPathMarkSprite( loadWhiteSprite( "pathMark.tga" ) ),
            mSayField( handwritingFont, 0, 1000, 10, true, NULL,
@@ -156,7 +156,7 @@ index 3d800ebe..e2da13d1 100644
            mDeathReason( NULL ),
            mShowHighlights( true ),
            mUsingSteam( false ),
-@@ -3544,6 +3640,7 @@ LivingLifePage::LivingLifePage()
+@@ -3572,6 +3668,7 @@ LivingLifePage::LivingLifePage()
      mPendingFilterString = NULL;
      
      
@@ -164,7 +164,7 @@ index 3d800ebe..e2da13d1 100644
  
      for( int i=0; i<NUM_HINT_SHEETS; i++ ) {
          
-@@ -3936,6 +4033,11 @@ LivingLifePage::~LivingLifePage() {
+@@ -3981,6 +4078,11 @@ LivingLifePage::~LivingLifePage() {
          mPendingFilterString = NULL;
          }
  
@@ -176,7 +176,7 @@ index 3d800ebe..e2da13d1 100644
      if( mDeathReason != NULL ) {
          delete [] mDeathReason;
          }
-@@ -16757,6 +16859,8 @@ void LivingLifePage::step() {
+@@ -16966,6 +17068,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -185,7 +185,7 @@ index 3d800ebe..e2da13d1 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17649,6 +17753,7 @@ void LivingLifePage::step() {
+@@ -17957,6 +18061,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -193,7 +193,7 @@ index 3d800ebe..e2da13d1 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -17982,6 +18087,8 @@ void LivingLifePage::step() {
+@@ -18290,6 +18395,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -202,7 +202,7 @@ index 3d800ebe..e2da13d1 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22071,7 +22178,7 @@ void LivingLifePage::step() {
+@@ -22380,7 +22487,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -211,7 +211,7 @@ index 3d800ebe..e2da13d1 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -23615,6 +23722,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23954,6 +24061,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -219,7 +219,7 @@ index 3d800ebe..e2da13d1 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -23682,7 +23790,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24021,7 +24129,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -228,7 +228,7 @@ index 3d800ebe..e2da13d1 100644
      mNextHintIndex = 0;
      
      
-@@ -27677,6 +27785,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28072,6 +28180,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mSayField.focus();
                  }
              break;
@@ -246,7 +246,7 @@ index 3d800ebe..e2da13d1 100644
          case 13:  // enter
              // speak
              if( ! TextField::isAnyFocused() ) {
-@@ -27995,6 +28114,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28390,6 +28509,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
@@ -302,7 +302,7 @@ index 3d800ebe..e2da13d1 100644
                          // actual, spoken text, not a /command
                          
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index e0247485..4a3441d1 100644
+index 5b82acd4..0ab9f2cf 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -489,6 +489,7 @@ typedef struct LocationSlip {
@@ -339,7 +339,7 @@ index e0247485..4a3441d1 100644
          
          // offset from current view center
          doublePair mTutorialHideOffset[NUM_HINT_SHEETS];
-@@ -1142,6 +1148,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1157,6 +1163,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void setLocationSlipExpiration( int seconds );
          void addLocationSlip( int inX, int inY );
          void addTempLocationSlip( int inX, int inY, char inPerson, int inPersonID, const char* inPersonKey, int inAge );
