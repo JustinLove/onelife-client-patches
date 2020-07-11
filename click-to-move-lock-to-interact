@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9542e75e..1f9df632 100644
+index b2cb712cc..ab77a2b95 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -143,6 +143,7 @@ static int showShiverSweat = 1;
@@ -19,7 +19,7 @@ index 9542e75e..1f9df632 100644
      
      initLiveTriggers();
  
-@@ -24360,7 +24363,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24378,7 +24381,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
  
@@ -34,7 +34,7 @@ index 9542e75e..1f9df632 100644
  
  
  
-@@ -24516,7 +24525,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24534,7 +24543,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      
@@ -45,7 +45,7 @@ index 9542e75e..1f9df632 100644
  
 diff --git a/gameSource/settings/clickToMoveLockToInteract.ini b/gameSource/settings/clickToMoveLockToInteract.ini
 new file mode 100644
-index 00000000..573541ac
+index 000000000..573541ac9
 --- /dev/null
 +++ b/gameSource/settings/clickToMoveLockToInteract.ini
 @@ -0,0 +1 @@

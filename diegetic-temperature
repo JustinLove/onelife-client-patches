@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 32cb2652..6e14c7ab 100644
+index c6313162d..31106f5b3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -137,6 +137,8 @@ static int maxDoubleClickDrift = 30;
@@ -82,7 +82,7 @@ index 32cb2652..6e14c7ab 100644
                  
                  if( babyO->babyWiggle ) {
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 4fab20e3..1e1e2c57 100644
+index 4fab20e3f..1e1e2c57d 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -71,7 +71,6 @@ static char outputMouthFrames = false;
@@ -173,7 +173,7 @@ index 4fab20e3..1e1e2c57 100644
          if( ! skipSprite && 
              inClothing.backShoe != NULL && i == backFootIndex ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index bff8c9fe..1a926d5a 100644
+index bff8c9fea..1a926d5a1 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
 @@ -451,6 +451,8 @@ void setAnimationEmotion( Emotion *inEmotion );
@@ -187,14 +187,14 @@ index bff8c9fe..1a926d5a 100644
  // drawn on top of tunic of people who are drawn
 diff --git a/gameSource/settings/showShiverSweat.ini b/gameSource/settings/showShiverSweat.ini
 new file mode 100644
-index 00000000..d00491fd
+index 000000000..d00491fd7
 --- /dev/null
 +++ b/gameSource/settings/showShiverSweat.ini
 @@ -0,0 +1 @@
 +1
 diff --git a/gameSource/settings/sweatDropSprite.ini b/gameSource/settings/sweatDropSprite.ini
 new file mode 100644
-index 00000000..9f728587
+index 000000000..9f7285879
 --- /dev/null
 +++ b/gameSource/settings/sweatDropSprite.ini
 @@ -0,0 +1 @@

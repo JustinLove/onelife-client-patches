@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d0252aba..9542e75e 100644
+index b99f37400..b2cb712cc 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -10812,6 +10812,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10826,6 +10826,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
              }
              
  
@@ -41,7 +41,7 @@ index d0252aba..9542e75e 100644
          
          if( showBugMessage ) {
              
-@@ -25353,6 +25385,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -25371,6 +25403,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  

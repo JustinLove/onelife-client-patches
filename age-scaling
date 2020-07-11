@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cd4228ff..74c3ca32 100644
+index a05a4b1bd..ec793d689 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1497,8 +1497,8 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
@@ -26,7 +26,7 @@ index cd4228ff..74c3ca32 100644
              else {
                  // temp override over
 diff --git a/gameSource/ageControl.cpp b/gameSource/ageControl.cpp
-index ec88099b..c71282da 100644
+index ec88099bf..c71282da1 100644
 --- a/gameSource/ageControl.cpp
 +++ b/gameSource/ageControl.cpp
 @@ -1,4 +1,6 @@
@@ -143,7 +143,7 @@ index ec88099b..c71282da 100644
 +    return displayAge;
 +    }
 diff --git a/gameSource/ageControl.h b/gameSource/ageControl.h
-index 328068e0..60314b81 100644
+index 328068e08..60314b818 100644
 --- a/gameSource/ageControl.h
 +++ b/gameSource/ageControl.h
 @@ -10,3 +10,9 @@ doublePair getAgeHeadOffset( double inAge, doublePair inHeadSpritePos,
@@ -157,7 +157,7 @@ index 328068e0..60314b81 100644
 +
 +double computeServerAge( double displayAge );
 diff --git a/gameSource/musicPlayer2.cpp b/gameSource/musicPlayer2.cpp
-index 83666f74..d6a4227e 100644
+index 83666f748..d6a4227ed 100644
 --- a/gameSource/musicPlayer2.cpp
 +++ b/gameSource/musicPlayer2.cpp
 @@ -1,3 +1,4 @@
@@ -219,7 +219,7 @@ index 83666f74..d6a4227e 100644
      musicStarted = true;
 diff --git a/gameSource/settings/ageScaling.ini b/gameSource/settings/ageScaling.ini
 new file mode 100644
-index 00000000..31550ada
+index 000000000..31550adad
 --- /dev/null
 +++ b/gameSource/settings/ageScaling.ini
 @@ -0,0 +1,7 @@
@@ -232,7 +232,7 @@ index 00000000..31550ada
 +60 60 dead
 diff --git a/gameSource/settings/ageScaling2hol.ini b/gameSource/settings/ageScaling2hol.ini
 new file mode 100644
-index 00000000..f6257a97
+index 000000000..f6257a973
 --- /dev/null
 +++ b/gameSource/settings/ageScaling2hol.ini
 @@ -0,0 +1,7 @@

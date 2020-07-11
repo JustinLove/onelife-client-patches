@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 8a1a8c68..4c77d3eb 100644
+index 11648563d..7feece388 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -239,6 +239,40 @@ void initKeybinds() {
@@ -133,7 +133,7 @@ index 8a1a8c68..4c77d3eb 100644
                      
                      drawSquare( squarePos, squareRad );
                      
-@@ -11129,6 +11202,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11143,6 +11216,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
                          desToDelete = des;
                          }
                      }
@@ -156,7 +156,7 @@ index 8a1a8c68..4c77d3eb 100644
  
                  
  
-@@ -12539,6 +12628,88 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
+@@ -12553,6 +12642,88 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
  
  
  
@@ -245,7 +245,7 @@ index 8a1a8c68..4c77d3eb 100644
  // inNewID > 0
  static char shouldCreationSoundPlay( int inOldID, int inNewID ) {
      if( inOldID == inNewID ) {
-@@ -20693,6 +20864,9 @@ void LivingLifePage::step() {
+@@ -20707,6 +20878,9 @@ void LivingLifePage::step() {
                      }
                  
                  if( mYumMultiplier != oldYumMultiplier ) {
@@ -255,7 +255,7 @@ index 8a1a8c68..4c77d3eb 100644
                      int oldSlipIndex = -1;
                      int newSlipIndex = 0;
                      
-@@ -20814,6 +20988,15 @@ void LivingLifePage::step() {
+@@ -20828,6 +21002,15 @@ void LivingLifePage::step() {
                  
                      if( lastAteID != 0 ) {
                          ObjectRecord *lastAteObj = getObject( lastAteID );
@@ -271,7 +271,7 @@ index 8a1a8c68..4c77d3eb 100644
                          
                          char *strUpper = stringToUpperCase(
                              lastAteObj->description );
-@@ -22782,6 +22965,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22800,6 +22983,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          mYumSlipNumberToShow[i] = 0;
          }
      
@@ -281,7 +281,7 @@ index 8a1a8c68..4c77d3eb 100644
      mCurrentArrowHeat = -1;
 diff --git a/gameSource/settings/showYumHover.ini b/gameSource/settings/showYumHover.ini
 new file mode 100644
-index 00000000..d00491fd
+index 000000000..d00491fd7
 --- /dev/null
 +++ b/gameSource/settings/showYumHover.ini
 @@ -0,0 +1 @@

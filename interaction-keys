@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 1f9df632..821d0520 100644
+index ab77a2b95..1607b313e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -145,6 +145,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -114,7 +114,7 @@ index 1f9df632..821d0520 100644
                  inObj->holdingFlip = true;
                  }
              }
-@@ -21113,9 +21199,15 @@ void LivingLifePage::step() {
+@@ -21127,9 +21213,15 @@ void LivingLifePage::step() {
              // don't change flip unless moving substantially in x
              if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
                  if( o->currentMoveDirection.x > 0 ) {
@@ -130,7 +130,7 @@ index 1f9df632..821d0520 100644
                      o->holdingFlip = true;
                      }         
                  }
-@@ -24212,6 +24304,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+@@ -24230,6 +24322,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -372,7 +372,7 @@ index 1f9df632..821d0520 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -25831,7 +26158,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25849,7 +26176,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -380,7 +380,7 @@ index 1f9df632..821d0520 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -26221,23 +26547,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26239,23 +26565,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -425,7 +425,7 @@ index 1f9df632..821d0520 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -26415,6 +26762,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -26433,6 +26780,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
@@ -436,7 +436,7 @@ index 1f9df632..821d0520 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 57b834de..85ca4a5c 100644
+index d56b4968a..06b894671 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -993,6 +993,8 @@ class LivingLifePage : public GamePage, public ActionListener {
@@ -450,7 +450,7 @@ index 57b834de..85ca4a5c 100644
          LiveObject *getLiveObject( int inID );
 diff --git a/gameSource/settings/interactionKeys.ini b/gameSource/settings/interactionKeys.ini
 new file mode 100644
-index 00000000..ce3be461
+index 000000000..ce3be4618
 --- /dev/null
 +++ b/gameSource/settings/interactionKeys.ini
 @@ -0,0 +1,12 @@
@@ -468,7 +468,7 @@ index 00000000..ce3be461
 +w take/cycle in backpack
 diff --git a/gameSource/settings/interactionKeysEnabled.ini b/gameSource/settings/interactionKeysEnabled.ini
 new file mode 100644
-index 00000000..d00491fd
+index 000000000..d00491fd7
 --- /dev/null
 +++ b/gameSource/settings/interactionKeysEnabled.ini
 @@ -0,0 +1 @@

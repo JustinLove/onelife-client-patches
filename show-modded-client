@@ -1,5 +1,5 @@
 diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
-index 11317319..dbe9e10d 100644
+index 113173194..dbe9e10d5 100644
 --- a/gameSource/ExistingAccountPage.cpp
 +++ b/gameSource/ExistingAccountPage.cpp
 @@ -728,6 +728,10 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
@@ -15,7 +15,7 @@ index 11317319..dbe9e10d 100644
  
 diff --git a/gameSource/ModUpdateMessagePage.cpp b/gameSource/ModUpdateMessagePage.cpp
 new file mode 100644
-index 00000000..bc15226f
+index 000000000..bc15226f8
 --- /dev/null
 +++ b/gameSource/ModUpdateMessagePage.cpp
 @@ -0,0 +1,126 @@
@@ -147,7 +147,7 @@ index 00000000..bc15226f
 +
 diff --git a/gameSource/ModUpdateMessagePage.h b/gameSource/ModUpdateMessagePage.h
 new file mode 100644
-index 00000000..a0d2d2fa
+index 000000000..a0d2d2fa5
 --- /dev/null
 +++ b/gameSource/ModUpdateMessagePage.h
 @@ -0,0 +1,47 @@
@@ -199,11 +199,11 @@ index 00000000..a0d2d2fa
 +    };
 +
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 0ae32998..30653144 100644
+index d4ff8fafb..7cb331710 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 346;
+ int versionNumber = 348;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
@@ -341,7 +341,7 @@ index 0ae32998..30653144 100644
      
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index e4c20b47..a9e78a79 100644
+index e4c20b47c..a9e78a794 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -44,6 +44,7 @@ ExistingAccountPage.cpp \

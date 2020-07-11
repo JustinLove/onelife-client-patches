@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7cf101e6..a3b8271f 100644
+index a6171c10c..64ac4d99b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -284,6 +284,9 @@ static char* lastNamed = NULL;
@@ -21,7 +21,7 @@ index 7cf101e6..a3b8271f 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -22685,7 +22690,10 @@ void LivingLifePage::step() {
+@@ -22699,7 +22704,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index 7cf101e6..a3b8271f 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -22770,6 +22778,9 @@ void LivingLifePage::step() {
+@@ -22784,6 +22792,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index 7cf101e6..a3b8271f 100644
                  }
              }
          
-@@ -24311,6 +24322,71 @@ static void dummyFunctionA() {
+@@ -24326,6 +24337,70 @@ static void dummyFunctionA() {
  
  
  
@@ -111,35 +111,25 @@ index 7cf101e6..a3b8271f 100644
 +        }
 +    }
 +
-+
- char LivingLifePage::isSameFloor( int inFloor, GridPos inFloorPos, 
-                                   int inDX, int inDY ) {    
-     GridPos nextStep = inFloorPos;
+ 
+ 
+ 
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 8567897b..9b965212 100644
+index 3501061eb..d91162ad9 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -575,7 +575,7 @@ class LivingLifePage : public GamePage, public ActionListener {
-                            double inViewSize );
-         
-         virtual void step();
--  
-+
-         virtual void makeActive( char inFresh );
-         
- 
 @@ -1031,6 +1031,8 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          double computePathSpeedMod( LiveObject *inObject, int inPathLength );
          
 +        void timeBasedHungerDings( char foodChanged );
-+  
-         // check if same floor is present when we take a step in x or y
-         char isSameFloor( int inFloor, GridPos inFloorPos, int inDX, int inDY );
++
+         // check if same road is present when we take a step in x or y
+         char isSameRoad( int inFloor, GridPos inFloorPos, int inDX, int inDY );
          
 diff --git a/gameSource/settings/starvationAlarmTime.ini b/gameSource/settings/starvationAlarmTime.ini
 new file mode 100644
-index 00000000..ea90ee31
+index 000000000..ea90ee319
 --- /dev/null
 +++ b/gameSource/settings/starvationAlarmTime.ini
 @@ -0,0 +1 @@

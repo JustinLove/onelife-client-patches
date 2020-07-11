@@ -1,5 +1,5 @@
 diff --git a/.gitignore b/.gitignore
-index 319c1177..9e747328 100644
+index 319c11776..9e747328d 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -3,6 +3,7 @@

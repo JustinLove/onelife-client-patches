@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4df87116..b2a83f92 100644
+index 73b4985bc..1dc7135ac 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -25075,6 +25075,26 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25093,6 +25093,26 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          return;
          }
  
@@ -30,7 +30,7 @@ index 4df87116..b2a83f92 100644
      
      switch( inASCII ) {
 diff --git a/gameSource/emotion.cpp b/gameSource/emotion.cpp
-index eac38c9a..7ace9750 100644
+index eac38c9a4..7ace97508 100644
 --- a/gameSource/emotion.cpp
 +++ b/gameSource/emotion.cpp
 @@ -82,6 +82,38 @@ void initEmotion() {
@@ -96,7 +96,7 @@ index eac38c9a..7ace9750 100644
  Emotion *getEmotion( int inIndex ) {
      if( inIndex < 0 || inIndex >= emotions.size() ) {
 diff --git a/gameSource/emotion.h b/gameSource/emotion.h
-index 7b114e2c..8a24c9bd 100644
+index 7b114e2c5..8a24c9bd7 100644
 --- a/gameSource/emotion.h
 +++ b/gameSource/emotion.h
 @@ -33,6 +33,8 @@ typedef struct Emotion {
@@ -121,7 +121,7 @@ index 7b114e2c..8a24c9bd 100644
  
 diff --git a/gameSource/settings/emotionKeys.ini b/gameSource/settings/emotionKeys.ini
 new file mode 100644
-index 00000000..09d13090
+index 000000000..09d13090c
 --- /dev/null
 +++ b/gameSource/settings/emotionKeys.ini
 @@ -0,0 +1,16 @@

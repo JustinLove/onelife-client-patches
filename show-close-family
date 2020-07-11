@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 52012606..d5fc2bfd 100644
+index 331e421d9..6c549b0c6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -152,6 +152,13 @@ static int ignoreTallObjects = 1;
@@ -340,7 +340,7 @@ index 52012606..d5fc2bfd 100644
                  doublePair babyHeldPos = holdPos;
                  
                  if( babyO->babyWiggle ) {
-@@ -12428,6 +12707,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -12442,6 +12721,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
      char *spaces = replaceAll( lines, "_", " ", &found );
      
      delete [] lines;
@@ -352,7 +352,7 @@ index 52012606..d5fc2bfd 100644
      
      
      mGlobalMessageShowing = true;
-@@ -14342,6 +14626,9 @@ void LivingLifePage::step() {
+@@ -14356,6 +14640,9 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
@@ -362,7 +362,7 @@ index 52012606..d5fc2bfd 100644
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -14551,6 +14838,16 @@ void LivingLifePage::step() {
+@@ -14565,6 +14852,16 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -379,7 +379,7 @@ index 52012606..d5fc2bfd 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -16341,6 +16638,8 @@ void LivingLifePage::step() {
+@@ -16355,6 +16652,8 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -388,7 +388,7 @@ index 52012606..d5fc2bfd 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -18357,6 +18656,16 @@ void LivingLifePage::step() {
+@@ -18371,6 +18670,16 @@ void LivingLifePage::step() {
                                        &( o.id ),
                                        &( o.holdingID ) );
                      
@@ -405,7 +405,7 @@ index 52012606..d5fc2bfd 100644
                      
                      for( int i=0; i<gameObjects.size(); i++ ) {
                          
-@@ -19933,6 +20242,11 @@ void LivingLifePage::step() {
+@@ -19947,6 +20256,11 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -417,7 +417,7 @@ index 52012606..d5fc2bfd 100644
                          }
                      }
                  }
-@@ -24674,6 +24988,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -24692,6 +25006,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -457,7 +457,7 @@ index 52012606..d5fc2bfd 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26719,6 +27066,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26737,6 +27084,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
          }
  
@@ -474,7 +474,7 @@ index 52012606..d5fc2bfd 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 85ca4a5c..98a3120e 100644
+index 06b894671..6d9978a4f 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -66,6 +66,8 @@ typedef struct LiveObject {
@@ -508,7 +508,7 @@ index 85ca4a5c..98a3120e 100644
          LiveObject *getOurLiveObject();
          LiveObject *getLiveObject( int inID );
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 1e1e2c57..3184e95b 100644
+index 1e1e2c57d..3184e95b7 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -1253,6 +1253,78 @@ void setAnimationSweatSprite( int spriteID ) {
@@ -652,7 +652,7 @@ index 1e1e2c57..3184e95b 100644
      
      if( animLayerFades != NULL ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index 1a926d5a..fddaaf36 100644
+index 1a926d5a1..fddaaf36b 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
 @@ -460,7 +460,16 @@ void setAnimationSweatSprite( int spriteID );
@@ -674,7 +674,7 @@ index 1a926d5a..fddaaf36 100644
  // or NULL for no clothing highlights
 diff --git a/gameSource/settings/closeFamilySprite.ini b/gameSource/settings/closeFamilySprite.ini
 new file mode 100644
-index 00000000..4ad837a9
+index 000000000..4ad837a99
 --- /dev/null
 +++ b/gameSource/settings/closeFamilySprite.ini
 @@ -0,0 +1 @@
@@ -682,7 +682,7 @@ index 00000000..4ad837a9
 \ No newline at end of file
 diff --git a/gameSource/settings/geneticFamilySprite.ini b/gameSource/settings/geneticFamilySprite.ini
 new file mode 100644
-index 00000000..03a524df
+index 000000000..03a524df8
 --- /dev/null
 +++ b/gameSource/settings/geneticFamilySprite.ini
 @@ -0,0 +1 @@
@@ -690,7 +690,7 @@ index 00000000..03a524df
 \ No newline at end of file
 diff --git a/gameSource/settings/newPlayerMarkerObject.ini b/gameSource/settings/newPlayerMarkerObject.ini
 new file mode 100644
-index 00000000..b8d1607c
+index 000000000..b8d1607c2
 --- /dev/null
 +++ b/gameSource/settings/newPlayerMarkerObject.ini
 @@ -0,0 +1 @@
@@ -698,21 +698,21 @@ index 00000000..b8d1607c
 \ No newline at end of file
 diff --git a/gameSource/settings/playerMarkKey.ini b/gameSource/settings/playerMarkKey.ini
 new file mode 100644
-index 00000000..d82b2311
+index 000000000..d82b2311e
 --- /dev/null
 +++ b/gameSource/settings/playerMarkKey.ini
 @@ -0,0 +1 @@
 += (+ unshifted)
 diff --git a/gameSource/settings/playerUnmarkKey.ini b/gameSource/settings/playerUnmarkKey.ini
 new file mode 100644
-index 00000000..39cdd0de
+index 000000000..39cdd0ded
 --- /dev/null
 +++ b/gameSource/settings/playerUnmarkKey.ini
 @@ -0,0 +1 @@
 +-
 diff --git a/gameSource/settings/showGeneticFamily.ini b/gameSource/settings/showGeneticFamily.ini
 new file mode 100644
-index 00000000..56a6051c
+index 000000000..56a6051ca
 --- /dev/null
 +++ b/gameSource/settings/showGeneticFamily.ini
 @@ -0,0 +1 @@
@@ -720,7 +720,7 @@ index 00000000..56a6051c
 \ No newline at end of file
 diff --git a/gameSource/settings/showNewPlayers.ini b/gameSource/settings/showNewPlayers.ini
 new file mode 100644
-index 00000000..56a6051c
+index 000000000..56a6051ca
 --- /dev/null
 +++ b/gameSource/settings/showNewPlayers.ini
 @@ -0,0 +1 @@
@@ -728,7 +728,7 @@ index 00000000..56a6051c
 \ No newline at end of file
 diff --git a/gameSource/settings/showRelationDistance.ini b/gameSource/settings/showRelationDistance.ini
 new file mode 100644
-index 00000000..d00491fd
+index 000000000..d00491fd7
 --- /dev/null
 +++ b/gameSource/settings/showRelationDistance.ini
 @@ -0,0 +1 @@

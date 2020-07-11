@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f2147e0f..e3c4620f 100644
+index 5c219c86e..2d71be24b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -499,6 +499,7 @@ typedef struct {
@@ -176,7 +176,7 @@ index f2147e0f..e3c4620f 100644
      if( mDeathReason != NULL ) {
          delete [] mDeathReason;
          }
-@@ -16966,6 +17068,8 @@ void LivingLifePage::step() {
+@@ -16980,6 +17082,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -185,7 +185,7 @@ index f2147e0f..e3c4620f 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17957,6 +18061,7 @@ void LivingLifePage::step() {
+@@ -17971,6 +18075,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -193,7 +193,7 @@ index f2147e0f..e3c4620f 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -18290,6 +18395,8 @@ void LivingLifePage::step() {
+@@ -18304,6 +18409,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -202,7 +202,7 @@ index f2147e0f..e3c4620f 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22380,7 +22487,7 @@ void LivingLifePage::step() {
+@@ -22394,7 +22501,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -211,7 +211,7 @@ index f2147e0f..e3c4620f 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -23954,6 +24061,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23972,6 +24079,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -219,7 +219,7 @@ index f2147e0f..e3c4620f 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24021,7 +24129,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24039,7 +24147,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -228,7 +228,7 @@ index f2147e0f..e3c4620f 100644
      mNextHintIndex = 0;
      
      
-@@ -28072,6 +28180,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28090,6 +28198,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mSayField.focus();
                  }
              break;
@@ -246,7 +246,7 @@ index f2147e0f..e3c4620f 100644
          case 13:  // enter
              // speak
              if( ! TextField::isAnyFocused() ) {
-@@ -28390,6 +28509,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28408,6 +28527,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
@@ -302,7 +302,7 @@ index f2147e0f..e3c4620f 100644
                          // actual, spoken text, not a /command
                          
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 5b82acd4..0ab9f2cf 100644
+index bb142e311..0750d26a7 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -489,6 +489,7 @@ typedef struct LocationSlip {

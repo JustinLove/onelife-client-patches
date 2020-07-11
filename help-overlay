@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d5fc2bfd..8a1a8c68 100644
+index 6c549b0c6..11648563d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -3755,6 +3755,59 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
@@ -63,7 +63,7 @@ index d5fc2bfd..8a1a8c68 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index da9e3d29..4e215828 100644
+index 889fe7ed4..fa37f428a 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -829,43 +829,86 @@ void freeFrameDrawer() {
