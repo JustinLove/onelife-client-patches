@@ -16,7 +16,7 @@ Sets user agent to `client_wonlife`
 
 Attempts relogin with/without client tag if login fails.
 
-Adds setting for which to try first, but updates setting on successful login.
+Adds setting for which to try first, the setting is updated on the first successfull login.
 
 `settings/usingClientTag.ini`
 
