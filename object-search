@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4e5e64e9e..5b7d894c3 100644
+index 4e5e64e9e..c3e0eb40a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -499,6 +499,7 @@ typedef struct {
@@ -185,7 +185,26 @@ index 4e5e64e9e..5b7d894c3 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17977,6 +18081,7 @@ void LivingLifePage::step() {
+@@ -17593,6 +17697,18 @@ void LivingLifePage::step() {
+                             }
+                         
+ 
++                        // Clear object search slips for this location
++                        if( old != 0 ) {
++                            for( int i=0; i<mLocationSlips.size(); i++ ) {
++                                LocationSlip *p = mLocationSlips.getElement( i );
++
++                                if( p->search && p->pos.x == x && p->pos.y == y ) {
++                                    p->temporaryExpireETA = game_getCurrentTime();
++                                    break;
++                                    }
++                                }
++                            }
++
+                         // Check if a home marker has been set or removed
+                         if( responsiblePlayerID != -1 &&
+                             ( old != 0 ||
+@@ -17977,6 +18093,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -193,7 +212,7 @@ index 4e5e64e9e..5b7d894c3 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -18310,6 +18415,8 @@ void LivingLifePage::step() {
+@@ -18310,6 +18427,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -202,7 +221,7 @@ index 4e5e64e9e..5b7d894c3 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22400,7 +22507,7 @@ void LivingLifePage::step() {
+@@ -22400,7 +22519,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -211,7 +230,7 @@ index 4e5e64e9e..5b7d894c3 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -23978,6 +24085,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23978,6 +24097,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -219,7 +238,7 @@ index 4e5e64e9e..5b7d894c3 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24045,7 +24153,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24045,7 +24165,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -228,7 +247,7 @@ index 4e5e64e9e..5b7d894c3 100644
      mNextHintIndex = 0;
      
      
-@@ -28096,6 +28204,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28096,6 +28216,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mSayField.focus();
                  }
              break;
@@ -246,7 +265,7 @@ index 4e5e64e9e..5b7d894c3 100644
          case 13:  // enter
              // speak
              if( ! TextField::isAnyFocused() ) {
-@@ -28414,6 +28533,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28414,6 +28545,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
