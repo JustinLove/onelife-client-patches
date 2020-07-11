@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 3b3eb13d7..88c4d5e57 100644
+index b7beaaf39..6c6a65cd9 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -3000,7 +3000,7 @@ LivingLifePage::LivingLifePage()

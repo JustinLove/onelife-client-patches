@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4bafd5600..181c8f181 100644
+index c6cb283c6..795da0439 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -11542,6 +11542,7 @@ void LivingLifePage::draw( doublePair inViewCenter,

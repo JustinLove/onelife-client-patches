@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 275ee8749..c3c14baa5 100644
+index ed463a963..d86b125f7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -123,9 +123,17 @@ static JenkinsRandomSource remapRandSource( 340403 );

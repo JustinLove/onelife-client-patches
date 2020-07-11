@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cce3b4341..e25f975a6 100644
+index a2f3a32b7..236bfded0 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -145,6 +145,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
