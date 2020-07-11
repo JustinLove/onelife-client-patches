@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ab77a2b95..1607b313e 100644
+index cce3b4341..e25f975a6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -145,6 +145,82 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -114,7 +114,7 @@ index ab77a2b95..1607b313e 100644
                  inObj->holdingFlip = true;
                  }
              }
-@@ -21127,9 +21213,15 @@ void LivingLifePage::step() {
+@@ -21133,9 +21219,15 @@ void LivingLifePage::step() {
              // don't change flip unless moving substantially in x
              if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
                  if( o->currentMoveDirection.x > 0 ) {
@@ -130,7 +130,7 @@ index ab77a2b95..1607b313e 100644
                      o->holdingFlip = true;
                      }         
                  }
-@@ -24230,6 +24322,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
+@@ -24236,6 +24328,241 @@ void LivingLifePage::killAt( int clickDestX, int clickDestY, int targetID ) {
  
  
  
@@ -372,7 +372,7 @@ index ab77a2b95..1607b313e 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -25849,7 +26176,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25855,7 +26182,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -380,7 +380,7 @@ index ab77a2b95..1607b313e 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -26239,23 +26565,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26245,23 +26571,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -425,7 +425,7 @@ index ab77a2b95..1607b313e 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -26433,6 +26780,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -26439,6 +26786,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }

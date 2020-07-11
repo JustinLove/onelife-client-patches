@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 5c219c86e..2d71be24b 100644
+index 4e5e64e9e..5b7d894c3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -499,6 +499,7 @@ typedef struct {
@@ -176,7 +176,7 @@ index 5c219c86e..2d71be24b 100644
      if( mDeathReason != NULL ) {
          delete [] mDeathReason;
          }
-@@ -16980,6 +17082,8 @@ void LivingLifePage::step() {
+@@ -16986,6 +17088,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -185,7 +185,7 @@ index 5c219c86e..2d71be24b 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17971,6 +18075,7 @@ void LivingLifePage::step() {
+@@ -17977,6 +18081,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -193,7 +193,7 @@ index 5c219c86e..2d71be24b 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -18304,6 +18409,8 @@ void LivingLifePage::step() {
+@@ -18310,6 +18415,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -202,7 +202,7 @@ index 5c219c86e..2d71be24b 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22394,7 +22501,7 @@ void LivingLifePage::step() {
+@@ -22400,7 +22507,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -211,7 +211,7 @@ index 5c219c86e..2d71be24b 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -23972,6 +24079,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23978,6 +24085,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -219,7 +219,7 @@ index 5c219c86e..2d71be24b 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24039,7 +24147,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24045,7 +24153,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -228,7 +228,7 @@ index 5c219c86e..2d71be24b 100644
      mNextHintIndex = 0;
      
      
-@@ -28090,6 +28198,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28096,6 +28204,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mSayField.focus();
                  }
              break;
@@ -246,7 +246,7 @@ index 5c219c86e..2d71be24b 100644
          case 13:  // enter
              // speak
              if( ! TextField::isAnyFocused() ) {
-@@ -28408,6 +28527,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28414,6 +28533,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }

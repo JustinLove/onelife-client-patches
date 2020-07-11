@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v69?
+
+- login mode is only recorded on the first success. The main server accepts both formats, and it's possible for a transient error to flip us into old mode and get stuck there. You may want to check settings/usingClientTag.ini is 1 for the main onelife servers.
+
 ## v68
 
 - screen edge push combined with new camera movement as camera-control
