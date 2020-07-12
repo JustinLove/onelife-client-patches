@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d23ca4543..dfe6bc79c 100644
+index d23ca4543..020aee03c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -499,6 +499,7 @@ typedef struct {
@@ -176,7 +176,74 @@ index d23ca4543..dfe6bc79c 100644
      if( mDeathReason != NULL ) {
          delete [] mDeathReason;
          }
-@@ -16986,6 +17088,8 @@ void LivingLifePage::step() {
+@@ -13890,6 +13992,9 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+ 
+ 
+ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
++    mLastCravingFoodID = inFoodID;
++    mLastCravingYumBonus = inYumBonus;
++
+     char *foodDescription = 
+         stringToUpperCase( getObject( inFoodID )->description );
+                 
+@@ -13933,6 +14038,56 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
+ 
+ 
+ 
++void LivingLifePage::setSearchSheet() {
++    if( mLiveCravingSheetIndex > -1 ) {
++        // hide old craving sheet
++        mCravingTargetOffset[ mLiveCravingSheetIndex ] =
++            mCravingHideOffset[ mLiveCravingSheetIndex ];
++        }
++    mLiveCravingSheetIndex ++;
++
++    if( mLiveCravingSheetIndex >= NUM_HINT_SHEETS ) {
++        mLiveCravingSheetIndex -= NUM_HINT_SHEETS;
++        }
++
++    if( mCravingMessage[ mLiveCravingSheetIndex ] != NULL ) {
++        delete [] mCravingMessage[ mLiveCravingSheetIndex ];
++        mCravingMessage[ mLiveCravingSheetIndex ] = NULL;
++        }
++
++    if( mObjectSearchString == NULL ) {
++        if( mLastCravingFoodID > 0 ) {
++            setNewCraving( mLastCravingFoodID, mLastCravingYumBonus );
++            }
++        return;
++        }
++
++    const char *reasonString = "";
++
++    if( mSoughtObjects.size() < 1 ) {
++        reasonString = translate( "noMatch" );
++        }
++
++    char *message =
++        autoSprintf( "SEARCHING: %s %s",
++                     mObjectSearchString, reasonString );
++
++    mCravingMessage[ mLiveCravingSheetIndex ] = message;
++
++    mCravingTargetOffset[ mLiveCravingSheetIndex ] =
++        mCravingHideOffset[ mLiveCravingSheetIndex ];
++
++    mCravingTargetOffset[ mLiveCravingSheetIndex ].y += 64;
++
++    double longestLine = getLongestLine( 
++        (char*)( mCravingMessage[ mLiveCravingSheetIndex ] ) );
++
++    mCravingExtraOffset[ mLiveCravingSheetIndex ].x = longestLine;
++    }
++
++
++
++
+ // color list from here:
+ // https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
+ 
+@@ -16986,6 +17141,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -185,7 +252,7 @@ index d23ca4543..dfe6bc79c 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17593,6 +17697,18 @@ void LivingLifePage::step() {
+@@ -17593,6 +17750,18 @@ void LivingLifePage::step() {
                              }
                          
  
@@ -204,7 +271,7 @@ index d23ca4543..dfe6bc79c 100644
                          // Check if a home marker has been set or removed
                          if( responsiblePlayerID != -1 &&
                              ( old != 0 ||
-@@ -17977,6 +18093,7 @@ void LivingLifePage::step() {
+@@ -17977,6 +18146,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -212,7 +279,7 @@ index d23ca4543..dfe6bc79c 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -18310,6 +18427,8 @@ void LivingLifePage::step() {
+@@ -18310,6 +18480,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -221,7 +288,7 @@ index d23ca4543..dfe6bc79c 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22400,7 +22519,7 @@ void LivingLifePage::step() {
+@@ -22400,7 +22572,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -230,7 +297,7 @@ index d23ca4543..dfe6bc79c 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -23978,6 +24097,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23978,6 +24150,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -238,7 +305,7 @@ index d23ca4543..dfe6bc79c 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24045,7 +24165,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24045,7 +24218,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -247,7 +314,17 @@ index d23ca4543..dfe6bc79c 100644
      mNextHintIndex = 0;
      
      
-@@ -28096,6 +28216,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -24094,6 +24267,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+             mCravingMessage[i] = NULL;
+             }
+         }
++
++    mLastCravingFoodID = -1;
++    mLastCravingYumBonus = 0;
+     
+     
+     for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
+@@ -28096,6 +28272,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mSayField.focus();
                  }
              break;
@@ -265,7 +342,7 @@ index d23ca4543..dfe6bc79c 100644
          case 13:  // enter
              // speak
              if( ! TextField::isAnyFocused() ) {
-@@ -28414,6 +28545,54 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28414,6 +28601,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
@@ -316,12 +393,13 @@ index d23ca4543..dfe6bc79c 100644
 +                                findInMap();
 +                                }
 +                            }
++                        setSearchSheet( );
 +                        }
                      else {
                          // actual, spoken text, not a /command
                          
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index bb142e311..0750d26a7 100644
+index bb142e311..e6226287c 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -489,6 +489,7 @@ typedef struct LocationSlip {
@@ -358,7 +436,22 @@ index bb142e311..0750d26a7 100644
          
          // offset from current view center
          doublePair mTutorialHideOffset[NUM_HINT_SHEETS];
-@@ -1157,6 +1163,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -900,9 +906,14 @@ class LivingLifePage : public GamePage, public ActionListener {
+         char *mCravingMessage[NUM_HINT_SHEETS];
+ 
+         int mLiveCravingSheetIndex;
++
++        int mLastCravingFoodID;
++        int mLastCravingYumBonus;
+         
+         void setNewCraving( int inFoodID, int inYumBonus );
+ 
++        void setSearchSheet();
++
+         
+ 
+ 
+@@ -1157,6 +1168,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void setLocationSlipExpiration( int seconds );
          void addLocationSlip( int inX, int inY );
          void addTempLocationSlip( int inX, int inY, char inPerson, int inPersonID, const char* inPersonKey, int inAge );

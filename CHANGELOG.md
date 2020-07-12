@@ -1,9 +1,11 @@
 # Changelog - feature changes
 
-## v69?
+## v69
 
 - login mode is only recorded on the first success. The main server accepts both formats, and it's possible for a transient error to flip us into old mode and get stuck there. You may want to check settings/usingClientTag.ini is 1 for the main onelife servers.
 - prevent sending use slot parameter on older servers
+- The current object search is shown in place of craving, including a message if no matching object names were found.
+- Player slips show the first few letters of the name so they can be distinguished.
 
 ## v68
 

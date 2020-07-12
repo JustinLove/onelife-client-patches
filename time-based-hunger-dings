@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d9056b206..cc5728fea 100644
+index 2e176a20b..aea4fa388 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -284,6 +284,9 @@ static char* lastNamed = NULL;
@@ -21,7 +21,7 @@ index d9056b206..cc5728fea 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -22717,7 +22722,10 @@ void LivingLifePage::step() {
+@@ -22789,7 +22794,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index d9056b206..cc5728fea 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -22802,6 +22810,9 @@ void LivingLifePage::step() {
+@@ -22874,6 +22882,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index d9056b206..cc5728fea 100644
                  }
              }
          
-@@ -24344,6 +24355,70 @@ static void dummyFunctionA() {
+@@ -24416,6 +24427,70 @@ static void dummyFunctionA() {
  
  
  
@@ -115,10 +115,10 @@ index d9056b206..cc5728fea 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 3501061eb..d91162ad9 100644
+index fb93f1d35..05a091506 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -1031,6 +1031,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1036,6 +1036,8 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          double computePathSpeedMod( LiveObject *inObject, int inPathLength );
          

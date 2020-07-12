@@ -255,7 +255,7 @@ Piles are defined by a category object id, defined in
 
 ## object-search
 
-Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer.
+Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer. The current search is show in place of the craving.
 
 ## person-search
 
