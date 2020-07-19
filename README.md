@@ -142,9 +142,10 @@ Putting the pointer near the edge of the screen will nudge it over, as far as yo
 
 Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
 
-Holding 'c' will allow you to pan your view around within the map buffer.
+Holding 'c' will allow you to pan your view around within the map buffer.  With camera pan, it may look better if you change mouse pointer to 'DRAWN'
 
 `settings/cameraKey.ini` to change the key, or remove to disable.
+
 
 ### show-close-family
 

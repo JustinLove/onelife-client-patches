@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 031ad18f8..2e176a20b 100644
+index 3f542ff87..7404129c6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -280,6 +280,9 @@ static yumType isYummy( int inObjectID ) {
@@ -28,7 +28,7 @@ index 031ad18f8..2e176a20b 100644
  
  
 +// forces uppercase
-+void LivingLifePage::drawCharacterNameLabel( doublePair inPos, 
++void LivingLifePage::drawCharacterNameLabel( doublePair inPos,
 +                                             const char *inString,
 +                                             LiveObject *inSpeaker) {
 +
@@ -173,12 +173,12 @@ index 031ad18f8..2e176a20b 100644
 +
 +        doublePair blotSpacing = { 20, 0 };
 +
-+        doublePair firstBlot = 
++        doublePair firstBlot =
 +            { labelPos.x, firstLineY - i * lineSpacing};
 +
 +
 +        if( numBlots == 1 ) {
-+            // center first and only blot on line of text 
++            // center first and only blot on line of text
 +            // (probably one char of text)
 +            firstBlot.x += length / 2;
 +            }
@@ -190,7 +190,7 @@ index 031ad18f8..2e176a20b 100644
 +
 +        for( int b=0; b<numBlots; b++ ) {
 +            doublePair blotPos = add( firstBlot, mult( blotSpacing, b ) );
-+        
++
 +            double rot = blotRandSource.getRandomDouble();
 +            drawSprite( mChalkBlotSprite, blotPos, 1.0, rot );
 +            }
@@ -204,7 +204,7 @@ index 031ad18f8..2e176a20b 100644
 +    for( int i=0; i<lines->size(); i++ ) {
 +        char *line = lines->getElementDirect( i );
 +
-+        doublePair lineStart = 
++        doublePair lineStart =
 +            { labelPos.x, firstLineY - i * lineSpacing};
 +
 +        handwritingFont->drawString( line, lineStart, alignLeft );
@@ -248,7 +248,7 @@ index 031ad18f8..2e176a20b 100644
 -    SimpleVector<doublePair> *inSpeakersPos ) {    
 +    SimpleVector<doublePair> *inSpeakersPos,
 +    SimpleVector<LiveObject *> *inNamed,
-+    SimpleVector<doublePair> *inNamedPos ) {    
++    SimpleVector<doublePair> *inNamedPos ) {
  
  
      ObjectAnimPack returnPack;
@@ -313,21 +313,21 @@ index 031ad18f8..2e176a20b 100644
 +
 +        double age = computeCurrentAge( o );
 +
-+        doublePair headPos = 
++        doublePair headPos =
 +            displayObj->spritePos[ getHeadIndex( displayObj, age ) ];
-+        
-+        doublePair bodyPos = 
++
++        doublePair bodyPos =
 +            displayObj->spritePos[ getBodyIndex( displayObj, age ) ];
 +
-+        doublePair frontFootPos = 
++        doublePair frontFootPos =
 +            displayObj->spritePos[ getFrontFootIndex( displayObj, age ) ];
-+        
++
 +        headPos = add( headPos, 
 +                       getAgeHeadOffset( age, headPos, 
 +                                         bodyPos, frontFootPos ) );
 +        headPos = add( headPos,
 +                       getAgeBodyOffset( age, bodyPos ) );
-+        
++
 +        textPos.y += headPos.y;
 +        if( o->holdingFlip ) {
 +          textPos.x -= headPos.x;
@@ -335,7 +335,7 @@ index 031ad18f8..2e176a20b 100644
 +          textPos.x += headPos.x;
 +        }
 +
-+        drawCharacterNameLabel( textPos, o->name, 
++        drawCharacterNameLabel( textPos, o->name,
 +                                o );
 +        }
 +
@@ -351,7 +351,7 @@ index 031ad18f8..2e176a20b 100644
      if( showFPS ) runningPixelCount += endCountingSpritePixelsDrawn();
  
      
-@@ -14322,6 +14597,13 @@ void LivingLifePage::step() {
+@@ -14326,6 +14601,13 @@ void LivingLifePage::step() {
              }
          }
      
@@ -365,7 +365,7 @@ index 031ad18f8..2e176a20b 100644
  
      if( mGlobalMessageShowing ) {
          
-@@ -18243,6 +18525,10 @@ void LivingLifePage::step() {
+@@ -18247,6 +18529,10 @@ void LivingLifePage::step() {
                  o.lineageEveID = -1;
  
                  o.name = NULL;
@@ -376,7 +376,7 @@ index 031ad18f8..2e176a20b 100644
                  o.relationName = NULL;
                  o.relationDistance = -1;
                  o.newPlayer = false;
-@@ -21287,6 +21573,14 @@ void LivingLifePage::step() {
+@@ -21291,6 +21577,14 @@ void LivingLifePage::step() {
                                              existing->currentPos.y ) );
                                      }
  
@@ -391,7 +391,25 @@ index 031ad18f8..2e176a20b 100644
                                  if( existing->id == ourID ) {
                                      // look for map metadata
                                      char *starPos =
-@@ -22033,6 +22327,19 @@ void LivingLifePage::step() {
+@@ -21829,6 +22123,17 @@ void LivingLifePage::step() {
+                                 
+                                 if( id == ourID ) {
+                                     // we just got our own lineage
++                                    if( existing->lineage.size() > 0 ) {
++
++                                        LiveObject *mother =
++                                            getLiveObject( 
++                                                existing->lineage.
++                                                getElementDirect( 0 ) );
++                                        if( mother != NULL ) {
++                                            mother->nameKnown = true;
++                                            }
++                                        }
++
+                                     for( int t=0; 
+                                          t < existing->lineage.size();
+                                          t++ ) {
+@@ -22037,6 +22342,19 @@ void LivingLifePage::step() {
                                  
                                  existing->name = stringDuplicate( nameStart );
                                  knownNames.push_back(stringDuplicate( nameStart ));
@@ -411,7 +429,7 @@ index 031ad18f8..2e176a20b 100644
                                  }
                              
                              break;
-@@ -24152,6 +24459,8 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24156,6 +24474,8 @@ void LivingLifePage::makeActive( char inFresh ) {
      mLastMouseOverID = 0;
      mCurMouseOverID = 0;
      mCurMouseOverBiome = -1;
@@ -420,7 +438,7 @@ index 031ad18f8..2e176a20b 100644
      mCurMouseOverFade = 0;
      mCurMouseOverBehind = false;
      mCurMouseOverPerson = false;
-@@ -25147,6 +25456,9 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -25151,6 +25471,9 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
  
      ourLiveObject->currentMouseOverClothingIndex = -1;
      
@@ -430,7 +448,7 @@ index 031ad18f8..2e176a20b 100644
      if( destID == 0 ) {
          if( p.hitSelf ) {
              mCurMouseOverSelf = true;
-@@ -25180,6 +25492,7 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -25184,6 +25507,7 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
              // store negative in place so that we can show their relation
              // string
              mCurMouseOverID = - p.hitOtherPersonID;
@@ -438,7 +456,7 @@ index 031ad18f8..2e176a20b 100644
              mCurMouseOverBiome = -1;
              }
          }
-@@ -25260,6 +25573,10 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -25264,6 +25588,10 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mCurMouseOverBehind = false;
          mLastMouseOverFade = 1.0f;
          }
@@ -450,7 +468,7 @@ index 031ad18f8..2e176a20b 100644
      
      double worldX = inX / (double)CELL_D;
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 1abae545f..fb93f1d35 100644
+index 1abae545f..81136b0c4 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -65,6 +65,10 @@ typedef struct LiveObject {
@@ -478,7 +496,7 @@ index 1abae545f..fb93f1d35 100644
                                          FloatColor *inForceBlotColor = NULL,
                                          FloatColor *inForceTextColor = NULL );
          
-+        void drawCharacterNameLabel( doublePair inPos, 
++        void drawCharacterNameLabel( doublePair inPos,
 +                                     const char *inString,
 +                                     LiveObject *inSpeaker = NULL);
 +        void drawPointerLine( doublePair labelPos,

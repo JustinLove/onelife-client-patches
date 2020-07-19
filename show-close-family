@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 49c1235bf..e59bb6709 100644
+index 548352a0e..33c6e23be 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -152,6 +152,13 @@ static int ignoreTallObjects = 1;
@@ -417,7 +417,7 @@ index 49c1235bf..e59bb6709 100644
                          }
                      }
                  }
-@@ -24698,6 +25012,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -24700,6 +25014,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -457,7 +457,7 @@ index 49c1235bf..e59bb6709 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26743,6 +27090,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26745,6 +27092,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
          }
  

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4df6449c2..1cc0d920e 100644
+index 4c1329da5..c343a48a0 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -23196,6 +23196,1005 @@ static void freeSavedPath() {
+@@ -23196,6 +23196,1007 @@ static void freeSavedPath() {
          }
      }
  
@@ -629,6 +629,7 @@ index 4df6449c2..1cc0d920e 100644
 +            // don't consider N neighbor
 +            nLimit = 4;
 +            }
++        /*
 +        else if( destID > 0 &&
 +                 ( ourLiveObject->holdingID == 0 ||
 +                   isSick( ourLiveObject ) )
@@ -663,6 +664,7 @@ index 4df6449c2..1cc0d920e 100644
 +                nStart = 0;
 +                }
 +            }
++            */
 +
 +
 +
@@ -1008,7 +1010,7 @@ index 4df6449c2..1cc0d920e 100644
  
  
  
-@@ -23328,8 +24327,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23328,8 +24329,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -1017,7 +1019,7 @@ index 4df6449c2..1cc0d920e 100644
      
      
  
-@@ -23691,7 +24688,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23691,7 +24690,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -1025,7 +1027,7 @@ index 4df6449c2..1cc0d920e 100644
  
  
      
-@@ -23699,61 +24695,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23699,61 +24697,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1088,7 +1090,7 @@ index 4df6449c2..1cc0d920e 100644
          }
  
      
-@@ -24118,7 +25060,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24118,7 +25062,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1097,7 +1099,7 @@ index 4df6449c2..1cc0d920e 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -24137,276 +25079,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24137,276 +25081,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1375,7 +1377,7 @@ index 4df6449c2..1cc0d920e 100644
          
          
  
-@@ -24448,47 +25122,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24448,47 +25124,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1426,7 +1428,7 @@ index 4df6449c2..1cc0d920e 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -24669,216 +25305,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24669,216 +25307,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }

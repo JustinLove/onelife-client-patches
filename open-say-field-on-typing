@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c37b0d75f..1494d54d3 100644
+index 40d6fc204..079c62cc8 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -178,6 +178,12 @@ static char *photoSig = NULL;

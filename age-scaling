@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6c6a65cd9..bf57e21cd 100644
+index bfeb593ed..2685f34ac 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1497,8 +1497,8 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
@@ -26,7 +26,7 @@ index 6c6a65cd9..bf57e21cd 100644
              else {
                  // temp override over
 diff --git a/gameSource/ageControl.cpp b/gameSource/ageControl.cpp
-index ec88099bf..c71282da1 100644
+index ec88099bf..434e3112b 100644
 --- a/gameSource/ageControl.cpp
 +++ b/gameSource/ageControl.cpp
 @@ -1,4 +1,6 @@
@@ -55,10 +55,26 @@ index ec88099bf..c71282da1 100644
      }
  
  
-@@ -94,3 +99,86 @@ doublePair getAgeBodyOffset( double inAge, doublePair inBodySpritePos ) {
+@@ -94,3 +99,104 @@ doublePair getAgeBodyOffset( double inAge, doublePair inBodySpritePos ) {
      return (doublePair){ 0, 0 };
      }
  
++double fakeStartNextAgeFileRead( double inAge );
++void fakeRestartMusic( double inAge, double inAgeRate, char inForceNow );
++
++void testAgeScaling() {
++    printf("s%lf -> d%lf\n", 104.0, computeDisplayAge(104));
++    printf("s%lf -> d%lf\n", 117.0, computeDisplayAge(117));
++    printf("s%lf -> d%lf\n", 115.0, computeDisplayAge(115));
++    printf("s%lf -> d%lf\n", 121.1, computeDisplayAge(121.1));
++
++    printf("d%lf -> s%lf\n", 40.0, computeServerAge(40));
++    printf("d%lf -> s%lf\n", 57.0, computeServerAge(57));
++    printf("d%lf -> s%lf\n", 55.0, computeServerAge(55));
++    printf("d%lf -> s%lf\n", 50.0, computeServerAge(50));
++    printf("d%lf -> s%lf\n", 60.1, computeServerAge(60.1));
++    }
++
 +
 +void initAgeScaling() {
 +    char *cont = SettingsManager::getSettingContents( "ageScaling", "" );
@@ -90,6 +106,8 @@ index ec88099bf..c71282da1 100644
 +        delete [] parts[i];
 +        }
 +    delete [] parts;
++
++    //testAgeScaling();
 +    }
 +
 +
@@ -115,7 +133,7 @@ index ec88099bf..c71282da1 100644
 +
 +        start = end;
 +        }
-+    return serverAge;
++    return serverAge - start.x + start.y;
 +    }
 +
 +double computeServerAge( double displayAge ) {
@@ -140,7 +158,7 @@ index ec88099bf..c71282da1 100644
 +
 +        start = end;
 +        }
-+    return displayAge;
++    return displayAge - start.y + start.x;
 +    }
 diff --git a/gameSource/ageControl.h b/gameSource/ageControl.h
 index 328068e08..60314b818 100644

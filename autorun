@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ed463a963..d86b125f7 100644
+index ed463a963..39ef583c8 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -123,9 +123,17 @@ static JenkinsRandomSource remapRandSource( 340403 );
@@ -81,7 +81,7 @@ index ed463a963..d86b125f7 100644
 +                        if( mapIF != -1 && mapIP != -1 ) {
 +                            int floor = mMapFloors[ mapIF ];
 +
-+                            if( floor > 0 && mMapFloors[ mapIP ] == floor &&
++                            if( sameRoadClass( mMapFloors[ mapIP ], floor) &&
 +                                getObject( floor )->rideable ) {
 +                                    run = false;
 +                                    if ( nextActionMessageToSend == NULL &&
@@ -129,7 +129,7 @@ index ed463a963..d86b125f7 100644
  
 +                                //endPos.x = (double)round( fakeClick.x / CELL_D);
 +                                //endPos.y = (double)round( fakeClick.y / CELL_D);
-+                               
++
                                  o->useWaypoint = false;
                                  }
                              else {

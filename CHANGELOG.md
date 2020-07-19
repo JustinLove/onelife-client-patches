@@ -1,5 +1,13 @@
 # Changelog - feature changes
 
+## v70
+
+- mother's name is know
+- search for craving food when no object search active
+- reduce pathing distance in some cases with key command (e.g. picking carrots to a box travels to adjacent tile instead of carrot tile)
+- fix running on roads
+- attempt to fix end of life music with age scaling
+
 ## v69
 
 - login mode is only recorded on the first success. The main server accepts both formats, and it's possible for a transient error to flip us into old mode and get stuck there. You may want to check settings/usingClientTag.ini is 1 for the main onelife servers.

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 795da0439..d23ca4543 100644
+index 29684434f..49df51dff 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -159,6 +159,8 @@ static double newPlayerMessageTime = 0;

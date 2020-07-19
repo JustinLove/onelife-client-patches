@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d0ae2e6e5..a2f3a32b7 100644
+index 7529af86b..bbe67a42e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -143,6 +143,7 @@ static int showShiverSweat = 1;
@@ -19,7 +19,7 @@ index d0ae2e6e5..a2f3a32b7 100644
      
      initLiveTriggers();
  
-@@ -24384,7 +24387,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24386,7 +24389,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
  
@@ -34,7 +34,7 @@ index d0ae2e6e5..a2f3a32b7 100644
  
  
  
-@@ -24540,7 +24549,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24542,7 +24551,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      
