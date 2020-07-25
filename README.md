@@ -258,6 +258,10 @@ Piles are defined by a category object id, defined in
 
 Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer. The current search is show in place of the craving.
 
+If no search is active, a search is peformed for the current craving. This can be disabled with 
+
+`settings/defaultSearchForCraving.ini`, 0 to disable this feature
+
 ## person-search
 
 Search for a person's name with `:character name` (or a prefix), or by press 't' with the cursor over them to get a temporary location slip to them. If someone says "Follow me", you can.

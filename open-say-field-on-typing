@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 40d6fc204..079c62cc8 100644
+index 7663687fe..673216e29 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -178,6 +178,12 @@ static char *photoSig = NULL;
@@ -15,7 +15,7 @@ index 40d6fc204..079c62cc8 100644
  static double emotDuration = 10;
  
  
-@@ -2713,6 +2719,9 @@ LivingLifePage::LivingLifePage()
+@@ -2714,6 +2720,9 @@ LivingLifePage::LivingLifePage()
      setAnimationSweatSprite( SettingsManager::getIntSetting( "sweatDropSprite", 88 ) );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
@@ -25,16 +25,16 @@ index 40d6fc204..079c62cc8 100644
      
      initLiveTriggers();
  
-@@ -12431,6 +12440,8 @@ void LivingLifePage::step() {
+@@ -12432,6 +12441,8 @@ void LivingLifePage::step() {
              mouseHeld = true;
              }
          }
 +
 +    keyDownGap++;
      
-     if( mServerSocket == -1 ) {
-         serverSocketConnected = false;
-@@ -25072,6 +25083,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+     double pageLifeTime = game_getCurrentTime() - mPageStartTime;
+ 
+@@ -25099,6 +25110,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          return;
          }
  
@@ -42,7 +42,7 @@ index 40d6fc204..079c62cc8 100644
      
      switch( inASCII ) {
          /*
-@@ -25093,6 +25105,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25120,6 +25132,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  SettingsManager::getIntSetting( "vogModeOn", 0 ) ) {
@@ -50,7 +50,7 @@ index 40d6fc204..079c62cc8 100644
                  
                  if( ! vogMode ) {
                      sendToServerSocket( (char*)"VOGS 0 0#" );
-@@ -25124,6 +25137,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25151,6 +25164,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          case 'I':
              if( ! mSayField.isFocused() &&
                  vogMode ) {
@@ -58,7 +58,7 @@ index 40d6fc204..079c62cc8 100644
                  
                  if( ! vogPickerOn ) {
                      addComponent( &mObjectPicker );
-@@ -25140,6 +25154,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25167,6 +25181,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  vogMode ) {
@@ -66,7 +66,7 @@ index 40d6fc204..079c62cc8 100644
                  sendToServerSocket( (char*)"VOGP 0 0#" );
                  }
              break;
-@@ -25147,12 +25162,14 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25174,12 +25189,14 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  vogMode ) {
@@ -81,7 +81,7 @@ index 40d6fc204..079c62cc8 100644
                  savingSpeechColor = true;
                  savingSpeechMask = false;
                  savingSpeech = true;
-@@ -25162,6 +25179,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25189,6 +25206,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          case 'X':
              if( userTwinCode != NULL &&
                  ! mStartedLoadingFirstObjectSet ) {
@@ -89,7 +89,7 @@ index 40d6fc204..079c62cc8 100644
                  
                  closeSocket( mServerSocket );
                  mServerSocket = -1;
-@@ -25231,18 +25249,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25258,18 +25276,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          */
          case 'e':
          case 'E':
@@ -112,7 +112,7 @@ index 40d6fc204..079c62cc8 100644
                  shouldMoveCamera = false;
                  }
              break;
-@@ -25685,6 +25706,35 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25712,6 +25733,35 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;

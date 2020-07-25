@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v71?
+
+- New setting to disable default search for craving
+
 ## v70
 
 - mother's name is know

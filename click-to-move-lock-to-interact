@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7529af86b..bbe67a42e 100644
+index 3f648f292..293236971 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -143,6 +143,7 @@ static int showShiverSweat = 1;
@@ -10,7 +10,7 @@ index 7529af86b..bbe67a42e 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2729,6 +2730,8 @@ LivingLifePage::LivingLifePage()
+@@ -2730,6 +2731,8 @@ LivingLifePage::LivingLifePage()
      openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
  
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
@@ -19,7 +19,7 @@ index 7529af86b..bbe67a42e 100644
      
      initLiveTriggers();
  
-@@ -24386,7 +24389,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24377,7 +24380,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
  
@@ -34,7 +34,7 @@ index 7529af86b..bbe67a42e 100644
  
  
  
-@@ -24542,7 +24551,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24533,7 +24542,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      

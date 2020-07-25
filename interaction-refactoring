@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4c1329da5..c343a48a0 100644
+index b13afecaf..ba53f9452 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -23196,6 +23196,1007 @@ static void freeSavedPath() {
+@@ -23223,6 +23223,971 @@ static void freeSavedPath() {
          }
      }
  
@@ -629,42 +629,6 @@ index 4c1329da5..c343a48a0 100644
 +            // don't consider N neighbor
 +            nLimit = 4;
 +            }
-+        /*
-+        else if( destID > 0 &&
-+                 ( ourLiveObject->holdingID == 0 ||
-+                   isSick( ourLiveObject ) )
-+                 &&
-+                 getObject( destID )->permanent &&
-+                 ! getObject( destID )->blocksWalking ) {
-+
-+            TransRecord *handTrans = NULL;
-+            if( ourLiveObject->holdingID == 0 ) {
-+                handTrans = getTrans( 0, destID );
-+                }
-+
-+            if( handTrans == NULL ||
-+                ( handTrans->newActor != 0 &&
-+                  getObject( handTrans->newActor )->foodValue > 0 &&
-+                    handTrans->newTarget != 0 &&
-+                  ! getObject( handTrans->newTarget )->blocksWalking ) ) {
-+                // walk to tile itself if target is permanent
-+                // and not blocking, and hand is empty
-+                // AND this will result in something still
-+                // on the ground (so it's not a transforming pick-up,
-+                // like pulling an onion).
-+                // and the new thing on the ground is not blocking
-+                // (so we're not closing a door)
-+                // and what you get in the hand is edible
-+                // (example:  picking berries from behind the bush)
-+                //
-+                // this is the main situation where you'd want to
-+                // click the same target and yourself
-+                // multiple times in a row, so having yourself
-+                // as close as possible to the target matters
-+                nStart = 0;
-+                }
-+            }
-+            */
 +
 +
 +
@@ -1010,7 +974,7 @@ index 4c1329da5..c343a48a0 100644
  
  
  
-@@ -23328,8 +24329,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23355,8 +24320,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -1019,7 +983,7 @@ index 4c1329da5..c343a48a0 100644
      
      
  
-@@ -23691,7 +24690,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23718,7 +24681,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -1027,7 +991,7 @@ index 4c1329da5..c343a48a0 100644
  
  
      
-@@ -23699,61 +24697,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23726,61 +24688,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1090,7 +1054,7 @@ index 4c1329da5..c343a48a0 100644
          }
  
      
-@@ -24118,7 +25062,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24145,7 +25053,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1099,7 +1063,7 @@ index 4c1329da5..c343a48a0 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -24137,276 +25081,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24164,276 +25072,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1377,7 +1341,7 @@ index 4c1329da5..c343a48a0 100644
          
          
  
-@@ -24448,47 +25124,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24475,47 +25115,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1428,7 +1392,7 @@ index 4c1329da5..c343a48a0 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -24669,216 +25307,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24696,216 +25298,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }
