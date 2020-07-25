@@ -37,3 +37,4 @@ settings/locationSlipColors.ini
 settings/locationSlipsEnabled.ini
 settings/categoryPile.ini
 settings/showNameLabels.ini
+settings/defaultSearchForCraving.ini
