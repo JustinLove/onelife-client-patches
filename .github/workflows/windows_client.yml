@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image:  wondible/ohol-windows-dev
+      image:  wondible/ohol-dev-windows
 
     steps:
     - name: Fetch Latest Tagged
