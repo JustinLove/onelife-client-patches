@@ -24,9 +24,9 @@ jobs:
     - name: Get Game Client Version
       id: gameClientVersion
       run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
-      #- name: Get Patch Version
-      #id: patchVersion
-      #run: echo ::set-output name=version::`cat OneLife/patches-master/patchVersionNumber.txt`
+    - name: Get Patch Version
+      id: patchVersion
+      run: echo ::set-output name=version::`cat OneLife/patches-master/patchVersionNumber.txt`
       #- name: Upload versioned file
       #run: s3cmd --no-check-certificate --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error put WonLife-test-${{ steps.gameClientVersion.outputs.version}}.${{ steps.patchVersion.outputs.version }}.zip s3://$BUCKET/
       #env:
