@@ -1,6 +1,6 @@
 # Changelog - feature changes
 
-## v71?
+## v71
 
 - New setting to disable default search for craving
 
