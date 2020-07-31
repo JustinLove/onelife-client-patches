@@ -21,9 +21,9 @@ jobs:
       run: /ohol/apply_patches.sh
     - name: Build Client
       run: /ohol/build_client_cross.sh
-      #- name: Get Game Client Version
-      #id: gameClientVersion
-      #run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
+    - name: Get Game Client Version
+      id: gameClientVersion
+      run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
       #- name: Get Patch Version
       #id: patchVersion
       #run: echo ::set-output name=version::`cat OneLife/patches-master/patchVersionNumber.txt`
