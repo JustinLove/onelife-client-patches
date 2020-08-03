@@ -39,7 +39,7 @@ jobs:
           ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
           SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Upload latest file
-        run: s3cmd --no-check-certificate --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error cp s3://$BUCKET/${{ steps.zip.outputs.filename }} s3://$BUCKET/WonLifeMacOSX-test-latest.zip
+        run: s3cmd --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error cp s3://$BUCKET/${{ steps.zip.outputs.filename }} s3://$BUCKET/WonLifeMacOSX-test-latest.zip
         env:
           BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
