@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index fd296c050..67db0521d 100644
+index 0cf982520..e029fd425 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -3756,6 +3756,59 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {

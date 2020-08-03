@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 82eb60b29..1724bc381 100644
+index 82eb60b29..1feb247a5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -48,6 +48,17 @@
@@ -229,9 +229,9 @@ index 82eb60b29..1724bc381 100644
 +    if( freeCamera ) {
 +        screenCenterPlayerOffsetX -= delta.x;
 +        screenCenterPlayerOffsetY -= delta.y;
++#ifdef WIN32
 +        int screenWidth, screenHeight;
 +        getScreenDimensions( &screenWidth, &screenHeight );
-+#ifndef LINUX
 +        SetMouse(screenWidth/2, screenHeight/2);
 +#endif
 +        }
@@ -261,15 +261,16 @@ index 82eb60b29..1724bc381 100644
  
      }
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index fbdfbecad..20ab3a314 100644
+index fbdfbecad..75db291af 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
-@@ -176,4 +176,5 @@ NEEDED_MINOR_GEMS_OBJECTS = \
-  ${DIFF_BUNDLE_CLIENT_O} \
+@@ -177,3 +177,6 @@ NEEDED_MINOR_GEMS_OBJECTS = \
   ${STRING_TREE_O} \
   ${CRC32_O} \
-+ ${SET_MOUSE_O} \
  
++ifeq ($(PLATFORM),Win32)
++	NEEDED_MINOR_GEMS_OBJECTS += ${SET_MOUSE_O} 
++endif
 diff --git a/gameSource/settings/cameraKey.ini b/gameSource/settings/cameraKey.ini
 new file mode 100644
 index 000000000..f2ad6c76f
