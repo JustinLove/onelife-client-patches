@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ab8a401d8..6d8fa37c4 100644
+index ab8a401d8..7138458ec 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -163,6 +163,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -39,15 +39,14 @@ index ab8a401d8..6d8fa37c4 100644
  
      for( int i=0; i<3; i++ ) {    
          mHungerSlipShowOffsets[i].x = -558;
-@@ -3848,6 +3864,78 @@ void drawHelpMarkKeys( doublePair messagePos ) {
+@@ -3848,6 +3864,77 @@ void drawHelpMarkKeys( doublePair messagePos ) {
      }
  
  
 +
 +doublePair getSayPosition( LiveObject* liveObject ) {
-+    doublePair pos;
++    doublePair pos = {0,84};
 +    if( liveObject == NULL ) {
-+        pos = {0,84};
 +        return pos;
 +        }
 +    pos = mult( liveObject->currentPos, CELL_D );
@@ -118,7 +117,7 @@ index ab8a401d8..6d8fa37c4 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -10147,6 +10235,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10147,6 +10234,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
@@ -140,7 +139,7 @@ index ab8a401d8..6d8fa37c4 100644
  
      // now draw tutorial sheets
      if( mTutorialNumber > 0 || mGlobalMessageShowing )
-@@ -13018,6 +13121,19 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -13018,6 +13120,19 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
      
      
      mGlobalMessageShowing = true;
@@ -160,7 +159,7 @@ index ab8a401d8..6d8fa37c4 100644
      mGlobalMessageStartTime = game_getCurrentTime();
      
      if( mLiveTutorialSheetIndex >= 0 ) {
-@@ -13045,6 +13161,7 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -13045,6 +13160,7 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
          (char*)( mTutorialMessage[ mLiveTutorialSheetIndex ] ) );
      
      mTutorialExtraOffset[ mLiveTutorialSheetIndex ].x = longestLine;
@@ -168,7 +167,7 @@ index ab8a401d8..6d8fa37c4 100644
      
      
      delete [] spaces;
-@@ -13752,6 +13869,41 @@ void LivingLifePage::step() {
+@@ -13752,6 +13868,41 @@ void LivingLifePage::step() {
              }
          
  
@@ -210,7 +209,7 @@ index ab8a401d8..6d8fa37c4 100644
  
          if( ( isHintFilterStringInvalid() &&
                mCurrentHintObjectID != mNextHintObjectID ) ||
-@@ -13963,6 +14115,49 @@ void LivingLifePage::step() {
+@@ -13963,6 +14114,49 @@ void LivingLifePage::step() {
          }
  
  
@@ -260,7 +259,7 @@ index ab8a401d8..6d8fa37c4 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -14542,13 +14737,19 @@ void LivingLifePage::step() {
+@@ -14542,13 +14736,19 @@ void LivingLifePage::step() {
              for( int i=1; i < tokens->size(); i++ ) {
                  char *tok = tokens->getElementDirect( i );
                  
@@ -281,7 +280,7 @@ index ab8a401d8..6d8fa37c4 100644
                          }
                      }
                  }
-@@ -14601,6 +14802,7 @@ void LivingLifePage::step() {
+@@ -14601,6 +14801,7 @@ void LivingLifePage::step() {
              if( numRead == 2 ) {
                  usedToolSlots = numSlotsUsed;
                  totalToolSlots = numTotalSlots;
@@ -289,7 +288,7 @@ index ab8a401d8..6d8fa37c4 100644
                  }
              }
          else if( type == HOMELAND ) {
-@@ -17643,6 +17845,15 @@ void LivingLifePage::step() {
+@@ -17643,6 +17844,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -305,7 +304,7 @@ index ab8a401d8..6d8fa37c4 100644
                              }
                          
  
-@@ -22997,6 +23208,15 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22997,6 +23207,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 52a91a852..09f629104 100644
+index db9fa4c46..cf218502f 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -159,6 +159,8 @@ static double newPlayerMessageTime = 0;
@@ -54,7 +54,7 @@ index 52a91a852..09f629104 100644
      categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
-@@ -7433,23 +7464,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
+@@ -7432,23 +7463,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
      if ( labeled ) {
          arrowPos.y -= LOCATION_SLIP_BOTTOM_TEXT;
          }
@@ -106,7 +106,7 @@ index 52a91a852..09f629104 100644
              }
          }
  
-@@ -14596,10 +14642,14 @@ void LivingLifePage::step() {
+@@ -14595,10 +14641,14 @@ void LivingLifePage::step() {
              char home =
                  ! locationSlip->temporary &&
                  ! locationSlip->ancient;
@@ -122,7 +122,7 @@ index 52a91a852..09f629104 100644
              locationSlip->labeled = home && homeSlips == 1;
              char expired =
                  locationSlip->temporary &&
-@@ -26668,6 +26718,22 @@ void LivingLifePage::playerUnmark() {
+@@ -26667,6 +26717,22 @@ void LivingLifePage::playerUnmark() {
      }
  
  
@@ -145,7 +145,7 @@ index 52a91a852..09f629104 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -28598,7 +28664,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28597,7 +28663,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                              
                                  if( filterStringLen > 0 ) {
                                      // not blank
@@ -154,7 +154,7 @@ index 52a91a852..09f629104 100644
                                          stringDuplicate( trimmedFilterString );
                                      }
                              
-@@ -28629,8 +28695,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28628,8 +28694,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
  
                          if( filterStringLen > 0 ) {
                              // not blank
@@ -178,7 +178,7 @@ index 52a91a852..09f629104 100644
                              }
  
                          delete [] trimmedFilterString;
-@@ -28782,6 +28861,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28781,6 +28860,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 495353e69..31a313824 100644
+index 5b04a22a4..7088ff563 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -11548,6 +11548,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11547,6 +11547,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
          
          char badBiome = false;
          if( mCurMouseOverBiome != -1 &&

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 099f12d80..52a91a852 100644
+index 55bdda590..db9fa4c46 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -169,6 +169,8 @@ static int showLearnedTools = 1;
@@ -196,7 +196,7 @@ index 099f12d80..52a91a852 100644
      if( mDeathReason != NULL ) {
          delete [] mDeathReason;
          }
-@@ -13896,6 +14004,9 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -13895,6 +14003,9 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
  
  
  void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
@@ -206,7 +206,7 @@ index 099f12d80..52a91a852 100644
      char *foodDescription = 
          stringToUpperCase( getObject( inFoodID )->description );
                  
-@@ -13935,10 +14046,64 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
+@@ -13934,10 +14045,64 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
          (char*)( mCravingMessage[ mLiveCravingSheetIndex ] ) );
      
      mCravingExtraOffset[ mLiveCravingSheetIndex ].x = longestLine;
@@ -271,7 +271,7 @@ index 099f12d80..52a91a852 100644
  // color list from here:
  // https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
  
-@@ -17017,6 +17182,8 @@ void LivingLifePage::step() {
+@@ -17016,6 +17181,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -280,7 +280,7 @@ index 099f12d80..52a91a852 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17624,6 +17791,18 @@ void LivingLifePage::step() {
+@@ -17623,6 +17790,18 @@ void LivingLifePage::step() {
                              }
                          
  
@@ -299,7 +299,7 @@ index 099f12d80..52a91a852 100644
                          // Check if a home marker has been set or removed
                          if( responsiblePlayerID != -1 &&
                              ( old != 0 ||
-@@ -18008,6 +18187,7 @@ void LivingLifePage::step() {
+@@ -18007,6 +18186,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -307,7 +307,7 @@ index 099f12d80..52a91a852 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -18341,6 +18521,8 @@ void LivingLifePage::step() {
+@@ -18340,6 +18520,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -316,7 +316,7 @@ index 099f12d80..52a91a852 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22431,7 +22613,7 @@ void LivingLifePage::step() {
+@@ -22430,7 +22612,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -325,7 +325,7 @@ index 099f12d80..52a91a852 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -24009,6 +24191,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24008,6 +24190,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -333,7 +333,7 @@ index 099f12d80..52a91a852 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24077,7 +24260,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24076,7 +24259,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -342,7 +342,7 @@ index 099f12d80..52a91a852 100644
      mNextHintIndex = 0;
      
      
-@@ -24126,6 +24309,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24125,6 +24308,9 @@ void LivingLifePage::makeActive( char inFresh ) {
              mCravingMessage[i] = NULL;
              }
          }
@@ -352,7 +352,7 @@ index 099f12d80..52a91a852 100644
      
      
      for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
-@@ -28094,6 +28280,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28093,6 +28279,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mSayField.focus();
                  }
              break;
@@ -370,7 +370,7 @@ index 099f12d80..52a91a852 100644
          case 13:  // enter
              // speak
              if( ! TextField::isAnyFocused() ) {
-@@ -28412,6 +28609,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28411,6 +28608,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
