@@ -1,0 +1,37 @@
+name: Test Version
+
+on:
+  workflow_dispatch:
+    inputs:
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    outputs:
+      onelifeversion: ${{ steps.onelife.outputs.version }}
+      patchversion: ${{ steps.patch.outputs.version }}
+      modversion: ${{ steps.mod.outputs.version }}
+
+    steps:
+      - name: checkout onelife
+        uses: actions/checkout@v2
+        with:
+          repository: jasonrohrer/OneLife
+          path: OneLife
+      - name: Get Game Client Version
+        id: gameClientVersion
+        run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
+      - name: checkout patches
+        uses: actions/checkout@v2
+      - name: fetch tags
+        run: git fetch origin "+refs/tags/*:refs/tags/*"
+      - name: get patch version number
+        id: patch
+        run: echo ::set-output name=version::`git for-each-ref --sort=-authordate --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/v* | sed -e 's/v//'`
+      - name: Compose version
+        id: mod
+        run: echo ::set-output name=version::${{ steps.onelife.outputs.version}}.${{ steps.patch.outputs.version }}
+      - name: report
+        run: echo "${{ steps.mod.outputs.version }}"
