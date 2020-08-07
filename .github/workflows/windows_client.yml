@@ -33,37 +33,14 @@ jobs:
       - name: Package
         run: cd OneLife/gameSource && 7z a ../../${{ steps.zip.outputs.filename }} @../patches-master/package_files.txt
       - name: Upload versioned file
-        run: s3cmd --no-check-certificate --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error put ${{ steps.zip.outputs.filename }} s3://$BUCKET/
+        run: s3cmd -P --no-check-certificate --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error put ${{ steps.zip.outputs.filename }} s3://$BUCKET/
         env:
           BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
           SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Upload latest file
-        run: s3cmd --no-check-certificate --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error cp s3://$BUCKET/${{ steps.zip.outputs.filename }} s3://$BUCKET/WonLife-test-latest.zip
+        run: s3cmd -P --no-check-certificate --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error cp s3://$BUCKET/${{ steps.zip.outputs.filename }} s3://$BUCKET/WonLife-test-latest.zip
         env:
           BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
           SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - name: Target Commit
-        id: commitish
-        run: echo ::set-output name=sha::`git --git-dir=OneLife/patches-master/.git log -1 --pretty=format:%H v${{ steps.patchVesion.outputs.version }}`
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          commitish: ${{ steps.commitish.outputs.sha}}
-          tag_name: v${{ steps.gameClientVersion.outputs.version}}.${{ steps.patchVersion.outputs.version }}
-          release_name: v${{ steps.gameClientVersion.outputs.version}}.${{ steps.patchVersion.outputs.version }}
-          draft: true
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.zip.outputs.filename }}
-          asset_name: ${{ steps.zip.outputs.filename }}
-          asset_content_type: application/zip

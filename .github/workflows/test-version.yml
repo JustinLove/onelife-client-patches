@@ -57,9 +57,12 @@ jobs:
 
     steps:
       - name: windows download
-        run: curl https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.windowsFile }}
+        run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.windowsFile }} -o ${{ needs.test.outputs.windowsFile }}
       - name: macosx download
-        run: curl https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.macosxFile }}
+        run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.macosxFile }} -o ${{ needs.test.outputs.macosxFile }}
+
+      - name: file report
+        run: ls -R
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
