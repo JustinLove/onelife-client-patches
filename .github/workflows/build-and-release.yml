@@ -3,6 +3,12 @@ name: Build and Release
 on:
   workflow_dispatch:
     inputs:
+  push:
+    tags:
+      - v*
+  #schedule:
+    #         m h   d m w
+    #- cron: '7 */4 * * *'
 
 jobs:
   test:
