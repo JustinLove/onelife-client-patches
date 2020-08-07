@@ -13,7 +13,6 @@ jobs:
       gameClientVersion: ${{ steps.gameClient.outputs.version }}
       patchVersion: ${{ steps.patch.outputs.version }}
       modVersion: ${{ steps.mod.outputs.version }}
-      modVersion: ${{ steps.mod.outputs.version }}
       commitish: ${{ steps.commitish.outputs.sha }}
       windowsFile: ${{ steps.windows.outputs.filename }}
       macosxFile: ${{ steps.macosx.outputs.filename }}
