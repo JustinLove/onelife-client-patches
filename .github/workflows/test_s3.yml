@@ -1,0 +1,22 @@
+name: Test S3
+
+on:
+  workflow_dispatch:
+    inputs:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image:  wondible/ohol-dev-macosx
+
+    steps:
+      - name: Setup test file
+        run: echo "hi" > test.txt
+      - name: Upload versioned file
+        run: s3cmd --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes put test.txt s3://$BUCKET/
+        env:
+          BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -1,0 +1,46 @@
+name: MacOSX Client
+
+on:
+  workflow_dispatch:
+    inputs:
+
+jobs:
+  build:
+    #needs: test
+    #if: needs.test.outputs.lastversion != needs.test.outputs.dataversion
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  wondible/ohol-dev-macosx
+
+    steps:
+      - name: Fetch Latest Tagged
+        run: /ohol/fetch_latest_tagged.sh
+      - name: Apply Patches
+        run: /ohol/apply_patches.sh
+      - name: Build Client
+        run: /ohol/build_client_cross.sh
+      - name: Get Game Client Version
+        id: gameClientVersion
+        run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
+      - name: Get Patch Version
+        id: patchVersion
+        run: echo ::set-output name=version::`cat OneLife/patches-master/patchVersionNumber.txt`
+      - name: Compose filename
+        id: zip
+        run: echo ::set-output name=filename::WonLifeMacOSX-test-${{ steps.gameClientVersion.outputs.version}}.${{ steps.patchVersion.outputs.version }}.zip
+      - name: Package
+        run: cd OneLife/gameSource && 7z a ../../${{ steps.zip.outputs.filename }} @../patches-master/package_files.txt
+      - name: Upload versioned file
+        run: s3cmd -P --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes put ${{ steps.zip.outputs.filename }} s3://$BUCKET/
+        env:
+          BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Upload latest file
+        run: s3cmd -P --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes cp s3://$BUCKET/${{ steps.zip.outputs.filename }} s3://$BUCKET/WonLifeMacOSX-test-latest.zip
+        env:
+          BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

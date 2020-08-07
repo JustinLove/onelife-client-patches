@@ -1,0 +1,182 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+    inputs:
+  push:
+    tags:
+      - v*
+  #schedule:
+    #         m h   d m w
+    #- cron: '7 */4 * * *'
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    outputs:
+      gameClientVersion: ${{ steps.gameClient.outputs.version }}
+      patchVersion: ${{ steps.patch.outputs.version }}
+      modVersion: v${{ steps.mod.outputs.version }}
+      commitish: ${{ steps.commitish.outputs.sha }}
+      windowsFile: ${{ steps.windows.outputs.filename }}
+
+
+    steps:
+      - name: current release
+        id: currentrelease
+        uses: thebritican/fetch-latest-release@v1.0.3
+        with:
+          github_token: ${{ github.token }}
+      - name: checkout onelife
+        uses: actions/checkout@v2
+        with:
+          repository: jasonrohrer/OneLife
+          path: OneLife
+      - name: Get Game Client Version
+        id: gameClient
+        run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
+      - name: checkout patches
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: fetch tags
+        run: git fetch origin "+refs/tags/*:refs/tags/*"
+      - name: get patch version number
+        id: patch
+        run: echo ::set-output name=version::`git for-each-ref --sort=-authordate --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/v* | sed -e 's/v//'`
+      - name: Compose version
+        id: mod
+        run: echo ::set-output name=version::${{ steps.gameClient.outputs.version}}.${{ steps.patch.outputs.version }}
+      - name: Target Commit
+        id: commitish
+        run: echo ::set-output name=sha::`git log -1 --pretty=format:%H v${{ steps.patch.outputs.version }}`
+      - name: report
+        run: echo "${{ steps.mod.outputs.version }} ${{ steps.commitish.outputs.name }}"
+
+  windows:
+    needs: test
+    if: needs.test.outputs.modVersion != needs.test.outputs.releaseVersion
+
+    outputs:
+      filename: ${{ steps.zip.outputs.filename }}
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  wondible/ohol-dev-windows
+
+    steps:
+      - name: Fetch Latest Tagged
+        run: /ohol/fetch_latest_tagged.sh
+      - name: Apply Patches
+        run: /ohol/apply_patches.sh
+      - name: Build Client
+        run: /ohol/build_client_cross.sh
+      - name: Get Game Client Version
+        id: gameClientVersion
+        run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
+      - name: Get Patch Version
+        id: patchVersion
+        run: echo ::set-output name=version::`cat OneLife/patches-master/patchVersionNumber.txt`
+      - name: Compose filename
+        id: zip
+        run: echo ::set-output name=filename::WonLife-${{ steps.gameClientVersion.outputs.version}}.${{ steps.patchVersion.outputs.version }}.zip
+      - name: Package
+        run: cd OneLife/gameSource && 7z a ../../${{ steps.zip.outputs.filename }} @../patches-master/package_files.txt
+      - name: Upload versioned file
+        run: s3cmd -P --no-check-certificate --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error put ${{ steps.zip.outputs.filename }} s3://$BUCKET/
+        env:
+          BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Upload latest file
+        run: s3cmd -P --no-check-certificate --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes --stop-on-error cp s3://$BUCKET/${{ steps.zip.outputs.filename }} s3://$BUCKET/WonLife-latest.zip
+        env:
+          BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  macosx:
+    needs: test
+    if: needs.test.outputs.modVersion != needs.test.outputs.releaseVersion
+
+    outputs:
+      filename: ${{ steps.zip.outputs.filename }}
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  wondible/ohol-dev-macosx
+
+    steps:
+      - name: Fetch Latest Tagged
+        run: /ohol/fetch_latest_tagged.sh
+      - name: Apply Patches
+        run: /ohol/apply_patches.sh
+      - name: Build Client
+        run: /ohol/build_client_cross.sh
+      - name: Get Game Client Version
+        id: gameClientVersion
+        run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
+      - name: Get Patch Version
+        id: patchVersion
+        run: echo ::set-output name=version::`cat OneLife/patches-master/patchVersionNumber.txt`
+      - name: Compose filename
+        id: zip
+        run: echo ::set-output name=filename::WonLifeMacOSX-${{ steps.gameClientVersion.outputs.version}}.${{ steps.patchVersion.outputs.version }}.zip
+      - name: Package
+        run: cd OneLife/gameSource && 7z a ../../${{ steps.zip.outputs.filename }} @../patches-master/package_files.txt
+      - name: Upload versioned file
+        run: s3cmd -P --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes put ${{ steps.zip.outputs.filename }} s3://$BUCKET/
+        env:
+          BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Upload latest file
+        run: s3cmd -P --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY --human-readable-sizes cp s3://$BUCKET/${{ steps.zip.outputs.filename }} s3://$BUCKET/WonLifeMacOSX-latest.zip
+        env:
+          BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  release:
+    needs: [test, windows, macosx]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: windows download
+        run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.windows.outputs.filename }} -o ${{ needs.windows.outputs.filename }}
+      - name: macosx download
+        run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.macosx.outputs.filename }} -o ${{ needs.macosx.outputs.filename }}
+      - name: file report
+        run: ls -R
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          commitish: ${{ needs.test.outputs.commitish }}
+          tag_name: rel_${{ needs.test.outputs.modVersion}}
+          release_name: ${{ needs.test.outputs.modVersion}}
+      - name: Upload Windows
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ needs.windows.outputs.filename }}
+          asset_name: ${{ needs.windows.outputs.filename }}
+          asset_content_type: application/zip
+      - name: Upload MacOSX
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ needs.macosx.outputs.filename }}
+          asset_name: ${{ needs.macosx.outputs.filename }}
+          asset_content_type: application/zip
