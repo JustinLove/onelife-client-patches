@@ -20,6 +20,8 @@ jobs:
         with:
           repository: jasonrohrer/OneLife
           path: OneLife
+      - name: file report
+        run: ls -R
       - name: Get Game Client Version
         id: gameClientVersion
         run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
