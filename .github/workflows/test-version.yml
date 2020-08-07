@@ -38,18 +38,18 @@ jobs:
       - name: Compose version
         id: mod
         run: echo ::set-output name=version::${{ steps.gameClient.outputs.version}}.${{ steps.patch.outputs.version }}
-        #      - name: Target Commit
-        #        id: commitish
-        #        run: echo ::set-output name=sha::`git log -1 --pretty=format:%H v${{ steps.patch.outputs.version }}`
+      - name: Target Commit
+        id: commitish
+        run: echo ::set-output name=sha::`git log -1 --pretty=format:%H v${{ steps.patch.outputs.version }}`
       - name: report
         run: echo "${{ steps.mod.outputs.version }} ${{ steps.commitish.outputs.name }}"
-        #      - name: Windows filename
-        #        id: windows
-        #        run: echo ::set-output name=filename::WonLife-test-${{ steps.mod.outputs.version}}.zip
-        #      - name: MacOSX filename
-        #        id: macosx
-        #        run: echo ::set-output name=filename::WonLifeMacOSX-test-${{ steps.mod.outputs.version}}.zip
-        #
+      - name: Windows filename
+        id: windows
+        run: echo ::set-output name=filename::WonLife-test-${{ steps.mod.outputs.version}}.zip
+      - name: MacOSX filename
+        id: macosx
+        run: echo ::set-output name=filename::WonLifeMacOSX-test-${{ steps.mod.outputs.version}}.zip
+
         #  release:
         #    needs: test
         #
