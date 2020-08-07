@@ -51,41 +51,41 @@ jobs:
         id: macosx
         run: echo ::set-output name=filename::WonLifeMacOSX-test-${{ steps.mod.outputs.version}}.zip
 
-  release:
-    needs: test
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: windows download
-        run: curl https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.windowsFile }}
-      - name: macosx download
-        run: curl https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.macosxFile }}
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          commitish: ${{ needs.test.outputs.commitish }}
-          tag_name: v${{ needs.test.outputs.modVersion}}
-          release_name: v${{ needs.test.outputs.modVersion}}
-          draft: true
-      - name: Upload Windows
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ needs.test.outputs.windowsFile }}
-          asset_name: ${{ needs.test.outputs.windowsFile }}
-          asset_content_type: application/zip
-      - name: Upload MacOSX
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ needs.test.outputs.macosxFile }}
-          asset_name: ${{ needs.test.outputs.macosxFile }}
-          asset_content_type: application/zip
+        #  release:
+        #    needs: test
+        #
+        #    runs-on: ubuntu-latest
+        #
+        #    steps:
+        #      - name: windows download
+        #        run: curl https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.windowsFile }}
+        #      - name: macosx download
+        #        run: curl https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.macosxFile }}
+        #      - name: Create Release
+        #        id: create_release
+        #        uses: actions/create-release@v1
+        #        env:
+        #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        #        with:
+        #          commitish: ${{ needs.test.outputs.commitish }}
+        #          tag_name: v${{ needs.test.outputs.modVersion}}
+        #          release_name: v${{ needs.test.outputs.modVersion}}
+        #          draft: true
+        #      - name: Upload Windows
+        #        uses: actions/upload-release-asset@v1
+        #        env:
+        #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #        with:
+        #          upload_url: ${{ steps.create_release.outputs.upload_url }}
+        #          asset_path: ${{ needs.test.outputs.windowsFile }}
+        #          asset_name: ${{ needs.test.outputs.windowsFile }}
+        #          asset_content_type: application/zip
+        #      - name: Upload MacOSX
+        #        uses: actions/upload-release-asset@v1
+        #        env:
+        #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #        with:
+        #          upload_url: ${{ steps.create_release.outputs.upload_url }}
+        #          asset_path: ${{ needs.test.outputs.macosxFile }}
+        #          asset_name: ${{ needs.test.outputs.macosxFile }}
+        #          asset_content_type: application/zip
