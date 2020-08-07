@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: current release
         id: currentrelease
-        uses: thebritican/fetch-latest-release@v1
+        uses: thebritican/fetch-latest-release@v1.0.3
         with:
           github_token: ${{ github.token }}
       - name: checkout onelife
