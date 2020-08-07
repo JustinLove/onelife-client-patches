@@ -18,12 +18,13 @@ jobs:
       macosxFile: ${{ steps.macosx.outputs.filename }}
       releaseversion: ${{ steps.currentrelease.outputs.name }}
 
+
     steps:
       - name: current release
         id: currentrelease
         uses: thebritican/fetch-latest-release@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ github.token }}
       - name: checkout onelife
         uses: actions/checkout@v2
         with:
