@@ -16,8 +16,14 @@ jobs:
       commitish: ${{ steps.commitish.outputs.sha }}
       windowsFile: ${{ steps.windows.outputs.filename }}
       macosxFile: ${{ steps.macosx.outputs.filename }}
+      releaseversion: ${{ steps.currentrelease.outputs.name }}
 
     steps:
+      - name: current release
+        id: currentrelease
+        uses: thebritican/fetch-latest-release@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: checkout onelife
         uses: actions/checkout@v2
         with:
@@ -56,38 +62,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: windows download
-        run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.windowsFile }} -o ${{ needs.test.outputs.windowsFile }}
-      - name: macosx download
-        run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.macosxFile }} -o ${{ needs.test.outputs.macosxFile }}
-
-      - name: file report
-        run: ls -R
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          commitish: ${{ needs.test.outputs.commitish }}
-          tag_name: v${{ needs.test.outputs.modVersion}}
-          release_name: v${{ needs.test.outputs.modVersion}}
-          draft: true
-      - name: Upload Windows
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ needs.test.outputs.windowsFile }}
-          asset_name: ${{ needs.test.outputs.windowsFile }}
-          asset_content_type: application/zip
-      - name: Upload MacOSX
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ needs.test.outputs.macosxFile }}
-          asset_name: ${{ needs.test.outputs.macosxFile }}
-          asset_content_type: application/zip
+      - name: report
+        run: echo "${{ needs.test.outputs.releaseversion }}"
