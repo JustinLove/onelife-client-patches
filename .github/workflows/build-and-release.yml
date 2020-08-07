@@ -154,9 +154,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           commitish: ${{ needs.test.outputs.commitish }}
-          tag_name: ${{ needs.test.outputs.modVersion}}
+          tag_name: rel_${{ needs.test.outputs.modVersion}}
           release_name: ${{ needs.test.outputs.modVersion}}
-          draft: true
       - name: Upload Windows
         uses: actions/upload-release-asset@v1
         env:
