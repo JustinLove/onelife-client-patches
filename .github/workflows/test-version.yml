@@ -12,7 +12,11 @@ jobs:
     outputs:
       gameClientVersion: ${{ steps.gameClient.outputs.version }}
       patchVersion: ${{ steps.patch.outputs.version }}
-      modVersoin: ${{ steps.mod.outputs.version }}
+      modVersion: ${{ steps.mod.outputs.version }}
+      modVersion: ${{ steps.mod.outputs.version }}
+      commitish: ${{ steps.commitish.outputs.sha }}
+      windowsFile: ${{ steps.windows.outputs.filename }}
+      macosxFile: ${{ steps.macosx.outputs.filename }}
 
     steps:
       - name: checkout onelife
@@ -25,6 +29,8 @@ jobs:
         run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
       - name: checkout patches
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: fetch tags
         run: git fetch origin "+refs/tags/*:refs/tags/*"
       - name: get patch version number
@@ -33,5 +39,53 @@ jobs:
       - name: Compose version
         id: mod
         run: echo ::set-output name=version::${{ steps.gameClient.outputs.version}}.${{ steps.patch.outputs.version }}
+      - name: Target Commit
+        id: commitish
+        run: echo ::set-output name=sha::`git log -1 --pretty=format:%H v${{ steps.patch.outputs.version }}`
       - name: report
-        run: echo "${{ steps.mod.outputs.version }}"
+        run: echo "${{ steps.mod.outputs.version }} ${{ steps.commitish.outputs.name }}"
+      - name: Windows filename
+        id: windows
+        run: echo ::set-output name=filename::WonLife-test-${{ steps.mod.outputs.version}}.zip
+      - name: MacOSX filename
+        id: macosx
+        run: echo ::set-output name=filename::WonLifeMacOSX-test-${{ steps.mod.outputs.version}}.zip
+
+  release:
+    needs: test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: windows download
+        run: curl https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.windowsFile }}
+      - name: macosx download
+        run: curl https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.test.outputs.macosxFile }}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          commitish: ${{ needs.test.outputs.commitish }}
+          tag_name: v${{ needs.test.outputs.modVersion}}
+          release_name: v${{ needs.test.outputs.modVersion}}
+          draft: true
+      - name: Upload Windows
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ needs.test.outputs.windowsFile }}
+          asset_name: ${{ needs.test.outputs.windowsFile }}
+          asset_content_type: application/zip
+      - name: Upload MacOSX
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ needs.test.outputs.macosxFile }}
+          asset_name: ${{ needs.test.outputs.macosxFile }}
+          asset_content_type: application/zip
