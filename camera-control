@@ -1,26 +1,18 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 82eb60b29..1feb247a5 100644
+index 50085b044..6beb187c1 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -48,6 +48,17 @@
+@@ -48,6 +48,9 @@
  
  #include "minorGems/crypto/hashes/sha1.h"
  
 +
-+/*
-+# makefile additions
-+PLATFORM_SET_MOUSE = ${ROOT_PATH}/minorGems/ui/SetMouse${PLATFORM}
-+
-+SET_MOUSE_H = ${ROOT_PATH}/minorGems/ui/SetMouse.h
-+SET_MOUSE_CPP = ${PLATFORM_SET_MOUSE}.cpp
-+SET_MOUSE_O = ${PLATFORM_SET_MOUSE}.o
-+*/
-+#include "minorGems/ui/SetMouse.h"
++#include <SDL/SDL.h>
 +
  #include <stdlib.h>//#include <math.h>
  
  
-@@ -227,6 +238,14 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+@@ -227,6 +230,14 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  static float lastMouseX = 0;
  static float lastMouseY = 0;
  
@@ -35,7 +27,7 @@ index 82eb60b29..1feb247a5 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -2792,6 +2811,24 @@ LivingLifePage::LivingLifePage()
+@@ -2792,6 +2803,24 @@ LivingLifePage::LivingLifePage()
      // allow ctrl-v to paste into chat from clipboard
      mSayField.usePasteShortcut( true );
  
@@ -60,7 +52,7 @@ index 82eb60b29..1feb247a5 100644
      //
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
-@@ -15150,6 +15187,43 @@ void LivingLifePage::step() {
+@@ -15150,6 +15179,43 @@ void LivingLifePage::step() {
              mMapOffsetX = newMapOffsetX;
              mMapOffsetY = newMapOffsetY;
              
@@ -104,7 +96,7 @@ index 82eb60b29..1feb247a5 100644
              
              unsigned char *compressedChunk = 
                  new unsigned char[ compressedSize ];
-@@ -20646,6 +20720,30 @@ void LivingLifePage::step() {
+@@ -20646,6 +20712,30 @@ void LivingLifePage::step() {
  
          doublePair screenTargetPos = 
              mult( targetObjectPos, CELL_D );
@@ -135,7 +127,7 @@ index 82eb60b29..1feb247a5 100644
          
          if( vogMode ) {
              // don't adjust camera
-@@ -20658,6 +20756,10 @@ void LivingLifePage::step() {
+@@ -20658,6 +20748,10 @@ void LivingLifePage::step() {
              // moving
  
              // push camera out in front
@@ -146,7 +138,7 @@ index 82eb60b29..1feb247a5 100644
              
  
              double moveScale = 40 * cameraFollowsObject->currentSpeed;
-@@ -20689,18 +20791,6 @@ void LivingLifePage::step() {
+@@ -20689,18 +20783,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -165,7 +157,7 @@ index 82eb60b29..1feb247a5 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -20741,6 +20831,22 @@ void LivingLifePage::step() {
+@@ -20741,6 +20823,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -188,7 +180,7 @@ index 82eb60b29..1feb247a5 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -20760,6 +20866,10 @@ void LivingLifePage::step() {
+@@ -20760,6 +20858,10 @@ void LivingLifePage::step() {
          if( !shouldMoveCamera ) {
              screenTargetPos = lastScreenViewCenter;
              }
@@ -199,7 +191,7 @@ index 82eb60b29..1feb247a5 100644
          
  
          doublePair dir = sub( screenTargetPos, lastScreenViewCenter );
-@@ -22097,6 +22207,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22097,6 +22199,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      
      mouseDown = false;
      shouldMoveCamera = true;
@@ -207,11 +199,11 @@ index 82eb60b29..1feb247a5 100644
      
      screenCenterPlayerOffsetX = 0;
      screenCenterPlayerOffsetY = 0;
-@@ -23232,6 +23343,30 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -23232,6 +23335,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          }
      
      
-+    
++
 +    float spanX = viewWidth/2 - CELL_D/2;
 +    float spanY = viewHeight/2 - CELL_D/2;
 +    doublePair delta = {
@@ -229,16 +221,14 @@ index 82eb60b29..1feb247a5 100644
 +    if( freeCamera ) {
 +        screenCenterPlayerOffsetX -= delta.x;
 +        screenCenterPlayerOffsetY -= delta.y;
-+#ifdef WIN32
 +        int screenWidth, screenHeight;
 +        getScreenDimensions( &screenWidth, &screenHeight );
-+        SetMouse(screenWidth/2, screenHeight/2);
-+#endif
++        SDL_WarpMouse(screenWidth/2, screenHeight/2);
 +        }
      }
  
  
-@@ -26596,6 +26731,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26596,6 +26721,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -250,7 +240,7 @@ index 82eb60b29..1feb247a5 100644
          // inspired by Awbz OneLife+
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
-@@ -26804,6 +26944,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -26804,6 +26934,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
          case ' ':
              shouldMoveCamera = true;
              break;

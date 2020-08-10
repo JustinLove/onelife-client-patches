@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d68ee246d..9be606620 100644
+index cafaf8fd3..7ab12f521 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -163,6 +163,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
+@@ -155,6 +155,8 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
  
  static int clickToMoveLockToInteract = 0;
  
@@ -11,7 +11,7 @@ index d68ee246d..9be606620 100644
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -3086,6 +3088,8 @@ LivingLifePage::LivingLifePage()
+@@ -3078,6 +3080,8 @@ LivingLifePage::LivingLifePage()
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
  
@@ -20,7 +20,7 @@ index d68ee246d..9be606620 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -3174,6 +3178,18 @@ LivingLifePage::LivingLifePage()
+@@ -3166,6 +3170,18 @@ LivingLifePage::LivingLifePage()
          mYumSlipPosTargetOffset[i] = mYumSlipHideOffset[i];
          }
      
@@ -39,7 +39,7 @@ index d68ee246d..9be606620 100644
  
      for( int i=0; i<3; i++ ) {    
          mHungerSlipShowOffsets[i].x = -558;
-@@ -3848,6 +3864,77 @@ void drawHelpMarkKeys( doublePair messagePos ) {
+@@ -3840,6 +3856,77 @@ void drawHelpMarkKeys( doublePair messagePos ) {
      }
  
  
@@ -117,7 +117,7 @@ index d68ee246d..9be606620 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -10147,6 +10234,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10139,6 +10226,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
@@ -139,7 +139,7 @@ index d68ee246d..9be606620 100644
  
      // now draw tutorial sheets
      if( mTutorialNumber > 0 || mGlobalMessageShowing )
-@@ -13018,6 +13120,19 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -13010,6 +13112,19 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
      
      
      mGlobalMessageShowing = true;
@@ -159,7 +159,7 @@ index d68ee246d..9be606620 100644
      mGlobalMessageStartTime = game_getCurrentTime();
      
      if( mLiveTutorialSheetIndex >= 0 ) {
-@@ -13045,6 +13160,7 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -13037,6 +13152,7 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
          (char*)( mTutorialMessage[ mLiveTutorialSheetIndex ] ) );
      
      mTutorialExtraOffset[ mLiveTutorialSheetIndex ].x = longestLine;
@@ -167,7 +167,7 @@ index d68ee246d..9be606620 100644
      
      
      delete [] spaces;
-@@ -13752,6 +13868,41 @@ void LivingLifePage::step() {
+@@ -13744,6 +13860,41 @@ void LivingLifePage::step() {
              }
          
  
@@ -209,7 +209,7 @@ index d68ee246d..9be606620 100644
  
          if( ( isHintFilterStringInvalid() &&
                mCurrentHintObjectID != mNextHintObjectID ) ||
-@@ -13963,6 +14114,49 @@ void LivingLifePage::step() {
+@@ -13955,6 +14106,49 @@ void LivingLifePage::step() {
          }
  
  
@@ -259,7 +259,7 @@ index d68ee246d..9be606620 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -14542,13 +14736,19 @@ void LivingLifePage::step() {
+@@ -14534,13 +14728,19 @@ void LivingLifePage::step() {
              for( int i=1; i < tokens->size(); i++ ) {
                  char *tok = tokens->getElementDirect( i );
                  
@@ -280,7 +280,7 @@ index d68ee246d..9be606620 100644
                          }
                      }
                  }
-@@ -14601,6 +14801,7 @@ void LivingLifePage::step() {
+@@ -14593,6 +14793,7 @@ void LivingLifePage::step() {
              if( numRead == 2 ) {
                  usedToolSlots = numSlotsUsed;
                  totalToolSlots = numTotalSlots;
@@ -288,7 +288,7 @@ index d68ee246d..9be606620 100644
                  }
              }
          else if( type == HOMELAND ) {
-@@ -17643,6 +17844,15 @@ void LivingLifePage::step() {
+@@ -17635,6 +17836,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -304,7 +304,7 @@ index d68ee246d..9be606620 100644
                              }
                          
  
-@@ -22997,6 +23207,15 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22989,6 +23199,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      

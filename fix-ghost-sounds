@@ -1,0 +1,13 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index 453d3beff..ee4fd58f8 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -20864,7 +20864,7 @@ void LivingLifePage::step() {
+             o->heldFrozenRotFrameCount += animSpeed / BASE_SPEED;
+             }
+         
+-        if( o->holdingID > 0 ) {
++        if( o->holdingID > 0 && ! o->outOfRange ) {
+             handleAnimSound( o->id,
+                              o->holdingID, 0, o->curHeldAnim,
+                              oldFrameCount, o->heldAnimationFrameCount,

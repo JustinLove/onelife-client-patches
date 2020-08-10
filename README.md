@@ -2,6 +2,10 @@
 
 [Patched Windows Client](https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip)
 
+### fix-ghost-sounds
+
+Patch to fix ghost horses and other sounds
+
 ### custom-gitignore
 
 Cleans up some noise from my local compile environment that apparently don't bother Jason. Perhaps he has global ignores for those files.

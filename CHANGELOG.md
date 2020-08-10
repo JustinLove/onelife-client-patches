@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## v75
+
+- Camera control should no longer be windows-only
+- patch for ghost horses and other sounds
+
 ## v71
 
 - New setting to disable default search for craving
