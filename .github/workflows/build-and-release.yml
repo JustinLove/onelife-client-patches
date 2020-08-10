@@ -20,7 +20,6 @@ jobs:
       patchVersion: ${{ steps.patch.outputs.version }}
       modVersion: v${{ steps.mod.outputs.version }}
       commitish: ${{ steps.commitish.outputs.sha }}
-      windowsFile: ${{ steps.windows.outputs.filename }}
 
 
     steps:
@@ -53,7 +52,7 @@ jobs:
         id: commitish
         run: echo ::set-output name=sha::`git log -1 --pretty=format:%H v${{ steps.patch.outputs.version }}`
       - name: report
-        run: echo "${{ steps.mod.outputs.version }} ${{ steps.commitish.outputs.name }}"
+        run: echo "${{ steps.mod.outputs.version }} ${{ steps.currentrelease.outputs.name }}"
 
   windows:
     needs: test
