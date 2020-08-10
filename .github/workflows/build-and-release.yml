@@ -20,6 +20,7 @@ jobs:
       patchVersion: ${{ steps.patch.outputs.version }}
       modVersion: v${{ steps.mod.outputs.version }}
       commitish: ${{ steps.commitish.outputs.sha }}
+      releaseVersion: ${{ steps.currentrelease.outputs.name }}
 
 
     steps:

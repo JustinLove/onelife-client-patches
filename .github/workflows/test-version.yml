@@ -14,8 +14,6 @@ jobs:
       patchVersion: ${{ steps.patch.outputs.version }}
       modVersion: v${{ steps.mod.outputs.version }}
       commitish: ${{ steps.commitish.outputs.sha }}
-      windowsFile: ${{ steps.windows.outputs.filename }}
-      macosxFile: ${{ steps.macosx.outputs.filename }}
       releaseVersion: ${{ steps.currentrelease.outputs.name }}
 
 
