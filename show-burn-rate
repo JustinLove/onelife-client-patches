@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d8e6016f6..cafaf8fd3 100644
+index bb308e043..b53b97299 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -5952,6 +5952,48 @@ void LivingLifePage::drawHungerMaxFillLine( doublePair inAteWordsPos,
+@@ -5956,6 +5956,48 @@ void LivingLifePage::drawHungerMaxFillLine( doublePair inAteWordsPos,
  
  
  
@@ -51,7 +51,7 @@ index d8e6016f6..cafaf8fd3 100644
  
  static void drawLine( SpriteHandle inSegmentSprite,
                        doublePair inStart, doublePair inEnd,
-@@ -10567,7 +10609,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10571,7 +10613,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
  
          for( int i=0; i<ourLiveObject->foodCapacity; i++ ) {
              doublePair pos = { lastScreenViewCenter.x - 590, 
@@ -60,7 +60,7 @@ index d8e6016f6..cafaf8fd3 100644
          
              pos.x += i * 30;
              drawSprite( 
-@@ -10776,6 +10818,19 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10780,6 +10822,19 @@ void LivingLifePage::draw( doublePair inViewCenter,
              toggleMultiplicativeBlend( false );
              }
  

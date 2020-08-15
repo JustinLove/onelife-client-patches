@@ -1,12 +1,31 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c57aada5b..6e542a8e2 100644
+index c57aada5b..66c3d17d6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -10827,6 +10827,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -143,6 +143,8 @@ static int showShiverSweat = 1;
+ 
+ static int preferObjectsOverPlayersWithScreenLock = 1;
+ 
++static int dragDropUse = 1;
++
+ 
+ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
+@@ -2726,6 +2728,8 @@ LivingLifePage::LivingLifePage()
+ 
+     preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
+ 
++    dragDropUse = SettingsManager::getIntSetting( "dragDropUse", 1 );
++
+     openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
+     openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
+ 
+@@ -10827,6 +10831,39 @@ void LivingLifePage::draw( doublePair inViewCenter,
              }
              
  
-+            if( mouseHeld &&
++            if( dragDropUse &&
++                mouseHeld &&
 +                ourLiveObject->holdingID > 0 &&
 +                ! ourLiveObject->inMotion ) {
 +
@@ -41,12 +60,13 @@ index c57aada5b..6e542a8e2 100644
          
          if( showBugMessage ) {
              
-@@ -25370,6 +25402,38 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -25370,6 +25407,39 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  
 +    LiveObject *o = getOurLiveObject();
-+    if( mouseHeld &&
++    if( dragDropUse &&
++        mouseHeld &&
 +        o->holdingID > 0 &&
 +        ! o->inMotion ) {
 +

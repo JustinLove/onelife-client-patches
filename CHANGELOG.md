@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v76?
+
+- drag drop has a setting file
+
 ## v75
 
 - Camera control should no longer be windows-only

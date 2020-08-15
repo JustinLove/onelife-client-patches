@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 329dd8e1f..8e3567dab 100644
+index bc5590cff..c943359cc 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -151,6 +151,8 @@ static double newPlayerMessageTime = 0;
@@ -11,7 +11,7 @@ index 329dd8e1f..8e3567dab 100644
  static int categoryPile = 1600;
  
  static int preferObjectsOverPlayersWithScreenLock = 1;
-@@ -2502,6 +2504,26 @@ SimpleVector<char*> knownNames;
+@@ -2504,6 +2506,26 @@ SimpleVector<char*> knownNames;
  static int tabNameCompletion = 1;
  
  
@@ -38,7 +38,7 @@ index 329dd8e1f..8e3567dab 100644
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
  
-@@ -3457,6 +3479,15 @@ LivingLifePage::LivingLifePage()
+@@ -3459,6 +3481,15 @@ LivingLifePage::LivingLifePage()
          delete [] markKeyString;
          }
  
@@ -54,7 +54,7 @@ index 329dd8e1f..8e3567dab 100644
      categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
-@@ -7424,23 +7455,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
+@@ -7428,23 +7459,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
      if ( labeled ) {
          arrowPos.y -= LOCATION_SLIP_BOTTOM_TEXT;
          }
@@ -106,7 +106,7 @@ index 329dd8e1f..8e3567dab 100644
              }
          }
  
-@@ -14587,10 +14633,14 @@ void LivingLifePage::step() {
+@@ -14592,10 +14638,14 @@ void LivingLifePage::step() {
              char home =
                  ! locationSlip->temporary &&
                  ! locationSlip->ancient;
@@ -122,7 +122,7 @@ index 329dd8e1f..8e3567dab 100644
              locationSlip->labeled = home && homeSlips == 1;
              char expired =
                  locationSlip->temporary &&
-@@ -26657,6 +26707,22 @@ void LivingLifePage::playerUnmark() {
+@@ -26662,6 +26712,22 @@ void LivingLifePage::playerUnmark() {
      }
  
  
@@ -145,7 +145,7 @@ index 329dd8e1f..8e3567dab 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -28587,7 +28653,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28593,7 +28659,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                              
                                  if( filterStringLen > 0 ) {
                                      // not blank
@@ -154,7 +154,7 @@ index 329dd8e1f..8e3567dab 100644
                                          stringDuplicate( trimmedFilterString );
                                      }
                              
-@@ -28618,8 +28684,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28624,8 +28690,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
  
                          if( filterStringLen > 0 ) {
                              // not blank
@@ -178,7 +178,7 @@ index 329dd8e1f..8e3567dab 100644
                              }
  
                          delete [] trimmedFilterString;
-@@ -28771,6 +28850,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28777,6 +28856,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  

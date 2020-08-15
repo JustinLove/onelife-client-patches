@@ -109,6 +109,8 @@ Rewrite of some portions of pointer down and command issuing, depended on by oth
 
 Allows holding the mouse button when picking up an item, once the character is shown as holding the item, the cursor will show the item, and it can be released on another tile to use the item there. Handy for water-to-crops, soil-to-crops, moving things, etc.
 
+`settings/dragDropUse.ini` (0 to disable this feature)
+
 ### click-to-move-lock-to-interact
 
 Disabled by default `settings/clickToMoveLockToInteract.ini` (1 to enable this feature)

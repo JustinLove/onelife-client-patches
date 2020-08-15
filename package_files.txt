@@ -26,6 +26,7 @@ settings/openSayFieldOnTypingLower.ini
 settings/openSayFieldOnTypingUpper.ini
 settings/tabNameCompletion.ini
 settings/emotionKeys.ini
+settings/dragDropUse.ini
 settings/clickToMoveLockToInteract.ini
 settings/interactionKeysEnabled.ini
 settings/interactionKeys.ini

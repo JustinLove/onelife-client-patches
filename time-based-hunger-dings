@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a89a1fd0e..cecd2809f 100644
+index cc3736ecc..32f74b4aa 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -278,6 +278,9 @@ static char* lastNamed = NULL;
+@@ -280,6 +280,9 @@ static char* lastNamed = NULL;
  static int showNameLabels = 1;
  
  
@@ -12,7 +12,7 @@ index a89a1fd0e..cecd2809f 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -3520,6 +3523,8 @@ LivingLifePage::LivingLifePage()
+@@ -3524,6 +3527,8 @@ LivingLifePage::LivingLifePage()
  
      showNameLabels = SettingsManager::getIntSetting( "showNameLabels", 1 );
  
@@ -21,7 +21,7 @@ index a89a1fd0e..cecd2809f 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -22832,7 +22837,10 @@ void LivingLifePage::step() {
+@@ -22837,7 +22842,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index a89a1fd0e..cecd2809f 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -22917,6 +22925,9 @@ void LivingLifePage::step() {
+@@ -22922,6 +22930,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index a89a1fd0e..cecd2809f 100644
                  }
              }
          
-@@ -24459,6 +24470,70 @@ static void dummyFunctionA() {
+@@ -24464,6 +24475,70 @@ static void dummyFunctionA() {
  
  
  

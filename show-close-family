@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6beb187c1..43da72af7 100644
+index e65d9857f..42a22d570 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -144,6 +144,13 @@ static int ignoreTallObjects = 1;
@@ -15,8 +15,8 @@ index 6beb187c1..43da72af7 100644
 +
  static int preferObjectsOverPlayersWithScreenLock = 1;
  
- static int clickToMoveLockToInteract = 0;
-@@ -1043,9 +1050,181 @@ char *getRelationName( LiveObject *inOurObject, LiveObject *inTheirObject ) {
+ static int dragDropUse = 1;
+@@ -1045,9 +1052,181 @@ char *getRelationName( LiveObject *inOurObject, LiveObject *inTheirObject ) {
  
  
  
@@ -198,7 +198,7 @@ index 6beb187c1..43da72af7 100644
  
  
  // base speed for animations that aren't speeded up or slowed down
-@@ -2830,6 +3009,32 @@ LivingLifePage::LivingLifePage()
+@@ -2832,6 +3011,32 @@ LivingLifePage::LivingLifePage()
      showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
      setAnimationSweatSprite( SettingsManager::getIntSetting( "sweatDropSprite", 88 ) );
  
@@ -230,8 +230,8 @@ index 6beb187c1..43da72af7 100644
 +
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
  
-     openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
-@@ -3169,6 +3374,8 @@ LivingLifePage::LivingLifePage()
+     dragDropUse = SettingsManager::getIntSetting( "dragDropUse", 1 );
+@@ -3173,6 +3378,8 @@ LivingLifePage::LivingLifePage()
      if( ! tutorialDone ) {
          mTutorialNumber = 1;
          }
@@ -240,7 +240,7 @@ index 6beb187c1..43da72af7 100644
      }
  
  
-@@ -4498,6 +4705,47 @@ void LivingLifePage::drawMapCell( int inMapI,
+@@ -4502,6 +4709,47 @@ void LivingLifePage::drawMapCell( int inMapI,
  
                  }
  
@@ -288,7 +288,7 @@ index 6beb187c1..43da72af7 100644
          if( mMapContainedStacks[ inMapI ].size() > 0 ) {
              int *stackArray = 
                  mMapContainedStacks[ inMapI ].getElementArray();
-@@ -4993,6 +5241,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4997,6 +5245,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          else {
              setAnimationHeat( 0.5 );
              }
@@ -305,7 +305,7 @@ index 6beb187c1..43da72af7 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5285,6 +5543,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5289,6 +5547,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationBadgeColor( inObj->badgeColor );
                  }
  
@@ -323,7 +323,7 @@ index 6beb187c1..43da72af7 100644
              // rideable object
              holdingPos =
                  drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -5366,6 +5635,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5370,6 +5639,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                      setAnimationHeat( 0.5 );
                      }
                  
@@ -340,7 +340,7 @@ index 6beb187c1..43da72af7 100644
                  doublePair babyHeldPos = holdPos;
                  
                  if( babyO->babyWiggle ) {
-@@ -12435,6 +12714,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -12440,6 +12719,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
      char *spaces = replaceAll( lines, "_", " ", &found );
      
      delete [] lines;
@@ -352,7 +352,7 @@ index 6beb187c1..43da72af7 100644
      
      
      mGlobalMessageShowing = true;
-@@ -14380,6 +14664,9 @@ void LivingLifePage::step() {
+@@ -14385,6 +14669,9 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
@@ -362,7 +362,7 @@ index 6beb187c1..43da72af7 100644
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -14589,6 +14876,16 @@ void LivingLifePage::step() {
+@@ -14594,6 +14881,16 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -379,7 +379,7 @@ index 6beb187c1..43da72af7 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -16379,6 +16676,8 @@ void LivingLifePage::step() {
+@@ -16384,6 +16681,8 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -388,7 +388,7 @@ index 6beb187c1..43da72af7 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -18395,6 +18694,16 @@ void LivingLifePage::step() {
+@@ -18400,6 +18699,16 @@ void LivingLifePage::step() {
                                        &( o.id ),
                                        &( o.holdingID ) );
                      
@@ -405,7 +405,7 @@ index 6beb187c1..43da72af7 100644
                      
                      for( int i=0; i<gameObjects.size(); i++ ) {
                          
-@@ -19971,6 +20280,11 @@ void LivingLifePage::step() {
+@@ -19976,6 +20285,11 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -417,7 +417,7 @@ index 6beb187c1..43da72af7 100644
                          }
                      }
                  }
-@@ -24681,6 +24995,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -24686,6 +25000,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -457,7 +457,7 @@ index 6beb187c1..43da72af7 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26726,6 +27073,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26732,6 +27079,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
          }
  
