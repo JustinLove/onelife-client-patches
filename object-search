@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 95454d00e..bc5590cff 100644
+index 95454d00e..f2d6d5395 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -163,6 +163,8 @@ static int showLearnedTools = 1;
@@ -394,7 +394,7 @@ index 95454d00e..bc5590cff 100644
 +
 +                        if( filterStringLen > 0 ) {
 +                            // not blank
-+                            mObjectSearchString = 
++                            mObjectSearchString =
 +                                stringDuplicate( trimmedFilterString );
 +                            }
 +
