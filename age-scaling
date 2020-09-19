@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index d059ea3c8..284bc4fb3 100644
+index 4d6d8c9af..e15c12820 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1492,8 +1492,8 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
