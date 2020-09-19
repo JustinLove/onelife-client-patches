@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7613742fa..71861a84d 100644
+index f656d33ef..14c292d9a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -276,6 +276,9 @@ static yumType isYummy( int inObjectID ) {

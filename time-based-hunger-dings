@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 71861a84d..e713f2a16 100644
+index 14c292d9a..59a2826f5 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -280,6 +280,9 @@ static char* lastNamed = NULL;
