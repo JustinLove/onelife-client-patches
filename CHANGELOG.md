@@ -6,6 +6,7 @@
 - player search can find known graves
 - ranged use key actions from outside of range will not move towards the target (e.g. the wolf)
 - backpack use key will work on special clothing, e.g. take a bow from backpack or quiver
+- twins name is known
 
 ## v75
 

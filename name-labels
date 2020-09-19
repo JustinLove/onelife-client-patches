@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f656d33ef..14c292d9a 100644
+index c62fbd626..9f2cce7a2 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -276,6 +276,9 @@ static yumType isYummy( int inObjectID ) {
@@ -409,7 +409,15 @@ index f656d33ef..14c292d9a 100644
                                      for( int t=0; 
                                           t < existing->lineage.size();
                                           t++ ) {
-@@ -22090,6 +22395,19 @@ void LivingLifePage::step() {
+@@ -21962,6 +22267,7 @@ void LivingLifePage::step() {
+                             }
+                         if( other->relationDistance == 0 ) {
+                             other->relationDistance = 1;
++                            other->nameKnown = true;
+                             }
+                         }
+                     }
+@@ -22093,6 +22399,19 @@ void LivingLifePage::step() {
                                  
                                  existing->name = stringDuplicate( nameStart );
                                  knownNames.push_back(stringDuplicate( nameStart ));
@@ -429,7 +437,7 @@ index f656d33ef..14c292d9a 100644
                                  }
                              
                              break;
-@@ -24209,6 +24527,8 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24212,6 +24531,8 @@ void LivingLifePage::makeActive( char inFresh ) {
      mLastMouseOverID = 0;
      mCurMouseOverID = 0;
      mCurMouseOverBiome = -1;
@@ -438,7 +446,7 @@ index f656d33ef..14c292d9a 100644
      mCurMouseOverFade = 0;
      mCurMouseOverBehind = false;
      mCurMouseOverPerson = false;
-@@ -25205,6 +25525,9 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -25208,6 +25529,9 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
  
      ourLiveObject->currentMouseOverClothingIndex = -1;
      
@@ -448,7 +456,7 @@ index f656d33ef..14c292d9a 100644
      if( destID == 0 ) {
          if( p.hitSelf ) {
              mCurMouseOverSelf = true;
-@@ -25238,6 +25561,7 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -25241,6 +25565,7 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
              // store negative in place so that we can show their relation
              // string
              mCurMouseOverID = - p.hitOtherPersonID;
@@ -456,7 +464,7 @@ index f656d33ef..14c292d9a 100644
              mCurMouseOverBiome = -1;
              }
          }
-@@ -25318,6 +25642,10 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -25321,6 +25646,10 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          mCurMouseOverBehind = false;
          mLastMouseOverFade = 1.0f;
          }

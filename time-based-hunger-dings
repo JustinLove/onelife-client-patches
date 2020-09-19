@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 14c292d9a..59a2826f5 100644
+index 9f2cce7a2..af0c55a1e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -280,6 +280,9 @@ static char* lastNamed = NULL;
@@ -21,7 +21,7 @@ index 14c292d9a..59a2826f5 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -22857,7 +22862,10 @@ void LivingLifePage::step() {
+@@ -22861,7 +22866,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index 14c292d9a..59a2826f5 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -22942,6 +22950,9 @@ void LivingLifePage::step() {
+@@ -22946,6 +22954,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index 14c292d9a..59a2826f5 100644
                  }
              }
          
-@@ -24484,6 +24495,70 @@ static void dummyFunctionA() {
+@@ -24488,6 +24499,70 @@ static void dummyFunctionA() {
  
  
  

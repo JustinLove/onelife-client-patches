@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 812ab622a..9e21cd0f2 100644
+index 55db0299c..a26d3a4c8 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -163,6 +163,8 @@ static int showLearnedTools = 1;
@@ -316,7 +316,7 @@ index 812ab622a..9e21cd0f2 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22427,7 +22609,7 @@ void LivingLifePage::step() {
+@@ -22430,7 +22612,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -325,7 +325,7 @@ index 812ab622a..9e21cd0f2 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -24005,6 +24187,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24008,6 +24190,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -333,7 +333,7 @@ index 812ab622a..9e21cd0f2 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24073,7 +24256,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24076,7 +24259,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -342,7 +342,7 @@ index 812ab622a..9e21cd0f2 100644
      mNextHintIndex = 0;
      
      
-@@ -24122,6 +24305,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24125,6 +24308,9 @@ void LivingLifePage::makeActive( char inFresh ) {
              mCravingMessage[i] = NULL;
              }
          }
@@ -352,7 +352,7 @@ index 812ab622a..9e21cd0f2 100644
      
      
      for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
-@@ -28091,6 +28277,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28094,6 +28280,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mSayField.focus();
                  }
              break;
@@ -370,7 +370,7 @@ index 812ab622a..9e21cd0f2 100644
          case 13:  // enter
              // speak
              if( ! TextField::isAnyFocused() ) {
-@@ -28409,6 +28606,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28412,6 +28609,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }

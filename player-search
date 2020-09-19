@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9e21cd0f2..f656d33ef 100644
+index a26d3a4c8..c62fbd626 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -151,6 +151,8 @@ static double newPlayerMessageTime = 0;
@@ -149,7 +149,7 @@ index 9e21cd0f2..f656d33ef 100644
              locationSlip->labeled = home && homeSlips == 1;
              char expired =
                  locationSlip->temporary &&
-@@ -26664,6 +26734,22 @@ void LivingLifePage::playerUnmark() {
+@@ -26667,6 +26737,22 @@ void LivingLifePage::playerUnmark() {
      }
  
  
@@ -172,7 +172,7 @@ index 9e21cd0f2..f656d33ef 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -28595,7 +28681,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28598,7 +28684,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                              
                                  if( filterStringLen > 0 ) {
                                      // not blank
@@ -181,7 +181,7 @@ index 9e21cd0f2..f656d33ef 100644
                                          stringDuplicate( trimmedFilterString );
                                      }
                              
-@@ -28626,8 +28712,31 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28629,8 +28715,31 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
  
                          if( filterStringLen > 0 ) {
                              // not blank
@@ -215,7 +215,7 @@ index 9e21cd0f2..f656d33ef 100644
                              }
  
                          delete [] trimmedFilterString;
-@@ -28779,6 +28888,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28782,6 +28891,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  

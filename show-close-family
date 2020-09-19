@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 43dd1832a..31a61c7d5 100644
+index 43dd1832a..d249dd3ea 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -144,6 +144,13 @@ static int ignoreTallObjects = 1;
@@ -84,7 +84,7 @@ index 43dd1832a..31a61c7d5 100644
 +            }
 +        else {
 +            // close enough together in age
-+            return 1;
++            return 0;
 +            }
 +        }
 +    else if( theirMatchIndex == 0 ) {
@@ -154,7 +154,7 @@ index 43dd1832a..31a61c7d5 100644
 +    theirLin->deleteAll();
 +}
 +
- 
++
 +void testRelations() {
 +    SimpleVector<int> ourLin;
 +    SimpleVector<int> theirLin;
@@ -164,7 +164,7 @@ index 43dd1832a..31a61c7d5 100644
  
 +    theirLin.push_back(1);
 +    testRelation( &ourLin, &theirLin, "child", 0 );
-+
+ 
 +    ourLin.push_back(3);
 +    ourLin.push_back(2);
 +    testRelation( &ourLin, &theirLin, "grandmother", 1 );
@@ -405,7 +405,7 @@ index 43dd1832a..31a61c7d5 100644
                      
                      for( int i=0; i<gameObjects.size(); i++ ) {
                          
-@@ -19976,6 +20285,11 @@ void LivingLifePage::step() {
+@@ -19976,6 +20285,14 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -414,10 +414,13 @@ index 43dd1832a..31a61c7d5 100644
 +                        if( other->relationDistance == 1 && game_getCurrentTime() < newPlayerMessageTime + 1) {
 +                            other->newPlayer = true;
 +                            }
++                        if( other->relationDistance == 0 ) {
++                            other->relationDistance = 1;
++                            }
                          }
                      }
                  }
-@@ -24688,6 +25002,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -24688,6 +25005,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -457,7 +460,7 @@ index 43dd1832a..31a61c7d5 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26734,6 +27081,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26734,6 +27084,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
          }
  
