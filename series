@@ -1,4 +1,5 @@
-# This series applies on GIT commit b1d0575d23ac0899c6ef8a59047040fe26ec5587
+# This series applies on GIT commit 05acf01c5648c4b601489d697355618200f95f0a
+fix-ghost-sounds
 custom-gitignore
 show-modded-client
 optional-client-tag

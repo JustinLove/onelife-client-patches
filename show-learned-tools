@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b53b97299..e0fd9e815 100644
+index 117d7b0a7..5d5a98ab3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -157,6 +157,8 @@ static int dragDropUse = 1;
@@ -351,10 +351,10 @@ index dd23c9a13..9f86f73ef 100644
          doublePair mCravingHideOffset[NUM_HINT_SHEETS];
          doublePair mCravingPosOffset[NUM_HINT_SHEETS];
 diff --git a/gameSource/objectBank.cpp b/gameSource/objectBank.cpp
-index 183306388..6a18a4b53 100644
+index 643520eee..c04f3a9af 100644
 --- a/gameSource/objectBank.cpp
 +++ b/gameSource/objectBank.cpp
-@@ -5003,6 +5003,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
+@@ -5220,6 +5220,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
  
  
  
@@ -399,10 +399,10 @@ index 183306388..6a18a4b53 100644
      ObjectRecord *o = getObject( inObjectID );
      
 diff --git a/gameSource/objectBank.h b/gameSource/objectBank.h
-index c61ac8bdd..af6a8005e 100644
+index 15de3d39e..a82cee143 100644
 --- a/gameSource/objectBank.h
 +++ b/gameSource/objectBank.h
-@@ -759,6 +759,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
+@@ -772,6 +772,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
  int getMaxDiameter( ObjectRecord *inObject );
  
  

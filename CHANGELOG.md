@@ -4,6 +4,7 @@
 
 - drag drop has a setting file
 - player search can find known graves
+- ranged use key actions from outside of range will not move towards the target (e.g. the wolf)
 
 ## v75
 

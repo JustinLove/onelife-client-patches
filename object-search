@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 95454d00e..f2d6d5395 100644
+index 901cdb719..c91e19704 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -163,6 +163,8 @@ static int showLearnedTools = 1;
@@ -352,7 +352,7 @@ index 95454d00e..f2d6d5395 100644
      
      
      for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
-@@ -28089,6 +28275,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28090,6 +28276,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mSayField.focus();
                  }
              break;
@@ -370,7 +370,7 @@ index 95454d00e..f2d6d5395 100644
          case 13:  // enter
              // speak
              if( ! TextField::isAnyFocused() ) {
-@@ -28407,6 +28604,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28408,6 +28605,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }

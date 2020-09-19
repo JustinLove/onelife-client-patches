@@ -82,7 +82,7 @@ index d0e056819..1e7d1b7a0 100644
                  
                  if( babyO->babyWiggle ) {
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 4fab20e3f..1e1e2c57d 100644
+index 473c1bbba..12479ae9f 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -71,7 +71,6 @@ static char outputMouthFrames = false;
@@ -121,7 +121,7 @@ index 4fab20e3f..1e1e2c57d 100644
  
  static char shouldHidePersonShadows = false;
  
-@@ -3200,6 +3213,50 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -3217,6 +3230,50 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  

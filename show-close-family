@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e65d9857f..42a22d570 100644
+index 4f292a79a..317218074 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -144,6 +144,13 @@ static int ignoreTallObjects = 1;
@@ -417,7 +417,7 @@ index e65d9857f..42a22d570 100644
                          }
                      }
                  }
-@@ -24686,6 +25000,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -24687,6 +25001,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -457,7 +457,7 @@ index e65d9857f..42a22d570 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26732,6 +27079,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26733,6 +27080,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
          }
  
@@ -508,7 +508,7 @@ index 06b894671..6d9978a4f 100644
          LiveObject *getOurLiveObject();
          LiveObject *getLiveObject( int inID );
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 1e1e2c57d..3184e95b7 100644
+index 12479ae9f..e26d81d8b 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -1253,6 +1253,78 @@ void setAnimationSweatSprite( int spriteID ) {
@@ -590,7 +590,7 @@ index 1e1e2c57d..3184e95b7 100644
  
  static char shouldHidePersonShadows = false;
  
-@@ -3433,6 +3505,60 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -3450,6 +3522,60 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
                          NULL );
          }
  

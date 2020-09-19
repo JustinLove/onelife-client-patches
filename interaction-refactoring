@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cdc998b17..c57aada5b 100644
+index cdc998b17..524911c42 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -23223,6 +23223,971 @@ static void freeSavedPath() {
+@@ -23223,6 +23223,972 @@ static void freeSavedPath() {
          }
      }
  
@@ -857,7 +857,8 @@ index cdc998b17..c57aada5b 100644
 +            playerActionTargetNotAdjacent = true;
 +            }
 +        else {
-+            canExecute = moveNearTo( clickDestX, clickDestY );
++            // Out of range. Don't want to run headlong into a wolf
++            //canExecute = moveNearTo( clickDestX, clickDestY );
 +            }
 +        }
 +    else {
@@ -974,7 +975,7 @@ index cdc998b17..c57aada5b 100644
  
  
  
-@@ -23355,8 +24320,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23355,8 +24321,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -983,7 +984,7 @@ index cdc998b17..c57aada5b 100644
      
      
  
-@@ -23718,7 +24681,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23718,7 +24682,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int moveDestX = clickDestX;
      int moveDestY = clickDestY;
      
@@ -991,7 +992,7 @@ index cdc998b17..c57aada5b 100644
  
  
      
-@@ -23726,61 +24688,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23726,61 +24689,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      if( destID > 0 && p.hitAnObject ) {
          
@@ -1054,7 +1055,7 @@ index cdc998b17..c57aada5b 100644
          }
  
      
-@@ -24145,7 +25053,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24145,7 +25054,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // a move to an empty spot where we're not already standing
          // can interrupt current move
          
@@ -1063,7 +1064,7 @@ index cdc998b17..c57aada5b 100644
          }
      else if( ( modClick && 
                 // we can right click on an empty tile or full tile if
-@@ -24164,276 +25072,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24164,276 +25073,8 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          // use/drop modifier
          // OR pick up action
              
@@ -1341,7 +1342,7 @@ index cdc998b17..c57aada5b 100644
          
          
  
-@@ -24475,47 +25115,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24475,47 +25116,9 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // check for other special case
                  // a use-on-ground transition or use-on-floor transition
  
@@ -1392,7 +1393,7 @@ index cdc998b17..c57aada5b 100644
                      }
                  }
              else if( destID != 0 &&
-@@ -24696,216 +25298,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24696,216 +25299,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
              delete [] extra;
              }
          }

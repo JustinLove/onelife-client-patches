@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a410fe204..e65d9857f 100644
+index ca104610e..4f292a79a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -48,6 +48,9 @@
@@ -228,7 +228,7 @@ index a410fe204..e65d9857f 100644
      }
  
  
-@@ -26602,6 +26727,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26603,6 +26728,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -240,7 +240,7 @@ index a410fe204..e65d9857f 100644
          // inspired by Awbz OneLife+
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
-@@ -26810,6 +26940,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -26811,6 +26941,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
          case ' ':
              shouldMoveCamera = true;
              break;

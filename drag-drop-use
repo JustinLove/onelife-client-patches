@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c57aada5b..66c3d17d6 100644
+index 524911c42..e61d82597 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -143,6 +143,8 @@ static int showShiverSweat = 1;
@@ -60,7 +60,7 @@ index c57aada5b..66c3d17d6 100644
          
          if( showBugMessage ) {
              
-@@ -25370,6 +25407,39 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -25371,6 +25408,39 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  
