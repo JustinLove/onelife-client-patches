@@ -1,6 +1,6 @@
 # Changelog - feature changes
 
-## v76?
+## v76
 
 - drag drop has a setting file
 - player search can find known graves
