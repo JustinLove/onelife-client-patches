@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a8a42a587..9a16fd166 100644
+index 6b1542c7f..9000833db 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -5956,6 +5956,48 @@ void LivingLifePage::drawHungerMaxFillLine( doublePair inAteWordsPos,

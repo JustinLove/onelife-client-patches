@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 1b92891d0..66d4e9780 100644
+index e926d7c0f..d0f554e5c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -21532,7 +21532,7 @@ void LivingLifePage::step() {
@@ -20,11 +20,11 @@ index 1b92891d0..66d4e9780 100644
                      extra = autoSprintf( " %d %d", destID, useExtraIParam );
                      }
                  else {
-@@ -25343,6 +25343,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25355,6 +25355,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                      
                                      showPlayerLabel( leadO, leaderLabel, eta );
                                      }
 +                                if( usingClientTag )
                                  sendToServerSocket( (char*)"LEAD 0 0#" );
                                  }
-                             else if( strstr( typedText,
+                             else if( commandTyped( typedText, 

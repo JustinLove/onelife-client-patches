@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index af08f6c59..13c70ff38 100644
+index 558b6dedd..f0606544a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -178,6 +178,12 @@ static char *photoSig = NULL;
@@ -34,7 +34,7 @@ index af08f6c59..13c70ff38 100644
      
      double pageLifeTime = game_getCurrentTime() - mPageStartTime;
  
-@@ -25099,6 +25110,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25120,6 +25131,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          return;
          }
  
@@ -42,7 +42,7 @@ index af08f6c59..13c70ff38 100644
      
      switch( inASCII ) {
          /*
-@@ -25120,6 +25132,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25141,6 +25153,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  SettingsManager::getIntSetting( "vogModeOn", 0 ) ) {
@@ -50,7 +50,7 @@ index af08f6c59..13c70ff38 100644
                  
                  if( ! vogMode ) {
                      sendToServerSocket( (char*)"VOGS 0 0#" );
-@@ -25151,6 +25164,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25172,6 +25185,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          case 'I':
              if( ! mSayField.isFocused() &&
                  vogMode ) {
@@ -58,7 +58,7 @@ index af08f6c59..13c70ff38 100644
                  
                  if( ! vogPickerOn ) {
                      addComponent( &mObjectPicker );
-@@ -25167,6 +25181,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25188,6 +25202,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  vogMode ) {
@@ -66,7 +66,7 @@ index af08f6c59..13c70ff38 100644
                  sendToServerSocket( (char*)"VOGP 0 0#" );
                  }
              break;
-@@ -25174,12 +25189,14 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25195,12 +25210,14 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              if( ! mSayField.isFocused() &&
                  serverSocketConnected &&
                  vogMode ) {
@@ -81,7 +81,7 @@ index af08f6c59..13c70ff38 100644
                  savingSpeechColor = true;
                  savingSpeechMask = false;
                  savingSpeech = true;
-@@ -25189,6 +25206,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25210,6 +25227,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          case 'X':
              if( userTwinCode != NULL &&
                  ! mStartedLoadingFirstObjectSet ) {
@@ -89,7 +89,7 @@ index af08f6c59..13c70ff38 100644
                  
                  closeSocket( mServerSocket );
                  mServerSocket = -1;
-@@ -25258,18 +25276,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25279,18 +25297,21 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          */
          case 'e':
          case 'E':
@@ -112,7 +112,7 @@ index af08f6c59..13c70ff38 100644
                  shouldMoveCamera = false;
                  }
              break;
-@@ -25712,6 +25733,35 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25721,6 +25742,35 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;

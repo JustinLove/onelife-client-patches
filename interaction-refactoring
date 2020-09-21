@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cdc998b17..524911c42 100644
+index 5d4f5f580..ffc7a77fb 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -23223,6 +23223,972 @@ static void freeSavedPath() {
