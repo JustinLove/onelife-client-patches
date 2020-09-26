@@ -288,6 +288,10 @@ Starvation notices are based on time to starvation instead of food boxes, making
 
 `settings/starvationAlarmTime.ini` - number of seconds for starving state (twice that for hungry). Set to 0 to disable this feature.
 
+## compat-missing-strings
+
+Adds fallbacks for some missing strings in 2hol
+
 ### Patch Development
 
 I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.

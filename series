@@ -35,3 +35,4 @@ object-search
 player-search
 name-labels
 time-based-hunger-dings
+compat-missing-strings

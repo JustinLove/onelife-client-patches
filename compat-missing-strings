@@ -1,0 +1,48 @@
+diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
+index c15d13c1e..90249cb90 100644
+--- a/gameSource/LivingLifePage.cpp
++++ b/gameSource/LivingLifePage.cpp
+@@ -11271,6 +11271,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+ 
+             char *pageNum = NULL;
+             double pageNumExtra = 0;
++            char *shiftHint = stringToUpperCase( translate( shiftHintKey ) );
+             
+             if( mNumTotalHints[i] > 1 ) {
+                 
+@@ -11286,7 +11287,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+                     handwritingFont->measureString( translate( "tabHint" ) );
+ 
+                 double extraC = 
+-                    handwritingFont->measureString( translate( shiftHintKey ) );
++                    handwritingFont->measureString( shiftHint );
+                 
+                 if( extraB > extraA ) {
+                     extraA = extraB;
+@@ -11369,7 +11370,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+                 
+                 delete [] pageNum;
+                 
+-                handwritingFont->drawString( translate( shiftHintKey ), 
++                handwritingFont->drawString( shiftHint,
+                                              lineStart, alignCenter );
+                 
+                 lineStart.y -= lineSpacing;
+@@ -11377,6 +11378,8 @@ void LivingLifePage::draw( doublePair inViewCenter,
+                 handwritingFont->drawString( translate( "tabHint" ), 
+                                              lineStart, alignCenter );
+                 }
++
++            delete [] shiftHint;
+             }
+         }
+ 
+@@ -13965,7 +13968,7 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
+             actorString = stringDuplicate( translate( "bareHandHint" ) );
+             }
+         else if( actor == -1 ) {
+-            actorString = stringDuplicate( translate( "timeHint" ) );
++            actorString = stringToUpperCase( translate( "timeHint" ) );
+             }
+         else {
+             actorString = stringDuplicate( "" );
