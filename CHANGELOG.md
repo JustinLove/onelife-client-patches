@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v77?
+
+- fix tools lost for more learned tools than slots. Showing tools is disabled by default (if you have a setting file, you may still need to change it)
+
 ## v76
 
 - drag drop has a setting file

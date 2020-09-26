@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 5e303e2fb..d7a45a361 100644
+index 8ee612401..1d54123f6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -135,6 +135,8 @@ static unsigned int minMouseDownFrames = 30;
+@@ -137,6 +137,8 @@ static unsigned int minMouseDownFrames = 30;
  static unsigned int maxDoubleClickFrames = 30;
  static int maxDoubleClickDrift = 30;
  
@@ -11,7 +11,7 @@ index 5e303e2fb..d7a45a361 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2701,6 +2703,8 @@ LivingLifePage::LivingLifePage()
+@@ -2719,6 +2721,8 @@ LivingLifePage::LivingLifePage()
      //
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
@@ -20,7 +20,7 @@ index 5e303e2fb..d7a45a361 100644
      
      initLiveTriggers();
  
-@@ -22315,7 +22319,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -22435,7 +22439,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
          // all short objects are mouse-through-able
          
          if( oID > 0 && 
@@ -30,7 +30,7 @@ index 5e303e2fb..d7a45a361 100644
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -22426,8 +22431,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -22546,8 +22551,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
@@ -43,7 +43,7 @@ index 5e303e2fb..d7a45a361 100644
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -22632,7 +22639,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -22558,7 +22565,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }

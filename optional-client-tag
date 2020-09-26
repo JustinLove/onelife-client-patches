@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 8b8ac8fc7..e926d7c0f 100644
+index f77e664be..33aac5c0d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -103,6 +103,8 @@ extern int userTwinCount;
+@@ -105,6 +105,8 @@ extern int userTwinCount;
  
  extern char userReconnect;
  
@@ -11,7 +11,7 @@ index 8b8ac8fc7..e926d7c0f 100644
  static char vogMode = false;
  static char vogModeActuallyOn = false;
  
-@@ -13980,6 +13982,7 @@ void LivingLifePage::step() {
+@@ -14091,6 +14093,7 @@ void LivingLifePage::step() {
                  }
  
  
@@ -19,7 +19,7 @@ index 8b8ac8fc7..e926d7c0f 100644
              if( strlen( userEmail ) <= 80 ) {    
                  outMessage = autoSprintf( "%s %s %-80s %s %s %d%s#",
                                            loginWord,
-@@ -13996,6 +13999,24 @@ void LivingLifePage::step() {
+@@ -14107,6 +14110,24 @@ void LivingLifePage::step() {
                                            clientTag, tempEmail, pwHash, keyHash,
                                            mTutorialNumber, twinExtra );
                  }
@@ -44,7 +44,7 @@ index 8b8ac8fc7..e926d7c0f 100644
              
              delete [] tempEmail;
              delete [] twinExtra;
-@@ -14015,6 +14036,13 @@ void LivingLifePage::step() {
+@@ -14126,6 +14147,13 @@ void LivingLifePage::step() {
              // subsequent messages should all be part of FRAME batches
              waitForFrameMessages = true;
  
@@ -59,7 +59,7 @@ index 8b8ac8fc7..e926d7c0f 100644
  
              delete [] message;
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index 344f2d0ac..f7be25ddc 100644
+index 23c31edc8..6f8886ea6 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -136,6 +136,9 @@ char *userTwinCode = NULL;
@@ -81,7 +81,7 @@ index 344f2d0ac..f7be25ddc 100644
      
      if( SettingsManager::getIntSetting( "useCustomServer", 0 ) ) {
          usingCustomServer = true;
-@@ -1956,19 +1961,26 @@ void drawFrame( char inUpdate ) {
+@@ -1957,19 +1962,26 @@ void drawFrame( char inUpdate ) {
              }
          else if( currentGamePage == livingLifePage ) {
              if( livingLifePage->checkSignal( "loginFailed" ) ) {

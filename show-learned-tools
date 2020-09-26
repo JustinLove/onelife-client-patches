@@ -1,26 +1,26 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9000833db..9ab0dbf5f 100644
+index b2d1b8142..fe78a7b8d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -157,6 +157,8 @@ static int dragDropUse = 1;
+@@ -159,6 +159,8 @@ static int dragDropUse = 1;
  
  static int clickToMoveLockToInteract = 0;
  
-+static int showLearnedTools = 1;
++static int showLearnedTools = 0;
 +
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -3082,6 +3084,8 @@ LivingLifePage::LivingLifePage()
+@@ -3100,6 +3102,8 @@ LivingLifePage::LivingLifePage()
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
  
-+    showLearnedTools = SettingsManager::getIntSetting( "showLearnedTools", 1 );
++    showLearnedTools = SettingsManager::getIntSetting( "showLearnedTools", 0 );
 +
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -3170,6 +3174,18 @@ LivingLifePage::LivingLifePage()
+@@ -3188,6 +3192,18 @@ LivingLifePage::LivingLifePage()
          mYumSlipPosTargetOffset[i] = mYumSlipHideOffset[i];
          }
      
@@ -39,7 +39,7 @@ index 9000833db..9ab0dbf5f 100644
  
      for( int i=0; i<3; i++ ) {    
          mHungerSlipShowOffsets[i].x = -558;
-@@ -3844,6 +3860,77 @@ void drawHelpMarkKeys( doublePair messagePos ) {
+@@ -3862,6 +3878,77 @@ void drawHelpMarkKeys( doublePair messagePos ) {
      }
  
  
@@ -117,7 +117,7 @@ index 9000833db..9ab0dbf5f 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
      
-@@ -10143,6 +10230,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10247,6 +10334,21 @@ void LivingLifePage::draw( doublePair inViewCenter,
          }
  
  
@@ -139,7 +139,7 @@ index 9000833db..9ab0dbf5f 100644
  
      // now draw tutorial sheets
      if( mTutorialNumber > 0 || mGlobalMessageShowing )
-@@ -13015,6 +13117,19 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -13119,6 +13221,19 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
      
      
      mGlobalMessageShowing = true;
@@ -159,7 +159,7 @@ index 9000833db..9ab0dbf5f 100644
      mGlobalMessageStartTime = game_getCurrentTime();
      
      if( mLiveTutorialSheetIndex >= 0 ) {
-@@ -13042,6 +13157,7 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -13146,6 +13261,7 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
          (char*)( mTutorialMessage[ mLiveTutorialSheetIndex ] ) );
      
      mTutorialExtraOffset[ mLiveTutorialSheetIndex ].x = longestLine;
@@ -167,7 +167,7 @@ index 9000833db..9ab0dbf5f 100644
      
      
      delete [] spaces;
-@@ -13749,6 +13865,41 @@ void LivingLifePage::step() {
+@@ -13853,6 +13969,42 @@ void LivingLifePage::step() {
              }
          
  
@@ -178,6 +178,7 @@ index 9000833db..9ab0dbf5f 100644
 +
 +            ObjectRecord *o = getObject( mNextHintObjectID );
 +            int remainingSlots = (totalToolSlots - usedToolSlots);
++            if( remainingSlots < 0 ) remainingSlots = 0;
 +            int showSlots = mKnownToolSlips + remainingSlots;
 +            float offset = 1220.0 / showSlots;
 +            if (offset > 64) offset = 64;
@@ -209,7 +210,7 @@ index 9000833db..9ab0dbf5f 100644
  
          if( ( isHintFilterStringInvalid() &&
                mCurrentHintObjectID != mNextHintObjectID ) ||
-@@ -13960,6 +14111,49 @@ void LivingLifePage::step() {
+@@ -14064,6 +14216,49 @@ void LivingLifePage::step() {
          }
  
  
@@ -259,7 +260,7 @@ index 9000833db..9ab0dbf5f 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -14539,13 +14733,19 @@ void LivingLifePage::step() {
+@@ -14650,13 +14845,20 @@ void LivingLifePage::step() {
              for( int i=1; i < tokens->size(); i++ ) {
                  char *tok = tokens->getElementDirect( i );
                  
@@ -276,11 +277,12 @@ index 9000833db..9ab0dbf5f 100644
 +                            mToolBoxPosOffset[mKnownToolSlips] = pos;
 +                            mToolBoxFreeze[mKnownToolSlips] = 2.0;
 +                            mToolBoxTool[mKnownToolSlips++] = id;
++                            printf( "learned %d: %s\n", id, o->description );
 +                            }
                          }
                      }
                  }
-@@ -14598,6 +14798,7 @@ void LivingLifePage::step() {
+@@ -14709,6 +14911,7 @@ void LivingLifePage::step() {
              if( numRead == 2 ) {
                  usedToolSlots = numSlotsUsed;
                  totalToolSlots = numTotalSlots;
@@ -288,7 +290,7 @@ index 9000833db..9ab0dbf5f 100644
                  }
              }
          else if( type == HOMELAND ) {
-@@ -17640,6 +17841,15 @@ void LivingLifePage::step() {
+@@ -17751,6 +17954,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -304,7 +306,7 @@ index 9000833db..9ab0dbf5f 100644
                              }
                          
  
-@@ -22997,6 +23207,15 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23117,6 +23329,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      
@@ -321,14 +323,14 @@ index 9000833db..9ab0dbf5f 100644
      savingSpeechEnabled = SettingsManager::getIntSetting( "allowSavingSpeech",
                                                            0 );
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index dd23c9a13..9f86f73ef 100644
+index f6ea96256..4c0c7f2af 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -32,6 +32,7 @@
  
  #define NUM_HINT_SHEETS 4
  
-+#define NUM_TOOL_SHEETS 100
++#define NUM_TOOL_SHEETS 200
  
  #define NUM_HOME_ARROWS 8
  
@@ -351,10 +353,10 @@ index dd23c9a13..9f86f73ef 100644
          doublePair mCravingHideOffset[NUM_HINT_SHEETS];
          doublePair mCravingPosOffset[NUM_HINT_SHEETS];
 diff --git a/gameSource/objectBank.cpp b/gameSource/objectBank.cpp
-index 643520eee..c04f3a9af 100644
+index 7692feaff..1ce07f090 100644
 --- a/gameSource/objectBank.cpp
 +++ b/gameSource/objectBank.cpp
-@@ -5220,6 +5220,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
+@@ -5272,6 +5272,43 @@ int getMaxDiameter( ObjectRecord *inObject ) {
  
  
  
@@ -399,10 +401,10 @@ index 643520eee..c04f3a9af 100644
      ObjectRecord *o = getObject( inObjectID );
      
 diff --git a/gameSource/objectBank.h b/gameSource/objectBank.h
-index 15de3d39e..a82cee143 100644
+index e5e1e5e5b..58d22128e 100644
 --- a/gameSource/objectBank.h
 +++ b/gameSource/objectBank.h
-@@ -772,6 +772,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
+@@ -784,6 +784,11 @@ char checkSpriteAncestor( ObjectRecord *inRecord, int inChildIndex,
  int getMaxDiameter( ObjectRecord *inObject );
  
  
@@ -416,8 +418,8 @@ index 15de3d39e..a82cee143 100644
  
 diff --git a/gameSource/settings/showLearnedTools.ini b/gameSource/settings/showLearnedTools.ini
 new file mode 100644
-index 000000000..d00491fd7
+index 000000000..573541ac9
 --- /dev/null
 +++ b/gameSource/settings/showLearnedTools.ini
 @@ -0,0 +1 @@
-+1
++0

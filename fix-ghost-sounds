@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 0dc15c9ab..8b8ac8fc7 100644
+index 7517f859c..f77e664be 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -20864,7 +20864,7 @@ void LivingLifePage::step() {
+@@ -20981,7 +20981,7 @@ void LivingLifePage::step() {
              o->heldFrozenRotFrameCount += animSpeed / BASE_SPEED;
              }
          
