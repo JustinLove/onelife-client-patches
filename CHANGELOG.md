@@ -1,6 +1,6 @@
 # Changelog - feature changes
 
-## v77?
+## v78
 
 - fix tools lost for more learned tools than slots. Showing tools is disabled by default (if you have a setting file, you may still need to change it)
 - new patch to fix some missing strings in 2hol
