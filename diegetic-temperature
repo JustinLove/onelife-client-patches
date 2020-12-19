@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 1d54123f6..52f88989a 100644
+index b6979561e..e7dba8ec7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -139,6 +139,8 @@ static int maxDoubleClickDrift = 30;
@@ -21,7 +21,7 @@ index 1d54123f6..52f88989a 100644
      
      initLiveTriggers();
  
-@@ -4798,6 +4803,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4802,6 +4807,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -40,7 +40,7 @@ index 1d54123f6..52f88989a 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -4930,6 +4947,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4934,6 +4951,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          setAnimationEmotion( inObj->currentEmot );
          addExtraAnimationEmotions( &( inObj->permanentEmots ) );
@@ -54,7 +54,7 @@ index 1d54123f6..52f88989a 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5210,6 +5234,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5214,6 +5238,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  restoreSkipDrawing( heldObject );
                  }
  
@@ -67,7 +67,7 @@ index 1d54123f6..52f88989a 100644
              
              setAnimationBadge( badge );
              if( badge != -1 ) {
-@@ -5290,6 +5320,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5294,6 +5324,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationEmotion( babyO->currentEmot );
                  addExtraAnimationEmotions( &( babyO->permanentEmots ) );
  

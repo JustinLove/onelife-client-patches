@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v79?
+
+- fix-ghost-sounds was merged upstream
+
 ## v78
 
 - fix tool slots for more learned tools than slots. Showing tools is disabled by default (if you have a setting file, you may still need to change it)

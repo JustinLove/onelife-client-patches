@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 73be2e8ac..3c835a7d2 100644
+index 41d04d645..7ae1b46dc 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -145,6 +145,8 @@ static int showShiverSweat = 1;
@@ -20,7 +20,7 @@ index 73be2e8ac..3c835a7d2 100644
      openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
      openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
  
-@@ -10931,6 +10935,39 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -10939,6 +10943,39 @@ void LivingLifePage::draw( doublePair inViewCenter,
              }
              
  
@@ -60,7 +60,7 @@ index 73be2e8ac..3c835a7d2 100644
          
          if( showBugMessage ) {
              
-@@ -25491,6 +25528,39 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -25499,6 +25536,39 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  

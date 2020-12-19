@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e23fba70a..9234a7730 100644
+index 30ca169cf..62a990e0c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -161,6 +161,8 @@ static int clickToMoveLockToInteract = 0;
@@ -20,7 +20,7 @@ index e23fba70a..9234a7730 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -12383,6 +12387,7 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -12391,6 +12395,7 @@ int LivingLifePage::getNumHints( int inObjectID ) {
  
      // new logic:
      // show all trans leading to this target object
@@ -28,7 +28,7 @@ index e23fba70a..9234a7730 100644
      if( mLastHintFilterString != NULL ) {
          
          SimpleVector<int> hitIDs = findObjectsMatchingWords(
-@@ -12517,6 +12522,101 @@ int LivingLifePage::getNumHints( int inObjectID ) {
+@@ -12525,6 +12530,101 @@ int LivingLifePage::getNumHints( int inObjectID ) {
              }
          }
      
