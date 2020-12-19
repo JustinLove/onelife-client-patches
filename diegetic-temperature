@@ -185,18 +185,48 @@ index bff8c9fea..1a926d5a1 100644
  
  // set to -1 to clear
  // drawn on top of tunic of people who are drawn
-diff --git a/gameSource/settings/showShiverSweat.ini b/gameSource/settings/showShiverSweat.ini
+diff --git a/gameSource/settings/wonlife-plus/showShiverSweat.ini b/gameSource/settings/wonlife-plus/showShiverSweat.ini
 new file mode 100644
 index 000000000..573541ac9
 --- /dev/null
-+++ b/gameSource/settings/showShiverSweat.ini
++++ b/gameSource/settings/wonlife-plus/showShiverSweat.ini
 @@ -0,0 +1 @@
 +0
-diff --git a/gameSource/settings/sweatDropSprite.ini b/gameSource/settings/sweatDropSprite.ini
+diff --git a/gameSource/settings/wonlife-plus/sweatDropSprite.ini b/gameSource/settings/wonlife-plus/sweatDropSprite.ini
 new file mode 100644
 index 000000000..9f7285879
 --- /dev/null
-+++ b/gameSource/settings/sweatDropSprite.ini
++++ b/gameSource/settings/wonlife-plus/sweatDropSprite.ini
+@@ -0,0 +1 @@
++88
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/showShiverSweat.ini b/gameSource/settings/wonlife-vanilla/showShiverSweat.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/showShiverSweat.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-vanilla/sweatDropSprite.ini b/gameSource/settings/wonlife-vanilla/sweatDropSprite.ini
+new file mode 100644
+index 000000000..9f7285879
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/sweatDropSprite.ini
+@@ -0,0 +1 @@
++88
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/showShiverSweat.ini b/gameSource/settings/wonlife-wondible/showShiverSweat.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/showShiverSweat.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/sweatDropSprite.ini b/gameSource/settings/wonlife-wondible/sweatDropSprite.ini
+new file mode 100644
+index 000000000..9f7285879
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/sweatDropSprite.ini
 @@ -0,0 +1 @@
 +88
 \ No newline at end of file

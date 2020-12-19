@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 30ca169cf..62a990e0c 100644
+index 2ccb27113..89e9e84b2 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -161,6 +161,8 @@ static int clickToMoveLockToInteract = 0;
@@ -130,11 +130,27 @@ index 30ca169cf..62a990e0c 100644
  
  
      int numTrans = filteredTrans.size();
-diff --git a/gameSource/settings/filterMatchesProduct.ini b/gameSource/settings/filterMatchesProduct.ini
+diff --git a/gameSource/settings/wonlife-plus/filterMatchesProduct.ini b/gameSource/settings/wonlife-plus/filterMatchesProduct.ini
 new file mode 100644
 index 000000000..56a6051ca
 --- /dev/null
-+++ b/gameSource/settings/filterMatchesProduct.ini
++++ b/gameSource/settings/wonlife-plus/filterMatchesProduct.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/filterMatchesProduct.ini b/gameSource/settings/wonlife-vanilla/filterMatchesProduct.ini
+new file mode 100644
+index 000000000..c22708346
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/filterMatchesProduct.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/filterMatchesProduct.ini b/gameSource/settings/wonlife-wondible/filterMatchesProduct.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/filterMatchesProduct.ini
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file

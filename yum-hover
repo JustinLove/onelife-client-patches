@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9505b6dc3..33573d7d5 100644
+index 1814d2d41..ea58fdb48 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -235,6 +235,40 @@ void initKeybinds() {
@@ -279,10 +279,24 @@ index 9505b6dc3..33573d7d5 100644
  
      mCurrentArrowI = 0;
      mCurrentArrowHeat = -1;
-diff --git a/gameSource/settings/showYumHover.ini b/gameSource/settings/showYumHover.ini
+diff --git a/gameSource/settings/wonlife-plus/showYumHover.ini b/gameSource/settings/wonlife-plus/showYumHover.ini
 new file mode 100644
 index 000000000..d00491fd7
 --- /dev/null
-+++ b/gameSource/settings/showYumHover.ini
++++ b/gameSource/settings/wonlife-plus/showYumHover.ini
+@@ -0,0 +1 @@
++1
+diff --git a/gameSource/settings/wonlife-vanilla/showYumHover.ini b/gameSource/settings/wonlife-vanilla/showYumHover.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/showYumHover.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/showYumHover.ini b/gameSource/settings/wonlife-wondible/showYumHover.ini
+new file mode 100644
+index 000000000..d00491fd7
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/showYumHover.ini
 @@ -0,0 +1 @@
 +1

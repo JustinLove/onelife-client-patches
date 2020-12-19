@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9d09e0bba..30797bc45 100644
+index ab2691892..28f97b462 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -25275,6 +25275,26 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
@@ -119,11 +119,55 @@ index 7b114e2c5..8a24c9bd7 100644
  // returns NULL if index out of range
  Emotion *getEmotion( int inIndex );
  
-diff --git a/gameSource/settings/emotionKeys.ini b/gameSource/settings/emotionKeys.ini
+diff --git a/gameSource/settings/wonlife-plus/emotionKeys.ini b/gameSource/settings/wonlife-plus/emotionKeys.ini
 new file mode 100644
 index 000000000..09d13090c
 --- /dev/null
-+++ b/gameSource/settings/emotionKeys.ini
++++ b/gameSource/settings/wonlife-plus/emotionKeys.ini
+@@ -0,0 +1,16 @@
++h /happy
++m /mad
++a /angry
++s /sad
++d /devious
++j /joy
++b /blush
++
++
++u /hubba
++i /ill
++y /yoohoo
++f /hmph
++l /love
++o /oreally
++k /shock
+diff --git a/gameSource/settings/wonlife-vanilla/emotionKeys.ini b/gameSource/settings/wonlife-vanilla/emotionKeys.ini
+new file mode 100644
+index 000000000..09d13090c
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/emotionKeys.ini
+@@ -0,0 +1,16 @@
++h /happy
++m /mad
++a /angry
++s /sad
++d /devious
++j /joy
++b /blush
++
++
++u /hubba
++i /ill
++y /yoohoo
++f /hmph
++l /love
++o /oreally
++k /shock
+diff --git a/gameSource/settings/wonlife-wondible/emotionKeys.ini b/gameSource/settings/wonlife-wondible/emotionKeys.ini
+new file mode 100644
+index 000000000..09d13090c
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/emotionKeys.ini
 @@ -0,0 +1,16 @@
 +h /happy
 +m /mad

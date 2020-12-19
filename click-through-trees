@@ -57,10 +57,24 @@ index e6987e728..b6979561e 100644
                          p->closestCellX = x;
                          p->closestCellY = y;
                          
-diff --git a/gameSource/settings/ignoreTallObjects.ini b/gameSource/settings/ignoreTallObjects.ini
+diff --git a/gameSource/settings/wonlife-plus/ignoreTallObjects.ini b/gameSource/settings/wonlife-plus/ignoreTallObjects.ini
 new file mode 100644
 index 000000000..d00491fd7
 --- /dev/null
-+++ b/gameSource/settings/ignoreTallObjects.ini
++++ b/gameSource/settings/wonlife-plus/ignoreTallObjects.ini
+@@ -0,0 +1 @@
++1
+diff --git a/gameSource/settings/wonlife-vanilla/ignoreTallObjects.ini b/gameSource/settings/wonlife-vanilla/ignoreTallObjects.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/ignoreTallObjects.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/ignoreTallObjects.ini b/gameSource/settings/wonlife-wondible/ignoreTallObjects.ini
+new file mode 100644
+index 000000000..d00491fd7
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/ignoreTallObjects.ini
 @@ -0,0 +1 @@
 +1

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index feeaceb35..a1414f10a 100644
+index 771d1f674..5b6230f9a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -153,6 +153,8 @@ static double newPlayerMessageTime = 0;
@@ -58,11 +58,27 @@ index feeaceb35..a1414f10a 100644
                  }
              
              char *stringUpper = stringToUpperCase( des );
-diff --git a/gameSource/settings/categoryPile.ini b/gameSource/settings/categoryPile.ini
+diff --git a/gameSource/settings/wonlife-plus/categoryPile.ini b/gameSource/settings/wonlife-plus/categoryPile.ini
 new file mode 100644
 index 000000000..f5624aeae
 --- /dev/null
-+++ b/gameSource/settings/categoryPile.ini
++++ b/gameSource/settings/wonlife-plus/categoryPile.ini
+@@ -0,0 +1 @@
++1600
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/categoryPile.ini b/gameSource/settings/wonlife-vanilla/categoryPile.ini
+new file mode 100644
+index 000000000..f5624aeae
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/categoryPile.ini
+@@ -0,0 +1 @@
++1600
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/categoryPile.ini b/gameSource/settings/wonlife-wondible/categoryPile.ini
+new file mode 100644
+index 000000000..f5624aeae
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/categoryPile.ini
 @@ -0,0 +1 @@
 +1600
 \ No newline at end of file

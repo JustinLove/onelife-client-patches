@@ -1,10 +1,10 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4d2e39cc4..321cae8a2 100644
+index 15ec6c928..f769ac537 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -146,6 +146,13 @@ static int ignoreTallObjects = 1;
  
- static int showShiverSweat = 1;
+ static int showShiverSweat = 0;
  
 +static int showRelationDistance = 1;
 +static int showGeneticFamily = 1;
@@ -199,7 +199,7 @@ index 4d2e39cc4..321cae8a2 100644
  
  // base speed for animations that aren't speeded up or slowed down
 @@ -2850,6 +3029,32 @@ LivingLifePage::LivingLifePage()
-     showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
+     showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 0 );
      setAnimationSweatSprite( SettingsManager::getIntSetting( "sweatDropSprite", 88 ) );
  
 +    showRelationDistance = SettingsManager::getIntSetting( "showRelationDistance", 1 );
@@ -675,64 +675,186 @@ index 1a926d5a1..fddaaf36b 100644
  
  // sets fade values for clothing highlights of next drawn person
  // or NULL for no clothing highlights
-diff --git a/gameSource/settings/closeFamilySprite.ini b/gameSource/settings/closeFamilySprite.ini
+diff --git a/gameSource/settings/wonlife-plus/closeFamilySprite.ini b/gameSource/settings/wonlife-plus/closeFamilySprite.ini
 new file mode 100644
 index 000000000..4ad837a99
 --- /dev/null
-+++ b/gameSource/settings/closeFamilySprite.ini
++++ b/gameSource/settings/wonlife-plus/closeFamilySprite.ini
 @@ -0,0 +1 @@
 +2521
 \ No newline at end of file
-diff --git a/gameSource/settings/geneticFamilySprite.ini b/gameSource/settings/geneticFamilySprite.ini
+diff --git a/gameSource/settings/wonlife-plus/geneticFamilySprite.ini b/gameSource/settings/wonlife-plus/geneticFamilySprite.ini
 new file mode 100644
 index 000000000..03a524df8
 --- /dev/null
-+++ b/gameSource/settings/geneticFamilySprite.ini
++++ b/gameSource/settings/wonlife-plus/geneticFamilySprite.ini
 @@ -0,0 +1 @@
 +1115
 \ No newline at end of file
-diff --git a/gameSource/settings/newPlayerMarkerObject.ini b/gameSource/settings/newPlayerMarkerObject.ini
+diff --git a/gameSource/settings/wonlife-plus/newPlayerMarkerObject.ini b/gameSource/settings/wonlife-plus/newPlayerMarkerObject.ini
 new file mode 100644
 index 000000000..b8d1607c2
 --- /dev/null
-+++ b/gameSource/settings/newPlayerMarkerObject.ini
++++ b/gameSource/settings/wonlife-plus/newPlayerMarkerObject.ini
 @@ -0,0 +1 @@
 +1255
 \ No newline at end of file
-diff --git a/gameSource/settings/playerMarkKey.ini b/gameSource/settings/playerMarkKey.ini
+diff --git a/gameSource/settings/wonlife-plus/playerMarkKey.ini b/gameSource/settings/wonlife-plus/playerMarkKey.ini
 new file mode 100644
 index 000000000..d82b2311e
 --- /dev/null
-+++ b/gameSource/settings/playerMarkKey.ini
++++ b/gameSource/settings/wonlife-plus/playerMarkKey.ini
 @@ -0,0 +1 @@
 += (+ unshifted)
-diff --git a/gameSource/settings/playerUnmarkKey.ini b/gameSource/settings/playerUnmarkKey.ini
+diff --git a/gameSource/settings/wonlife-plus/playerUnmarkKey.ini b/gameSource/settings/wonlife-plus/playerUnmarkKey.ini
 new file mode 100644
 index 000000000..39cdd0ded
 --- /dev/null
-+++ b/gameSource/settings/playerUnmarkKey.ini
++++ b/gameSource/settings/wonlife-plus/playerUnmarkKey.ini
 @@ -0,0 +1 @@
 +-
-diff --git a/gameSource/settings/showGeneticFamily.ini b/gameSource/settings/showGeneticFamily.ini
+diff --git a/gameSource/settings/wonlife-plus/showGeneticFamily.ini b/gameSource/settings/wonlife-plus/showGeneticFamily.ini
 new file mode 100644
 index 000000000..56a6051ca
 --- /dev/null
-+++ b/gameSource/settings/showGeneticFamily.ini
++++ b/gameSource/settings/wonlife-plus/showGeneticFamily.ini
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file
-diff --git a/gameSource/settings/showNewPlayers.ini b/gameSource/settings/showNewPlayers.ini
+diff --git a/gameSource/settings/wonlife-plus/showNewPlayers.ini b/gameSource/settings/wonlife-plus/showNewPlayers.ini
 new file mode 100644
 index 000000000..56a6051ca
 --- /dev/null
-+++ b/gameSource/settings/showNewPlayers.ini
++++ b/gameSource/settings/wonlife-plus/showNewPlayers.ini
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file
-diff --git a/gameSource/settings/showRelationDistance.ini b/gameSource/settings/showRelationDistance.ini
+diff --git a/gameSource/settings/wonlife-plus/showRelationDistance.ini b/gameSource/settings/wonlife-plus/showRelationDistance.ini
 new file mode 100644
 index 000000000..d00491fd7
 --- /dev/null
-+++ b/gameSource/settings/showRelationDistance.ini
++++ b/gameSource/settings/wonlife-plus/showRelationDistance.ini
+@@ -0,0 +1 @@
++1
+diff --git a/gameSource/settings/wonlife-vanilla/closeFamilySprite.ini b/gameSource/settings/wonlife-vanilla/closeFamilySprite.ini
+new file mode 100644
+index 000000000..4ad837a99
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/closeFamilySprite.ini
+@@ -0,0 +1 @@
++2521
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/geneticFamilySprite.ini b/gameSource/settings/wonlife-vanilla/geneticFamilySprite.ini
+new file mode 100644
+index 000000000..03a524df8
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/geneticFamilySprite.ini
+@@ -0,0 +1 @@
++1115
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/newPlayerMarkerObject.ini b/gameSource/settings/wonlife-vanilla/newPlayerMarkerObject.ini
+new file mode 100644
+index 000000000..b8d1607c2
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/newPlayerMarkerObject.ini
+@@ -0,0 +1 @@
++1255
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/playerMarkKey.ini b/gameSource/settings/wonlife-vanilla/playerMarkKey.ini
+new file mode 100644
+index 000000000..d82b2311e
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/playerMarkKey.ini
+@@ -0,0 +1 @@
++= (+ unshifted)
+diff --git a/gameSource/settings/wonlife-vanilla/playerUnmarkKey.ini b/gameSource/settings/wonlife-vanilla/playerUnmarkKey.ini
+new file mode 100644
+index 000000000..39cdd0ded
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/playerUnmarkKey.ini
+@@ -0,0 +1 @@
++-
+diff --git a/gameSource/settings/wonlife-vanilla/showGeneticFamily.ini b/gameSource/settings/wonlife-vanilla/showGeneticFamily.ini
+new file mode 100644
+index 000000000..c22708346
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/showGeneticFamily.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/showNewPlayers.ini b/gameSource/settings/wonlife-vanilla/showNewPlayers.ini
+new file mode 100644
+index 000000000..c22708346
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/showNewPlayers.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/showRelationDistance.ini b/gameSource/settings/wonlife-vanilla/showRelationDistance.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/showRelationDistance.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/closeFamilySprite.ini b/gameSource/settings/wonlife-wondible/closeFamilySprite.ini
+new file mode 100644
+index 000000000..4ad837a99
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/closeFamilySprite.ini
+@@ -0,0 +1 @@
++2521
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/geneticFamilySprite.ini b/gameSource/settings/wonlife-wondible/geneticFamilySprite.ini
+new file mode 100644
+index 000000000..03a524df8
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/geneticFamilySprite.ini
+@@ -0,0 +1 @@
++1115
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/newPlayerMarkerObject.ini b/gameSource/settings/wonlife-wondible/newPlayerMarkerObject.ini
+new file mode 100644
+index 000000000..b8d1607c2
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/newPlayerMarkerObject.ini
+@@ -0,0 +1 @@
++1255
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/playerMarkKey.ini b/gameSource/settings/wonlife-wondible/playerMarkKey.ini
+new file mode 100644
+index 000000000..d82b2311e
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/playerMarkKey.ini
+@@ -0,0 +1 @@
++= (+ unshifted)
+diff --git a/gameSource/settings/wonlife-wondible/playerUnmarkKey.ini b/gameSource/settings/wonlife-wondible/playerUnmarkKey.ini
+new file mode 100644
+index 000000000..39cdd0ded
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/playerUnmarkKey.ini
+@@ -0,0 +1 @@
++-
+diff --git a/gameSource/settings/wonlife-wondible/showGeneticFamily.ini b/gameSource/settings/wonlife-wondible/showGeneticFamily.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/showGeneticFamily.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/showNewPlayers.ini b/gameSource/settings/wonlife-wondible/showNewPlayers.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/showNewPlayers.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/showRelationDistance.ini b/gameSource/settings/wonlife-wondible/showRelationDistance.ini
+new file mode 100644
+index 000000000..d00491fd7
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/showRelationDistance.ini
 @@ -0,0 +1 @@
 +1

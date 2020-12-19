@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 3b12c2411..b8ef2e0eb 100644
+index eaaea3f21..b65adc154 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -485,6 +485,84 @@ static SimpleVector<HomePos> oldHomePosStack;
@@ -1127,22 +1127,60 @@ index b74e8c324..ef8f15bb3 100644
          
  
          void updateLeadership();
-diff --git a/gameSource/settings/locationSlipColors.ini b/gameSource/settings/locationSlipColors.ini
+diff --git a/gameSource/settings/wonlife-plus/locationSlipColors.ini b/gameSource/settings/wonlife-plus/locationSlipColors.ini
 new file mode 100644
 index 000000000..d24d5f6aa
 --- /dev/null
-+++ b/gameSource/settings/locationSlipColors.ini
++++ b/gameSource/settings/wonlife-plus/locationSlipColors.ini
 @@ -0,0 +1,5 @@
 +839 255 227 50
 +2486 244 16 8
 +2484 244 16 8
 +2481 244 16 8
 +2482 244 16 8
-diff --git a/gameSource/settings/locationSlipsEnabled.ini b/gameSource/settings/locationSlipsEnabled.ini
+diff --git a/gameSource/settings/wonlife-plus/locationSlipsEnabled.ini b/gameSource/settings/wonlife-plus/locationSlipsEnabled.ini
 new file mode 100644
 index 000000000..56a6051ca
 --- /dev/null
-+++ b/gameSource/settings/locationSlipsEnabled.ini
++++ b/gameSource/settings/wonlife-plus/locationSlipsEnabled.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/locationSlipColors.ini b/gameSource/settings/wonlife-vanilla/locationSlipColors.ini
+new file mode 100644
+index 000000000..d24d5f6aa
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/locationSlipColors.ini
+@@ -0,0 +1,5 @@
++839 255 227 50
++2486 244 16 8
++2484 244 16 8
++2481 244 16 8
++2482 244 16 8
+diff --git a/gameSource/settings/wonlife-vanilla/locationSlipsEnabled.ini b/gameSource/settings/wonlife-vanilla/locationSlipsEnabled.ini
+new file mode 100644
+index 000000000..c22708346
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/locationSlipsEnabled.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/locationSlipColors.ini b/gameSource/settings/wonlife-wondible/locationSlipColors.ini
+new file mode 100644
+index 000000000..d24d5f6aa
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/locationSlipColors.ini
+@@ -0,0 +1,5 @@
++839 255 227 50
++2486 244 16 8
++2484 244 16 8
++2481 244 16 8
++2482 244 16 8
+diff --git a/gameSource/settings/wonlife-wondible/locationSlipsEnabled.ini b/gameSource/settings/wonlife-wondible/locationSlipsEnabled.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/locationSlipsEnabled.ini
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file

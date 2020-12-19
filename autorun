@@ -268,10 +268,24 @@ index 4497ce5b0..e6987e728 100644
  
  
      // clear mouse over cell
-diff --git a/gameSource/settings/maxDoubleClickFrames.ini b/gameSource/settings/maxDoubleClickFrames.ini
+diff --git a/gameSource/settings/wonlife-plus/maxDoubleClickFrames.ini b/gameSource/settings/wonlife-plus/maxDoubleClickFrames.ini
 new file mode 100644
 index 000000000..64bb6b746
 --- /dev/null
-+++ b/gameSource/settings/maxDoubleClickFrames.ini
++++ b/gameSource/settings/wonlife-plus/maxDoubleClickFrames.ini
+@@ -0,0 +1 @@
++30
+diff --git a/gameSource/settings/wonlife-vanilla/maxDoubleClickFrames.ini b/gameSource/settings/wonlife-vanilla/maxDoubleClickFrames.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/maxDoubleClickFrames.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/maxDoubleClickFrames.ini b/gameSource/settings/wonlife-wondible/maxDoubleClickFrames.ini
+new file mode 100644
+index 000000000..64bb6b746
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/maxDoubleClickFrames.ini
 @@ -0,0 +1 @@
 +30

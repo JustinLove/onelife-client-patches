@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 6efdc9fed..30ca169cf 100644
+index e3252c41a..2ccb27113 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -159,6 +159,8 @@ static int dragDropUse = 1;
@@ -416,10 +416,24 @@ index de94f050e..040dc07b7 100644
  // gets estimate of object height from cell center
  int getObjectHeight( int inObjectID );
  
-diff --git a/gameSource/settings/showLearnedTools.ini b/gameSource/settings/showLearnedTools.ini
+diff --git a/gameSource/settings/wonlife-plus/showLearnedTools.ini b/gameSource/settings/wonlife-plus/showLearnedTools.ini
 new file mode 100644
 index 000000000..573541ac9
 --- /dev/null
-+++ b/gameSource/settings/showLearnedTools.ini
++++ b/gameSource/settings/wonlife-plus/showLearnedTools.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-vanilla/showLearnedTools.ini b/gameSource/settings/wonlife-vanilla/showLearnedTools.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/showLearnedTools.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/showLearnedTools.ini b/gameSource/settings/wonlife-wondible/showLearnedTools.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/showLearnedTools.ini
 @@ -0,0 +1 @@
 +0

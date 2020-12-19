@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 46840faca..3b12c2411 100644
+index 3c00afe5c..eaaea3f21 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1510,8 +1510,8 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
@@ -235,24 +235,11 @@ index 83666f748..d6a4227ed 100644
      
      
      musicStarted = true;
-diff --git a/gameSource/settings/ageScaling.ini b/gameSource/settings/ageScaling.ini
-new file mode 100644
-index 000000000..31550adad
---- /dev/null
-+++ b/gameSource/settings/ageScaling.ini
-@@ -0,0 +1,7 @@
-+3 3 pick up most things
-+5 5 can be picked up
-+14 14 fertile
-+20 20 mature (affects character display)
-+40 40 infertile
-+57 57 hunger dings stop
-+60 60 dead
-diff --git a/gameSource/settings/ageScaling2hol.ini b/gameSource/settings/ageScaling2hol.ini
+diff --git a/gameSource/settings/wonlife-2hol/ageScaling.ini b/gameSource/settings/wonlife-2hol/ageScaling.ini
 new file mode 100644
 index 000000000..f6257a973
 --- /dev/null
-+++ b/gameSource/settings/ageScaling2hol.ini
++++ b/gameSource/settings/wonlife-2hol/ageScaling.ini
 @@ -0,0 +1,7 @@
 +3 3 pick up most things
 +5 5 can be picked up
@@ -261,3 +248,42 @@ index 000000000..f6257a973
 +104 40 infertile
 +117 57 hunger dings stop
 +120 60 dead
+diff --git a/gameSource/settings/wonlife-plus/ageScaling.ini b/gameSource/settings/wonlife-plus/ageScaling.ini
+new file mode 100644
+index 000000000..31550adad
+--- /dev/null
++++ b/gameSource/settings/wonlife-plus/ageScaling.ini
+@@ -0,0 +1,7 @@
++3 3 pick up most things
++5 5 can be picked up
++14 14 fertile
++20 20 mature (affects character display)
++40 40 infertile
++57 57 hunger dings stop
++60 60 dead
+diff --git a/gameSource/settings/wonlife-vanilla/ageScaling.ini b/gameSource/settings/wonlife-vanilla/ageScaling.ini
+new file mode 100644
+index 000000000..31550adad
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/ageScaling.ini
+@@ -0,0 +1,7 @@
++3 3 pick up most things
++5 5 can be picked up
++14 14 fertile
++20 20 mature (affects character display)
++40 40 infertile
++57 57 hunger dings stop
++60 60 dead
+diff --git a/gameSource/settings/wonlife-wondible/ageScaling.ini b/gameSource/settings/wonlife-wondible/ageScaling.ini
+new file mode 100644
+index 000000000..31550adad
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/ageScaling.ini
+@@ -0,0 +1,7 @@
++3 3 pick up most things
++5 5 can be picked up
++14 14 fertile
++20 20 mature (affects character display)
++40 40 infertile
++57 57 hunger dings stop
++60 60 dead

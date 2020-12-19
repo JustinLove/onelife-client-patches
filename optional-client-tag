@@ -118,10 +118,24 @@ index 23c31edc8..6f8886ea6 100644
                  }
              else if( livingLifePage->checkSignal( "reconnectFailed" ) ) {
                  lastScreenViewCenter.x = 0;
-diff --git a/gameSource/settings/usingClientTag.ini b/gameSource/settings/usingClientTag.ini
+diff --git a/gameSource/settings/wonlife-plus/usingClientTag.ini b/gameSource/settings/wonlife-plus/usingClientTag.ini
 new file mode 100644
 index 000000000..d00491fd7
 --- /dev/null
-+++ b/gameSource/settings/usingClientTag.ini
++++ b/gameSource/settings/wonlife-plus/usingClientTag.ini
+@@ -0,0 +1 @@
++1
+diff --git a/gameSource/settings/wonlife-vanilla/usingClientTag.ini b/gameSource/settings/wonlife-vanilla/usingClientTag.ini
+new file mode 100644
+index 000000000..d00491fd7
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/usingClientTag.ini
+@@ -0,0 +1 @@
++1
+diff --git a/gameSource/settings/wonlife-wondible/usingClientTag.ini b/gameSource/settings/wonlife-wondible/usingClientTag.ini
+new file mode 100644
+index 000000000..d00491fd7
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/usingClientTag.ini
 @@ -0,0 +1 @@
 +1

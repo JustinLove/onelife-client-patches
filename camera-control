@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b8f80cadc..4d2e39cc4 100644
+index 2c815c43c..15ec6c928 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -50,6 +50,9 @@
@@ -34,7 +34,7 @@ index b8f80cadc..4d2e39cc4 100644
 +    // set to 0 to disable screen edge push
 +    screenEdgePushSpeed = SettingsManager::getFloatSetting( "screenEdgePushSpeed", 10 );
 +
-+    // set to 0 to disable screen edge push
++    // remove to disable camera key
 +    char* cameraKeyString = SettingsManager::getStringSetting( "camerakey" );
 +
 +    if( cameraKeyString != NULL ) {
@@ -261,17 +261,31 @@ index fbdfbecad..75db291af 100644
 +ifeq ($(PLATFORM),Win32)
 +	NEEDED_MINOR_GEMS_OBJECTS += ${SET_MOUSE_O} 
 +endif
-diff --git a/gameSource/settings/cameraKey.ini b/gameSource/settings/cameraKey.ini
+diff --git a/gameSource/settings/wonlife-plus/screenEdgePushSpeed.ini b/gameSource/settings/wonlife-plus/screenEdgePushSpeed.ini
 new file mode 100644
-index 000000000..f2ad6c76f
+index 000000000..209e3ef4b
 --- /dev/null
-+++ b/gameSource/settings/cameraKey.ini
++++ b/gameSource/settings/wonlife-plus/screenEdgePushSpeed.ini
 @@ -0,0 +1 @@
-+c
-diff --git a/gameSource/settings/screenEdgePushSpeed.ini b/gameSource/settings/screenEdgePushSpeed.ini
++20
+diff --git a/gameSource/settings/wonlife-vanilla/screenEdgePushSpeed.ini b/gameSource/settings/wonlife-vanilla/screenEdgePushSpeed.ini
 new file mode 100644
 index 000000000..573541ac9
 --- /dev/null
-+++ b/gameSource/settings/screenEdgePushSpeed.ini
++++ b/gameSource/settings/wonlife-vanilla/screenEdgePushSpeed.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/cameraKey.ini b/gameSource/settings/wonlife-wondible/cameraKey.ini
+new file mode 100644
+index 000000000..f2ad6c76f
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/cameraKey.ini
+@@ -0,0 +1 @@
++c
+diff --git a/gameSource/settings/wonlife-wondible/screenEdgePushSpeed.ini b/gameSource/settings/wonlife-wondible/screenEdgePushSpeed.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/screenEdgePushSpeed.ini
 @@ -0,0 +1 @@
 +0

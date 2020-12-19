@@ -1,10 +1,10 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e7dba8ec7..dabdd8d6f 100644
+index 855653b72..46b061181 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -141,6 +141,8 @@ static int ignoreTallObjects = 1;
  
- static int showShiverSweat = 1;
+ static int showShiverSweat = 0;
  
 +static int preferObjectsOverPlayersWithScreenLock = 1;
 +
@@ -13,7 +13,7 @@ index e7dba8ec7..dabdd8d6f 100644
  
 @@ -2728,6 +2730,8 @@ LivingLifePage::LivingLifePage()
  
-     showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
+     showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 0 );
      setAnimationSweatSprite( SettingsManager::getIntSetting( "sweatDropSprite", 88 ) );
 +
 +    preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
@@ -36,10 +36,24 @@ index e7dba8ec7..dabdd8d6f 100644
                          p->closestCellX = x;
                          p->closestCellY = y;
                          if( o == ourLiveObject ) {
-diff --git a/gameSource/settings/preferObjectsOverPlayersWithScreenLock.ini b/gameSource/settings/preferObjectsOverPlayersWithScreenLock.ini
+diff --git a/gameSource/settings/wonlife-plus/preferObjectsOverPlayersWithScreenLock.ini b/gameSource/settings/wonlife-plus/preferObjectsOverPlayersWithScreenLock.ini
 new file mode 100644
 index 000000000..d00491fd7
 --- /dev/null
-+++ b/gameSource/settings/preferObjectsOverPlayersWithScreenLock.ini
++++ b/gameSource/settings/wonlife-plus/preferObjectsOverPlayersWithScreenLock.ini
+@@ -0,0 +1 @@
++1
+diff --git a/gameSource/settings/wonlife-vanilla/preferObjectsOverPlayersWithScreenLock.ini b/gameSource/settings/wonlife-vanilla/preferObjectsOverPlayersWithScreenLock.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/preferObjectsOverPlayersWithScreenLock.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/preferObjectsOverPlayersWithScreenLock.ini b/gameSource/settings/wonlife-wondible/preferObjectsOverPlayersWithScreenLock.ini
+new file mode 100644
+index 000000000..d00491fd7
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/preferObjectsOverPlayersWithScreenLock.ini
 @@ -0,0 +1 @@
 +1

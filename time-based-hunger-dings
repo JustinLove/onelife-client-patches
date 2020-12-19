@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9eee99109..63a47d3f9 100644
+index 2e9ebe9d9..acfa1b92c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -282,6 +282,9 @@ static char* lastNamed = NULL;
@@ -127,10 +127,24 @@ index 507c68f94..49b6aea9c 100644
          // check if same road is present when we take a step in x or y
          char isSameRoad( int inFloor, GridPos inFloorPos, int inDX, int inDY );
          
-diff --git a/gameSource/settings/starvationAlarmTime.ini b/gameSource/settings/starvationAlarmTime.ini
+diff --git a/gameSource/settings/wonlife-plus/starvationAlarmTime.ini b/gameSource/settings/wonlife-plus/starvationAlarmTime.ini
 new file mode 100644
 index 000000000..ea90ee319
 --- /dev/null
-+++ b/gameSource/settings/starvationAlarmTime.ini
++++ b/gameSource/settings/wonlife-plus/starvationAlarmTime.ini
+@@ -0,0 +1 @@
++45
+diff --git a/gameSource/settings/wonlife-vanilla/starvationAlarmTime.ini b/gameSource/settings/wonlife-vanilla/starvationAlarmTime.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/starvationAlarmTime.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/starvationAlarmTime.ini b/gameSource/settings/wonlife-wondible/starvationAlarmTime.ini
+new file mode 100644
+index 000000000..ea90ee319
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/starvationAlarmTime.ini
 @@ -0,0 +1 @@
 +45

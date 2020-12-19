@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 69ce3bec7..9eee99109 100644
+index 465935913..2e9ebe9d9 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -278,6 +278,9 @@ static yumType isYummy( int inObjectID ) {
@@ -527,11 +527,27 @@ index 3a12ceefa..507c68f94 100644
          
  
          void drawMapCell( int inMapI, 
-diff --git a/gameSource/settings/showNameLabels.ini b/gameSource/settings/showNameLabels.ini
+diff --git a/gameSource/settings/wonlife-plus/showNameLabels.ini b/gameSource/settings/wonlife-plus/showNameLabels.ini
 new file mode 100644
 index 000000000..56a6051ca
 --- /dev/null
-+++ b/gameSource/settings/showNameLabels.ini
++++ b/gameSource/settings/wonlife-plus/showNameLabels.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/showNameLabels.ini b/gameSource/settings/wonlife-vanilla/showNameLabels.ini
+new file mode 100644
+index 000000000..c22708346
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/showNameLabels.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/showNameLabels.ini b/gameSource/settings/wonlife-wondible/showNameLabels.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/showNameLabels.ini
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file

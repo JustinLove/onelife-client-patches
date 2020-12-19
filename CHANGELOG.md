@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v80
+
+- moved settings into several different example configuration subdirectories, copy the settings from the one you want to start with.
+
 ## v79
 
 - fix-ghost-sounds was merged upstream

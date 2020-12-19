@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 41d04d645..7ae1b46dc 100644
+index 593a73f18..0a2a3ce99 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -145,6 +145,8 @@ static int showShiverSweat = 1;
+@@ -145,6 +145,8 @@ static int showShiverSweat = 0;
  
  static int preferObjectsOverPlayersWithScreenLock = 1;
  
@@ -100,11 +100,27 @@ index 41d04d645..7ae1b46dc 100644
      mouseDown = false;
      mouseHeld = false;
  
-diff --git a/gameSource/settings/dragDropUse.ini b/gameSource/settings/dragDropUse.ini
+diff --git a/gameSource/settings/wonlife-plus/dragDropUse.ini b/gameSource/settings/wonlife-plus/dragDropUse.ini
 new file mode 100644
 index 000000000..56a6051ca
 --- /dev/null
-+++ b/gameSource/settings/dragDropUse.ini
++++ b/gameSource/settings/wonlife-plus/dragDropUse.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/dragDropUse.ini b/gameSource/settings/wonlife-vanilla/dragDropUse.ini
+new file mode 100644
+index 000000000..c22708346
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/dragDropUse.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/dragDropUse.ini b/gameSource/settings/wonlife-wondible/dragDropUse.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/dragDropUse.ini
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file

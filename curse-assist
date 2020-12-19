@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index dec6bfdfa..c8d60b4a1 100644
+index 69ff02741..966ca1bad 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1875,6 +1875,9 @@ static LiveObject *getGameObject( int inID ) {
@@ -247,11 +247,27 @@ index 0869f8aa8..325bbedf0 100644
          
          // handles error detection, total byte counting, etc.
          void sendToServerSocket( char *inMessage );
-diff --git a/gameSource/settings/tabNameCompletion.ini b/gameSource/settings/tabNameCompletion.ini
+diff --git a/gameSource/settings/wonlife-plus/tabNameCompletion.ini b/gameSource/settings/wonlife-plus/tabNameCompletion.ini
 new file mode 100644
 index 000000000..56a6051ca
 --- /dev/null
-+++ b/gameSource/settings/tabNameCompletion.ini
++++ b/gameSource/settings/wonlife-plus/tabNameCompletion.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/tabNameCompletion.ini b/gameSource/settings/wonlife-vanilla/tabNameCompletion.ini
+new file mode 100644
+index 000000000..c22708346
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/tabNameCompletion.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/tabNameCompletion.ini b/gameSource/settings/wonlife-wondible/tabNameCompletion.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/tabNameCompletion.ini
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file

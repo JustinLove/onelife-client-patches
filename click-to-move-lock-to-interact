@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7ae1b46dc..f0869cbcc 100644
+index 0a2a3ce99..9fb07756b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -147,6 +147,7 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -43,10 +43,24 @@ index 7ae1b46dc..f0869cbcc 100644
          
          // continuous movement mode
  
-diff --git a/gameSource/settings/clickToMoveLockToInteract.ini b/gameSource/settings/clickToMoveLockToInteract.ini
+diff --git a/gameSource/settings/wonlife-plus/clickToMoveLockToInteract.ini b/gameSource/settings/wonlife-plus/clickToMoveLockToInteract.ini
 new file mode 100644
 index 000000000..573541ac9
 --- /dev/null
-+++ b/gameSource/settings/clickToMoveLockToInteract.ini
++++ b/gameSource/settings/wonlife-plus/clickToMoveLockToInteract.ini
 @@ -0,0 +1 @@
 +0
+diff --git a/gameSource/settings/wonlife-vanilla/clickToMoveLockToInteract.ini b/gameSource/settings/wonlife-vanilla/clickToMoveLockToInteract.ini
+new file mode 100644
+index 000000000..573541ac9
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/clickToMoveLockToInteract.ini
+@@ -0,0 +1 @@
++0
+diff --git a/gameSource/settings/wonlife-wondible/clickToMoveLockToInteract.ini b/gameSource/settings/wonlife-wondible/clickToMoveLockToInteract.ini
+new file mode 100644
+index 000000000..d00491fd7
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/clickToMoveLockToInteract.ini
+@@ -0,0 +1 @@
++1
