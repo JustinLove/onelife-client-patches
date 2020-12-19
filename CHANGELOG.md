@@ -1,6 +1,6 @@
 # Changelog - feature changes
 
-## v79?
+## v79
 
 - fix-ghost-sounds was merged upstream
 - showShiverSweat defaults to off
