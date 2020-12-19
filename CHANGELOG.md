@@ -3,6 +3,7 @@
 ## v79?
 
 - fix-ghost-sounds was merged upstream
+- showShiverSweat defaults to off
 
 ## v78
 

@@ -40,7 +40,7 @@ Changes the hit detection of large objects (mainly trees) so they they only dete
 
 Characters shiver when cold, and get a sweat drop when hot. This applies to all characters, although the client does not receive temperature updates for other players who are standing still.
 
-`settings/showShiverSweat.ini` (0 to disable this feature)
+`settings/showShiverSweat.ini` (1 to enable this feature)
 `settings/sweatDropSprite.ini`
 
 ### click-through-heads

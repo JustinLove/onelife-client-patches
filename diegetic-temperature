@@ -1,12 +1,12 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b6979561e..e7dba8ec7 100644
+index b6979561e..855653b72 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -139,6 +139,8 @@ static int maxDoubleClickDrift = 30;
  
  static int ignoreTallObjects = 1;
  
-+static int showShiverSweat = 1;
++static int showShiverSweat = 0;
 +
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
@@ -16,7 +16,7 @@ index b6979561e..e7dba8ec7 100644
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
 +
-+    showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 1 );
++    showShiverSweat = SettingsManager::getIntSetting( "showShiverSweat", 0 );
 +    setAnimationSweatSprite( SettingsManager::getIntSetting( "sweatDropSprite", 88 ) );
      
      initLiveTriggers();
@@ -187,11 +187,11 @@ index bff8c9fea..1a926d5a1 100644
  // drawn on top of tunic of people who are drawn
 diff --git a/gameSource/settings/showShiverSweat.ini b/gameSource/settings/showShiverSweat.ini
 new file mode 100644
-index 000000000..d00491fd7
+index 000000000..573541ac9
 --- /dev/null
 +++ b/gameSource/settings/showShiverSweat.ini
 @@ -0,0 +1 @@
-+1
++0
 diff --git a/gameSource/settings/sweatDropSprite.ini b/gameSource/settings/sweatDropSprite.ini
 new file mode 100644
 index 000000000..9f7285879
