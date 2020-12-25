@@ -51,14 +51,14 @@ While in screen lock (spacebar), hit detection prefers the item in the tile to a
 
 ### open-say-field-on-typing
 
-Automatically open the say field to talk if you type a text chracter. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
+Automatically open the say field to talk if you type a text character. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
 
 `settings/openSayFieldOnTypingLower.ini` (1 to enable on lower case letters)
 `settings/openSayFieldOnTypingUpper.ini` (0 to disable on upper case letters)
 
 ### curse-assist
 
-Allows stepping through completions of player and grave names with tab key while say field is open.  Can recognize full names for "CURSE " or the begging of first names otherwise.
+Allows stepping through completions of player and grave names with tab key while say field is open.  Can recognize full names for "CURSE " or the beginning of first names otherwise.
 
 `settings/tabNameCompletion.ini` (0 to disable this feature)
 
@@ -97,7 +97,7 @@ l /love
 o /oreally
 k /shock
 
-### interacation-refactoring
+### interaction-refactoring
 
 Rewrite of some portions of pointer down and command issuing, depended on by other patches.
 
@@ -153,18 +153,21 @@ Holding 'c' will allow you to pan your view around within the map buffer.  With 
 
 Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
 
+`settings/showRelationDistance.ini` (0 to disable hearts)
+`settings/closeFamilySprite.ini`
+
 Shows a gold ball above players who count for gene score, aka +FAMILY+ from the /FAM command.
+
+`settings/showGenticFamily.ini` (0 to disable gold disks)
+`settings/geneticFamilySprite.ini`
 
 Shows a gosling on the head of new players (fuzzily defined as closely related births within one second of a 'YOUR BABY IS' message)
 
-There are keybinds to increase (= aka ushifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
-
-`settings/showRelationDistance.ini` (0 to disable hearts)
-`settings/closeFamilySprite.ini`
-`settings/showGenticFamily.ini` (0 to disable gold disks)
-`settings/geneticFamilySprite.ini`
 `settings/showNewPlayers.ini` (0 to disable goslings)
 `settings/newPlayerMarkerObject.ini`
+
+There are keybinds to increase (= aka unshifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
+
 `settings/playerMarkKey.ini`
 `settings/playerUnmarkKey.ini`
 
@@ -174,7 +177,7 @@ Changes the ESC overlay to include mod keys and help
 
 ### yum-hover
 
-Food item descriptions show Yum or Meh. Edible items and some precuros items are highlighted green (yum) or red (meh) on cursor over.
+Food item descriptions show Yum or Meh. Edible items and some precursor items are highlighted green (yum) or red (meh) on cursor over.
 
 `settings/showYumHover.ini` (0 to disable this feature)
 
@@ -260,9 +263,9 @@ Piles are defined by a category object id, defined in
 
 ## object-search
 
-Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer. The current search is show in place of the craving.
+Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer. The current search is shown in place of the craving.
 
-If no search is active, a search is peformed for the current craving. This can be disabled with 
+If no search is active, a search is performed for the current craving. This can be disabled with 
 
 `settings/defaultSearchForCraving.ini`, 0 to disable this feature
 
@@ -274,7 +277,7 @@ Search for a person's name with `:character name` (or a prefix), or by press 't'
 
 ## name-labels
 
-Shows a name label to the side of characters of interest. Show for people you name yourself, and for those you hover for a second (e.g. looked at their hname)
+Shows a name label to the side of characters of interest. Show for people you name yourself, and for those you hover for a second (e.g. looked at their name)
 
 `settings/showNameLabels.ini` - 0 to disable this feature
 
