@@ -15,10 +15,14 @@ Requires a installation of [One Hour One Life](https://onehouronelife.com/), or 
 Download zip file. Copy the program and names files into the same folder as OneLife.exe (or equivalent).
 
 > **Steam**: right click on `One Hour One Life`. Chose `Properties...` from the menu. One that dialog, choose `Local Files` on the left, and then the `Browse...` button. Copy the files into this directory.
+## Example Configurations
 
 The settings directory has three main subfolders. Copy the contents (ini files) of one folder into the game's settings directory.
 
-## Example Configurations
+- [Vanilla](#vanillaall-configuration---differences): Everything which can be disabled, is disabled
+- [Plus](#plus-configuration): Enables most features, but does not drastically alter the interface
+- [Wondible](#wondible-configuration): Main interaction mode is mouse **+ keyboard**. _**Do not use** without reading the description below._
+- 2hol: Age Scaling configuration for Two Hours One Life
 
 | Feature                        |Vanilla|Plus|Wondible|
 | -----------------------------: |-------|----|--------|
@@ -259,7 +263,7 @@ Reworks location markers.
 
 ## Wondible Configuration
 
-Most features as in Plus.
+Most features as in Plus, main interaction mode is mouse **+ keyboard**.
 
 **DANGER - if you don't understand what you are doing, you WILL NOT BE ABLE TO PLAY THE GAME.**
 
