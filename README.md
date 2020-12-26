@@ -1,217 +1,247 @@
-## Wondible's One Hour One Life Client Patches
+# Wondible's One Hour One Life Client
 
-[Patched Windows Client](https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip)
+[Patch descriptions](README.patches.md)
 
-### custom-gitignore
+## Requirements
 
-Cleans up some noise from my local compile environment that apparently don't bother Jason. Perhaps he has global ignores for those files.
+Requires a installation of [One Hour One Life](https://onehouronelife.com/), or a derivitive such as [Two Hours One Life](https://twohoursonelife.com/). The mod installs *additional* files into the base installation.
 
-### show-modded-client
+## Installation
 
-Prints "WonLife" on the start page so it's easy to tell when the mod has loaded, or the game has relaunced vanilla. This also adds same-program relaunch and client version mismatch testing.
+[Windows Client](https://wondible-com-wonlife.s3.amazonaws.com/WonLife-latest.zip)
 
-Sets user agent to `client_wonlife`
+[MacOSX Client](https://wondible-com-wonlife.s3.amazonaws.com/WonLifeMacOSX-latest.zip) - lightly tested
 
-### optional-client-tag
+[Linux Client](https://wondible-com-wonlife.s3.amazonaws.com/WonLifeLinux-latest.zip) - lightly tested
 
-Attempts relogin with/without client tag if login fails.
+Download and extract zip file. Copy the program and names files into the same folder as OneLife.exe (or equivalent).
 
-Adds setting for which to try first, the setting is updated on the first successfull login.
+> **Steam**: right click on `One Hour One Life`. Chose `Properties...` from the menu. One that dialog, choose `Local Files` on the left, and then the `Browse...` button. Copy the files into this directory.
+## Example Configurations
 
-`settings/usingClientTag.ini`
+The settings directory has three main subfolders. Copy the contents (ini files) of one folder into the game's settings directory.
 
-### compat-disable-messages
+- [Vanilla](#vanillaall-configuration---differences): Everything which can be disabled, is disabled
+- [Plus](#plus-configuration): Enables most features, but does not drastically alter the interface
+- [Wondible](#wondible-configuration): Main interaction mode is mouse **+ keyboard**. _**Do not use** without reading the description below._
+- 2hol: Age Scaling configuration for Two Hours One Life
 
-Disables new client messages that will cause the server to boot a client. This is mainly for 2hol, so it reuses the client tag flag from the previous patch.
+| Feature                        |Vanilla|Plus|Wondible|
+| -----------------------------: |-------|----|--------|
+| Bugfixes                       | ✔️     | ✔️  | ✔️      |
+| Help Screen                    | ✔️     | ✔️  | ✔️      |
+| R.I.P. name                    | ✔️     | ✔️  | ✔️      |
+| Burn Rate                      | ✔️     | ✔️  | ✔️      |
+| Time Hints                     | ✔️     | ✔️  | ✔️      |
+| Say Quick Close                | ✔️     | ✔️  | ✔️      |
+| Obj in Bad Biome               | ✔️     | ✔️  | ✔️      |
+| Show Uses                      | ✔️     | ✔️  | ✔️      |
+| Emotion Keys                   | ✔️     | ✔️  | ✔️      |
+| Object Search                  | ✔️     | ✔️  | ✔️      |
+| Craving Search                 | ✔️     | ✔️  | ✔️      |
+| Person Search                  | ✔️     | ✔️  | ✔️      |
+| Autorun                        |       | ✔️  | ✔️      |
+| Ignore Tall Objects            |       | ✔️  | ✔️      |
+| Click Through Heads            |       | ✔️  |        |
+| Open Say Field on Typing       |       | ✔️  | Upper  |
+| Tab Name Completion            |       | ✔️  | ✔️      |
+| Tab Name Suggestion            |       | ✔️  | ✔️      |
+| Drag Drop                      |       | ✔️  | ✔️      |
+| Screen Push                    |       | ✔️  |        |
+| Family Hearts                  |       | ✔️  | ✔️      |
+| Mark Genetic Family            |       | ✔️  | ✔️      |
+| Mark New Players               |       | ✔️  | ✔️      |
+| Name Labels                    |       | ✔️  | ✔️      |
+| Yum Hover                      |       | ✔️  | ✔️      |
+| Time Based Hunger Dings        |       | ✔️  | ✔️      |
+| Filter Matches Product         |       | ✔️  | ✔️      |
+| Location Slips                 |       | ✔️  | ✔️      |
+| Click to Move Lock to Interact |       |    | ✔️      |
+| Keyboard Commands              |       |    | ✔️      |
+| Camera Pan                     |       |    | ✔️      |
 
-### autorun
+## Vanilla/All Configuration - differences
 
-Double-click to enable an auto-run mode. Dotted line trails will always be shown while active. Click again or catch your cursor to stop.
+All features which can be disabled, are disabled. The following changes are not togglable and are always present.
 
-This feature can be adjusted or disabled by the setting file `maxDoubleClickFrames.ini`. Set to 0 to disable double click to run; you can't click twice in 1 frame.
-
-### click-through-trees
-
-Changes the hit detection of large objects (mainly trees) so they they only detect clicks on their tile, making it much easier to navigate through swamps and other dense areas. Main other affect I've noticed is that you cannot click on the cart part of a horse-cart.
-
-`settings/ignoreTallObjects.ini` (0 to disable this feature)
-
-### diegetic-temperature
-
-Characters shiver when cold, and get a sweat drop when hot. This applies to all characters, although the client does not receive temperature updates for other players who are standing still.
-
-`settings/showShiverSweat.ini` (1 to enable this feature)
-`settings/sweatDropSprite.ini`
-
-### click-through-heads
-
-While in screen lock (spacebar), hit detection prefers the item in the tile to any characters who may be overlapping it, and provides the highlight effect seen most commonly seen with objects behind trees. Note that this can make it harder to eat, which makes me still slightly unsatisfied with this mode of activation.
-
-`settings/preferObjectsOverPlayersWithScreenLock.ini` (0 to disable this feature)
-
-### open-say-field-on-typing
-
-Automatically open the say field to talk if you type a text character. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
-
-`settings/openSayFieldOnTypingLower.ini` (1 to enable on lower case letters)
-`settings/openSayFieldOnTypingUpper.ini` (0 to disable on upper case letters)
-
-### curse-assist
-
-Allows stepping through completions of player and grave names with tab key while say field is open.  Can recognize full names for "CURSE " or the beginning of first names otherwise.
-
-`settings/tabNameCompletion.ini` (0 to disable this feature)
-
-### name-assist
-
-Suggests random names or name completions by pressing tab with "I AM " or "YOU ARE " in the say field.
-
-This requires the name files from the game's source repository. They should also be packed in WonLife zip release.
-
-- server/maleNames.txt
-- server/femaleNames.txt
-- server/lastNames.txt
-
-Depends on curse-name-assist, uses same settings file
-
-### fix-mushroom-death
+### Bugfixes
 
 Reset the sprite remap if you die while high. See [OneLife/#163](https://github.com/jasonrohrer/OneLife/issues/163)
 
-### emotion-keys
-
-Allows triggering emotes with Ctrl+key or Alt+key. Emote keys are defined in `settings/emotionKeys.ini` with these defaults. The emotion commands in the setting file are for convenience only, it uses line number like the base game settings. Note: Certain key combos may not work; Ctrl+q is interpreted as ESC for instance.
-
-h /happy
-m /mad
-a /angry
-s /sad
-d /devious
-j /joy
-b /blush
-u /hubba
-i /ill
-y /yoohoo
-f /hmph
-l /love
-o /oreally
-k /shock
-
-### interaction-refactoring
-
-Rewrite of some portions of pointer down and command issuing, depended on by other patches.
-
-### drag-drop-use
-
-Allows holding the mouse button when picking up an item, once the character is shown as holding the item, the cursor will show the item, and it can be released on another tile to use the item there. Handy for water-to-crops, soil-to-crops, moving things, etc.
-
-`settings/dragDropUse.ini` (0 to disable this feature)
-
-### click-to-move-lock-to-interact
-
-Disabled by default `settings/clickToMoveLockToInteract.ini` (1 to enable this feature)
-
-Makes clicks by default move only. Lock the screen (spacebar) to perform all other functions. Alternately, you may use Ctrl or Alt to *not* lock the screen and perform actions; this works while the say field is open.
-
-### interaction-keys
-
-Adds key actions that do very specific things at the mouse pointer cell, versus the default click which does very context sensitive things based on precise hit detection.
-
-Press F1 to close the say field without erasing it if you need to do something.
-Press shift-backspace to close and clear the say field (e.g. "YOU ARE ... DEAD")
-
-This feature may conflict with openSayFieldOnTypingLower.
-
-`settings/interactionKeysEnabled.ini` (0 to disable this feature)
-
-Default bindings (change in `settings/interactionKeys.ini`)
-q step
-a autorun
-f use
-d drop
-s take/cycle from container
-v eat/self
-g feed/use on other
-k kill
-x examine
-r put/take in backpack
-e put in backpack
-w take/cycle in backpack
-
-### camera-control
-
-Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
-
-Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
-
-Holding 'c' will allow you to pan your view around within the map buffer.  With camera pan, it may look better if you change mouse pointer to 'DRAWN'
-
-`settings/cameraKey.ini` to change the key, or remove to disable.
-
-
-### show-close-family
-
-Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
-
-`settings/showRelationDistance.ini` (0 to disable hearts)
-`settings/closeFamilySprite.ini`
-
-Shows a gold ball above players who count for gene score, aka +FAMILY+ from the /FAM command.
-
-`settings/showGenticFamily.ini` (0 to disable gold disks)
-`settings/geneticFamilySprite.ini`
-
-Shows a gosling on the head of new players (fuzzily defined as closely related births within one second of a 'YOUR BABY IS' message)
-
-`settings/showNewPlayers.ini` (0 to disable goslings)
-`settings/newPlayerMarkerObject.ini`
-
-There are keybinds to increase (= aka unshifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
-
-`settings/playerMarkKey.ini`
-`settings/playerUnmarkKey.ini`
-
-### help-overlay
+### Help Screen
 
 Changes the ESC overlay to include mod keys and help
 
-### yum-hover
+### Out of Game
 
-Food item descriptions show Yum or Meh. Edible items and some precursor items are highlighted green (yum) or red (meh) on cursor over.
-
-`settings/showYumHover.ini` (0 to disable this feature)
-
-### show-name-on-death-screen
+"WonLife" is on the main screen so you can tell the mod is running.
 
 Shows "R.I.P. <name>" in place of "YOU DIED"
 
-### show-burn-rate
+### Food Bar
 
 Displays a line above the food bar, that shows approximate pip-per-minute drain.
 
-### show-learned-tools
-
-Disabled by default
-
-Displays your learned tools and an empty slip for each available tool slot along the top of the screen. Similar to yum, the tool UI is only shown when holding or examining a tool. Available slots depends on the text announcements and may not be available after reconnects and such.
-
-`settings/showLearnedTools.ini` (1 to enable this feature)
-
-### filter-matches-product
-
-/filter selects all transitions that produce a matching object. So even if you can't spell tattoo, /tat gives you all the tattoo items with their immediate precursors (and potato recipes)
-
-`settings/filterMatchesProduct.ini` (0 to disable this feature)
-
-### time-transition-hints
+### Hints
 
 Shows hints with (time passing) for fires, dough, growing plants, etc so you can see when the thing you need to do is wait.
 
-### tolerate-missing-graphic
+### Say Field
 
-Skips attempting to draw the hint arrow if the graphic is missing, which it may be in client folders for 2HOL etc. Game crashes otherwise.
+Press `F1` to close the say field without erasing it.
+Press `shift-backspace` to close and clear the say field (e.g. "YOU ARE ... DEAD")
 
-### location-slips
+### Object Hover
+
+Allows viewing object names when hovering in bad biomes
+
+Shows the remaining uses of water buckets, bushes, piles, etc.
+
+> Piles are defined by a category object id, defined in 
+> `settings/categoryPile.ini`
+
+### Additional UI
+
+These features are present in all configurations, but can be ignored if you don't activate them.
+
+#### Emotion Keys
+
+Allows triggering emotes with Ctrl+key or Alt+key. Emote keys are defined in `settings/emotionKeys.ini` with these defaults. The emotion commands in the setting file are for convenience only, it uses line number like the base game settings. Note: Certain key combos may not work; Ctrl+q is interpreted as ESC for instance.
+
+|Key| Command  |
+|---| :------- |
+| h | /happy   |
+| m | /mad     |
+| a | /angry   |
+| s | /sad     |
+| d | /devious |
+| j | /joy     |
+| b | /blush   |
+| u | /hubba   |
+| i | /ill     |
+| y | /yoohoo  |
+| f | /hmph    |
+| l | /love    |
+| o | /oreally |
+| k | /shock   |
+
+#### Object Search
+
+Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer. The current search is shown in place of the craving.
+
+#### Person Search
+
+Search for a person's name with `:character name` (or a prefix), or by press `t` with the cursor over them to get a temporary location slip to them. If someone says "Follow me", you can.
+
+> `settings/playerTrackKey.ini`
+
+## Plus Configuration
+
+Enables most features, but does not drastically alter the interface
+
+### Autorun
+
+Double-click to enable an auto-run mode. Dotted line trails will always be shown while active. Click again or catch your cursor to stop.
+
+> This feature can be adjusted or disabled by the setting file `maxDoubleClickFrames.ini`. Set to 0 to disable double click to run; you can't click twice in 1 frame.
+
+### Hit Detection
+
+Changes the hit detection of large objects (mainly trees) so they they only detect clicks on their tile, making it much easier to navigate through swamps and other dense areas. Main other affect I've noticed is that you cannot click on the cart part of a horse-cart.
+
+> `settings/ignoreTallObjects.ini` (0 to disable this feature)
+
+While in screen lock (spacebar), hit detection prefers the item in the tile to any characters who may be overlapping it, and provides the highlight effect seen most commonly seen with objects behind trees. Note that this can make it harder to eat, which makes me still slightly unsatisfied with this mode of activation.
+
+> `settings/preferObjectsOverPlayersWithScreenLock.ini` (0 to disable this feature)
+
+### Say Field
+
+Automatically open the say field to talk if you type a text character. Does not block e/z; those character will be added if another printable character is seen shortly afterwards.
+
+> `settings/openSayFieldOnTypingLower.ini` (0 to disable on lower case letters)
+>
+> `settings/openSayFieldOnTypingUpper.ini` (0 to disable on upper case letters)
+
+#### Name Completion
+
+Allows stepping through completions of player and grave names with tab key while say field is open.  Can recognize full names for "CURSE " or the beginning of first names otherwise.
+
+#### Name Suggestion
+
+Suggests random names or name completions by pressing tab with "I AM " or "YOU ARE " in the say field.
+
+> This requires the name files from the game's source repository. They should also be packed in WonLife zip release. Place the files in the same folder as the game program.
+> 
+> - maleNames.txt
+> - femaleNames.txt
+> - lastNames.txt
+> 
+> `settings/tabNameCompletion.ini` (0 to disable these features)
+
+#### Object Search
+
+As above; If no object search is active, a search is performed for the current craving. This can be disabled with 
+
+> `settings/defaultSearchForCraving.ini`, 0 to disable this feature
+
+#### Drag-Drop
+
+Allows holding the mouse button when picking up an item, once the character is shown as holding the item, the cursor will show the item, and it can be released on another tile to use the item there. Handy for water-to-crops, soil-to-crops, moving things, etc.
+
+> `settings/dragDropUse.ini` (0 to disable this feature)
+
+#### Screen Push
+
+Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
+
+> Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
+
+#### Player Annotations
+
+Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
+
+> `settings/showRelationDistance.ini` (0 to disable hearts)
+> `settings/closeFamilySprite.ini`
+
+Shows a gold ball above players who count for gene score, aka +FAMILY+ from the /FAM command.
+
+> `settings/showGenticFamily.ini` (0 to disable gold disks)
+> `settings/geneticFamilySprite.ini`
+
+Shows a gosling on the head of new players (fuzzily defined as closely related births within one second of a 'YOUR BABY IS' message)
+
+> `settings/showNewPlayers.ini` (0 to disable goslings)
+> `settings/newPlayerMarkerObject.ini`
+
+There are keybinds to increase (= aka unshifted +) or decrease (-) hearts for players of interest. Manual marking can go one size larger than mom/child.
+
+> `settings/playerMarkKey.ini`
+> `settings/playerUnmarkKey.ini`
+
+Shows a name label to the side of characters of interest. Show for people you name yourself, and for those you hover for a second (e.g. looked at their name)
+
+> `settings/showNameLabels.ini` - 0 to disable this feature
+
+#### Item Hover
+
+Food item descriptions show Yum or Meh. Edible items and some precursor items are highlighted green (yum) or red (meh) on cursor over.
+
+> `settings/showYumHover.ini` (0 to disable this feature)
+
+#### Food Bar
+
+Starvation notices are based on time to starvation instead of food boxes, making them relative to clothing etc.
+
+> `settings/starvationAlarmTime.ini` - number of seconds for starving state (twice that for hungry). Set to 0 to disable this feature.
+
+### Hints
+
+/filter selects all transitions that produce a matching object. So even if you can't spell tattoo, /tat gives you all the tattoo items with their immediate precursors (and potato recipes)
+
+> `settings/filterMatchesProduct.ini` (0 to disable this feature)
+
+#### Location Slips
 
 Reworks location markers.
 
@@ -224,80 +254,56 @@ Reworks location markers.
 - Homeland slips are stone gray
 - Temporary slips have a pointer to the location when close.
 
-`settings/locationsSlipsEnabled.ini` (0 to disable this feature)
+> `settings/locationsSlipsEnabled.ini` (0 to disable this feature)
 
-Since monument colors require object specific information, they are settable in 
+> Since monument colors require object specific information, they are settable in 
+> 
+> `settings/locationSlipColors.ini`
+> 
+> Format is
+> `objectID r g b`
 
-`settings/locationSlipColors.ini`
+## Wondible Configuration
 
-Format is
-`objectID r g b`
+Most features as in Plus, main interaction mode is mouse **+ keyboard**.
 
-### age-scaling
+**DANGER - if you don't understand what you are doing, you WILL NOT BE ABLE TO PLAY THE GAME.**
 
-Clientside age scaling for e.g. Two Hours One Life, where you currently spend half your life old and wrinkled. Allows settings multipel scaling segments, an example file is provided for 2HOL
+#### DANGER: Click to Move Lock to Interact
 
-`settings/ageScaling.ini` - Client uses this files, shows do-nothing settings for vanilla.
-`settings/ageScaling2hol.ini` - 2HOL example settings - copy to `ageScaling.ini` to use
+> `settings/clickToMoveLockToInteract.ini` (0 to disable this feature)
 
-File format:
-`serverAge displayAge optional comment, rest of line ignored`
+Makes clicks by default move only. Lock the screen (spacebar) to perform all other functions. Alternately, you may use Ctrl or Alt to *not* lock the screen and perform actions; this works while the say field is open.
 
-e.g.
+> `settings/preferObjectsOverPlayersWithScreenLock.ini` is off in the provided settings (keyboard commands cover this need).
 
-`3 3` - if the server reports 3, show as 3
+#### Keyboard Commands
 
-`120 60` - if the server reports 120, show as 60
+Adds key actions that do very specific things at the mouse pointer cell, versus the default click which does very context sensitive things based on precise hit detection.
 
-## show-bad-biome-objects
+Press `F1` to close the say field without erasing it if you need to do something.
+Press `shift-backspace` to close and clear the say field (e.g. "YOU ARE ... DEAD")
 
-Allows viewing object names when hovering in bad biomes
+> This feature conflicts with openSayFieldOnTypingLower, which is disabled in this configuration.
 
-## show-use-count
+> `settings/interactionKeysEnabled.ini` (0 to disable this feature)
 
-Shows the remaining uses of water buckets, bushes, piles, etc.
+Default bindings (change in `settings/interactionKeys.ini`)
 
-Piles are defined by a category object id, defined in 
+|Key| Action                    |
+|---| :------------------------ |
+| q | step                      |
+| a | autorun                   |
+| f | use                       |
+| d | drop                      |
+| s | take/cycle from container |
+| v | eat/self                  |
+| g | feed/use on other         |
+| k | kill                      |
+| x | examine                   |
+| r | put/take in backpack      |
+| e | put in backpack           |
+| w | take/cycle in backpack    |
 
-`settings/categoryPile.ini`
-
-## object-search
-
-Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer. The current search is shown in place of the craving.
-
-If no search is active, a search is performed for the current craving. This can be disabled with 
-
-`settings/defaultSearchForCraving.ini`, 0 to disable this feature
-
-## person-search
-
-Search for a person's name with `:character name` (or a prefix), or by press 't' with the cursor over them to get a temporary location slip to them. If someone says "Follow me", you can.
-
-`settings/playerTrackKey.ini`
-
-## name-labels
-
-Shows a name label to the side of characters of interest. Show for people you name yourself, and for those you hover for a second (e.g. looked at their name)
-
-`settings/showNameLabels.ini` - 0 to disable this feature
-
-## time-based-hunger-dings
-
-Starvation notices are based on time to starvation instead of food boxes, making them relative to clothing etc.
-
-`settings/starvationAlarmTime.ini` - number of seconds for starving state (twice that for hungry). Set to 0 to disable this feature.
-
-## compat-missing-strings
-
-Adds fallbacks for some missing strings in 2hol
-
-### Patch Development
-
-I had a [fork](https://github.com/JustinLove/OneLife) of the [git repo](https://github.com/jasonrohrer/OneLife), but felt like the several features could get a bit muddled all in one, and buried behind mainline changes and merges.
-
-I'm currently using [Stacked Git](http://procode.org/stgit/) (stgit) to manage patches, although it seems to create a lot of noise in the commit graph.
-
-Importing all of these patches would be:
-
-`stg import --series onelife-client-patches/series`
-
+Holding `c` will allow you to pan your view around within the map buffer.  With camera pan, it may look better if you change mouse pointer to `DRAWN`
+Configuration disables screen edge push in deference to this feature.
