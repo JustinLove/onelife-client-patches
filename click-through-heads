@@ -52,8 +52,8 @@ index 000000000..573541ac9
 +0
 diff --git a/gameSource/settings/wonlife-wondible/preferObjectsOverPlayersWithScreenLock.ini b/gameSource/settings/wonlife-wondible/preferObjectsOverPlayersWithScreenLock.ini
 new file mode 100644
-index 000000000..d00491fd7
+index 000000000..573541ac9
 --- /dev/null
 +++ b/gameSource/settings/wonlife-wondible/preferObjectsOverPlayersWithScreenLock.ini
 @@ -0,0 +1 @@
-+1
++0
