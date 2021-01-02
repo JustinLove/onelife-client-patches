@@ -17,6 +17,7 @@ Requires a installation of [One Hour One Life](https://onehouronelife.com/), or 
 Download and extract zip file. Copy the program and names files into the same folder as OneLife.exe (or equivalent).
 
 > **Steam**: right click on `One Hour One Life`. Chose `Properties...` from the menu. One that dialog, choose `Local Files` on the left, and then the `Browse...` button. Copy the files into this directory.
+
 ## Example Configurations
 
 The settings directory has three main subfolders. Copy the contents (ini files) of one folder into the game's settings directory.
@@ -25,40 +26,41 @@ The settings directory has three main subfolders. Copy the contents (ini files) 
 - [Plus](#plus-configuration): Enables most features, but does not drastically alter the interface
 - [Wondible](#wondible-configuration): Main interaction mode is mouse **+ keyboard**. _**Do not use** without reading the description below._
 - 2hol: Age Scaling configuration for Two Hours One Life
+- defaults: How the program behaves with no setting files
 
-| Feature                        |Vanilla|Plus|Wondible|
-| -----------------------------: |-------|----|--------|
-| Bugfixes                       | ✔️     | ✔️  | ✔️      |
-| Help Screen                    | ✔️     | ✔️  | ✔️      |
-| R.I.P. name                    | ✔️     | ✔️  | ✔️      |
-| Burn Rate                      | ✔️     | ✔️  | ✔️      |
-| Time Hints                     | ✔️     | ✔️  | ✔️      |
-| Say Quick Close                | ✔️     | ✔️  | ✔️      |
-| Obj in Bad Biome               | ✔️     | ✔️  | ✔️      |
-| Show Uses                      | ✔️     | ✔️  | ✔️      |
-| Emotion Keys                   | ✔️     | ✔️  | ✔️      |
-| Object Search                  | ✔️     | ✔️  | ✔️      |
-| Craving Search                 | ✔️     | ✔️  | ✔️      |
-| Person Search                  | ✔️     | ✔️  | ✔️      |
-| Autorun                        |       | ✔️  | ✔️      |
-| Ignore Tall Objects            |       | ✔️  | ✔️      |
-| Click Through Heads            |       | ✔️  |        |
-| Open Say Field on Typing       |       | ✔️  | Upper  |
-| Tab Name Completion            |       | ✔️  | ✔️      |
-| Tab Name Suggestion            |       | ✔️  | ✔️      |
-| Drag Drop                      |       | ✔️  | ✔️      |
-| Screen Push                    |       | ✔️  |        |
-| Family Hearts                  |       | ✔️  | ✔️      |
-| Mark Genetic Family            |       | ✔️  | ✔️      |
-| Mark New Players               |       | ✔️  | ✔️      |
-| Name Labels                    |       | ✔️  | ✔️      |
-| Yum Hover                      |       | ✔️  | ✔️      |
-| Time Based Hunger Dings        |       | ✔️  | ✔️      |
-| Filter Matches Product         |       | ✔️  | ✔️      |
-| Location Slips                 |       | ✔️  | ✔️      |
-| Click to Move Lock to Interact |       |    | ✔️      |
-| Keyboard Commands              |       |    | ✔️      |
-| Camera Pan                     |       |    | ✔️      |
+| Feature                        |Vanilla|Plus|Wondible|defaults|
+| -----------------------------: |-------|----|--------|--------|
+| Bugfixes                       | ✔️     | ✔️  | ✔️      | ✔️      |
+| Help Screen                    | ✔️     | ✔️  | ✔️      | ✔️      |
+| R.I.P. name                    | ✔️     | ✔️  | ✔️      | ✔️      |
+| Burn Rate                      | ✔️     | ✔️  | ✔️      | ✔️      |
+| Time Hints                     | ✔️     | ✔️  | ✔️      | ✔️      |
+| Say Quick Close                | ✔️     | ✔️  | ✔️      | ✔️      |
+| Obj in Bad Biome               | ✔️     | ✔️  | ✔️      | ✔️      |
+| Show Uses                      | ✔️     | ✔️  | ✔️      | ✔️      |
+| Emotion Keys                   | ✔️     | ✔️  | ✔️      | ✔️      |
+| Object Search                  | ✔️     | ✔️  | ✔️      | ✔️      |
+| Craving Search                 |       | ✔️  | ✔️      | ✔️      |
+| Person Search                  | ✔️     | ✔️  | ✔️      | ✔️      |
+| Autorun                        |       | ✔️  | ✔️      | ✔️      |
+| Ignore Tall Objects            |       | ✔️  | ✔️      | ✔️      |
+| Click Through Heads            |       | ✔️  |        | ✔️      |
+| Open Say Field on Typing       |       | ✔️  | Upper  | Upper  |
+| Tab Name Completion            |       | ✔️  | ✔️      | ✔️      |
+| Tab Name Suggestion            |       | ✔️  | ✔️      | ✔️      |
+| Drag Drop                      |       | ✔️  | ✔️      | ✔️      |
+| Family Hearts                  |       | ✔️  | ✔️      | ✔️      |
+| Mark Genetic Family            |       | ✔️  | ✔️      | ✔️      |
+| Mark New Players               |       | ✔️  | ✔️      | ✔️      |
+| Name Labels                    |       | ✔️  | ✔️      | ✔️      |
+| Yum Hover                      |       | ✔️  | ✔️      | ✔️      |
+| Time Based Hunger Dings        |       | ✔️  | ✔️      | ✔️      |
+| Filter Matches Product         |       | ✔️  | ✔️      | ✔️      |
+| Location Slips                 |       | ✔️  | ✔️      | ✔️      |
+| Screen Push                    |       | ✔️  |        |        |
+| Click to Move Lock to Interact |       |    | ✔️      |        |
+| Keyboard Commands              |       |    | ✔️      | ✔️      |
+| Camera Pan                     |       |    | ✔️      | ✔️      |
 
 ## Vanilla/All Configuration - differences
 
@@ -185,19 +187,13 @@ As above; If no object search is active, a search is performed for the current c
 
 > `settings/defaultSearchForCraving.ini`, 0 to disable this feature
 
-#### Drag-Drop
+### Drag-Drop
 
 Allows holding the mouse button when picking up an item, once the character is shown as holding the item, the cursor will show the item, and it can be released on another tile to use the item there. Handy for water-to-crops, soil-to-crops, moving things, etc.
 
 > `settings/dragDropUse.ini` (0 to disable this feature)
 
-#### Screen Push
-
-Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
-
-> Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
-
-#### Player Annotations
+### Player Annotations
 
 Shows heart above mother/grandmother, child/grandchild, siblings, twins. Currently includes aunts/uncles, still not sure about that part.
 
@@ -223,13 +219,13 @@ Shows a name label to the side of characters of interest. Show for people you na
 
 > `settings/showNameLabels.ini` - 0 to disable this feature
 
-#### Item Hover
+### Item Hover
 
 Food item descriptions show Yum or Meh. Edible items and some precursor items are highlighted green (yum) or red (meh) on cursor over.
 
 > `settings/showYumHover.ini` (0 to disable this feature)
 
-#### Food Bar
+### Food Bar
 
 Starvation notices are based on time to starvation instead of food boxes, making them relative to clothing etc.
 
@@ -241,7 +237,7 @@ Starvation notices are based on time to starvation instead of food boxes, making
 
 > `settings/filterMatchesProduct.ini` (0 to disable this feature)
 
-#### Location Slips
+### Location Slips
 
 Reworks location markers.
 
@@ -263,13 +259,19 @@ Reworks location markers.
 > Format is
 > `objectID r g b`
 
+### Screen Push
+
+Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
+
+> Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
+
 ## Wondible Configuration
 
 Most features as in Plus, main interaction mode is mouse **+ keyboard**.
 
 **DANGER - if you don't understand what you are doing, you WILL NOT BE ABLE TO PLAY THE GAME.**
 
-#### DANGER: Click to Move Lock to Interact
+### DANGER: Click to Move Lock to Interact
 
 > `settings/clickToMoveLockToInteract.ini` (0 to disable this feature)
 
@@ -277,7 +279,7 @@ Makes clicks by default move only. Lock the screen (spacebar) to perform all oth
 
 > `settings/preferObjectsOverPlayersWithScreenLock.ini` is off in the provided settings (keyboard commands cover this need).
 
-#### Keyboard Commands
+### Keyboard Commands
 
 Adds key actions that do very specific things at the mouse pointer cell, versus the default click which does very context sensitive things based on precise hit detection.
 

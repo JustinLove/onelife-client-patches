@@ -1,5 +1,10 @@
 # Changelog - feature changes
 
+## v81
+
+- Rewrite readme as user focused, move old readme to READEM.patches.md
+- Changed defaults for camera control to screen pan instead of edge push
+
 ## v80
 
 - moved settings into several different example configuration subdirectories, copy the settings from the one you want to start with.

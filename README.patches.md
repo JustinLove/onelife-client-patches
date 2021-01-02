@@ -140,9 +140,9 @@ w take/cycle in backpack
 
 ### camera-control
 
-Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
+(disabled by default) Putting the pointer near the edge of the screen will nudge it over, as far as your character remains in frame.
 
-Push speed can be configured in `settings/screenEdgePushSpeed.ini`. Default value is 10, speed of 0 (or even 1) will disable edge push.
+Push speed can be configured in `settings/screenEdgePushSpeed.ini`. An enabled value is around 10; speed of 0 (or even 1) will disable edge push.
 
 Holding 'c' will allow you to pan your view around within the map buffer.  With camera pan, it may look better if you change mouse pointer to 'DRAWN'
 
