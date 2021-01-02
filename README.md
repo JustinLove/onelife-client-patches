@@ -1,6 +1,6 @@
 # Wondible's One Hour One Life Client
 
-[Patch descriptions](README.patches.md)
+[Patch Respository](https://github.com/JustinLove/onelife-client-patches) [Patch descriptions](README.patches.md)
 
 ## Requirements
 

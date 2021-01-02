@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## v82
+
+- C considers 0 a valid `char*`
+
 ## v81
 
 - Rewrite readme as user focused, move old readme to READEM.patches.md

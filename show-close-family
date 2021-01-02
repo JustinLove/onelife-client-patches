@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9fd5dbc8e..176024951 100644
+index 8050c737c..621326691 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -146,6 +146,13 @@ static int ignoreTallObjects = 1;

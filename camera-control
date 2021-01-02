@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 2c815c43c..9fd5dbc8e 100644
+index 2c815c43c..8050c737c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -50,6 +50,9 @@
@@ -32,7 +32,7 @@ index 2c815c43c..9fd5dbc8e 100644
      mSayField.usePasteShortcut( true );
  
 +    // set to 0 to disable screen edge push
-+    screenEdgePushSpeed = SettingsManager::getFloatSetting( "screenEdgePushSpeed", 0 );
++    screenEdgePushSpeed = SettingsManager::getFloatSetting( "screenEdgePushSpeed", 0.0 );
 +
 +    // remove to disable camera key
 +    char* cameraKeyString = SettingsManager::getStringSetting( "camerakey" );
