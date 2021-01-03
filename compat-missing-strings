@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 670eb37e4..ae43e1b37 100644
+index 9bd7a10b6..cc36f8f66 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -11276,6 +11276,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11280,6 +11280,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
  
              char *pageNum = NULL;
              double pageNumExtra = 0;
@@ -10,7 +10,7 @@ index 670eb37e4..ae43e1b37 100644
              
              if( mNumTotalHints[i] > 1 ) {
                  
-@@ -11291,7 +11292,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11295,7 +11296,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
                      handwritingFont->measureString( translate( "tabHint" ) );
  
                  double extraC = 
@@ -19,7 +19,7 @@ index 670eb37e4..ae43e1b37 100644
                  
                  if( extraB > extraA ) {
                      extraA = extraB;
-@@ -11378,7 +11379,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11382,7 +11383,7 @@ void LivingLifePage::draw( doublePair inViewCenter,
                  
                  delete [] pageNum;
                  
@@ -28,7 +28,7 @@ index 670eb37e4..ae43e1b37 100644
                                               lineStart, alignCenter );
                  
                  lineStart.y -= lineSpacing;
-@@ -11386,6 +11387,8 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11390,6 +11391,8 @@ void LivingLifePage::draw( doublePair inViewCenter,
                  handwritingFont->drawString( translate( "tabHint" ), 
                                               lineStart, alignCenter );
                  }
@@ -37,7 +37,7 @@ index 670eb37e4..ae43e1b37 100644
              }
          }
  
-@@ -13974,7 +13977,7 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
+@@ -13978,7 +13981,7 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
              actorString = stringDuplicate( translate( "bareHandHint" ) );
              }
          else if( actor == -1 ) {

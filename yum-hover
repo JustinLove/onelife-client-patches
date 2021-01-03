@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 01e622b10..1f3ae1868 100644
+index 4f006e585..b8c1ac368 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -235,6 +235,40 @@ void initKeybinds() {
@@ -133,7 +133,7 @@ index 01e622b10..1f3ae1868 100644
                      
                      drawSquare( squarePos, squareRad );
                      
-@@ -11252,6 +11325,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11246,6 +11319,22 @@ void LivingLifePage::draw( doublePair inViewCenter,
                          desToDelete = des;
                          }
                      }
@@ -156,7 +156,7 @@ index 01e622b10..1f3ae1868 100644
  
                  
  
-@@ -12663,6 +12752,88 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
+@@ -12657,6 +12746,88 @@ char *LivingLifePage::getHintMessage( int inObjectID, int inIndex,
  
  
  
@@ -245,7 +245,7 @@ index 01e622b10..1f3ae1868 100644
  // inNewID > 0
  static char shouldCreationSoundPlay( int inOldID, int inNewID ) {
      if( inOldID == inNewID ) {
-@@ -20864,6 +21035,9 @@ void LivingLifePage::step() {
+@@ -20858,6 +21029,9 @@ void LivingLifePage::step() {
                      }
                  
                  if( mYumMultiplier != oldYumMultiplier ) {
@@ -255,7 +255,7 @@ index 01e622b10..1f3ae1868 100644
                      int oldSlipIndex = -1;
                      int newSlipIndex = 0;
                      
-@@ -20985,6 +21159,15 @@ void LivingLifePage::step() {
+@@ -20979,6 +21153,15 @@ void LivingLifePage::step() {
                  
                      if( lastAteID != 0 ) {
                          ObjectRecord *lastAteObj = getObject( lastAteID );
@@ -271,7 +271,7 @@ index 01e622b10..1f3ae1868 100644
                          
                          char *strUpper = stringToUpperCase(
                              lastAteObj->description );
-@@ -22961,6 +23144,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22949,6 +23132,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          mYumSlipNumberToShow[i] = 0;
          }
      

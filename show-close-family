@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 8050c737c..621326691 100644
+index 9c685d5cf..6daab3d14 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -146,6 +146,13 @@ static int ignoreTallObjects = 1;
@@ -288,7 +288,7 @@ index 8050c737c..621326691 100644
          if( mMapContainedStacks[ inMapI ].size() > 0 ) {
              int *stackArray = 
                  mMapContainedStacks[ inMapI ].getElementArray();
-@@ -5105,6 +5353,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5099,6 +5347,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          else {
              setAnimationHeat( 0.5 );
              }
@@ -305,7 +305,7 @@ index 8050c737c..621326691 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5397,6 +5655,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5391,6 +5649,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationBadgeColor( inObj->badgeColor );
                  }
  
@@ -323,7 +323,7 @@ index 8050c737c..621326691 100644
              // rideable object
              holdingPos =
                  drawObjectAnim( inObj->displayID, 2, curType, 
-@@ -5478,6 +5747,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5472,6 +5741,16 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                      setAnimationHeat( 0.5 );
                      }
                  
@@ -340,7 +340,7 @@ index 8050c737c..621326691 100644
                  doublePair babyHeldPos = holdPos;
                  
                  if( babyO->babyWiggle ) {
-@@ -12552,6 +12831,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -12546,6 +12825,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
      char *spaces = replaceAll( lines, "_", " ", &found );
      
      delete [] lines;
@@ -352,7 +352,7 @@ index 8050c737c..621326691 100644
      
      
      mGlobalMessageShowing = true;
-@@ -14504,6 +14788,9 @@ void LivingLifePage::step() {
+@@ -14498,6 +14782,9 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
@@ -362,7 +362,7 @@ index 8050c737c..621326691 100644
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -14713,6 +15000,16 @@ void LivingLifePage::step() {
+@@ -14707,6 +14994,16 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -379,7 +379,7 @@ index 8050c737c..621326691 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -16503,6 +16800,8 @@ void LivingLifePage::step() {
+@@ -16497,6 +16794,8 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -388,7 +388,7 @@ index 8050c737c..621326691 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -18525,6 +18824,16 @@ void LivingLifePage::step() {
+@@ -18519,6 +18818,16 @@ void LivingLifePage::step() {
                                        &( o.id ),
                                        &( o.holdingID ) );
                      
@@ -405,7 +405,7 @@ index 8050c737c..621326691 100644
                      
                      for( int i=0; i<gameObjects.size(); i++ ) {
                          
-@@ -20101,6 +20410,14 @@ void LivingLifePage::step() {
+@@ -20095,6 +20404,14 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -420,7 +420,7 @@ index 8050c737c..621326691 100644
                          }
                      }
                  }
-@@ -24816,6 +25133,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -24804,6 +25121,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -460,7 +460,7 @@ index 8050c737c..621326691 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26873,6 +27223,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26861,6 +27211,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
          }
  

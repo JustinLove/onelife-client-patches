@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9fb07756b..2c815c43c 100644
+index c846a1b50..7270279db 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -149,6 +149,82 @@ static int dragDropUse = 1;
@@ -96,41 +96,7 @@ index 9fb07756b..2c815c43c 100644
      
      initLiveTriggers();
  
-@@ -4793,11 +4873,17 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
-     
-         if( inObj->currentPos.x < trueTargetX ) {
-             if( inObj->currentSpeed == 0 ) {
-+                if( inObj->holdingFlip == true ) {
-+                    printf( "animation flip\n" );
-+                    }
-                 inObj->holdingFlip = false;
-                 }
-             }
-         if( inObj->currentPos.x > trueTargetX ) {
-             if( inObj->currentSpeed == 0 ) {
-+                if( inObj->holdingFlip == false ) {
-+                    printf( "animation flip\n" );
-+                    }
-                 inObj->holdingFlip = true;
-                 }
-             }
-@@ -21289,9 +21375,15 @@ void LivingLifePage::step() {
-             // don't change flip unless moving substantially in x
-             if( fabs( o->currentMoveDirection.x ) > 0.5 ) {
-                 if( o->currentMoveDirection.x > 0 ) {
-+                    if( o->holdingFlip == true ) {
-+                        printf( "step flip\n" );
-+                        }
-                     o->holdingFlip = false;
-                     }
-                 else {
-+                    if( o->holdingFlip == false ) {
-+                        printf( "step flip\n" );
-+                        }
-                     o->holdingFlip = true;
-                     }         
-                 }
-@@ -24363,6 +24455,242 @@ static void freeSavedPath() {
+@@ -24363,6 +24443,242 @@ static void freeSavedPath() {
  
  
  
@@ -373,7 +339,7 @@ index 9fb07756b..2c815c43c 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26004,7 +26332,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26004,7 +26320,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -381,7 +347,7 @@ index 9fb07756b..2c815c43c 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -26384,23 +26711,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26384,23 +26699,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -401,7 +367,7 @@ index 9fb07756b..2c815c43c 100644
 +        }
 +
      if( keyHandledByCase ) {
-         printf( "key handled by case %c\n", inASCII);
+         //printf( "key handled by case %c\n", inASCII);
          sayCapture = inASCII;
          keyDownGap = 0;
 +        if( interactionKeysEnabled && inASCII != interactionKeys[IK_RUN] && inASCII != 13 ) {
@@ -409,7 +375,7 @@ index 9fb07756b..2c815c43c 100644
 +            }
          }
      else {
-         printf( "key NOT handled by case %c\n", inASCII);
+         //printf( "key NOT handled by case %c\n", inASCII);
 +
 +        bool keyHandledByKeybind = false;
 +
@@ -426,7 +392,7 @@ index 9fb07756b..2c815c43c 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -26578,6 +26926,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -26578,6 +26914,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }

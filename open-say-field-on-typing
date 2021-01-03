@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 46b061181..69ff02741 100644
+index 46b061181..3bfc0f29a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -180,6 +180,12 @@ static char *photoSig = NULL;
@@ -122,12 +122,12 @@ index 46b061181..69ff02741 100644
 +        }
 +
 +    if( keyHandledByCase ) {
-+        printf( "key handled by case %c\n", inASCII);
++        //printf( "key handled by case %c\n", inASCII);
 +        sayCapture = inASCII;
 +        keyDownGap = 0;
 +        }
 +    else {
-+        printf( "key NOT handled by case %c\n", inASCII);
++        //printf( "key NOT handled by case %c\n", inASCII);
 +        // inspired by Awbz OneLife+
 +        if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
 +              || ( openSayFieldOnTypingUpper && isupper( inASCII ) )

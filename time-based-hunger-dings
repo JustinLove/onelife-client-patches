@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 3f9dff729..670eb37e4 100644
+index 9d679a2e6..9bd7a10b6 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -282,6 +282,9 @@ static char* lastNamed = NULL;
@@ -12,7 +12,7 @@ index 3f9dff729..670eb37e4 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -3562,6 +3565,8 @@ LivingLifePage::LivingLifePage()
+@@ -3569,6 +3572,8 @@ LivingLifePage::LivingLifePage()
  
      showNameLabels = SettingsManager::getIntSetting( "showNameLabels", 1 );
  
@@ -21,7 +21,7 @@ index 3f9dff729..670eb37e4 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -22991,7 +22996,10 @@ void LivingLifePage::step() {
+@@ -23012,7 +23017,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index 3f9dff729..670eb37e4 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -23076,6 +23084,9 @@ void LivingLifePage::step() {
+@@ -23097,6 +23105,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index 3f9dff729..670eb37e4 100644
                  }
              }
          
-@@ -24618,6 +24629,70 @@ static void dummyFunctionA() {
+@@ -24633,6 +24644,70 @@ static void dummyFunctionA() {
  
  
  
@@ -115,10 +115,10 @@ index 3f9dff729..670eb37e4 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 507c68f94..49b6aea9c 100644
+index 41fe3344c..6fa1e63e8 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -1039,6 +1039,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1040,6 +1040,8 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          double computePathSpeedMod( LiveObject *inObject, int inPathLength );
          
