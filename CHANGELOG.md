@@ -1,5 +1,15 @@
 # Changelog - feature changes
 
+## 83
+
+- block many instances of your character talking to itself
+- location slips temporarily give close distances
+- location slips show distance when hovered
+- slip to owned property
+- /FAM gives location slips instead of speech
+- follow roads only while autorunning
+- fix bug with object search in containers
+
 ## v82
 
 - C considers 0 a valid `char*`

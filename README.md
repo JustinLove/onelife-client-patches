@@ -43,6 +43,7 @@ The settings directory has three main subfolders. Copy the contents (ini files) 
 | Craving Search                 |       | ✔️  | ✔️      | ✔️      |
 | Person Search                  | ✔️     | ✔️  | ✔️      | ✔️      |
 | Autorun                        |       | ✔️  | ✔️      | ✔️      |
+| Follow roads only while running|       | ✔️  | ✔️      | ✔️      |
 | Ignore Tall Objects            |       | ✔️  | ✔️      | ✔️      |
 | Click Through Heads            |       | ✔️  |        | ✔️      |
 | Open Say Field on Typing       |       | ✔️  | Upper  | Upper  |
@@ -143,9 +144,10 @@ Enables most features, but does not drastically alter the interface
 
 ### Autorun
 
-Double-click to enable an auto-run mode. Dotted line trails will always be shown while active. Click again or catch your cursor to stop.
+Double-click to enable an auto-run mode. Dotted line trails will always be shown while active. Click again or catch your cursor to stop. You will only follow roads while running, so it less likely to get taken away unexpectedly.
 
-> This feature can be adjusted or disabled by the setting file `maxDoubleClickFrames.ini`. Set to 0 to disable double click to run; you can't click twice in 1 frame.
+> This feature can be adjusted or disabled by the setting file `settings/maxDoubleClickFrames.ini`. Set to 0 to disable double click to run; you can't click twice in 1 frame.
+> `settings/followRoadsOnlyWhileRunning.ini`. Set to 0 to restore standard behavior.
 
 ### Hit Detection
 
@@ -239,7 +241,7 @@ Starvation notices are based on time to starvation instead of food boxes, making
 
 ### Location Slips
 
-Reworks location markers.
+Reworks location markers. Replaces many instances of your character talking to itself with slips. Hover a slip to show distance when it would not normally be shown.
 
 - Home slips are standard white. There can be up to 7 on screen, the most recent has the 'home' art.
 - Map slips are blue, you can have more than one, standard lifetime
@@ -248,6 +250,7 @@ Reworks location markers.
 - Follower/Leader slips are badge color
 - Bell slips are gold and apoc towers are red, you can have more than one
 - Homeland slips are stone gray
+- Slips to owned property. Property slips are wood brown
 - Temporary slips have a pointer to the location when close.
 
 > `settings/locationsSlipsEnabled.ini` (0 to disable this feature)

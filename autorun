@@ -1,12 +1,15 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4497ce5b0..e6987e728 100644
+index 4497ce5b0..b2b68f2b2 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -125,9 +125,17 @@ static JenkinsRandomSource remapRandSource( 340403 );
+@@ -125,10 +125,18 @@ static JenkinsRandomSource remapRandSource( 340403 );
  
  static int lastScreenMouseX, lastScreenMouseY;
  static char mouseDown = false;
 -static int mouseDownFrames = 0;
+-
+-static int minMouseDownFrames = 30;
+-
 +static unsigned int mouseDownFrames = 0;
 +static unsigned int mouseClickGap = 0;
 +static unsigned int framesSinceAutoRunStart = 0;
@@ -14,14 +17,14 @@ index 4497ce5b0..e6987e728 100644
 +static char autoRun = false;
 +static float previousMouseX = 0;
 +static float previousMouseY = 0;
- 
--static int minMouseDownFrames = 30;
++
 +static unsigned int minMouseDownFrames = 30;
 +static unsigned int maxDoubleClickFrames = 30;
 +static int maxDoubleClickDrift = 30;
- 
++static char followRoadsOnlyWhileRunning = 1;
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+ 
 @@ -2264,7 +2272,7 @@ void LivingLifePage::computePathToDest( LiveObject *inObject ) {
              inObject->pathToDest[i].y -= pathOffsetY;
              }
@@ -31,7 +34,7 @@ index 4497ce5b0..e6987e728 100644
          
          // up, down, left, right
          int dirsInPath[4] = { 0, 0, 0, 0 };
-@@ -2707,6 +2715,10 @@ LivingLifePage::LivingLifePage()
+@@ -2707,6 +2715,14 @@ LivingLifePage::LivingLifePage()
  
      // allow ctrl-v to paste into chat from clipboard
      mSayField.usePasteShortcut( true );
@@ -39,10 +42,14 @@ index 4497ce5b0..e6987e728 100644
 +    //
 +    // set to 0 to disable double click to run; you can't click twice in 1 frame
 +    maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
++
++    //
++    // set to 0 for standard road following on any click
++    followRoadsOnlyWhileRunning = SettingsManager::getIntSetting( "followRoadsOnlyWhileRunning", 1 ) && maxDoubleClickFrames > 0;
      
      initLiveTriggers();
  
-@@ -12479,8 +12491,13 @@ void LivingLifePage::step() {
+@@ -12479,8 +12495,13 @@ void LivingLifePage::step() {
          }
      
  
@@ -56,7 +63,7 @@ index 4497ce5b0..e6987e728 100644
          }
      
      double pageLifeTime = game_getCurrentTime() - mPageStartTime;
-@@ -21188,10 +21205,41 @@ void LivingLifePage::step() {
+@@ -21188,10 +21209,41 @@ void LivingLifePage::step() {
                      }
                  }
              else {
@@ -64,17 +71,17 @@ index 4497ce5b0..e6987e728 100644
 +                bool road = false;
 +                if( o->id == ourID && shouldMoveCamera && o->pathLength >= 2 ) {
 +                    run = mouseHeld || autoRun;
-+                    if( !mouseHeld ) {
++                    if( !mouseHeld && ( followRoadsOnlyWhileRunning == 0 || autoRun ) ) {
 +
 +                        // reached destination of bare-ground click
 +
 +                        // check for auto-walk on road
++
++                        GridPos prevStep = o->pathToDest[ o->pathLength - 2 ];
++                        GridPos finalStep = o->pathToDest[ o->pathLength - 1 ];
  
 -                if( o->id == ourID && mouseDown && shouldMoveCamera &&
 -                    o->pathLength > 2 ) {
-+                        GridPos prevStep = o->pathToDest[ o->pathLength - 2 ];
-+                        GridPos finalStep = o->pathToDest[ o->pathLength - 1 ];
-+
 +                        int mapIP = getMapIndex( prevStep.x, prevStep.y );
 +                        int mapIF = getMapIndex( finalStep.x, finalStep.y );
 +
@@ -100,7 +107,7 @@ index 4497ce5b0..e6987e728 100644
                      float worldMouseX, worldMouseY;
                      
                      screenToWorld( lastScreenMouseX,
-@@ -21210,9 +21258,7 @@ void LivingLifePage::step() {
+@@ -21210,9 +21262,7 @@ void LivingLifePage::step() {
                      // however, if they started by clicking on something
                      // make sure they are really holding the mouse down
                      // (give them time to unpress the mouse)
@@ -111,7 +118,7 @@ index 4497ce5b0..e6987e728 100644
                          
                          double absX = fabs( delta.x );
                          double absY = fabs( delta.y );
-@@ -21224,10 +21270,7 @@ void LivingLifePage::step() {
+@@ -21224,10 +21274,7 @@ void LivingLifePage::step() {
                              
                              if( absX < CELL_D * 4 
                                  &&
@@ -123,7 +130,7 @@ index 4497ce5b0..e6987e728 100644
                                  
                                  // they're holding mouse down very close
                                  // to to their character
-@@ -21261,20 +21304,24 @@ void LivingLifePage::step() {
+@@ -21261,20 +21308,24 @@ void LivingLifePage::step() {
                                  pointerDown( fakeClick.x, fakeClick.y );
                                  isAutoClick = false;
  
@@ -152,7 +159,7 @@ index 4497ce5b0..e6987e728 100644
  
                      // reached destination of bare-ground click
  
-@@ -21436,6 +21483,20 @@ void LivingLifePage::step() {
+@@ -21436,6 +21487,20 @@ void LivingLifePage::step() {
                                  endPos.x = (double)( nextStep.x );
                                  endPos.y = (double)( nextStep.y );
                                  }
@@ -173,7 +180,7 @@ index 4497ce5b0..e6987e728 100644
                              }
                          }
                      }
-@@ -21455,6 +21516,9 @@ void LivingLifePage::step() {
+@@ -21455,6 +21520,9 @@ void LivingLifePage::step() {
                      //trailColor.g = randSource.getRandomBoundedDouble( 0, .5 );
                      //trailColor.b = randSource.getRandomBoundedDouble( 0, .5 );
                      
@@ -183,7 +190,7 @@ index 4497ce5b0..e6987e728 100644
  
                      if( ( o->id != ourID && 
                            ! o->somePendingMessageIsMoreMovement ) 
-@@ -23235,12 +23299,33 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23235,12 +23303,33 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      // something actionable along the way
      char mouseAlreadyDown = mouseDown;
      
@@ -218,7 +225,7 @@ index 4497ce5b0..e6987e728 100644
      
      if( mFirstServerMessagesReceived != 3 || ! mDoneLoadingFirstObjectSet ) {
          return;
-@@ -23255,7 +23340,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23255,7 +23344,6 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
          }
      
  
@@ -226,7 +233,7 @@ index 4497ce5b0..e6987e728 100644
      
      if( ourLiveObject->holdingID > 0 &&
          getObject( ourLiveObject->holdingID )->speedMult == 0 ) {
-@@ -23493,9 +23577,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -23493,9 +23581,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      
@@ -237,7 +244,7 @@ index 4497ce5b0..e6987e728 100644
          
          // continuous movement mode
  
-@@ -24904,11 +24986,17 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -24904,11 +24990,17 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          return;
          }
  
@@ -260,7 +267,7 @@ index 4497ce5b0..e6987e728 100644
          
          // treat the up as one final click (at closest next path position
          // to where they currently are)
-@@ -24930,6 +25018,7 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -24930,6 +25022,7 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          }
  
      mouseDown = false;
@@ -268,6 +275,14 @@ index 4497ce5b0..e6987e728 100644
  
  
      // clear mouse over cell
+diff --git a/gameSource/settings/wonlife-plus/followRoadsOnlyWhileRunning.ini b/gameSource/settings/wonlife-plus/followRoadsOnlyWhileRunning.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-plus/followRoadsOnlyWhileRunning.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
 diff --git a/gameSource/settings/wonlife-plus/maxDoubleClickFrames.ini b/gameSource/settings/wonlife-plus/maxDoubleClickFrames.ini
 new file mode 100644
 index 000000000..64bb6b746
@@ -275,6 +290,14 @@ index 000000000..64bb6b746
 +++ b/gameSource/settings/wonlife-plus/maxDoubleClickFrames.ini
 @@ -0,0 +1 @@
 +30
+diff --git a/gameSource/settings/wonlife-vanilla/followRoadsOnlyWhileRunning.ini b/gameSource/settings/wonlife-vanilla/followRoadsOnlyWhileRunning.ini
+new file mode 100644
+index 000000000..c22708346
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/followRoadsOnlyWhileRunning.ini
+@@ -0,0 +1 @@
++0
+\ No newline at end of file
 diff --git a/gameSource/settings/wonlife-vanilla/maxDoubleClickFrames.ini b/gameSource/settings/wonlife-vanilla/maxDoubleClickFrames.ini
 new file mode 100644
 index 000000000..573541ac9
@@ -282,6 +305,14 @@ index 000000000..573541ac9
 +++ b/gameSource/settings/wonlife-vanilla/maxDoubleClickFrames.ini
 @@ -0,0 +1 @@
 +0
+diff --git a/gameSource/settings/wonlife-wondible/followRoadsOnlyWhileRunning.ini b/gameSource/settings/wonlife-wondible/followRoadsOnlyWhileRunning.ini
+new file mode 100644
+index 000000000..56a6051ca
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/followRoadsOnlyWhileRunning.ini
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
 diff --git a/gameSource/settings/wonlife-wondible/maxDoubleClickFrames.ini b/gameSource/settings/wonlife-wondible/maxDoubleClickFrames.ini
 new file mode 100644
 index 000000000..64bb6b746

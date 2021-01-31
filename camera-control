@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7270279db..9c685d5cf 100644
+index ccfea29e2..03d007055 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -50,6 +50,9 @@
@@ -12,7 +12,7 @@ index 7270279db..9c685d5cf 100644
  #include <stdlib.h>//#include <math.h>
  
  
-@@ -231,6 +234,14 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+@@ -232,6 +235,14 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  static float lastMouseX = 0;
  static float lastMouseY = 0;
  
@@ -27,7 +27,7 @@ index 7270279db..9c685d5cf 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -2812,6 +2823,24 @@ LivingLifePage::LivingLifePage()
+@@ -2813,6 +2824,24 @@ LivingLifePage::LivingLifePage()
      // allow ctrl-v to paste into chat from clipboard
      mSayField.usePasteShortcut( true );
  
@@ -52,7 +52,7 @@ index 7270279db..9c685d5cf 100644
      //
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
-@@ -15268,6 +15297,43 @@ void LivingLifePage::step() {
+@@ -15273,6 +15302,43 @@ void LivingLifePage::step() {
              mMapOffsetX = newMapOffsetX;
              mMapOffsetY = newMapOffsetY;
              
@@ -96,7 +96,7 @@ index 7270279db..9c685d5cf 100644
              
              unsigned char *compressedChunk = 
                  new unsigned char[ compressedSize ];
-@@ -20770,6 +20836,30 @@ void LivingLifePage::step() {
+@@ -20775,6 +20841,30 @@ void LivingLifePage::step() {
  
          doublePair screenTargetPos = 
              mult( targetObjectPos, CELL_D );
@@ -127,7 +127,7 @@ index 7270279db..9c685d5cf 100644
          
          if( vogMode ) {
              // don't adjust camera
-@@ -20782,6 +20872,10 @@ void LivingLifePage::step() {
+@@ -20787,6 +20877,10 @@ void LivingLifePage::step() {
              // moving
  
              // push camera out in front
@@ -138,7 +138,7 @@ index 7270279db..9c685d5cf 100644
              
  
              double moveScale = 40 * cameraFollowsObject->currentSpeed;
-@@ -20813,18 +20907,6 @@ void LivingLifePage::step() {
+@@ -20818,18 +20912,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -157,7 +157,7 @@ index 7270279db..9c685d5cf 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -20865,6 +20947,22 @@ void LivingLifePage::step() {
+@@ -20870,6 +20952,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -180,7 +180,7 @@ index 7270279db..9c685d5cf 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -20884,6 +20982,10 @@ void LivingLifePage::step() {
+@@ -20889,6 +20987,10 @@ void LivingLifePage::step() {
          if( !shouldMoveCamera ) {
              screenTargetPos = lastScreenViewCenter;
              }
@@ -191,7 +191,7 @@ index 7270279db..9c685d5cf 100644
          
  
          doublePair dir = sub( screenTargetPos, lastScreenViewCenter );
-@@ -22215,6 +22317,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22220,6 +22322,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      
      mouseDown = false;
      shouldMoveCamera = true;
@@ -199,7 +199,7 @@ index 7270279db..9c685d5cf 100644
      
      screenCenterPlayerOffsetX = 0;
      screenCenterPlayerOffsetY = 0;
-@@ -23353,6 +23456,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -23358,6 +23461,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          }
      
      
@@ -228,7 +228,7 @@ index 7270279db..9c685d5cf 100644
      }
  
  
-@@ -26731,6 +26856,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26736,6 +26861,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -240,7 +240,7 @@ index 7270279db..9c685d5cf 100644
          // inspired by Awbz OneLife+
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
-@@ -26939,6 +27069,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -26944,6 +27074,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
          case ' ':
              shouldMoveCamera = true;
              break;

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7881c56ce..571fc6caf 100644
+index 44e9ee3e9..73318a619 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -153,6 +153,8 @@ static double newPlayerMessageTime = 0;
+@@ -154,6 +154,8 @@ static double newPlayerMessageTime = 0;
  static char playerMarkKey = '=';
  static char playerUnmarkKey = '-';
  
@@ -11,7 +11,7 @@ index 7881c56ce..571fc6caf 100644
  static int categoryPile = 1600;
  
  static int preferObjectsOverPlayersWithScreenLock = 1;
-@@ -513,6 +515,7 @@ static const char* textExpt = "expt";
+@@ -515,6 +517,7 @@ static const char* textExpt = "expt";
  static const char* textOwner = "owner";
  static const char* textVisitor = "visitor";
  static const char* textProperty = "property";
@@ -19,7 +19,7 @@ index 7881c56ce..571fc6caf 100644
  
  #define LOCATION_SLIP_HOME_X -41
  #define LOCATION_SLIP_MAP_X (LOCATION_SLIP_HOME_X+LOCATION_SLIP_OFFSET)
-@@ -2529,6 +2532,45 @@ SimpleVector<char*> knownNames;
+@@ -2560,6 +2563,45 @@ SimpleVector<char*> knownNames;
  static int tabNameCompletion = 1;
  
  
@@ -65,7 +65,7 @@ index 7881c56ce..571fc6caf 100644
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
  
-@@ -3484,6 +3526,15 @@ LivingLifePage::LivingLifePage()
+@@ -3519,6 +3561,15 @@ LivingLifePage::LivingLifePage()
          delete [] markKeyString;
          }
  
@@ -81,7 +81,7 @@ index 7881c56ce..571fc6caf 100644
      categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
-@@ -7537,23 +7588,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
+@@ -7572,23 +7623,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
      if ( labeled ) {
          arrowPos.y -= LOCATION_SLIP_BOTTOM_TEXT;
          }
@@ -133,7 +133,7 @@ index 7881c56ce..571fc6caf 100644
              }
          }
  
-@@ -14710,10 +14776,14 @@ void LivingLifePage::step() {
+@@ -14747,10 +14813,14 @@ void LivingLifePage::step() {
              char home =
                  ! locationSlip->temporary &&
                  ! locationSlip->ancient;
@@ -149,7 +149,7 @@ index 7881c56ce..571fc6caf 100644
              locationSlip->labeled = home && homeSlips == 1;
              char expired =
                  locationSlip->temporary &&
-@@ -26814,6 +26884,22 @@ void LivingLifePage::playerUnmark() {
+@@ -26876,6 +26946,22 @@ void LivingLifePage::playerUnmark() {
      }
  
  
@@ -172,7 +172,7 @@ index 7881c56ce..571fc6caf 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -28756,7 +28842,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28830,7 +28916,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                              
                                  if( filterStringLen > 0 ) {
                                      // not blank
@@ -181,7 +181,7 @@ index 7881c56ce..571fc6caf 100644
                                          stringDuplicate( trimmedFilterString );
                                      }
                              
-@@ -28787,8 +28873,31 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28861,8 +28947,31 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
  
                          if( filterStringLen > 0 ) {
                              // not blank
@@ -215,7 +215,7 @@ index 7881c56ce..571fc6caf 100644
                              }
  
                          delete [] trimmedFilterString;
-@@ -28940,6 +29049,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -29014,6 +29123,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  
@@ -228,10 +228,10 @@ index 7881c56ce..571fc6caf 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 1d1efdd26..21ee9a889 100644
+index e68e49897..6c0e9e89c 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -1057,6 +1057,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1058,6 +1058,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void playerMark();
          void playerUnmark();
  
@@ -240,7 +240,7 @@ index 1d1efdd26..21ee9a889 100644
  
          LiveObject *getOurLiveObject();
          LiveObject *getLiveObject( int inID );
-@@ -1132,6 +1134,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1133,6 +1135,8 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          SimpleVector<GraveInfo> mGraveInfo;
  

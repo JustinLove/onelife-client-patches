@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 4b09311c6..00e6529ec 100644
+index 144f66196..f3c35b3a3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -153,6 +153,8 @@ static double newPlayerMessageTime = 0;
+@@ -154,6 +154,8 @@ static double newPlayerMessageTime = 0;
  static char playerMarkKey = '=';
  static char playerUnmarkKey = '-';
  
@@ -11,7 +11,7 @@ index 4b09311c6..00e6529ec 100644
  static int preferObjectsOverPlayersWithScreenLock = 1;
  
  static int dragDropUse = 1;
-@@ -3382,6 +3384,7 @@ LivingLifePage::LivingLifePage()
+@@ -3414,6 +3416,7 @@ LivingLifePage::LivingLifePage()
          delete [] markKeyString;
          }
  
@@ -19,7 +19,7 @@ index 4b09311c6..00e6529ec 100644
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
  
-@@ -12154,6 +12157,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -12184,6 +12187,38 @@ void LivingLifePage::draw( doublePair inViewCenter,
                      desToDelete = des;
                      }
  

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b6979561e..855653b72 100644
+index dfe1a730a..d6086795d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -139,6 +139,8 @@ static int maxDoubleClickDrift = 30;
+@@ -140,6 +140,8 @@ static char followRoadsOnlyWhileRunning = 1;
  
  static int ignoreTallObjects = 1;
  
@@ -11,8 +11,8 @@ index b6979561e..855653b72 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2723,6 +2725,9 @@ LivingLifePage::LivingLifePage()
-     maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
+@@ -2728,6 +2730,9 @@ LivingLifePage::LivingLifePage()
+     followRoadsOnlyWhileRunning = SettingsManager::getIntSetting( "followRoadsOnlyWhileRunning", 1 ) && maxDoubleClickFrames > 0;
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
 +
@@ -21,7 +21,7 @@ index b6979561e..855653b72 100644
      
      initLiveTriggers();
  
-@@ -4802,6 +4807,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4807,6 +4812,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -40,7 +40,7 @@ index b6979561e..855653b72 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -4934,6 +4951,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4939,6 +4956,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          setAnimationEmotion( inObj->currentEmot );
          addExtraAnimationEmotions( &( inObj->permanentEmots ) );
@@ -54,7 +54,7 @@ index b6979561e..855653b72 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5214,6 +5238,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5219,6 +5243,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  restoreSkipDrawing( heldObject );
                  }
  
@@ -67,7 +67,7 @@ index b6979561e..855653b72 100644
              
              setAnimationBadge( badge );
              if( badge != -1 ) {
-@@ -5294,6 +5324,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5299,6 +5329,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationEmotion( babyO->currentEmot );
                  addExtraAnimationEmotions( &( babyO->permanentEmots ) );
  
