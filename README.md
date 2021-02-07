@@ -194,6 +194,7 @@ Suggests random names or name completions by pressing tab with "I AM " or "YOU A
 As above; If no object search is active, a search is performed for the current craving. This can be disabled with 
 
 > `settings/defaultSearchForCraving.ini`, 0 to disable this feature
+
 Open the the say field with `:` prefilled by pressing `;`.
 
 > ` settings/searchOpenKey.ini` to change the key
