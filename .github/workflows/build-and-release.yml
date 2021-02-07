@@ -6,9 +6,9 @@ on:
   push:
     tags:
       - v*
-  schedule:
+  #schedule:
     #        m h   d m w
-    - cron: '7 */4 * * *'
+    #- cron: '7 */4 * * *'
 
 jobs:
   test:
