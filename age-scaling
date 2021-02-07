@@ -1,18 +1,16 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e733fb778..cef2db792 100644
+index e733fb778..db0b4d7f4 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1511,8 +1511,8 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
+@@ -1511,7 +1511,7 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
          return inObj->age;
          }
      else {
 -        return inObj->age + 
--            inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime );
-+        return computeDisplayAge( inObj->age +
-+            inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime ) );
++        return inObj->age +
+             inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime );
          }
      }
- 
 @@ -1531,9 +1531,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
                  // baby cries for 5 seconds each time they speak
              
@@ -25,6 +23,34 @@ index e733fb778..cef2db792 100644
                  }
              else {
                  // temp override over
+@@ -1541,7 +1541,8 @@ static double computeCurrentAge( LiveObject *inObj ) {
+                 }
+             }
+         
+-        return computeCurrentAgeNoOverride( inObj );
++        return computeDisplayAge( inObj->age +
++            inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime ) );
+         }
+     
+     }
+@@ -26604,7 +26605,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+ 
+     char tryingToPickUpBaby = false;
+     
+-    double ourAge = computeCurrentAge( ourLiveObject );
++    double ourAge = computeCurrentAgeNoOverride( ourLiveObject );
+ 
+     if( destID == 0 &&
+         p.hit &&
+@@ -26627,7 +26628,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+                 if( distance( targetPos, o->currentPos ) < 1 ) {
+                     // clicked on someone
+ 
+-                    if( computeCurrentAge( o ) < 5 ) {
++                    if( computeCurrentAgeNoOverride( o ) < 5 ) {
+ 
+                         // they're a baby
+                         
 diff --git a/gameSource/ageControl.cpp b/gameSource/ageControl.cpp
 index ec88099bf..434e3112b 100644
 --- a/gameSource/ageControl.cpp

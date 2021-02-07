@@ -167,6 +167,12 @@ Automatically open the say field to talk if you type a text character. Does not 
 >
 > `settings/openSayFieldOnTypingUpper.ini` (0 to disable on upper case letters)
 
+`F2`-`F12` can be used as say field macros. (`F1` is taken by closing the say field) Ctrl+key with say open to assign text
+
+> Values are saved when updated, or edit in `settings/textMacros.ini`
+>
+> `settings/textMacrosEnabled.ini`, 0 to disable this feature
+
 #### Name Completion
 
 Allows stepping through completions of player and grave names with tab key while say field is open.  Can recognize full names for "CURSE " or the beginning of first names otherwise.
@@ -188,6 +194,13 @@ Suggests random names or name completions by pressing tab with "I AM " or "YOU A
 As above; If no object search is active, a search is performed for the current craving. This can be disabled with 
 
 > `settings/defaultSearchForCraving.ini`, 0 to disable this feature
+Open the the say field with `:` prefilled by pressing `;`.
+
+> ` settings/searchOpenKey.ini` to change the key
+
+Clear the current search by pressing `````
+
+> ` settings/searchClearKey.ini` to change the key
 
 ### Drag-Drop
 

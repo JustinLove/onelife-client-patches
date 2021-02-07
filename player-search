@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 44e9ee3e9..73318a619 100644
+index e439013ef..0f066a80c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -154,6 +154,8 @@ static double newPlayerMessageTime = 0;
@@ -11,7 +11,7 @@ index 44e9ee3e9..73318a619 100644
  static int categoryPile = 1600;
  
  static int preferObjectsOverPlayersWithScreenLock = 1;
-@@ -515,6 +517,7 @@ static const char* textExpt = "expt";
+@@ -517,6 +519,7 @@ static const char* textExpt = "expt";
  static const char* textOwner = "owner";
  static const char* textVisitor = "visitor";
  static const char* textProperty = "property";
@@ -19,7 +19,7 @@ index 44e9ee3e9..73318a619 100644
  
  #define LOCATION_SLIP_HOME_X -41
  #define LOCATION_SLIP_MAP_X (LOCATION_SLIP_HOME_X+LOCATION_SLIP_OFFSET)
-@@ -2560,6 +2563,45 @@ SimpleVector<char*> knownNames;
+@@ -2563,6 +2566,45 @@ SimpleVector<char*> knownNames;
  static int tabNameCompletion = 1;
  
  
@@ -65,7 +65,7 @@ index 44e9ee3e9..73318a619 100644
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
  
-@@ -3519,6 +3561,15 @@ LivingLifePage::LivingLifePage()
+@@ -3522,6 +3564,15 @@ LivingLifePage::LivingLifePage()
          delete [] markKeyString;
          }
  
@@ -81,7 +81,7 @@ index 44e9ee3e9..73318a619 100644
      categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
-@@ -7572,23 +7623,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
+@@ -7594,23 +7645,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
      if ( labeled ) {
          arrowPos.y -= LOCATION_SLIP_BOTTOM_TEXT;
          }
@@ -133,7 +133,7 @@ index 44e9ee3e9..73318a619 100644
              }
          }
  
-@@ -14747,10 +14813,14 @@ void LivingLifePage::step() {
+@@ -14769,10 +14835,14 @@ void LivingLifePage::step() {
              char home =
                  ! locationSlip->temporary &&
                  ! locationSlip->ancient;
@@ -149,7 +149,7 @@ index 44e9ee3e9..73318a619 100644
              locationSlip->labeled = home && homeSlips == 1;
              char expired =
                  locationSlip->temporary &&
-@@ -26876,6 +26946,22 @@ void LivingLifePage::playerUnmark() {
+@@ -26898,6 +26968,22 @@ void LivingLifePage::playerUnmark() {
      }
  
  
@@ -172,7 +172,7 @@ index 44e9ee3e9..73318a619 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -28830,7 +28916,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28841,7 +28927,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                              
                                  if( filterStringLen > 0 ) {
                                      // not blank
@@ -181,7 +181,7 @@ index 44e9ee3e9..73318a619 100644
                                          stringDuplicate( trimmedFilterString );
                                      }
                              
-@@ -28861,8 +28947,31 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28872,8 +28958,31 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
  
                          if( filterStringLen > 0 ) {
                              // not blank
@@ -215,9 +215,9 @@ index 44e9ee3e9..73318a619 100644
                              }
  
                          delete [] trimmedFilterString;
-@@ -29014,6 +29123,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
-             keyHandledByKeybind = true;
+@@ -29053,6 +29162,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              }
+ 
  
 +        if( inASCII == playerTrackKey ) {
 +            playerTrack();

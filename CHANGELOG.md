@@ -1,5 +1,12 @@
 # Changelog - feature changes
 
+## 84
+
+- object search is no longer opened by `:`. It has a configureable key defaulting to `;`.
+- configurable key to clear object search, defaults to `````.
+- say field macro keys assignable to F2-F12; ctrl+key to set
+- age scaling no longer applies to can-pickup-baby checks.
+
 ## 83
 
 - block many instances of your character talking to itself

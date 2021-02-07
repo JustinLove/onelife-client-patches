@@ -1,17 +1,19 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index f3c35b3a3..44e9ee3e9 100644
+index edbe514ac..e439013ef 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -166,6 +166,8 @@ static int showLearnedTools = 0;
+@@ -166,6 +166,10 @@ static int showLearnedTools = 0;
  
  static int filterMatchesProduct = 1;
  
 +static int defaultSearchForCraving = 1;
++static char searchOpenkey = ';';
++static char searchClearKey = '`';
 +
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -497,6 +499,7 @@ static FloatColor white = { 1, 1, 1, 1 };
+@@ -497,6 +501,7 @@ static FloatColor white = { 1, 1, 1, 1 };
  static FloatColor gold = { 255.0/255, 227.0/255, 50.0/255, 1 };
  static FloatColor blood = { 244.0/255, 16.0/255, 8.0/255, 1 };
  static FloatColor indigo = { 122.0/255, 126.0/255, 244.0/255, 1 };
@@ -19,7 +21,7 @@ index f3c35b3a3..44e9ee3e9 100644
  static FloatColor pink = { 250.0/255, 144.0/255, 146.0/255, 1 };
  static FloatColor stone = { 128.0/255, 125.0/255, 149.0/255, 1 };
  static FloatColor wood = { 146.0/255, 65.0/255, 0.0/255, 1 };
-@@ -791,6 +794,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
+@@ -791,6 +796,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
      p.labeled = true;
      p.showDistance = false;
      p.tempPerson = false;
@@ -27,7 +29,7 @@ index f3c35b3a3..44e9ee3e9 100644
      p.temporaryExpireETA = 0;
      p.distanceExpireETA = 0;
      p.creationTime = game_getCurrentTime();
-@@ -870,6 +874,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -870,6 +876,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
      p.temporary = true;
      p.labeled = false;
      p.showDistance = false;
@@ -35,7 +37,7 @@ index f3c35b3a3..44e9ee3e9 100644
      // no expiration for now
      // until we drop the map
      p.temporaryExpireETA = 0;
-@@ -929,6 +934,50 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -929,6 +936,50 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
  
  
  
@@ -86,7 +88,7 @@ index f3c35b3a3..44e9ee3e9 100644
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
          HomePos *p = homePosStack.getElement( i );
-@@ -1008,6 +1057,7 @@ void LivingLifePage::addPropertyLocationSlip( int inX, int inY ) {
+@@ -1008,6 +1059,7 @@ void LivingLifePage::addPropertyLocationSlip( int inX, int inY ) {
      p.labeled = false;
      p.showDistance = false;
      p.tempPerson = false;
@@ -94,7 +96,7 @@ index f3c35b3a3..44e9ee3e9 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.pointerBounce = 0;
-@@ -1028,6 +1078,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
+@@ -1028,6 +1080,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
      p.labeled = false;
      p.showDistance = false;
      p.tempPerson = false;
@@ -102,7 +104,7 @@ index f3c35b3a3..44e9ee3e9 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.pointerBounce = 0;
-@@ -1059,6 +1110,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
+@@ -1059,6 +1112,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
      p.tempPerson = false;
      p.pointerBounce = 0;
      p.pointerFade = 0;
@@ -110,7 +112,7 @@ index f3c35b3a3..44e9ee3e9 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.distanceExpireETA = game_getCurrentTime() + LOCATION_SLIP_SHOW_DISTANCE;
-@@ -3277,6 +3329,57 @@ void LivingLifePage::clearMap() {
+@@ -3278,6 +3332,57 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -168,7 +170,7 @@ index f3c35b3a3..44e9ee3e9 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( 0 ),
-@@ -3304,7 +3407,7 @@ LivingLifePage::LivingLifePage()
+@@ -3305,7 +3410,7 @@ LivingLifePage::LivingLifePage()
            mChalkBlotSprite( loadWhiteSprite( "chalkBlot.tga" ) ),
            mPathMarkSprite( loadWhiteSprite( "pathMark.tga" ) ),
            mSayField( handwritingFont, 0, 1000, 10, true, NULL,
@@ -177,16 +179,35 @@ index f3c35b3a3..44e9ee3e9 100644
            mDeathReason( NULL ),
            mShowHighlights( true ),
            mUsingSteam( false ),
-@@ -3433,6 +3536,8 @@ LivingLifePage::LivingLifePage()
+@@ -3434,6 +3539,27 @@ LivingLifePage::LivingLifePage()
  
      filterMatchesProduct = SettingsManager::getIntSetting( "filterMatchesProduct", 1 );
  
 +    defaultSearchForCraving = SettingsManager::getIntSetting( "defaultSearchForCraving", 1 );
 +
++    char *searchKeyString = SettingsManager::getStringSetting( "searchOpenkey", ";" );
++
++    if( searchKeyString != NULL ) {
++        if( strlen( searchKeyString ) == 1 ) {
++            searchOpenkey = searchKeyString[0];
++            }
++        delete [] searchKeyString;
++        }
++
++    searchKeyString = SettingsManager::getStringSetting( "searchClearKey", "`" );
++
++    if( searchKeyString != NULL ) {
++        if( strlen( searchKeyString ) == 1 ) {
++            searchClearKey = searchKeyString[0];
++            }
++        delete [] searchKeyString;
++        }
++
++
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -3635,6 +3740,7 @@ LivingLifePage::LivingLifePage()
+@@ -3636,6 +3762,7 @@ LivingLifePage::LivingLifePage()
      mPendingFilterString = NULL;
      
      
@@ -194,7 +215,7 @@ index f3c35b3a3..44e9ee3e9 100644
  
      for( int i=0; i<NUM_HINT_SHEETS; i++ ) {
          
-@@ -4044,6 +4150,11 @@ LivingLifePage::~LivingLifePage() {
+@@ -4045,6 +4172,11 @@ LivingLifePage::~LivingLifePage() {
          mPendingFilterString = NULL;
          }
  
@@ -206,7 +227,7 @@ index f3c35b3a3..44e9ee3e9 100644
      if( mDeathReason != NULL ) {
          delete [] mDeathReason;
          }
-@@ -14038,6 +14149,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -14039,6 +14171,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
  
  
  void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
@@ -218,20 +239,21 @@ index f3c35b3a3..44e9ee3e9 100644
      char *foodDescription = 
          stringToUpperCase( getObject( inFoodID )->description );
                  
-@@ -14077,10 +14193,66 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
+@@ -14077,11 +14214,67 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
+     double longestLine = getLongestLine( 
          (char*)( mCravingMessage[ mLiveCravingSheetIndex ] ) );
      
-     mCravingExtraOffset[ mLiveCravingSheetIndex ].x = longestLine;
++    mCravingExtraOffset[ mLiveCravingSheetIndex ].x = longestLine;
 +    if( mObjectSearchString == NULL && defaultSearchForCraving ) {
 +        removeSearchLocationSlip();
 +        mSoughtObjects.deleteAll();
 +        mSoughtObjects.push_back( inFoodID );
 +        findInMap();
 +        }
-     }
- 
- 
- 
++    }
++
++
++
 +void LivingLifePage::setSearchSheet() {
 +    if( mLiveCravingSheetIndex > -1 ) {
 +        // hide old craving sheet
@@ -276,16 +298,16 @@ index f3c35b3a3..44e9ee3e9 100644
 +    double longestLine = getLongestLine( 
 +        (char*)( mCravingMessage[ mLiveCravingSheetIndex ] ) );
 +
-+    mCravingExtraOffset[ mLiveCravingSheetIndex ].x = longestLine;
-+    }
-+
-+
-+
+     mCravingExtraOffset[ mLiveCravingSheetIndex ].x = longestLine;
+     }
+ 
+ 
+ 
 +
  // color list from here:
  // https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
  
-@@ -17190,6 +17362,8 @@ void LivingLifePage::step() {
+@@ -17191,6 +17384,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -294,7 +316,7 @@ index f3c35b3a3..44e9ee3e9 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17797,6 +17971,18 @@ void LivingLifePage::step() {
+@@ -17798,6 +17993,18 @@ void LivingLifePage::step() {
                              }
                          
  
@@ -313,7 +335,7 @@ index f3c35b3a3..44e9ee3e9 100644
                          // Check if a home marker has been set or removed
                          if( responsiblePlayerID != -1 &&
                              ( old != 0 ||
-@@ -18193,6 +18379,7 @@ void LivingLifePage::step() {
+@@ -18194,6 +18401,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -321,7 +343,7 @@ index f3c35b3a3..44e9ee3e9 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -18526,6 +18713,8 @@ void LivingLifePage::step() {
+@@ -18527,6 +18735,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -330,7 +352,7 @@ index f3c35b3a3..44e9ee3e9 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22634,7 +22823,7 @@ void LivingLifePage::step() {
+@@ -22635,7 +22845,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -339,7 +361,7 @@ index f3c35b3a3..44e9ee3e9 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -24207,6 +24396,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24208,6 +24418,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -347,7 +369,7 @@ index f3c35b3a3..44e9ee3e9 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24275,7 +24465,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24276,7 +24487,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -356,7 +378,7 @@ index f3c35b3a3..44e9ee3e9 100644
      mNextHintIndex = 0;
      
      
-@@ -24327,6 +24517,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24328,6 +24539,9 @@ void LivingLifePage::makeActive( char inFresh ) {
              mCravingMessage[i] = NULL;
              }
          }
@@ -366,25 +388,7 @@ index f3c35b3a3..44e9ee3e9 100644
      
      
      for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
-@@ -28318,6 +28511,17 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
-                 mSayField.focus();
-                 }
-             break;
-+        case ':':
-+            if( ! mSayField.isFocused() ) {
-+                mEKeyDown = false;
-+                mZKeyDown = false;
-+                mXKeyDown = false;
-+
-+                // start typing a filter
-+                mSayField.setText( ":" );
-+                mSayField.focus();
-+                }
-+            break;
-         case 13:  // enter
-             // speak
-             if( ! TextField::isAnyFocused() ) {
-@@ -28637,6 +28841,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28638,6 +28852,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
@@ -440,6 +444,41 @@ index f3c35b3a3..44e9ee3e9 100644
                      else {
                          // actual, spoken text, not a /command
                          
+@@ -28762,6 +29025,34 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+             keyHandledByKeybind = true;
+             }
+ 
++        if( inASCII == searchOpenkey ) {
++            keyHandledByKeybind = true;
++            if( ! mSayField.isFocused() ) {
++                mEKeyDown = false;
++                mZKeyDown = false;
++                mXKeyDown = false;
++
++                // start typing a filter
++                mSayField.setText( ":" );
++                mSayField.focus();
++                }
++            }
++        else if( inASCII == searchClearKey ) {
++            keyHandledByKeybind = true;
++            mSayField.setText( "" );
++            mSayField.unfocus();
++
++            if( mObjectSearchString != NULL ) {
++                delete [] mObjectSearchString;
++                mObjectSearchString = NULL;
++                }
++
++            mSoughtObjects.deleteAll();
++            removeSearchLocationSlip();
++            setSearchSheet( );
++            }
++
++
+         // inspired by Awbz OneLife+
+         if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
+               || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
 index 48ef8764d..e68e49897 100644
 --- a/gameSource/LivingLifePage.h
@@ -510,6 +549,20 @@ index 000000000..56a6051ca
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file
+diff --git a/gameSource/settings/wonlife-plus/searchClearKey.ini b/gameSource/settings/wonlife-plus/searchClearKey.ini
+new file mode 100644
+index 000000000..b37663f19
+--- /dev/null
++++ b/gameSource/settings/wonlife-plus/searchClearKey.ini
+@@ -0,0 +1 @@
++`
+diff --git a/gameSource/settings/wonlife-plus/searchOpenKey.ini b/gameSource/settings/wonlife-plus/searchOpenKey.ini
+new file mode 100644
+index 000000000..092bc2b04
+--- /dev/null
++++ b/gameSource/settings/wonlife-plus/searchOpenKey.ini
+@@ -0,0 +1 @@
++;
 diff --git a/gameSource/settings/wonlife-vanilla/defaultSearchForCraving.ini b/gameSource/settings/wonlife-vanilla/defaultSearchForCraving.ini
 new file mode 100644
 index 000000000..c22708346
@@ -518,6 +571,20 @@ index 000000000..c22708346
 @@ -0,0 +1 @@
 +0
 \ No newline at end of file
+diff --git a/gameSource/settings/wonlife-vanilla/searchClearKey.ini b/gameSource/settings/wonlife-vanilla/searchClearKey.ini
+new file mode 100644
+index 000000000..8b1378917
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/searchClearKey.ini
+@@ -0,0 +1 @@
++
+diff --git a/gameSource/settings/wonlife-vanilla/searchOpenKey.ini b/gameSource/settings/wonlife-vanilla/searchOpenKey.ini
+new file mode 100644
+index 000000000..8b1378917
+--- /dev/null
++++ b/gameSource/settings/wonlife-vanilla/searchOpenKey.ini
+@@ -0,0 +1 @@
++
 diff --git a/gameSource/settings/wonlife-wondible/defaultSearchForCraving.ini b/gameSource/settings/wonlife-wondible/defaultSearchForCraving.ini
 new file mode 100644
 index 000000000..56a6051ca
@@ -526,3 +593,17 @@ index 000000000..56a6051ca
 @@ -0,0 +1 @@
 +1
 \ No newline at end of file
+diff --git a/gameSource/settings/wonlife-wondible/searchClearKey.ini b/gameSource/settings/wonlife-wondible/searchClearKey.ini
+new file mode 100644
+index 000000000..b37663f19
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/searchClearKey.ini
+@@ -0,0 +1 @@
++`
+diff --git a/gameSource/settings/wonlife-wondible/searchOpenKey.ini b/gameSource/settings/wonlife-wondible/searchOpenKey.ini
+new file mode 100644
+index 000000000..092bc2b04
+--- /dev/null
++++ b/gameSource/settings/wonlife-wondible/searchOpenKey.ini
+@@ -0,0 +1 @@
++;

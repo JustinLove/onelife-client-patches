@@ -267,6 +267,14 @@ Piles are defined by a category object id, defined in
 
 Separate search filter with `:` puts an arrow on the nearest target object. If farther way it has a location slip, but only within the map buffer. The current search is shown in place of the craving.
 
+Open the the say field with `:` prefilled by pressing `;`.
+
+` settings/searchOpenKey.ini` to change the key
+
+Clear the current search by pressing `````
+
+` settings/searchClearKey.ini` to change the key
+
 If no search is active, a search is performed for the current craving. This can be disabled with 
 
 `settings/defaultSearchForCraving.ini`, 0 to disable this feature
@@ -292,6 +300,14 @@ Starvation notices are based on time to starvation instead of food boxes, making
 ## compat-missing-strings
 
 Adds fallbacks for some missing strings in 2hol
+
+## text-macros
+
+`F2`-`F12` can be used as say field macros. (`F1` is taken by closing the say field) Ctrl+key with say open to assign text
+
+Values are saved when updated, or edit in `settings/textMacros.ini`
+
+`settings/textMacrosEnabled.ini`, 0 to disable this feature
 
 ### Patch Development
 
