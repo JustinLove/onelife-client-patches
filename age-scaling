@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e733fb778..db0b4d7f4 100644
+index b6093e4f7..b01572a01 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1511,7 +1511,7 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
+@@ -1512,7 +1512,7 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
          return inObj->age;
          }
      else {
@@ -11,7 +11,7 @@ index e733fb778..db0b4d7f4 100644
              inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime );
          }
      }
-@@ -1531,9 +1531,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
+@@ -1532,9 +1532,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
                  // baby cries for 5 seconds each time they speak
              
                  // update age using clock
@@ -23,7 +23,7 @@ index e733fb778..db0b4d7f4 100644
                  }
              else {
                  // temp override over
-@@ -1541,7 +1541,8 @@ static double computeCurrentAge( LiveObject *inObj ) {
+@@ -1542,7 +1542,8 @@ static double computeCurrentAge( LiveObject *inObj ) {
                  }
              }
          
@@ -33,7 +33,7 @@ index e733fb778..db0b4d7f4 100644
          }
      
      }
-@@ -26604,7 +26605,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -26616,7 +26617,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      char tryingToPickUpBaby = false;
      
@@ -42,7 +42,7 @@ index e733fb778..db0b4d7f4 100644
  
      if( destID == 0 &&
          p.hit &&
-@@ -26627,7 +26628,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -26639,7 +26640,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  if( distance( targetPos, o->currentPos ) < 1 ) {
                      // clicked on someone
  

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 60300dae7..4497ce5b0 100644
+index b2c044dba..ce57747ee 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -21657,7 +21657,7 @@ void LivingLifePage::step() {
+@@ -21669,7 +21669,7 @@ void LivingLifePage::step() {
  
  
  
@@ -11,7 +11,7 @@ index 60300dae7..4497ce5b0 100644
          if( ourLiveObject->holdingFlip != ourLiveObject->lastFlipSent &&
              currentTime - ourLiveObject->lastFlipSendTime > 2 ) {
              
-@@ -24606,7 +24606,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24618,7 +24618,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  // on something
                  delete [] extra;
                  
@@ -20,7 +20,7 @@ index 60300dae7..4497ce5b0 100644
                      extra = autoSprintf( " %d %d", destID, useExtraIParam );
                      }
                  else {
-@@ -25485,6 +25485,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -25497,6 +25497,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                      
                                      showPlayerLabel( leadO, leaderLabel, eta );
                                      }
