@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: current release
         id: currentrelease
-        uses: timcosgrove/fetch-latest-release@v0.1
+        uses: timcosgrove/fetch-latest-release@bfc69dd9892f644ff740234d8b8945f226f15a47
         with:
           github_token: ${{ github.token }}
       - name: checkout onelife
