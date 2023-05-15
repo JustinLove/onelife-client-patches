@@ -26,11 +26,11 @@ jobs:
     steps:
       - name: current release
         id: currentrelease
-        uses: thebritican/fetch-latest-release@v1.0.3
+        uses: timcosgrove/fetch-latest-release@v0.1
         with:
           github_token: ${{ github.token }}
       - name: checkout onelife
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: jasonrohrer/OneLife
           path: OneLife
@@ -38,7 +38,7 @@ jobs:
         id: gameClient
         run: echo "version="`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'` >> "$GITHUB_OUTPUT"
       - name: checkout patches
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: '0'
       - name: fetch tags
