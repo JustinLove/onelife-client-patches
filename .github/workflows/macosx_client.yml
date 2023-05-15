@@ -23,13 +23,13 @@ jobs:
         run: /ohol/build_client_cross.sh
       - name: Get Game Client Version
         id: gameClientVersion
-        run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
+        run: echo "version="`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'` >> "$GITHUB_OUTPUT"
       - name: Get Patch Version
         id: patchVersion
-        run: echo ::set-output name=version::`cat OneLife/patches-master/patchVersionNumber.txt`
+        run: echo "version="`cat OneLife/patches-master/patchVersionNumber.txt` >> "$GITHUB_OUTPUT"
       - name: Compose filename
         id: zip
-        run: echo ::set-output name=filename::WonLifeMacOSX-test-${{ steps.gameClientVersion.outputs.version}}.${{ steps.patchVersion.outputs.version }}.zip
+        run: echo "filename=WonLifeMacOSX-test-${{ steps.gameClientVersion.outputs.version}}.${{ steps.patchVersion.outputs.version }}.zip" >> "$GITHUB_OUTPUT"
       - name: Package
         run: cd OneLife/gameSource && 7z a ../../${{ steps.zip.outputs.filename }} @../patches-master/package_files.txt
       - name: Upload versioned file

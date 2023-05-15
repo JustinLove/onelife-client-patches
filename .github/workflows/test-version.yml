@@ -30,7 +30,7 @@ jobs:
           path: OneLife
       - name: Get Game Client Version
         id: gameClient
-        run: echo ::set-output name=version::`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'`
+        run: echo "version="`grep versionNumber OneLife/gameSource/game.cpp | head -1 | sed -e 's/[^0-9]*//g'` >> "$GITHUB_OUTPUT"
       - name: checkout patches
         uses: actions/checkout@v2
         with:
@@ -39,21 +39,21 @@ jobs:
         run: git fetch origin "+refs/tags/*:refs/tags/*"
       - name: get patch version number
         id: patch
-        run: echo ::set-output name=version::`git for-each-ref --sort=-authordate --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/v* | sed -e 's/v//'`
+        run: echo "version="`git for-each-ref --sort=-authordate --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/v* | sed -e 's/v//'` >> "$GITHUB_OUTPUT" >> "$GITHUB_OUTPUT"
       - name: Compose version
         id: mod
-        run: echo ::set-output name=version::${{ steps.gameClient.outputs.version}}.${{ steps.patch.outputs.version }}
+        run: echo "version=${{ steps.gameClient.outputs.version}}.${{ steps.patch.outputs.version }}" >> "$GITHUB_OUTPUT"
       - name: Target Commit
         id: commitish
-        run: echo ::set-output name=sha::`git log -1 --pretty=format:%H v${{ steps.patch.outputs.version }}`
+        run: echo "sha="`git log -1 --pretty=format:%H v${{ steps.patch.outputs.version }}` >> "$GITHUB_OUTPUT"
       - name: report
         run: echo "${{ steps.mod.outputs.version }} ${{ steps.commitish.outputs.name }}"
       - name: Windows filename
         id: windows
-        run: echo ::set-output name=filename::WonLife-test-${{ steps.mod.outputs.version}}.zip
+        run: echo "filename=WonLife-test-${{ steps.mod.outputs.version}}.zip" >> "$GITHUB_OUTPUT"
       - name: MacOSX filename
         id: macosx
-        run: echo ::set-output name=filename::WonLifeMacOSX-test-${{ steps.mod.outputs.version}}.zip
+        run: echo "filename=WonLifeMacOSX-test-${{ steps.mod.outputs.version}}.zip" >> "$GITHUB_OUTPUT"
 
   release:
     needs: test
