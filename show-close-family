@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b74c192f7..71d408c37 100644
+index c31b2717c..5561bb08c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -147,6 +147,13 @@ static int ignoreTallObjects = 1;
@@ -352,7 +352,7 @@ index b74c192f7..71d408c37 100644
      
      
      mGlobalMessageShowing = true;
-@@ -14515,6 +14799,9 @@ void LivingLifePage::step() {
+@@ -14521,6 +14805,9 @@ void LivingLifePage::step() {
                        gravePerson->name != NULL ) ) {
                      
                      GraveInfo g;
@@ -362,7 +362,7 @@ index b74c192f7..71d408c37 100644
                      g.worldPos.x = posX;
                      g.worldPos.y = posY;
                      g.creationTime = game_getCurrentTime();
-@@ -14724,6 +15011,16 @@ void LivingLifePage::step() {
+@@ -14730,6 +15017,16 @@ void LivingLifePage::step() {
                  GraveInfo g;
                  g.worldPos.x = posX;
                  g.worldPos.y = posY;
@@ -379,7 +379,7 @@ index b74c192f7..71d408c37 100644
                  
                  char *des = relationName;
                  char *desToDelete = NULL;
-@@ -16514,6 +16811,8 @@ void LivingLifePage::step() {
+@@ -16563,6 +16860,8 @@ void LivingLifePage::step() {
  
                  o.name = NULL;
                  o.relationName = NULL;
@@ -388,7 +388,7 @@ index b74c192f7..71d408c37 100644
                  o.warPeaceStatus = 0;
                  
                  o.curseLevel = 0;
-@@ -18536,6 +18835,16 @@ void LivingLifePage::step() {
+@@ -18624,6 +18923,16 @@ void LivingLifePage::step() {
                                        &( o.id ),
                                        &( o.holdingID ) );
                      
@@ -405,7 +405,7 @@ index b74c192f7..71d408c37 100644
                      
                      for( int i=0; i<gameObjects.size(); i++ ) {
                          
-@@ -19430,7 +19739,7 @@ void LivingLifePage::step() {
+@@ -19520,7 +19829,7 @@ void LivingLifePage::step() {
                                      existing->isGeneticFamily = true;
                                      famSpeech = true;
  
@@ -414,7 +414,7 @@ index b74c192f7..71d408c37 100644
                                          // we learned their family status
                                          // but don't make them say +FAMILY+
                                          // because they have a current speech
-@@ -20112,6 +20421,14 @@ void LivingLifePage::step() {
+@@ -20202,6 +20511,14 @@ void LivingLifePage::step() {
                          */
                          other->relationName = getRelationName( ourObject,
                                                                 other );
@@ -429,7 +429,7 @@ index b74c192f7..71d408c37 100644
                          }
                      }
                  }
-@@ -24821,6 +25138,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
+@@ -24911,6 +25228,39 @@ bool LivingLifePage::tryInteractionKeys( char inASCII ) {
      }
  
  
@@ -469,7 +469,7 @@ index b74c192f7..71d408c37 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26878,6 +27228,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26972,6 +27322,15 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
          }
  

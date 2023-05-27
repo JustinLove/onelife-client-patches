@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## 86
+
+- recognize property gate announcements as property slips, and print message to make name visible
+
 ## 84
 
 - object search is no longer opened by `:`. It has a configureable key defaulting to `;`.

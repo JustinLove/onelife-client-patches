@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e2619798f..a2a6e5889 100644
+index 98eb5cd98..733356ead 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -24,6 +24,8 @@
@@ -29,7 +29,7 @@ index e2619798f..a2a6e5889 100644
      readyPendingReceivedMessages.deallocateStringElements();
  
      serverFrameMessages.deallocateStringElements();
-@@ -26196,6 +26202,7 @@ void LivingLifePage::fadeErasedCharacters() {
+@@ -26290,6 +26296,7 @@ void LivingLifePage::fadeErasedCharacters() {
      }
  
  
@@ -37,7 +37,7 @@ index e2619798f..a2a6e5889 100644
  char originalCompletionText[256] = {0};
  unsigned int originalCompletionLength = 0;
  
-@@ -26207,6 +26214,12 @@ const char* nameDetection(const char * const inString ) {
+@@ -26301,6 +26308,12 @@ const char* nameDetection(const char * const inString ) {
      if( textLength >= 6 && strncmp( inString, "CURSE ", 6 ) == 0 ) {
          return inString + 6;
          }
@@ -50,7 +50,7 @@ index e2619798f..a2a6e5889 100644
      else {
          for( int i=textLength-1 ; i >= 0 ; i-- ) {
              if( inString[i] >= 'A' && inString[i] <= 'Z' ) {
-@@ -26277,13 +26290,12 @@ void LivingLifePage::nameCompletion() {
+@@ -26371,13 +26384,12 @@ void LivingLifePage::nameCompletion() {
  
      char *curText = mSayField.getText();
  
@@ -69,7 +69,7 @@ index e2619798f..a2a6e5889 100644
  
      delete [] curText;
  
-@@ -26296,16 +26308,46 @@ void LivingLifePage::nameCompletion() {
+@@ -26390,16 +26402,46 @@ void LivingLifePage::nameCompletion() {
      // some text to try and find partial name in, try next name
  
      const char* nameText = nameDetection( originalCompletionText );
@@ -120,7 +120,7 @@ index e2619798f..a2a6e5889 100644
      unsigned int prefixLength = nameText - originalCompletionText;
      if ( prefixLength > 255 ) return;
      strncpy( say, originalCompletionText, prefixLength );
-@@ -26316,6 +26358,7 @@ void LivingLifePage::nameCompletion() {
+@@ -26410,6 +26452,7 @@ void LivingLifePage::nameCompletion() {
      if (maxLength < prefixLength) return;
      strncpy( say + prefixLength, name, maxLength-prefixLength );
      say[maxLength] = 0;

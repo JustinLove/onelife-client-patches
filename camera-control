@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 46791f2c4..b74c192f7 100644
+index a04f235b0..c31b2717c 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -50,6 +50,9 @@
@@ -52,7 +52,7 @@ index 46791f2c4..b74c192f7 100644
      //
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
-@@ -15285,6 +15314,43 @@ void LivingLifePage::step() {
+@@ -15291,6 +15320,43 @@ void LivingLifePage::step() {
              mMapOffsetX = newMapOffsetX;
              mMapOffsetY = newMapOffsetY;
              
@@ -96,19 +96,19 @@ index 46791f2c4..b74c192f7 100644
              
              unsigned char *compressedChunk = 
                  new unsigned char[ compressedSize ];
-@@ -20787,6 +20853,30 @@ void LivingLifePage::step() {
+@@ -20877,6 +20943,30 @@ void LivingLifePage::step() {
  
          doublePair screenTargetPos = 
              mult( targetObjectPos, CELL_D );
 +
-+        int viewLeftLimit = viewWidth/3;
-+        int viewRightLimit = viewWidth/3;
++        int viewLeftLimit = visibleViewWidth/3;
++        int viewRightLimit = visibleViewWidth/3;
 +        int viewBottomLimit = viewHeight/6;
 +        int viewTopLimit = viewHeight/5;
 +
 +        if( lastScreenEdge.x != 0 || lastScreenEdge.y != 0 ) {
-+            viewLeftLimit = viewWidth/2;
-+            viewRightLimit = viewWidth/2;
++            viewLeftLimit = visibleViewWidth/2;
++            viewRightLimit = visibleViewWidth/2;
 +            viewBottomLimit = viewHeight/3;
 +            viewTopLimit = viewHeight/2;
 +            }
@@ -118,8 +118,8 @@ index 46791f2c4..b74c192f7 100644
 +                lrintf( targetObjectPos.x ) - mMapOffsetX + mMapD/2;
 +            int targetGridY =
 +                lrintf( targetObjectPos.y ) - mMapOffsetY + mMapD/2;
-+            viewLeftLimit = CELL_D*(targetGridX - mapLeftLimit) - viewWidth/2;
-+            viewRightLimit = CELL_D*(mapRightLimit - targetGridX) - viewWidth/2;
++            viewLeftLimit = CELL_D*(targetGridX - mapLeftLimit) - visibleViewWidth/2;
++            viewRightLimit = CELL_D*(mapRightLimit - targetGridX) - visibleViewWidth/2;
 +            viewBottomLimit = CELL_D*(targetGridY - mapBottomLimit) - viewHeight/3;
 +            viewTopLimit = CELL_D*(mapTopLimit - targetGridY) - viewHeight/2;
 +            }
@@ -127,26 +127,26 @@ index 46791f2c4..b74c192f7 100644
          
          if( vogMode ) {
              // don't adjust camera
-@@ -20799,6 +20889,10 @@ void LivingLifePage::step() {
+@@ -20889,6 +20979,10 @@ void LivingLifePage::step() {
              // moving
  
              // push camera out in front
-+            viewLeftLimit = viewWidth/3;
-+            viewRightLimit = viewWidth/3;
++            viewLeftLimit = visibleViewWidth/3;
++            viewRightLimit = visibleViewWidth/3;
 +            viewBottomLimit = viewHeight/6;
 +            viewTopLimit = viewHeight/5;
              
  
              double moveScale = 40 * cameraFollowsObject->currentSpeed;
-@@ -20830,18 +20924,6 @@ void LivingLifePage::step() {
+@@ -20920,18 +21014,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
--            if( screenCenterPlayerOffsetX < -viewWidth / 3 ) {
--                screenCenterPlayerOffsetX =  -viewWidth / 3;
+-            if( screenCenterPlayerOffsetX < -visibleViewWidth / 3 ) {
+-                screenCenterPlayerOffsetX =  -visibleViewWidth / 3;
 -                }
--            if( screenCenterPlayerOffsetX >  viewWidth / 3 ) {
--                screenCenterPlayerOffsetX =  viewWidth / 3;
+-            if( screenCenterPlayerOffsetX >  visibleViewWidth / 3 ) {
+-                screenCenterPlayerOffsetX =  visibleViewWidth / 3;
 -                }
 -            if( screenCenterPlayerOffsetY < -viewHeight / 5 ) {
 -                screenCenterPlayerOffsetY =  -viewHeight / 5;
@@ -157,7 +157,7 @@ index 46791f2c4..b74c192f7 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -20882,6 +20964,22 @@ void LivingLifePage::step() {
+@@ -20972,6 +21054,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -180,7 +180,7 @@ index 46791f2c4..b74c192f7 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -20901,6 +20999,10 @@ void LivingLifePage::step() {
+@@ -20991,6 +21089,10 @@ void LivingLifePage::step() {
          if( !shouldMoveCamera ) {
              screenTargetPos = lastScreenViewCenter;
              }
@@ -191,7 +191,7 @@ index 46791f2c4..b74c192f7 100644
          
  
          doublePair dir = sub( screenTargetPos, lastScreenViewCenter );
-@@ -22232,6 +22334,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22322,6 +22424,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      
      mouseDown = false;
      shouldMoveCamera = true;
@@ -199,12 +199,12 @@ index 46791f2c4..b74c192f7 100644
      
      screenCenterPlayerOffsetX = 0;
      screenCenterPlayerOffsetY = 0;
-@@ -23370,6 +23473,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -23460,6 +23563,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          }
      
      
 +
-+    float spanX = viewWidth/2 - CELL_D/2;
++    float spanX = visibleViewWidth/2 - CELL_D/2;
 +    float spanY = viewHeight/2 - CELL_D/2;
 +    doublePair delta = {
 +        inX - lastScreenViewCenter.x,
@@ -228,7 +228,7 @@ index 46791f2c4..b74c192f7 100644
      }
  
  
-@@ -26748,6 +26873,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26842,6 +26967,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -240,7 +240,7 @@ index 46791f2c4..b74c192f7 100644
          // inspired by Awbz OneLife+
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
-@@ -26956,6 +27086,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -27050,6 +27180,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
          case ' ':
              shouldMoveCamera = true;
              break;

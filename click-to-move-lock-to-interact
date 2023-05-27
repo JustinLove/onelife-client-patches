@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cda382eac..c887a4bb2 100644
+index f68e2515a..30c0b0404 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -148,6 +148,7 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -19,7 +19,7 @@ index cda382eac..c887a4bb2 100644
      
      initLiveTriggers();
  
-@@ -24528,7 +24531,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24618,7 +24621,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
  
@@ -34,7 +34,7 @@ index cda382eac..c887a4bb2 100644
  
  
  
-@@ -24684,7 +24693,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -24774,7 +24783,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      

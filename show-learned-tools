@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 105456c92..5d679eae3 100644
+index ea304e5a3..b99bc0612 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -160,6 +160,8 @@ static int dragDropUse = 1;
@@ -260,7 +260,7 @@ index 105456c92..5d679eae3 100644
      // should new tutorial sheet be shown?
      if( ( mTutorialNumber > 0 || mGlobalMessageShowing ) 
          && ourObject != NULL ) {
-@@ -14664,13 +14859,20 @@ void LivingLifePage::step() {
+@@ -14670,13 +14865,20 @@ void LivingLifePage::step() {
              for( int i=1; i < tokens->size(); i++ ) {
                  char *tok = tokens->getElementDirect( i );
                  
@@ -282,7 +282,7 @@ index 105456c92..5d679eae3 100644
                          }
                      }
                  }
-@@ -14723,6 +14925,7 @@ void LivingLifePage::step() {
+@@ -14729,6 +14931,7 @@ void LivingLifePage::step() {
              if( numRead == 2 ) {
                  usedToolSlots = numSlotsUsed;
                  totalToolSlots = numTotalSlots;
@@ -290,7 +290,7 @@ index 105456c92..5d679eae3 100644
                  }
              }
          else if( type == HOMELAND ) {
-@@ -17770,6 +17973,15 @@ void LivingLifePage::step() {
+@@ -17858,6 +18061,15 @@ void LivingLifePage::step() {
                                  mNextHintIndex = 
                                      mHintBookmarks[ mNextHintObjectID ];
                                  }
@@ -306,7 +306,7 @@ index 105456c92..5d679eae3 100644
                              }
                          
  
-@@ -23130,6 +23342,15 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23220,6 +23432,15 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
      
      

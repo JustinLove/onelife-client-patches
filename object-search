@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index c51e94bfc..f364e995e 100644
+index 86b2387d4..f0fc2b172 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -166,6 +166,10 @@ static int showLearnedTools = 0;
@@ -307,7 +307,7 @@ index c51e94bfc..f364e995e 100644
  // color list from here:
  // https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
  
-@@ -17209,6 +17402,8 @@ void LivingLifePage::step() {
+@@ -17215,6 +17408,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -316,7 +316,7 @@ index c51e94bfc..f364e995e 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17816,6 +18011,18 @@ void LivingLifePage::step() {
+@@ -17862,6 +18057,18 @@ void LivingLifePage::step() {
                              }
                          
  
@@ -335,7 +335,7 @@ index c51e94bfc..f364e995e 100644
                          // Check if a home marker has been set or removed
                          if( responsiblePlayerID != -1 &&
                              ( old != 0 ||
-@@ -18212,6 +18419,7 @@ void LivingLifePage::step() {
+@@ -18261,6 +18468,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -343,7 +343,7 @@ index c51e94bfc..f364e995e 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -18545,6 +18753,8 @@ void LivingLifePage::step() {
+@@ -18633,6 +18841,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -352,7 +352,7 @@ index c51e94bfc..f364e995e 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22653,7 +22863,7 @@ void LivingLifePage::step() {
+@@ -22747,7 +22957,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -361,7 +361,7 @@ index c51e94bfc..f364e995e 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -24226,6 +24436,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24320,6 +24530,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -369,7 +369,7 @@ index c51e94bfc..f364e995e 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24294,7 +24505,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24388,7 +24599,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -378,7 +378,7 @@ index c51e94bfc..f364e995e 100644
      mNextHintIndex = 0;
      
      
-@@ -24346,6 +24557,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24440,6 +24651,9 @@ void LivingLifePage::makeActive( char inFresh ) {
              mCravingMessage[i] = NULL;
              }
          }
@@ -388,7 +388,7 @@ index c51e94bfc..f364e995e 100644
      
      
      for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
-@@ -28656,6 +28870,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28754,6 +28968,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
@@ -444,7 +444,7 @@ index c51e94bfc..f364e995e 100644
                      else {
                          // actual, spoken text, not a /command
                          
-@@ -28780,6 +29043,34 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28878,6 +29141,34 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 35629ab92..902a3dbda 100644
+index 25893fb3c..fb2da9b79 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -140,6 +140,8 @@ static char followRoadsOnlyWhileRunning = 1;

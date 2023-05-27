@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index b6093e4f7..b01572a01 100644
+index 4f4f2a94d..edafb5188 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -1512,7 +1512,7 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
@@ -33,7 +33,7 @@ index b6093e4f7..b01572a01 100644
          }
      
      }
-@@ -26616,7 +26617,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -26706,7 +26707,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      char tryingToPickUpBaby = false;
      
@@ -42,7 +42,7 @@ index b6093e4f7..b01572a01 100644
  
      if( destID == 0 &&
          p.hit &&
-@@ -26639,7 +26640,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -26729,7 +26730,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  if( distance( targetPos, o->currentPos ) < 1 ) {
                      // clicked on someone
  
