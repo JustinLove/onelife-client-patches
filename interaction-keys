@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 30c0b0404..a04f235b0 100644
+index f88bbbe86..d3d87e36d 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -150,6 +150,82 @@ static int dragDropUse = 1;
@@ -85,7 +85,7 @@ index 30c0b0404..a04f235b0 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2761,6 +2837,10 @@ LivingLifePage::LivingLifePage()
+@@ -2767,6 +2843,10 @@ LivingLifePage::LivingLifePage()
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
@@ -96,7 +96,7 @@ index 30c0b0404..a04f235b0 100644
      
      initLiveTriggers();
  
-@@ -24470,6 +24550,242 @@ static void freeSavedPath() {
+@@ -24535,6 +24615,242 @@ static void freeSavedPath() {
  
  
  
@@ -339,7 +339,7 @@ index 30c0b0404..a04f235b0 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26111,7 +26427,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26176,7 +26492,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -347,7 +347,7 @@ index 30c0b0404..a04f235b0 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -26495,23 +26810,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26564,23 +26879,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -392,7 +392,7 @@ index 30c0b0404..a04f235b0 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -26689,6 +27025,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -26758,6 +27094,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
