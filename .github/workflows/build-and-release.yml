@@ -100,7 +100,7 @@ jobs:
 
   macosx:
     needs: test
-    if: needs.test.outputs.modVersion != needs.test.outputs.releaseVersion
+    if: ${{false}} and needs.test.outputs.modVersion != needs.test.outputs.releaseVersion
 
     outputs:
       filename: ${{ steps.zip.outputs.filename }}
@@ -185,7 +185,8 @@ jobs:
           SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   release:
-    needs: [test, windows, macosx, linux]
+    #needs: [test, windows, macosx, linux]
+    needs: [test, windows, linux]
 
     runs-on: ubuntu-latest
 
@@ -193,6 +194,7 @@ jobs:
       - name: windows download
         run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.windows.outputs.filename }} -o ${{ needs.windows.outputs.filename }}
       - name: macosx download
+        if: ${{false}}
         run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.macosx.outputs.filename }} -o ${{ needs.macosx.outputs.filename }}
       - name: linux download
         run: curl --fail https://${{ secrets.AWS_S3_BUCKET }}.s3.amazonaws.com/${{ needs.linux.outputs.filename }} -o ${{ needs.linux.outputs.filename }}
@@ -217,6 +219,7 @@ jobs:
           asset_name: ${{ needs.windows.outputs.filename }}
           asset_content_type: application/zip
       - name: Upload MacOSX
+        if: ${{false}}
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

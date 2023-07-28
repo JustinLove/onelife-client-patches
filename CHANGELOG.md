@@ -1,5 +1,9 @@
 # Changelog - feature changes
 
+## 89
+
+- The new photo cache doesn't build on macos. Mac builds have been disabled.
+
 ## 86
 
 - recognize property gate announcements as property slips, and print message to make name visible
