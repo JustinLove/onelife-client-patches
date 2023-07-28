@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 1de1db99c..2b71f22be 100644
+index 9ae976d36..57ad4e299 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -140,6 +140,8 @@ static char followRoadsOnlyWhileRunning = 1;
+@@ -141,6 +141,8 @@ static char followRoadsOnlyWhileRunning = 1;
  
  static int ignoreTallObjects = 1;
  
@@ -11,7 +11,7 @@ index 1de1db99c..2b71f22be 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2735,6 +2737,9 @@ LivingLifePage::LivingLifePage()
+@@ -2739,6 +2741,9 @@ LivingLifePage::LivingLifePage()
      followRoadsOnlyWhileRunning = SettingsManager::getIntSetting( "followRoadsOnlyWhileRunning", 1 ) && maxDoubleClickFrames > 0;
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -21,7 +21,7 @@ index 1de1db99c..2b71f22be 100644
      
      initLiveTriggers();
  
-@@ -4815,6 +4820,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4857,6 +4862,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -40,7 +40,7 @@ index 1de1db99c..2b71f22be 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -4947,6 +4964,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4989,6 +5006,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          setAnimationEmotion( inObj->currentEmot );
          addExtraAnimationEmotions( &( inObj->permanentEmots ) );
@@ -54,7 +54,7 @@ index 1de1db99c..2b71f22be 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5227,6 +5251,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5269,6 +5293,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  restoreSkipDrawing( heldObject );
                  }
  
@@ -67,7 +67,7 @@ index 1de1db99c..2b71f22be 100644
              
              setAnimationBadge( badge );
              if( badge != -1 ) {
-@@ -5308,6 +5338,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5350,6 +5380,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationEmotion( babyO->currentEmot );
                  addExtraAnimationEmotions( &( babyO->permanentEmots ) );
  
@@ -82,7 +82,7 @@ index 1de1db99c..2b71f22be 100644
                  
                  if( babyO->babyWiggle ) {
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 6822bbf3c..6caa32ed7 100644
+index 6499775ac..b2aa571e3 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
 @@ -71,7 +71,6 @@ static char outputMouthFrames = false;
@@ -121,7 +121,7 @@ index 6822bbf3c..6caa32ed7 100644
  
  static char shouldHidePersonShadows = false;
  
-@@ -3271,6 +3284,50 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -3288,6 +3301,50 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  
@@ -173,7 +173,7 @@ index 6822bbf3c..6caa32ed7 100644
          if( ! skipSprite && 
              inClothing.backShoe != NULL && i == backFootIndex ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index bff8c9fea..1a926d5a1 100644
+index 78044c1d1..f39b0468a 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
 @@ -451,6 +451,8 @@ void setAnimationEmotion( Emotion *inEmotion );

@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 1322e3c63..1de1db99c 100644
+index 8ce54555d..9ae976d36 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -138,6 +138,9 @@ static unsigned int maxDoubleClickFrames = 30;
+@@ -139,6 +139,9 @@ static unsigned int maxDoubleClickFrames = 30;
  static int maxDoubleClickDrift = 30;
  static char followRoadsOnlyWhileRunning = 1;
  
@@ -12,7 +12,7 @@ index 1322e3c63..1de1db99c 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2730,6 +2733,8 @@ LivingLifePage::LivingLifePage()
+@@ -2734,6 +2737,8 @@ LivingLifePage::LivingLifePage()
      //
      // set to 0 for standard road following on any click
      followRoadsOnlyWhileRunning = SettingsManager::getIntSetting( "followRoadsOnlyWhileRunning", 1 ) && maxDoubleClickFrames > 0;
@@ -21,7 +21,7 @@ index 1322e3c63..1de1db99c 100644
      
      initLiveTriggers();
  
-@@ -22614,7 +22619,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -22976,7 +22981,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
          // all short objects are mouse-through-able
          
          if( oID > 0 && 
@@ -31,7 +31,7 @@ index 1322e3c63..1de1db99c 100644
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -22725,8 +22731,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -23087,8 +23093,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
@@ -44,7 +44,7 @@ index 1322e3c63..1de1db99c 100644
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -22737,7 +22745,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -23099,7 +23107,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }

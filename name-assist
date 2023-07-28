@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index fcab60955..a00a87fd9 100644
+index 76adf1168..56ede5ca2 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -24,6 +24,8 @@
+@@ -25,6 +25,8 @@
  
  #include "liveAnimationTriggers.h"
  
@@ -11,7 +11,7 @@ index fcab60955..a00a87fd9 100644
  #include "../commonSource/fractalNoise.h"
  #include "../commonSource/sayLimit.h"
  
-@@ -2761,6 +2763,8 @@ LivingLifePage::LivingLifePage()
+@@ -2765,6 +2767,8 @@ LivingLifePage::LivingLifePage()
      
      initLiveTriggers();
  
@@ -20,7 +20,7 @@ index fcab60955..a00a87fd9 100644
      for( int i=0; i<4; i++ ) {
          char *name = autoSprintf( "ground_t%d.tga", i );    
          mGroundOverlaySprite[i] = loadSprite( name, false );
-@@ -3161,6 +3165,8 @@ LivingLifePage::~LivingLifePage() {
+@@ -3188,6 +3192,8 @@ LivingLifePage::~LivingLifePage() {
  
      freeLiveTriggers();
  
@@ -29,7 +29,7 @@ index fcab60955..a00a87fd9 100644
      readyPendingReceivedMessages.deallocateStringElements();
  
      serverFrameMessages.deallocateStringElements();
-@@ -26359,6 +26365,7 @@ void LivingLifePage::fadeErasedCharacters() {
+@@ -26721,6 +26727,7 @@ void LivingLifePage::fadeErasedCharacters() {
      }
  
  
@@ -37,7 +37,7 @@ index fcab60955..a00a87fd9 100644
  char originalCompletionText[256] = {0};
  unsigned int originalCompletionLength = 0;
  
-@@ -26370,6 +26377,12 @@ const char* nameDetection(const char * const inString ) {
+@@ -26732,6 +26739,12 @@ const char* nameDetection(const char * const inString ) {
      if( textLength >= 6 && strncmp( inString, "CURSE ", 6 ) == 0 ) {
          return inString + 6;
          }
@@ -50,7 +50,7 @@ index fcab60955..a00a87fd9 100644
      else {
          for( int i=textLength-1 ; i >= 0 ; i-- ) {
              if( inString[i] >= 'A' && inString[i] <= 'Z' ) {
-@@ -26440,13 +26453,12 @@ void LivingLifePage::nameCompletion() {
+@@ -26802,13 +26815,12 @@ void LivingLifePage::nameCompletion() {
  
      char *curText = mSayField.getText();
  
@@ -69,7 +69,7 @@ index fcab60955..a00a87fd9 100644
  
      delete [] curText;
  
-@@ -26459,16 +26471,46 @@ void LivingLifePage::nameCompletion() {
+@@ -26821,16 +26833,46 @@ void LivingLifePage::nameCompletion() {
      // some text to try and find partial name in, try next name
  
      const char* nameText = nameDetection( originalCompletionText );
@@ -120,7 +120,7 @@ index fcab60955..a00a87fd9 100644
      unsigned int prefixLength = nameText - originalCompletionText;
      if ( prefixLength > 255 ) return;
      strncpy( say, originalCompletionText, prefixLength );
-@@ -26479,6 +26521,7 @@ void LivingLifePage::nameCompletion() {
+@@ -26841,6 +26883,7 @@ void LivingLifePage::nameCompletion() {
      if (maxLength < prefixLength) return;
      strncpy( say + prefixLength, name, maxLength-prefixLength );
      say[maxLength] = 0;
@@ -129,7 +129,7 @@ index fcab60955..a00a87fd9 100644
      }
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index 2dc817610..eb763d0c6 100644
+index bd28bb1d3..c9757028c 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -26,6 +26,7 @@ accountHmac.cpp \

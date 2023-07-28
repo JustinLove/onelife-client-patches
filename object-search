@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e3c9261b6..eab53b930 100644
+index a82a9ed60..ccd53dead 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -166,6 +166,10 @@ static int showLearnedTools = 0;
+@@ -167,6 +167,10 @@ static int showLearnedTools = 0;
  
  static int filterMatchesProduct = 1;
  
@@ -13,7 +13,7 @@ index e3c9261b6..eab53b930 100644
  
  typedef enum interactionKeyType {
      IK_MOVE,
-@@ -498,6 +502,7 @@ static FloatColor gold = { 255.0/255, 227.0/255, 50.0/255, 1 };
+@@ -502,6 +506,7 @@ static FloatColor gold = { 255.0/255, 227.0/255, 50.0/255, 1 };
  static FloatColor pumpkin = { 255.0/255, 139.0/255, 0.0/255, 1 };
  static FloatColor blood = { 244.0/255, 16.0/255, 8.0/255, 1 };
  static FloatColor indigo = { 122.0/255, 126.0/255, 244.0/255, 1 };
@@ -21,7 +21,7 @@ index e3c9261b6..eab53b930 100644
  static FloatColor pink = { 250.0/255, 144.0/255, 146.0/255, 1 };
  static FloatColor stone = { 128.0/255, 125.0/255, 149.0/255, 1 };
  static FloatColor wood = { 146.0/255, 65.0/255, 0.0/255, 1 };
-@@ -794,6 +799,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
+@@ -798,6 +803,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
      p.labeled = true;
      p.showDistance = false;
      p.tempPerson = false;
@@ -29,7 +29,7 @@ index e3c9261b6..eab53b930 100644
      p.temporaryExpireETA = 0;
      p.distanceExpireETA = 0;
      p.creationTime = game_getCurrentTime();
-@@ -873,6 +879,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -877,6 +883,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
      p.temporary = true;
      p.labeled = false;
      p.showDistance = false;
@@ -37,7 +37,7 @@ index e3c9261b6..eab53b930 100644
      // no expiration for now
      // until we drop the map
      p.temporaryExpireETA = 0;
-@@ -932,6 +939,50 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -936,6 +943,50 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
  
  
  
@@ -88,7 +88,7 @@ index e3c9261b6..eab53b930 100644
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
          HomePos *p = homePosStack.getElement( i );
-@@ -1012,6 +1063,7 @@ void LivingLifePage::addPropertyLocationSlip( int inX, int inY ) {
+@@ -1016,6 +1067,7 @@ void LivingLifePage::addPropertyLocationSlip( int inX, int inY ) {
      p.labeled = false;
      p.showDistance = false;
      p.tempPerson = false;
@@ -96,7 +96,7 @@ index e3c9261b6..eab53b930 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.pointerBounce = 0;
-@@ -1032,6 +1084,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
+@@ -1036,6 +1088,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
      p.labeled = false;
      p.showDistance = false;
      p.tempPerson = false;
@@ -104,7 +104,7 @@ index e3c9261b6..eab53b930 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.pointerBounce = 0;
-@@ -1066,6 +1119,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
+@@ -1070,6 +1123,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
      p.tempPerson = false;
      p.pointerBounce = 0;
      p.pointerFade = 0;
@@ -112,7 +112,7 @@ index e3c9261b6..eab53b930 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.distanceExpireETA = game_getCurrentTime() + LOCATION_SLIP_SHOW_DISTANCE;
-@@ -3291,6 +3345,57 @@ void LivingLifePage::clearMap() {
+@@ -3295,6 +3349,57 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -170,7 +170,7 @@ index e3c9261b6..eab53b930 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( 0 ),
-@@ -3318,7 +3423,7 @@ LivingLifePage::LivingLifePage()
+@@ -3322,7 +3427,7 @@ LivingLifePage::LivingLifePage()
            mChalkBlotSprite( loadWhiteSprite( "chalkBlot.tga" ) ),
            mPathMarkSprite( loadWhiteSprite( "pathMark.tga" ) ),
            mSayField( handwritingFont, 0, 1000, 10, true, NULL,
@@ -179,7 +179,7 @@ index e3c9261b6..eab53b930 100644
            mDeathReason( NULL ),
            mShowHighlights( true ),
            mUsingSteam( false ),
-@@ -3447,6 +3552,27 @@ LivingLifePage::LivingLifePage()
+@@ -3451,6 +3556,27 @@ LivingLifePage::LivingLifePage()
  
      filterMatchesProduct = SettingsManager::getIntSetting( "filterMatchesProduct", 1 );
  
@@ -207,7 +207,7 @@ index e3c9261b6..eab53b930 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -3649,6 +3775,7 @@ LivingLifePage::LivingLifePage()
+@@ -3655,6 +3781,7 @@ LivingLifePage::LivingLifePage()
      mPendingFilterString = NULL;
      
      
@@ -215,7 +215,7 @@ index e3c9261b6..eab53b930 100644
  
      for( int i=0; i<NUM_HINT_SHEETS; i++ ) {
          
-@@ -4059,6 +4186,11 @@ LivingLifePage::~LivingLifePage() {
+@@ -4101,6 +4228,11 @@ LivingLifePage::~LivingLifePage() {
          mPendingFilterString = NULL;
          }
  
@@ -227,7 +227,7 @@ index e3c9261b6..eab53b930 100644
      if( mDeathReason != NULL ) {
          delete [] mDeathReason;
          }
-@@ -14115,6 +14247,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -14283,6 +14415,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
  
  
  void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
@@ -239,7 +239,7 @@ index e3c9261b6..eab53b930 100644
      char *foodDescription = 
          stringToUpperCase( getObject( inFoodID )->description );
                  
-@@ -14153,11 +14290,67 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
+@@ -14321,6 +14458,62 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
      double longestLine = getLongestLine( 
          (char*)( mCravingMessage[ mLiveCravingSheetIndex ] ) );
      
@@ -295,19 +295,14 @@ index e3c9261b6..eab53b930 100644
 +
 +    mCravingTargetOffset[ mLiveCravingSheetIndex ].y += 64;
 +
++
 +    double longestLine = getLongestLine( 
 +        (char*)( mCravingMessage[ mLiveCravingSheetIndex ] ) );
 +
      mCravingExtraOffset[ mLiveCravingSheetIndex ].x = longestLine;
      }
  
- 
- 
-+
- // color list from here:
- // https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
- 
-@@ -17278,6 +17471,8 @@ void LivingLifePage::step() {
+@@ -17588,6 +17781,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -316,7 +311,7 @@ index e3c9261b6..eab53b930 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -17927,6 +18122,18 @@ void LivingLifePage::step() {
+@@ -18237,6 +18432,18 @@ void LivingLifePage::step() {
                              }
                          
  
@@ -335,7 +330,7 @@ index e3c9261b6..eab53b930 100644
                          // Check if a home marker has been set or removed
                          if( responsiblePlayerID != -1 &&
                              ( old != 0 ||
-@@ -18326,6 +18533,7 @@ void LivingLifePage::step() {
+@@ -18636,6 +18843,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -343,7 +338,7 @@ index e3c9261b6..eab53b930 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -18698,6 +18906,8 @@ void LivingLifePage::step() {
+@@ -19008,6 +19216,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -352,7 +347,7 @@ index e3c9261b6..eab53b930 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -22812,7 +23022,7 @@ void LivingLifePage::step() {
+@@ -23169,7 +23379,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -361,7 +356,7 @@ index e3c9261b6..eab53b930 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -24385,6 +24595,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24742,6 +24952,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -369,7 +364,7 @@ index e3c9261b6..eab53b930 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24453,7 +24664,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24815,7 +25026,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -378,7 +373,7 @@ index e3c9261b6..eab53b930 100644
      mNextHintIndex = 0;
      
      
-@@ -24505,6 +24716,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24867,6 +25078,9 @@ void LivingLifePage::makeActive( char inFresh ) {
              mCravingMessage[i] = NULL;
              }
          }
@@ -388,7 +383,7 @@ index e3c9261b6..eab53b930 100644
      
      
      for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
-@@ -28823,6 +29037,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -29185,6 +29399,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
@@ -444,7 +439,7 @@ index e3c9261b6..eab53b930 100644
                      else {
                          // actual, spoken text, not a /command
                          
-@@ -28947,6 +29210,34 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -29309,6 +29572,34 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  
@@ -480,7 +475,7 @@ index e3c9261b6..eab53b930 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 48ef8764d..e68e49897 100644
+index 3abd83907..3fda968ed 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
 @@ -489,6 +489,7 @@ typedef struct LocationSlip {
@@ -499,7 +494,7 @@ index 48ef8764d..e68e49897 100644
          
          // enabled tutorail next time a connection loads
          void runTutorial( int inNumber );
-@@ -846,6 +848,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -852,6 +854,9 @@ class LivingLifePage : public GamePage, public ActionListener {
          SimpleVector<OldHintArrow> mOldHintArrows;
  
  
@@ -509,7 +504,7 @@ index 48ef8764d..e68e49897 100644
          SimpleVector<TransRecord *> mLastHintSortedList;
          int mLastHintSortedSourceID;
          char *mLastHintFilterString;
-@@ -868,6 +873,7 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -874,6 +879,7 @@ class LivingLifePage : public GamePage, public ActionListener {
          char *mHintFilterString;
          char mHintFilterStringNoMatch;
  
@@ -517,7 +512,7 @@ index 48ef8764d..e68e49897 100644
          
          // offset from current view center
          doublePair mTutorialHideOffset[NUM_HINT_SHEETS];
-@@ -905,9 +911,14 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -911,9 +917,14 @@ class LivingLifePage : public GamePage, public ActionListener {
          char *mCravingMessage[NUM_HINT_SHEETS];
  
          int mLiveCravingSheetIndex;
@@ -532,7 +527,7 @@ index 48ef8764d..e68e49897 100644
          
  
  
-@@ -1162,6 +1173,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1184,6 +1195,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void setLocationSlipExpiration( int seconds );
          void addLocationSlip( int inX, int inY );
          void addTempLocationSlip( int inX, int inY, char inPerson, int inPersonID, const char* inPersonKey, int inAge );
@@ -541,6 +536,220 @@ index 48ef8764d..e68e49897 100644
          void updateLocationSlip( LocationSlip* locationSlip, int inX, int inY );
          void updatePersonLocationSlip( int inPersonID, int inX, int inY );
          void addPropertyLocationSlip( int inX, int inY );
+diff --git a/gameSource/graphics/photoDisplay1.tga b/gameSource/graphics/photoDisplay1.tga
+index 568d7aaf6bdc623de7ff23fb5ac70e42442a5f1f..80fff02a925b7b231fb86af6ce4bfde7a04f9664 100644
+GIT binary patch
+delta 3495
+zcmYjUPl)5z8DB}3^khqxr_6u{cEEv#I?#X)J-F?~(2Gkc81~{EQe4`DdvkAYOH=3O
+zqc^a~M<2S#mw-bUo(~Q9XhRJ)Mbu(>)F$z)?cGt-%|Zm((EdKjGl>r$-}~P8|KF28
+z>Q+DMR)6r|f&Ae9CqIx&<;QP*>dw2$IS*p{r}|^(?iAUK@$KHuFuvQ^vChTXwirJy
+z?XQ5(fP2TO4KT4m9VgUL!ZA$nL4x<~Z*;!v*>7~d?b?y<`jK?bcOCm>f)@C;ZEtjU
+zK9UNqUy^ZdeRp=`OMYx7+8Xw22(;7-ep9z!+@Ur5f4aA;!hv1ImKeWrK;XM_qP?v`
+zx@12GbDb0w?SCV@j5~MaxB0PfcWNr{@Q~S`>rYqEvx@TwJBacKTkHwnZSt}1iFF=?
+zC6Tu?A|IytZ*_h%$&&|TT<%7B@?e<%8tED25pd9lq`R7FS3K<HpCQVj^)?T?3EI?v
+zcJeQDFK9zLXyr}lXhMREM*fWPu%7=CcnzA|ps8K(unKM-RLJ_)$?x?i3z?C6#8%G#
+zCpq#}DSwG_6yX*>6u{)ISe`vy<(apNQNC4V6{xHhZsr?{x%0%4wMC9B!4S+W3Vmvk
+z3loc67+d!)jKIf(p+znXpyPWk^sPG=dKS6R#rYI*$GQ)`ZGEMC+ZGIMn-*dX8rB8H
+zn&_=TueYtzWre)hIhKkBD^shL2o!O3Ea1uunZ=%lIEJzL>=b%r#wToVQji;y`fV+t
+zsn*}2OY;rNIYYL^)FgcqlNx$#zDBM_Ag_kd<IYRDAMt2l20)V(^-T)B2WjqiiDOaK
+z-a-jYgt=&=b442}+(p?&f49KEMbkt)y9O1uo)Bu_;HxThxQo33=?bKuEONjc^SSQ%
+zW$^kXGsE1Vt(~Ec$-NAx3Q$1V<|}4ivg;$6oiDW#Kg2m2pe6NFltc6F_BooiO%81v
+ztaB*o5(Lkm0rjW3BICCc;y8?R2w99k7Q-A;l?F7(Q9wy-{Tzz$sz=gcH;1Hm2($^b
+zAQd(fbB){{0y7Gt4q1frkRNKfmoQl+lND%jgN;_;2M1<&P|i_CN;v~6ia8{ITY#@T
+zU@-L5Cy_XNpWi5ZpWl5p&2Nz(Hrbab!#W$$MDzJF`zA$Z*&=gA!#4PFn*9coImyD*
+zIE#M09YMwmh9CrkELuqPvj9DuMHlj3(4nh#min<p!iOdp4h>Kb^{fhNEumJ4P=N&c
+zll&BW`GUVHXa9vNV2z=Ea4SJQzX)ExK)fpk=q~#5)%7v^Ik3HP#gDN;y%!nO+<WBX
+zxG}!Qe5`?Pmj=q?&w%<<py{Y>Xqik5%+sQ)nA{&5(3<x62u$1`8i-X42=4j@bzu)I
+zJm?a>>Hxa)wTiZB8`L&418vhXsP~#=sX+{jID-<_jW2+<Wz@B1kjE7pwySUu+t!F6
+z;gCexz_f=Y<4g2X5d={%&S*Xjb{!_fm>i0jiCpf19yW}cV9lr}mmv5vR=}7{$>Ryc
+zyl{-M2}cBm1O~VX`wScHwg*{HbU_duMzhq08h0_wA(t&iP9}ZWWVE*$3=`nj$wZAo
+zk*Jbf1=jejLwCC}2)hz&q7fOzRe;jdwq@*vejUJGI(4z0&Y!#L(87&$dRLO&veyyM
+zYNMm6#abtgOC7OoXF7^FB~(m+im^`HW~5^QiXjmOI=v=+aG*#!t)DK)s}3xkc1~M=
+zrt^7AhsQw^+@5HVU|px>T+=DYDv1Xb_>lVP-20idN?E6{N;+D9RV3{N{Sv*#bgU4B
+zfJZ^QdqX0P24=4zfQ^RIr?1soBNvw1Ly%`0WoimaYHOn1?WD0r3wNZUI;$ZxrkNRN
+zl+CqdB1#fH_B8BJzpEi9NF%&yL&IrzwGu;3QWP|Z!>@zGuYtqEI%20KTOpn4l67#!
+zMOjOVn7CHdk|HK_2FB|ZDO$uTOSe*_(pK7Imi>)NTWO}AdB-(9GD`w8+#IJW@)}H3
+za$!uYBb8<%S@A;^wO$NVh7iY@OSGl>91-<EKwCnE=s-fWA;IyrLUZ2)bQcr(oNpU2
+z&lhzSqY%`<7gSZW#7#xT%nOI4%LGcKqDc0G0&y{wLau7X>z%rXf;e-IWJeiV*=5_r
+zcS<JBiRp<AHOZP@@MVUYWR{_fOu_5<6OiFG#offp3P+jK2hlQ%B`{1+d_Ks~4lP3Q
+zZ9jtu4n2|%x{wY!nF|bLn;zg6fhK_lfjX|kT82I&s$`*u?7XT#-U}VNDrab;mcV)_
+z;(RD1N?C?o2k?lCSfQ;EDPY|zfdAbn-$Hh+fVw0wBQT}=i2{LFV}*2&h&m)NpsT(@
+zo2-Yk-zCri(QhkP;BP4yyj>H7T|+_3+}0I*g9atp<hz=3`Ud5GRXHthJX{L$d~jfg
+z@5&0=P?Qv8rYT$a5`p$(fdEr5O7O@FV;LaA6CLhleDxkSGIiS;1b-=0E6f00)c=y-
+zOl9;9x`J9^431zV;|;hOLdDGh=bOHa!igTq1znly8)r)Vwj*yK*OrmubRV~%2)mn%
+zH00BBScg>dF4p7{@?FK{p(3M|LPw_0uQCYR5}2^Dfr^4mE0Mw7>j2>NjK$J@CL#&T
+zZM&D?jMzxDRoD2|^_LO~5zL6}Pr(hFPv)}e1|u5ziS$M4#hBO@BMC$E@$VofhSE#A
+zN$rS1a>AD={RhAa&h}GL_wqd`5<Tg4!cHd_Cp2a^VPFY^``IJu-2LnWT)zJofZ!20
+zuKpxVAjI51{2rHAzm<xv_!a(nT>Vk{2k7_~X(d|EiQ%CuevXG5T>r$K!(nI*<R{4;
+z7r&9t<;PBgj1}G64opA`0)He`)yGb%fxrKrR0G!!iR;H?tLXmq&tQG`Z}8^Vzm!_?
+dCr(YJ+lO5ILaM8uIDePFXW&EU+L6wF_J8rc`fvaM
+
+delta 4585
+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
+MV1!rmlkgq&-+K0$3IG5A
+
+diff --git a/gameSource/graphics/photoDisplay2.tga b/gameSource/graphics/photoDisplay2.tga
+index e758f4b668f9e10e4fef404a59c45212fdea77bc..b65e728218b52bba151adba235451eeeb225030d 100644
+GIT binary patch
+delta 4953
+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
+
+delta 6164
+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
+aUGjQ=<4~`m?fM)0vDy!@JpDEJvHD-4$2#c%
+
 diff --git a/gameSource/settings/wonlife-plus/defaultSearchForCraving.ini b/gameSource/settings/wonlife-plus/defaultSearchForCraving.ini
 new file mode 100644
 index 000000000..56a6051ca

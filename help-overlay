@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 60cab9ab9..d5905b2ba 100644
+index f4f65095d..7ef150b53 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -3787,6 +3787,59 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
+@@ -3829,6 +3829,59 @@ LiveObject *LivingLifePage::getLiveObject( int inID ) {
      }
  
  
@@ -63,10 +63,10 @@ index 60cab9ab9..d5905b2ba 100644
  SimpleVector<char*> *splitLines( const char *inString,
                                   double inMaxWidth ) {
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index a12384467..312753138 100644
+index 8a3581a98..e973d08b1 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
-@@ -834,43 +834,86 @@ void freeFrameDrawer() {
+@@ -836,43 +836,86 @@ void freeFrameDrawer() {
  static void drawFrameNoUpdate( char inUpdate );
  
  
@@ -159,7 +159,7 @@ index a12384467..312753138 100644
  
          TextAlignment a = getMessageAlign();
  
-@@ -899,6 +942,16 @@ static void drawPauseScreen() {
+@@ -901,6 +944,16 @@ static void drawPauseScreen() {
          drawMessage( translate( "commandHintsA" ), drawPos, false, 
                       pauseScreenFade );
  
@@ -176,7 +176,7 @@ index a12384467..312753138 100644
  
  
          drawPos = lastScreenViewCenter;
-@@ -923,7 +976,7 @@ static void drawPauseScreen() {
+@@ -925,7 +978,7 @@ static void drawPauseScreen() {
          setMessageAlign( alignLeft );
          drawMessage( translate( "commandHintsB" ), drawPos, false, 
                       pauseScreenFade );
@@ -185,7 +185,7 @@ index a12384467..312753138 100644
          setMessageAlign( a );
          }
      
-@@ -1130,11 +1183,7 @@ static void drawPauseScreen() {
+@@ -1132,11 +1185,7 @@ static void drawPauseScreen() {
  
      messagePos = lastScreenViewCenter;
  
