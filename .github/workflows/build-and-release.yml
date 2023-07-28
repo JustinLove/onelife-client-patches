@@ -100,7 +100,8 @@ jobs:
 
   macosx:
     needs: test
-    if: ${{false}} and needs.test.outputs.modVersion != needs.test.outputs.releaseVersion
+    if: false
+    #if: needs.test.outputs.modVersion != needs.test.outputs.releaseVersion
 
     outputs:
       filename: ${{ steps.zip.outputs.filename }}
