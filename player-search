@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index ccd53dead..0e9021e2e 100644
+index 6d2d7cc72..7e9c58ef7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -155,6 +155,8 @@ static double newPlayerMessageTime = 0;
@@ -19,7 +19,7 @@ index ccd53dead..0e9021e2e 100644
  
  #define LOCATION_SLIP_HOME_X -41
  #define LOCATION_SLIP_MAP_X (LOCATION_SLIP_HOME_X+LOCATION_SLIP_OFFSET)
-@@ -2580,6 +2583,45 @@ SimpleVector<char*> knownNames;
+@@ -2582,6 +2585,45 @@ SimpleVector<char*> knownNames;
  static int tabNameCompletion = 1;
  
  
@@ -65,7 +65,7 @@ index ccd53dead..0e9021e2e 100644
  extern char autoAdjustFramerate;
  extern int baseFramesPerSecond;
  
-@@ -3539,6 +3581,15 @@ LivingLifePage::LivingLifePage()
+@@ -3541,6 +3583,15 @@ LivingLifePage::LivingLifePage()
          delete [] markKeyString;
          }
  
@@ -81,7 +81,7 @@ index ccd53dead..0e9021e2e 100644
      categoryPile = SettingsManager::getIntSetting( "categoryPile", 1600 );
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
-@@ -7656,23 +7707,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
+@@ -7660,23 +7711,38 @@ void LivingLifePage::drawLocationSlip( int inIndex ) {
      if ( labeled ) {
          arrowPos.y -= LOCATION_SLIP_BOTTOM_TEXT;
          }
@@ -133,7 +133,7 @@ index ccd53dead..0e9021e2e 100644
              }
          }
  
-@@ -15148,10 +15214,14 @@ void LivingLifePage::step() {
+@@ -15214,10 +15280,14 @@ void LivingLifePage::step() {
              char home =
                  ! locationSlip->temporary &&
                  ! locationSlip->ancient;
@@ -149,7 +149,7 @@ index ccd53dead..0e9021e2e 100644
              locationSlip->labeled = home && homeSlips == 1;
              char expired =
                  locationSlip->temporary &&
-@@ -27437,6 +27507,22 @@ void LivingLifePage::playerUnmark() {
+@@ -27566,6 +27636,22 @@ void LivingLifePage::playerUnmark() {
      }
  
  
@@ -172,7 +172,7 @@ index ccd53dead..0e9021e2e 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -29388,7 +29474,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -29536,7 +29622,7 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                              
                                  if( filterStringLen > 0 ) {
                                      // not blank
@@ -181,7 +181,7 @@ index ccd53dead..0e9021e2e 100644
                                          stringDuplicate( trimmedFilterString );
                                      }
                              
-@@ -29419,8 +29505,31 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -29567,8 +29653,31 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
  
                          if( filterStringLen > 0 ) {
                              // not blank
@@ -215,7 +215,7 @@ index ccd53dead..0e9021e2e 100644
                              }
  
                          delete [] trimmedFilterString;
-@@ -29600,6 +29709,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -29748,6 +29857,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              }
  
  
@@ -228,10 +228,10 @@ index ccd53dead..0e9021e2e 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 3fda968ed..7f95d35b7 100644
+index e0f363756..734ec5997 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -1080,6 +1080,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1087,6 +1087,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void playerMark();
          void playerUnmark();
  
@@ -240,7 +240,7 @@ index 3fda968ed..7f95d35b7 100644
  
          LiveObject *getOurLiveObject();
          LiveObject *getLiveObject( int inID );
-@@ -1155,6 +1157,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1162,6 +1164,8 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          SimpleVector<GraveInfo> mGraveInfo;
  

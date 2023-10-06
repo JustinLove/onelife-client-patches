@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 29f4ff625..32a325f67 100644
+index 8f7984f83..4bf41fe6b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -151,6 +151,82 @@ static int dragDropUse = 1;
@@ -85,7 +85,7 @@ index 29f4ff625..32a325f67 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2771,6 +2847,10 @@ LivingLifePage::LivingLifePage()
+@@ -2773,6 +2849,10 @@ LivingLifePage::LivingLifePage()
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
@@ -96,7 +96,7 @@ index 29f4ff625..32a325f67 100644
      
      initLiveTriggers();
  
-@@ -24897,6 +24977,242 @@ static void freeSavedPath() {
+@@ -25026,6 +25106,242 @@ static void freeSavedPath() {
  
  
  
@@ -339,7 +339,7 @@ index 29f4ff625..32a325f67 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26538,7 +26854,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26681,7 +26997,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -347,7 +347,7 @@ index 29f4ff625..32a325f67 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -26926,23 +27241,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -27074,23 +27389,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -392,7 +392,7 @@ index 29f4ff625..32a325f67 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -27120,6 +27456,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -27268,6 +27604,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
@@ -403,10 +403,10 @@ index 29f4ff625..32a325f67 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 38306e036..1b35c68c9 100644
+index 941715413..32846a9be 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -1018,6 +1018,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1025,6 +1025,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void useOnOtherAt( int clickDestX, int clickDestY, int targetID = 0 );
          void killAt( int clickDestX, int clickDestY, int targetID = 0 );
  

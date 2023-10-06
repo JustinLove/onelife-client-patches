@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a82a9ed60..ccd53dead 100644
+index b455a6fdd..6d2d7cc72 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -167,6 +167,10 @@ static int showLearnedTools = 0;
@@ -21,7 +21,7 @@ index a82a9ed60..ccd53dead 100644
  static FloatColor pink = { 250.0/255, 144.0/255, 146.0/255, 1 };
  static FloatColor stone = { 128.0/255, 125.0/255, 149.0/255, 1 };
  static FloatColor wood = { 146.0/255, 65.0/255, 0.0/255, 1 };
-@@ -798,6 +803,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
+@@ -800,6 +805,7 @@ void LivingLifePage::addLocationSlip( int inX, int inY ) {
      p.labeled = true;
      p.showDistance = false;
      p.tempPerson = false;
@@ -29,7 +29,7 @@ index a82a9ed60..ccd53dead 100644
      p.temporaryExpireETA = 0;
      p.distanceExpireETA = 0;
      p.creationTime = game_getCurrentTime();
-@@ -877,6 +883,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -879,6 +885,7 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
      p.temporary = true;
      p.labeled = false;
      p.showDistance = false;
@@ -37,7 +37,7 @@ index a82a9ed60..ccd53dead 100644
      // no expiration for now
      // until we drop the map
      p.temporaryExpireETA = 0;
-@@ -936,6 +943,50 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
+@@ -938,6 +945,50 @@ void LivingLifePage::addTempLocationSlip( int inX, int inY,
  
  
  
@@ -88,7 +88,7 @@ index a82a9ed60..ccd53dead 100644
  static void updatePersonHomeLocation( int inPersonID, int inX, int inY ) {
      for( int i=0; i<homePosStack.size(); i++ ) {
          HomePos *p = homePosStack.getElement( i );
-@@ -1016,6 +1067,7 @@ void LivingLifePage::addPropertyLocationSlip( int inX, int inY ) {
+@@ -1018,6 +1069,7 @@ void LivingLifePage::addPropertyLocationSlip( int inX, int inY ) {
      p.labeled = false;
      p.showDistance = false;
      p.tempPerson = false;
@@ -96,7 +96,7 @@ index a82a9ed60..ccd53dead 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.pointerBounce = 0;
-@@ -1036,6 +1088,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
+@@ -1038,6 +1090,7 @@ void LivingLifePage::addAncientLocationSlip( int inX, int inY, int monumentID )
      p.labeled = false;
      p.showDistance = false;
      p.tempPerson = false;
@@ -104,7 +104,7 @@ index a82a9ed60..ccd53dead 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.pointerBounce = 0;
-@@ -1070,6 +1123,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
+@@ -1072,6 +1125,7 @@ void LivingLifePage::addHomelandLocationSlip( int inX, int inY, const char* inFa
      p.tempPerson = false;
      p.pointerBounce = 0;
      p.pointerFade = 0;
@@ -112,7 +112,7 @@ index a82a9ed60..ccd53dead 100644
      doublePair offset = {LOCATION_SLIP_RIGHT_X, LOCATION_SLIP_RIGHT_Y};
      p.posOffset = p.targetOffset = p.hideOffset = offset;
      p.distanceExpireETA = game_getCurrentTime() + LOCATION_SLIP_SHOW_DISTANCE;
-@@ -3295,6 +3349,57 @@ void LivingLifePage::clearMap() {
+@@ -3297,6 +3351,57 @@ void LivingLifePage::clearMap() {
  
  
  
@@ -170,7 +170,7 @@ index a82a9ed60..ccd53dead 100644
  LivingLifePage::LivingLifePage() 
          : mServerSocket( -1 ), 
            mForceRunTutorial( 0 ),
-@@ -3322,7 +3427,7 @@ LivingLifePage::LivingLifePage()
+@@ -3324,7 +3429,7 @@ LivingLifePage::LivingLifePage()
            mChalkBlotSprite( loadWhiteSprite( "chalkBlot.tga" ) ),
            mPathMarkSprite( loadWhiteSprite( "pathMark.tga" ) ),
            mSayField( handwritingFont, 0, 1000, 10, true, NULL,
@@ -179,7 +179,7 @@ index a82a9ed60..ccd53dead 100644
            mDeathReason( NULL ),
            mShowHighlights( true ),
            mUsingSteam( false ),
-@@ -3451,6 +3556,27 @@ LivingLifePage::LivingLifePage()
+@@ -3453,6 +3558,27 @@ LivingLifePage::LivingLifePage()
  
      filterMatchesProduct = SettingsManager::getIntSetting( "filterMatchesProduct", 1 );
  
@@ -207,7 +207,7 @@ index a82a9ed60..ccd53dead 100644
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
-@@ -3655,6 +3781,7 @@ LivingLifePage::LivingLifePage()
+@@ -3657,6 +3783,7 @@ LivingLifePage::LivingLifePage()
      mPendingFilterString = NULL;
      
      
@@ -215,7 +215,7 @@ index a82a9ed60..ccd53dead 100644
  
      for( int i=0; i<NUM_HINT_SHEETS; i++ ) {
          
-@@ -4101,6 +4228,11 @@ LivingLifePage::~LivingLifePage() {
+@@ -4103,6 +4230,11 @@ LivingLifePage::~LivingLifePage() {
          mPendingFilterString = NULL;
          }
  
@@ -227,7 +227,7 @@ index a82a9ed60..ccd53dead 100644
      if( mDeathReason != NULL ) {
          delete [] mDeathReason;
          }
-@@ -14283,6 +14415,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
+@@ -14349,6 +14481,11 @@ void LivingLifePage::displayGlobalMessage( char *inMessage ) {
  
  
  void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
@@ -239,7 +239,7 @@ index a82a9ed60..ccd53dead 100644
      char *foodDescription = 
          stringToUpperCase( getObject( inFoodID )->description );
                  
-@@ -14321,6 +14458,62 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
+@@ -14387,6 +14524,62 @@ void LivingLifePage::setNewCraving( int inFoodID, int inYumBonus ) {
      double longestLine = getLongestLine( 
          (char*)( mCravingMessage[ mLiveCravingSheetIndex ] ) );
      
@@ -302,7 +302,7 @@ index a82a9ed60..ccd53dead 100644
      mCravingExtraOffset[ mLiveCravingSheetIndex ].x = longestLine;
      }
  
-@@ -17588,6 +17781,8 @@ void LivingLifePage::step() {
+@@ -17654,6 +17847,8 @@ void LivingLifePage::step() {
                  
                  tokens->deallocateStringElements();
                  delete tokens;
@@ -311,7 +311,7 @@ index a82a9ed60..ccd53dead 100644
                  
                  if( !( mFirstServerMessagesReceived & 1 ) ) {
                      // first map chunk just recieved
-@@ -18237,6 +18432,18 @@ void LivingLifePage::step() {
+@@ -18303,6 +18498,18 @@ void LivingLifePage::step() {
                              }
                          
  
@@ -330,7 +330,7 @@ index a82a9ed60..ccd53dead 100644
                          // Check if a home marker has been set or removed
                          if( responsiblePlayerID != -1 &&
                              ( old != 0 ||
-@@ -18636,6 +18843,7 @@ void LivingLifePage::step() {
+@@ -18702,6 +18909,7 @@ void LivingLifePage::step() {
                  }
              
              delete [] lines;
@@ -338,7 +338,7 @@ index a82a9ed60..ccd53dead 100644
              }
          else if( type == PLAYER_UPDATE ) {
              
-@@ -19008,6 +19216,8 @@ void LivingLifePage::step() {
+@@ -19076,6 +19284,8 @@ void LivingLifePage::step() {
                          existing->id == ourID ) {
                          // got a PU for self
  
@@ -347,7 +347,7 @@ index a82a9ed60..ccd53dead 100644
                          if( existing->holdingID != o.holdingID ) {
                              // holding change
                              // if we have a temp home arrow
-@@ -23169,7 +23379,7 @@ void LivingLifePage::step() {
+@@ -23298,7 +23508,7 @@ void LivingLifePage::step() {
          
          char *currentText = mSayField.getText();
          
@@ -356,7 +356,7 @@ index a82a9ed60..ccd53dead 100644
              // typing a filter
              // hard cap at 25, regardless of age
              // don't want them typing long filters that overflow the display
-@@ -24742,6 +24952,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24871,6 +25081,7 @@ void LivingLifePage::makeActive( char inFresh ) {
          }
  
      mOldHintArrows.deleteAll();
@@ -364,7 +364,7 @@ index a82a9ed60..ccd53dead 100644
  
      mGlobalMessageShowing = false;
      mGlobalMessageStartTime = 0;
-@@ -24815,7 +25026,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24944,7 +25155,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      mCurrentHintObjectID = 0;
      mCurrentHintIndex = 0;
      
@@ -373,7 +373,7 @@ index a82a9ed60..ccd53dead 100644
      mNextHintIndex = 0;
      
      
-@@ -24867,6 +25078,9 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -24996,6 +25207,9 @@ void LivingLifePage::makeActive( char inFresh ) {
              mCravingMessage[i] = NULL;
              }
          }
@@ -383,7 +383,7 @@ index a82a9ed60..ccd53dead 100644
      
      
      for( int i=0; i<NUM_TOOL_SHEETS; i++ ) {
-@@ -29185,6 +29399,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -29333,6 +29547,55 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                                  }
                              }
                          }
@@ -439,7 +439,7 @@ index a82a9ed60..ccd53dead 100644
                      else {
                          // actual, spoken text, not a /command
                          
-@@ -29309,6 +29572,34 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -29457,6 +29720,34 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = true;
              }
  
@@ -475,10 +475,10 @@ index a82a9ed60..ccd53dead 100644
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index 3abd83907..3fda968ed 100644
+index 20ea5df2a..e0f363756 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -489,6 +489,7 @@ typedef struct LocationSlip {
+@@ -496,6 +496,7 @@ typedef struct LocationSlip {
          char temporary;
          char labeled;
          char showDistance;
@@ -486,7 +486,7 @@ index 3abd83907..3fda968ed 100644
          char tempPerson;
          int personID;
          const char *tempPersonKey;
-@@ -551,6 +552,7 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -558,6 +559,7 @@ class LivingLifePage : public GamePage, public ActionListener {
          ~LivingLifePage();
          
          void clearMap();
@@ -494,7 +494,7 @@ index 3abd83907..3fda968ed 100644
          
          // enabled tutorail next time a connection loads
          void runTutorial( int inNumber );
-@@ -852,6 +854,9 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -859,6 +861,9 @@ class LivingLifePage : public GamePage, public ActionListener {
          SimpleVector<OldHintArrow> mOldHintArrows;
  
  
@@ -504,7 +504,7 @@ index 3abd83907..3fda968ed 100644
          SimpleVector<TransRecord *> mLastHintSortedList;
          int mLastHintSortedSourceID;
          char *mLastHintFilterString;
-@@ -874,6 +879,7 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -881,6 +886,7 @@ class LivingLifePage : public GamePage, public ActionListener {
          char *mHintFilterString;
          char mHintFilterStringNoMatch;
  
@@ -512,7 +512,7 @@ index 3abd83907..3fda968ed 100644
          
          // offset from current view center
          doublePair mTutorialHideOffset[NUM_HINT_SHEETS];
-@@ -911,9 +917,14 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -918,9 +924,14 @@ class LivingLifePage : public GamePage, public ActionListener {
          char *mCravingMessage[NUM_HINT_SHEETS];
  
          int mLiveCravingSheetIndex;
@@ -527,7 +527,7 @@ index 3abd83907..3fda968ed 100644
          
  
  
-@@ -1184,6 +1195,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1191,6 +1202,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void setLocationSlipExpiration( int seconds );
          void addLocationSlip( int inX, int inY );
          void addTempLocationSlip( int inX, int inY, char inPerson, int inPersonID, const char* inPersonKey, int inAge );
