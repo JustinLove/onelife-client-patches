@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9f4e8b56b..0e579af22 100644
+index c0d828938..a71b2cd78 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -249,6 +249,55 @@ void initKeybinds() {
@@ -58,7 +58,7 @@ index 9f4e8b56b..0e579af22 100644
  typedef enum yumType {
      YT_INEDIBLE,
      YT_MEH,
-@@ -3639,6 +3688,10 @@ LivingLifePage::LivingLifePage()
+@@ -3643,6 +3692,10 @@ LivingLifePage::LivingLifePage()
      interactionKeysEnabled = SettingsManager::getIntSetting( "interactionKeysEnabled", 1 );
  
      initKeybinds();
@@ -69,7 +69,7 @@ index 9f4e8b56b..0e579af22 100644
      
      showYumHover = SettingsManager::getIntSetting( "showYumHover", 1 );
  
-@@ -30464,6 +30517,25 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -30552,6 +30605,25 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
      else if( inKeyCode == MG_KEY_F1 ) {
          mSayField.unfocus();
          }

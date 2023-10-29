@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 14bc2b247..28030e02e 100644
+index 9cdb1b67c..6043af9f7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -25952,6 +25952,26 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26040,6 +26040,26 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          return;
          }
  

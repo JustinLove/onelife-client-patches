@@ -1,4 +1,4 @@
-# This series applies on GIT commit 20fbe644f598513aa327cc1adfd69df4e598948b
+# This series applies on GIT commit e7571ee658f74049c20a3eefe89350cd4f054a48
 custom-gitignore
 show-modded-client
 optional-client-tag
