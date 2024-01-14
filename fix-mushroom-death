@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 7072551ce..9cdb1b67c 100644
+index 5f7862479..19ef2b52a 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -19164,6 +19164,9 @@ void LivingLifePage::step() {
+@@ -19175,6 +19175,9 @@ void LivingLifePage::step() {
                  
  
                  remapRandSource.reseed( ourID );

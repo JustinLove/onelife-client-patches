@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9cdb1b67c..6043af9f7 100644
+index 19ef2b52a..e87534dab 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -26040,6 +26040,26 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -26059,6 +26059,26 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
          return;
          }
  
@@ -30,10 +30,10 @@ index 9cdb1b67c..6043af9f7 100644
      
      switch( inASCII ) {
 diff --git a/gameSource/emotion.cpp b/gameSource/emotion.cpp
-index 163051591..55d74f16c 100644
+index be01d3225..f448fe134 100644
 --- a/gameSource/emotion.cpp
 +++ b/gameSource/emotion.cpp
-@@ -83,6 +83,38 @@ void initEmotion() {
+@@ -92,6 +92,38 @@ void initEmotion() {
          }
      delete [] parts;
      
@@ -72,7 +72,7 @@ index 163051591..55d74f16c 100644
      }
  
  
-@@ -122,6 +154,22 @@ int getEmotionIndex( const char *inSpeech ) {
+@@ -131,6 +163,22 @@ int getEmotionIndex( const char *inSpeech ) {
  
  
  

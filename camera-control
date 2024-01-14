@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 8ab643e49..89f105803 100644
+index 65538b7c1..97e693a26 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -51,6 +51,9 @@
+@@ -53,6 +53,9 @@
  
  #include "minorGems/crypto/hashes/sha1.h"
  
@@ -12,7 +12,7 @@ index 8ab643e49..89f105803 100644
  #include <stdlib.h>//#include <math.h>
  
  
-@@ -233,6 +236,14 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
+@@ -235,6 +238,14 @@ static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  static float lastMouseX = 0;
  static float lastMouseY = 0;
  
@@ -27,7 +27,7 @@ index 8ab643e49..89f105803 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -2830,6 +2841,24 @@ LivingLifePage::LivingLifePage()
+@@ -2837,6 +2848,24 @@ LivingLifePage::LivingLifePage()
      // allow ctrl-v to paste into chat from clipboard
      mSayField.usePasteShortcut( true );
  
@@ -52,7 +52,7 @@ index 8ab643e49..89f105803 100644
      //
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
-@@ -15800,6 +15829,43 @@ void LivingLifePage::step() {
+@@ -15810,6 +15839,43 @@ void LivingLifePage::step() {
              mMapOffsetX = newMapOffsetX;
              mMapOffsetY = newMapOffsetY;
              
@@ -96,7 +96,7 @@ index 8ab643e49..89f105803 100644
              
              unsigned char *compressedChunk = 
                  new unsigned char[ compressedSize ];
-@@ -21506,6 +21572,30 @@ void LivingLifePage::step() {
+@@ -21517,6 +21583,30 @@ void LivingLifePage::step() {
  
          doublePair screenTargetPos = 
              mult( targetObjectPos, CELL_D );
@@ -127,7 +127,7 @@ index 8ab643e49..89f105803 100644
          
          if( vogMode ) {
              // don't adjust camera
-@@ -21518,6 +21608,10 @@ void LivingLifePage::step() {
+@@ -21529,6 +21619,10 @@ void LivingLifePage::step() {
              // moving
  
              // push camera out in front
@@ -138,7 +138,7 @@ index 8ab643e49..89f105803 100644
              
  
              double moveScale = 40 * cameraFollowsObject->currentSpeed;
-@@ -21549,18 +21643,6 @@ void LivingLifePage::step() {
+@@ -21560,18 +21654,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -157,7 +157,7 @@ index 8ab643e49..89f105803 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -21601,6 +21683,22 @@ void LivingLifePage::step() {
+@@ -21612,6 +21694,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -180,7 +180,7 @@ index 8ab643e49..89f105803 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -21620,6 +21718,10 @@ void LivingLifePage::step() {
+@@ -21631,6 +21729,10 @@ void LivingLifePage::step() {
          if( !shouldMoveCamera ) {
              screenTargetPos = lastScreenViewCenter;
              }
@@ -191,7 +191,7 @@ index 8ab643e49..89f105803 100644
          
  
          doublePair dir = sub( screenTargetPos, lastScreenViewCenter );
-@@ -22951,6 +23053,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -22970,6 +23072,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      
      mouseDown = false;
      shouldMoveCamera = true;
@@ -199,7 +199,7 @@ index 8ab643e49..89f105803 100644
      
      screenCenterPlayerOffsetX = 0;
      screenCenterPlayerOffsetY = 0;
-@@ -24104,6 +24207,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -24123,6 +24226,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          }
      
      
@@ -228,7 +228,7 @@ index 8ab643e49..89f105803 100644
      }
  
  
-@@ -27509,6 +27634,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -27528,6 +27653,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -240,7 +240,7 @@ index 8ab643e49..89f105803 100644
          // inspired by Awbz OneLife+
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
-@@ -27717,6 +27847,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -27736,6 +27866,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
          case ' ':
              shouldMoveCamera = true;
              break;
@@ -251,10 +251,10 @@ index 8ab643e49..89f105803 100644
  
      }
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index c9757028c..0ffa07fa8 100644
+index 258628874..1d230e091 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
-@@ -183,3 +183,6 @@ NEEDED_MINOR_GEMS_OBJECTS = \
+@@ -186,3 +186,6 @@ NEEDED_MINOR_GEMS_OBJECTS = \
   ${STRING_TREE_O} \
   ${CRC32_O} \
  

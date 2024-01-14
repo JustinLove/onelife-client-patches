@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 89affcf6a..4d6c52e27 100644
+index 78fb2ea92..aa9893419 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -106,6 +106,8 @@ extern int userTwinCount;
+@@ -109,6 +109,8 @@ extern int userTwinCount;
  
  extern char userReconnect;
  
@@ -11,7 +11,7 @@ index 89affcf6a..4d6c52e27 100644
  static char vogMode = false;
  static char vogModeActuallyOn = false;
  
-@@ -14621,6 +14623,7 @@ void LivingLifePage::step() {
+@@ -14632,6 +14634,7 @@ void LivingLifePage::step() {
                  }
  
  
@@ -19,7 +19,7 @@ index 89affcf6a..4d6c52e27 100644
              if( strlen( userEmail ) <= 80 ) {    
                  outMessage = autoSprintf( "%s %s %-80s %s %s %d%s#",
                                            loginWord,
-@@ -14637,6 +14640,24 @@ void LivingLifePage::step() {
+@@ -14648,6 +14651,24 @@ void LivingLifePage::step() {
                                            clientTag, tempEmail, pwHash, keyHash,
                                            mTutorialNumber, twinExtra );
                  }
@@ -44,7 +44,7 @@ index 89affcf6a..4d6c52e27 100644
              
              delete [] tempEmail;
              delete [] twinExtra;
-@@ -14656,6 +14677,13 @@ void LivingLifePage::step() {
+@@ -14667,6 +14688,13 @@ void LivingLifePage::step() {
              // subsequent messages should all be part of FRAME batches
              waitForFrameMessages = true;
  
@@ -59,10 +59,10 @@ index 89affcf6a..4d6c52e27 100644
  
              delete [] message;
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index e6d1e29a6..c1fd96342 100644
+index bb8231ad4..e483e70db 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
-@@ -138,6 +138,9 @@ char *userTwinCode = NULL;
+@@ -139,6 +139,9 @@ char *userTwinCode = NULL;
  int userTwinCount = 0;
  char userReconnect = false;
  
@@ -72,7 +72,7 @@ index e6d1e29a6..c1fd96342 100644
  
  // these are needed by ServerActionPage, but we don't use them
  int userID = -1;
-@@ -1174,6 +1177,8 @@ void deleteCharFromUserTypedMessage() {
+@@ -1179,6 +1182,8 @@ void deleteCharFromUserTypedMessage() {
  
  static void startConnecting() {
      userReconnect = false;
@@ -81,7 +81,7 @@ index e6d1e29a6..c1fd96342 100644
      
      if( SettingsManager::getIntSetting( "useCustomServer", 0 ) ) {
          usingCustomServer = true;
-@@ -1976,19 +1981,26 @@ void drawFrame( char inUpdate ) {
+@@ -2017,19 +2022,26 @@ void drawFrame( char inUpdate ) {
              }
          else if( currentGamePage == livingLifePage ) {
              if( livingLifePage->checkSignal( "loginFailed" ) ) {

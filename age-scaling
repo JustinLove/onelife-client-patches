@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index bd29624ad..43cfe4ec6 100644
+index cec244c0d..d2f8d992b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1524,7 +1524,7 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
+@@ -1526,7 +1526,7 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
          return inObj->age;
          }
      else {
@@ -11,7 +11,7 @@ index bd29624ad..43cfe4ec6 100644
              inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime );
          }
      }
-@@ -1544,9 +1544,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
+@@ -1546,9 +1546,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
                  // baby cries for 5 seconds each time they speak
              
                  // update age using clock
@@ -23,7 +23,7 @@ index bd29624ad..43cfe4ec6 100644
                  }
              else {
                  // temp override over
-@@ -1554,7 +1554,8 @@ static double computeCurrentAge( LiveObject *inObj ) {
+@@ -1556,7 +1556,8 @@ static double computeCurrentAge( LiveObject *inObj ) {
                  }
              }
          
@@ -33,7 +33,7 @@ index bd29624ad..43cfe4ec6 100644
          }
      
      }
-@@ -27350,7 +27351,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -27369,7 +27370,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      char tryingToPickUpBaby = false;
      
@@ -42,7 +42,7 @@ index bd29624ad..43cfe4ec6 100644
  
      if( destID == 0 &&
          p.hit &&
-@@ -27373,7 +27374,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -27392,7 +27393,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  if( distance( targetPos, o->currentPos ) < 1 ) {
                      // clicked on someone
  
@@ -52,17 +52,18 @@ index bd29624ad..43cfe4ec6 100644
                          // they're a baby
                          
 diff --git a/gameSource/ageControl.cpp b/gameSource/ageControl.cpp
-index ec88099bf..434e3112b 100644
+index 55ca4543d..e591ea463 100644
 --- a/gameSource/ageControl.cpp
 +++ b/gameSource/ageControl.cpp
-@@ -1,4 +1,6 @@
+@@ -1,5 +1,7 @@
  #include "ageControl.h"
+ #include "settingsToggle.h"
 +#include "minorGems/util/SimpleVector.h"
 +#include "minorGems/util/stringUtils.h"
  
  #include <math.h>
  
-@@ -11,6 +13,7 @@ static double oldHeadDownFactor = 0.35;
+@@ -12,6 +14,7 @@ static double oldHeadDownFactor = 0.35;
  
  static double oldHeadForwardFactor = 2;
  
@@ -70,18 +71,17 @@ index ec88099bf..434e3112b 100644
  
  #include "minorGems/util/SettingsManager.h"
  
-@@ -27,7 +30,9 @@ void initAgeControl() {
- 
-     oldHeadForwardFactor = 
+@@ -33,6 +36,9 @@ void initAgeControl() {
          SettingsManager::getFloatSetting( "oldHeadForwardFactor", 2 );
--    
+     
+     useMainSettings();
 +
 +    initAgeScaling();
 +
      }
  
  
-@@ -94,3 +99,104 @@ doublePair getAgeBodyOffset( double inAge, doublePair inBodySpritePos ) {
+@@ -99,3 +105,104 @@ doublePair getAgeBodyOffset( double inAge, doublePair inBodySpritePos ) {
      return (doublePair){ 0, 0 };
      }
  

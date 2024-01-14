@@ -1,17 +1,16 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index bc24ab709..7072551ce 100644
+index 99711f058..5f7862479 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -25,6 +25,8 @@
+@@ -27,6 +27,7 @@
  
- #include "liveAnimationTriggers.h"
+ #include "settingsToggle.h"
  
 +#include "names.h"
-+
+ 
  #include "../commonSource/fractalNoise.h"
  #include "../commonSource/sayLimit.h"
- 
-@@ -2771,6 +2773,8 @@ LivingLifePage::LivingLifePage()
+@@ -2779,6 +2780,8 @@ LivingLifePage::LivingLifePage()
      
      initLiveTriggers();
  
@@ -20,7 +19,7 @@ index bc24ab709..7072551ce 100644
      for( int i=0; i<4; i++ ) {
          char *name = autoSprintf( "ground_t%d.tga", i );    
          mGroundOverlaySprite[i] = loadSprite( name, false );
-@@ -3194,6 +3198,8 @@ LivingLifePage::~LivingLifePage() {
+@@ -3205,6 +3208,8 @@ LivingLifePage::~LivingLifePage() {
  
      freeLiveTriggers();
  
@@ -29,7 +28,7 @@ index bc24ab709..7072551ce 100644
      readyPendingReceivedMessages.deallocateStringElements();
  
      serverFrameMessages.deallocateStringElements();
-@@ -26957,6 +26963,7 @@ void LivingLifePage::fadeErasedCharacters() {
+@@ -26977,6 +26982,7 @@ void LivingLifePage::fadeErasedCharacters() {
      }
  
  
@@ -37,7 +36,7 @@ index bc24ab709..7072551ce 100644
  char originalCompletionText[256] = {0};
  unsigned int originalCompletionLength = 0;
  
-@@ -26968,6 +26975,12 @@ const char* nameDetection(const char * const inString ) {
+@@ -26988,6 +26994,12 @@ const char* nameDetection(const char * const inString ) {
      if( textLength >= 6 && strncmp( inString, "CURSE ", 6 ) == 0 ) {
          return inString + 6;
          }
@@ -50,7 +49,7 @@ index bc24ab709..7072551ce 100644
      else {
          for( int i=textLength-1 ; i >= 0 ; i-- ) {
              if( inString[i] >= 'A' && inString[i] <= 'Z' ) {
-@@ -27038,13 +27051,12 @@ void LivingLifePage::nameCompletion() {
+@@ -27058,13 +27070,12 @@ void LivingLifePage::nameCompletion() {
  
      char *curText = mSayField.getText();
  
@@ -69,13 +68,12 @@ index bc24ab709..7072551ce 100644
  
      delete [] curText;
  
-@@ -27057,16 +27069,46 @@ void LivingLifePage::nameCompletion() {
+@@ -27077,16 +27088,46 @@ void LivingLifePage::nameCompletion() {
      // some text to try and find partial name in, try next name
  
      const char* nameText = nameDetection( originalCompletionText );
 +    const char* name = NULL;
- 
--    int newIndex = nameMatching( nameText, curNameIndex );
++
 +    if( textLength >= 5 && strncmp( curText, "I AM ", 5 ) == 0 ) {
 +        name = findCloseLastName((char*)nameText);
 +        }
@@ -95,7 +93,7 @@ index bc24ab709..7072551ce 100644
 +            male = randSource.getRandomBoundedInt(0, 1);
 +            }
  
--    if( newIndex < 0 || newIndex >= knownNames.size() ) return;
+-    int newIndex = nameMatching( nameText, curNameIndex );
 +        if( male ) {
 +            name = findCloseMaleName((char*)nameText);
 +        } else {
@@ -105,7 +103,8 @@ index bc24ab709..7072551ce 100644
 +    else {
 +        int curNameIndex = trailingNameMatch( curText );
 +        int newIndex = nameMatching( nameText, curNameIndex );
-+
+ 
+-    if( newIndex < 0 || newIndex >= knownNames.size() ) return;
 +        if( newIndex < 0 || newIndex >= knownNames.size() ) return;
 +        name = knownNames.getElementDirect( newIndex );
 +        }
@@ -120,7 +119,7 @@ index bc24ab709..7072551ce 100644
      unsigned int prefixLength = nameText - originalCompletionText;
      if ( prefixLength > 255 ) return;
      strncpy( say, originalCompletionText, prefixLength );
-@@ -27077,6 +27119,7 @@ void LivingLifePage::nameCompletion() {
+@@ -27097,6 +27138,7 @@ void LivingLifePage::nameCompletion() {
      if (maxLength < prefixLength) return;
      strncpy( say + prefixLength, name, maxLength-prefixLength );
      say[maxLength] = 0;
@@ -129,7 +128,7 @@ index bc24ab709..7072551ce 100644
      }
  
 diff --git a/gameSource/makeFileList b/gameSource/makeFileList
-index bd28bb1d3..c9757028c 100644
+index 94722ec89..258628874 100644
 --- a/gameSource/makeFileList
 +++ b/gameSource/makeFileList
 @@ -26,6 +26,7 @@ accountHmac.cpp \
