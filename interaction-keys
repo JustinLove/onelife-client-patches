@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a711f7f16..65538b7c1 100644
+index 18d2ed846..4a55e435e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -153,6 +153,82 @@ static int dragDropUse = 1;
+@@ -164,6 +164,82 @@ static int dragDropUse = 1;
  
  static int clickToMoveLockToInteract = 0;
  
@@ -85,7 +85,7 @@ index a711f7f16..65538b7c1 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2784,6 +2860,10 @@ LivingLifePage::LivingLifePage()
+@@ -2807,6 +2883,10 @@ LivingLifePage::LivingLifePage()
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
  
      clickToMoveLockToInteract = SettingsManager::getIntSetting( "clickToMoveLockToInteract", 0 );
@@ -96,7 +96,7 @@ index a711f7f16..65538b7c1 100644
      
      initLiveTriggers();
  
-@@ -25133,6 +25213,242 @@ static void freeSavedPath() {
+@@ -25373,6 +25453,242 @@ static void freeSavedPath() {
  
  
  
@@ -339,7 +339,7 @@ index a711f7f16..65538b7c1 100644
  void LivingLifePage::pointerDown( float inX, float inY ) {
      lastMouseX = inX;
      lastMouseY = inY;
-@@ -26788,7 +27104,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -27028,7 +27344,6 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  mZKeyDown = false;
                  mXKeyDown = false;
  
@@ -347,7 +347,7 @@ index a711f7f16..65538b7c1 100644
                  mSayField.focus();
                  }
              else if( mSayField.isFocused() ) {
-@@ -27181,23 +27496,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -27421,23 +27736,44 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
                  TextField::unfocusAll();
                  }
              break;
@@ -392,7 +392,7 @@ index a711f7f16..65538b7c1 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -27375,6 +27711,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
+@@ -27615,6 +27951,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
@@ -403,10 +403,10 @@ index a711f7f16..65538b7c1 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index a60d6feac..18f4be7b2 100644
+index f4a8420ab..6c1b5ab64 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -1031,6 +1031,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1049,6 +1049,8 @@ class LivingLifePage : public GamePage, public ActionListener {
          void useOnOtherAt( int clickDestX, int clickDestY, int targetID = 0 );
          void killAt( int clickDestX, int clickDestY, int targetID = 0 );
  
@@ -414,7 +414,7 @@ index a60d6feac..18f4be7b2 100644
 +
  
          LiveObject *getOurLiveObject();
-         LiveObject *getLiveObject( int inID );
+         
 diff --git a/gameSource/settings/wonlife-plus/interactionKeys.ini b/gameSource/settings/wonlife-plus/interactionKeys.ini
 new file mode 100644
 index 000000000..ce3be4618

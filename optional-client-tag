@@ -1,17 +1,16 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 78fb2ea92..aa9893419 100644
+index 07a5aed98..261f38fd7 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -109,6 +109,8 @@ extern int userTwinCount;
- 
- extern char userReconnect;
+@@ -119,6 +119,7 @@ extern char userReconnect;
+ extern char *ahapAccountURL;
+ extern char *ahapSteamKey;
  
 +extern char usingClientTag;
-+
+ 
  static char vogMode = false;
  static char vogModeActuallyOn = false;
- 
-@@ -14632,6 +14634,7 @@ void LivingLifePage::step() {
+@@ -14808,6 +14809,7 @@ void LivingLifePage::step() {
                  }
  
  
@@ -19,7 +18,7 @@ index 78fb2ea92..aa9893419 100644
              if( strlen( userEmail ) <= 80 ) {    
                  outMessage = autoSprintf( "%s %s %-80s %s %s %d%s#",
                                            loginWord,
-@@ -14648,6 +14651,24 @@ void LivingLifePage::step() {
+@@ -14824,6 +14826,24 @@ void LivingLifePage::step() {
                                            clientTag, tempEmail, pwHash, keyHash,
                                            mTutorialNumber, twinExtra );
                  }
@@ -44,7 +43,7 @@ index 78fb2ea92..aa9893419 100644
              
              delete [] tempEmail;
              delete [] twinExtra;
-@@ -14667,6 +14688,13 @@ void LivingLifePage::step() {
+@@ -14843,6 +14863,13 @@ void LivingLifePage::step() {
              // subsequent messages should all be part of FRAME batches
              waitForFrameMessages = true;
  
@@ -59,10 +58,10 @@ index 78fb2ea92..aa9893419 100644
  
              delete [] message;
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index bb8231ad4..e483e70db 100644
+index 3dca3bfb0..23e46ebbc 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
-@@ -139,6 +139,9 @@ char *userTwinCode = NULL;
+@@ -144,6 +144,9 @@ char *userTwinCode = NULL;
  int userTwinCount = 0;
  char userReconnect = false;
  
@@ -70,18 +69,18 @@ index bb8231ad4..e483e70db 100644
 +char usingClientTag = true;
 +
  
- // these are needed by ServerActionPage, but we don't use them
- int userID = -1;
-@@ -1179,6 +1182,8 @@ void deleteCharFromUserTypedMessage() {
+ char *ahapAccountURL = NULL;
+ char *ahapSteamKey = NULL;
+@@ -1287,6 +1290,8 @@ void deleteCharFromUserTypedMessage() {
  
- static void startConnecting() {
+ static void startConnectingNoAHAPCheck() {
      userReconnect = false;
 +
 +    usingClientTag = SettingsManager::getIntSetting( "usingClientTag", 1 );
      
      if( SettingsManager::getIntSetting( "useCustomServer", 0 ) ) {
          usingCustomServer = true;
-@@ -2017,19 +2022,26 @@ void drawFrame( char inUpdate ) {
+@@ -2286,19 +2291,26 @@ void drawFrame( char inUpdate ) {
              }
          else if( currentGamePage == livingLifePage ) {
              if( livingLifePage->checkSignal( "loginFailed" ) ) {

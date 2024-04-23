@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index cec244c0d..d2f8d992b 100644
+index 4742e4206..ab9ecbe05 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -1526,7 +1526,7 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
+@@ -1541,7 +1541,7 @@ static double computeCurrentAgeNoOverride( LiveObject *inObj ) {
          return inObj->age;
          }
      else {
@@ -11,7 +11,7 @@ index cec244c0d..d2f8d992b 100644
              inObj->ageRate * ( game_getCurrentTime() - inObj->lastAgeSetTime );
          }
      }
-@@ -1546,9 +1546,9 @@ static double computeCurrentAge( LiveObject *inObj ) {
+@@ -1561,9 +1561,9 @@ double computeCurrentAge( LiveObject *inObj ) {
                  // baby cries for 5 seconds each time they speak
              
                  // update age using clock
@@ -23,7 +23,7 @@ index cec244c0d..d2f8d992b 100644
                  }
              else {
                  // temp override over
-@@ -1556,7 +1556,8 @@ static double computeCurrentAge( LiveObject *inObj ) {
+@@ -1571,7 +1571,8 @@ double computeCurrentAge( LiveObject *inObj ) {
                  }
              }
          
@@ -33,7 +33,7 @@ index cec244c0d..d2f8d992b 100644
          }
      
      }
-@@ -27369,7 +27370,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -27609,7 +27610,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
  
      char tryingToPickUpBaby = false;
      
@@ -42,7 +42,7 @@ index cec244c0d..d2f8d992b 100644
  
      if( destID == 0 &&
          p.hit &&
-@@ -27392,7 +27393,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -27632,7 +27633,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
                  if( distance( targetPos, o->currentPos ) < 1 ) {
                      // clicked on someone
  
@@ -201,7 +201,7 @@ index 328068e08..60314b818 100644
 +
 +double computeServerAge( double displayAge );
 diff --git a/gameSource/musicPlayer2.cpp b/gameSource/musicPlayer2.cpp
-index 83666f748..d6a4227ed 100644
+index bd9582eba..afec025d7 100644
 --- a/gameSource/musicPlayer2.cpp
 +++ b/gameSource/musicPlayer2.cpp
 @@ -1,3 +1,4 @@
@@ -209,7 +209,7 @@ index 83666f748..d6a4227ed 100644
  #include "minorGems/game/game.h"
  #include <math.h>
  
-@@ -71,25 +72,27 @@ void initMusicPlayer() {
+@@ -72,25 +73,27 @@ void initMusicPlayer() {
  
  // returns an asynch file read handle, or -1 on failure
  static int startNextAgeFileRead( double inAge ) {
@@ -243,7 +243,7 @@ index 83666f748..d6a4227ed 100644
  
      char *searchString = autoSprintf( "_%02d.ogg", nextFiveBlock );
  
-@@ -146,7 +149,7 @@ void restartMusic( double inAge, double inAgeRate, char inForceNow ) {
+@@ -147,7 +150,7 @@ void restartMusic( double inAge, double inAgeRate, char inForceNow ) {
      musicStarted = false;
      forceStartNow = inForceNow;
      
@@ -252,7 +252,7 @@ index 83666f748..d6a4227ed 100644
      ageRate = inAgeRate;
      
      samplesSeenSinceAgeSet = 0;
-@@ -171,7 +174,7 @@ void restartMusic( double inAge, double inAgeRate, char inForceNow ) {
+@@ -172,7 +175,7 @@ void restartMusic( double inAge, double inAgeRate, char inForceNow ) {
      musicOGGPlaying = false;
  
  

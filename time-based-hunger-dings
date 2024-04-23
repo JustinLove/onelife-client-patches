@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e01bf14fe..4df3c77a8 100644
+index 54c600fef..e43f729e3 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -288,6 +288,9 @@ static char* lastNamed = NULL;
+@@ -299,6 +299,9 @@ static char* lastNamed = NULL;
  static int showNameLabels = 1;
  
  
@@ -12,7 +12,7 @@ index e01bf14fe..4df3c77a8 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -3656,6 +3659,8 @@ LivingLifePage::LivingLifePage()
+@@ -3679,6 +3682,8 @@ LivingLifePage::LivingLifePage()
  
      showNameLabels = SettingsManager::getIntSetting( "showNameLabels", 1 );
  
@@ -21,7 +21,7 @@ index e01bf14fe..4df3c77a8 100644
      initDrawUtils();
  
      initLiveTriggers();
-@@ -23855,7 +23860,10 @@ void LivingLifePage::step() {
+@@ -24072,7 +24077,10 @@ void LivingLifePage::step() {
  
  
                      double curAge = computeCurrentAge( ourLiveObject );
@@ -33,7 +33,7 @@ index e01bf14fe..4df3c77a8 100644
                      if( curAge < 3 ) {
                          mHungerSlipVisible = 0;
                          // special case for babies
-@@ -23940,6 +23948,9 @@ void LivingLifePage::step() {
+@@ -24157,6 +24165,9 @@ void LivingLifePage::step() {
                          &( ourLiveObject->foodDrainTime ),
                          &( ourLiveObject->indoorBonusTime ) );
                  
@@ -43,7 +43,7 @@ index e01bf14fe..4df3c77a8 100644
                  }
              }
          
-@@ -25485,6 +25496,70 @@ static void dummyFunctionA() {
+@@ -25725,6 +25736,70 @@ static void dummyFunctionA() {
  
  
  
@@ -115,10 +115,10 @@ index e01bf14fe..4df3c77a8 100644
  
  
 diff --git a/gameSource/LivingLifePage.h b/gameSource/LivingLifePage.h
-index f3fa32d27..ed25e963a 100644
+index 8b4e3446c..47f41ed7a 100644
 --- a/gameSource/LivingLifePage.h
 +++ b/gameSource/LivingLifePage.h
-@@ -1076,6 +1076,8 @@ class LivingLifePage : public GamePage, public ActionListener {
+@@ -1094,6 +1094,8 @@ class LivingLifePage : public GamePage, public ActionListener {
  
          double computePathSpeedMod( LiveObject *inObject, int inPathLength );
          

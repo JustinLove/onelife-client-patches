@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 9ea081f93..4e05503e1 100644
+index 4b79f8e37..d63971ce9 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -144,6 +144,8 @@ static char followRoadsOnlyWhileRunning = 1;
+@@ -155,6 +155,8 @@ static char followRoadsOnlyWhileRunning = 1;
  
  static int ignoreTallObjects = 1;
  
@@ -11,7 +11,7 @@ index 9ea081f93..4e05503e1 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2753,6 +2755,9 @@ LivingLifePage::LivingLifePage()
+@@ -2776,6 +2778,9 @@ LivingLifePage::LivingLifePage()
      followRoadsOnlyWhileRunning = SettingsManager::getIntSetting( "followRoadsOnlyWhileRunning", 1 ) && maxDoubleClickFrames > 0;
  
      ignoreTallObjects = SettingsManager::getIntSetting( "ignoreTallObjects", 1 );
@@ -21,7 +21,7 @@ index 9ea081f93..4e05503e1 100644
      
      initLiveTriggers();
  
-@@ -4877,6 +4882,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -4906,6 +4911,18 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
          pos = add( pos, actionOffset );
          }                
  
@@ -40,7 +40,7 @@ index 9ea081f93..4e05503e1 100644
                  
      AnimType curType = inObj->curAnim;
      AnimType fadeTargetType = inObj->curAnim;
-@@ -5011,6 +5028,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5040,6 +5057,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
  
          setAnimationEmotion( inObj->currentEmot );
          addExtraAnimationEmotions( &( inObj->permanentEmots ) );
@@ -54,7 +54,7 @@ index 9ea081f93..4e05503e1 100644
          
          // draw young baby lying flat
          double rot = 0;
-@@ -5291,6 +5315,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5320,6 +5344,12 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  restoreSkipDrawing( heldObject );
                  }
  
@@ -67,7 +67,7 @@ index 9ea081f93..4e05503e1 100644
              
              setAnimationBadge( badge );
              if( badge != -1 ) {
-@@ -5372,6 +5402,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
+@@ -5401,6 +5431,13 @@ ObjectAnimPack LivingLifePage::drawLiveObject(
                  setAnimationEmotion( babyO->currentEmot );
                  addExtraAnimationEmotions( &( babyO->permanentEmots ) );
  
@@ -82,10 +82,10 @@ index 9ea081f93..4e05503e1 100644
                  
                  if( babyO->babyWiggle ) {
 diff --git a/gameSource/animationBank.cpp b/gameSource/animationBank.cpp
-index 99db500ba..498acb239 100644
+index 7af8c0887..20acb5ae8 100644
 --- a/gameSource/animationBank.cpp
 +++ b/gameSource/animationBank.cpp
-@@ -71,7 +71,6 @@ static char outputMouthFrames = false;
+@@ -73,7 +73,6 @@ static char outputMouthFrames = false;
  static char mouthFrameOutputStarted = false;
  
  
@@ -93,7 +93,7 @@ index 99db500ba..498acb239 100644
  static char shouldFileBeCached( char *inFileName ) {
      if( strstr( inFileName, ".txt" ) != NULL ) {
          return true;
-@@ -534,6 +533,7 @@ void freeAnimationBank() {
+@@ -555,6 +554,7 @@ void freeAnimationBank() {
          delete [] mouthShapes;
          mouthShapes = NULL;
          }
@@ -101,7 +101,7 @@ index 99db500ba..498acb239 100644
      
      if( mouthShapeFrameList != NULL ) {
          delete [] mouthShapeFrameList;
-@@ -1288,6 +1288,19 @@ void setClothingHighlightFades( float *inFades ) {
+@@ -1338,6 +1338,19 @@ void setClothingHighlightFades( float *inFades ) {
      }
  
  
@@ -121,7 +121,7 @@ index 99db500ba..498acb239 100644
  
  static char shouldHidePersonShadows = false;
  
-@@ -3411,6 +3424,50 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
+@@ -3461,6 +3474,50 @@ HoldingPos drawObjectAnim( int inObjectID, int inDrawBehindSlots,
  
  
  
@@ -173,10 +173,10 @@ index 99db500ba..498acb239 100644
          if( ! skipSprite && 
              inClothing.backShoe != NULL && i == backFootIndex ) {
 diff --git a/gameSource/animationBank.h b/gameSource/animationBank.h
-index 2bf1d5b96..b2c7baa4a 100644
+index 11b25f12d..6e32d83b1 100644
 --- a/gameSource/animationBank.h
 +++ b/gameSource/animationBank.h
-@@ -474,6 +474,8 @@ void setAnimationEmotion( Emotion *inEmotion );
+@@ -476,6 +476,8 @@ void setAnimationEmotion( Emotion *inEmotion );
  // add an extra layer of emotion for drawObjectAnim calls
  void addExtraAnimationEmotions( SimpleVector<Emotion*> *inList );
  

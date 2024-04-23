@@ -1,8 +1,8 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 3c874076e..a711f7f16 100644
+index 08b389578..18d2ed846 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
-@@ -151,6 +151,7 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
+@@ -162,6 +162,7 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
  
  static int dragDropUse = 1;
  
@@ -10,7 +10,7 @@ index 3c874076e..a711f7f16 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2781,6 +2782,8 @@ LivingLifePage::LivingLifePage()
+@@ -2804,6 +2805,8 @@ LivingLifePage::LivingLifePage()
      openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
  
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
@@ -19,7 +19,7 @@ index 3c874076e..a711f7f16 100644
      
      initLiveTriggers();
  
-@@ -25281,7 +25284,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -25521,7 +25524,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
  
@@ -34,7 +34,7 @@ index 3c874076e..a711f7f16 100644
  
  
  
-@@ -25437,7 +25446,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -25677,7 +25686,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      
