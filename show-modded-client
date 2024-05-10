@@ -1,8 +1,8 @@
 diff --git a/gameSource/ExistingAccountPage.cpp b/gameSource/ExistingAccountPage.cpp
-index d6f331c38..66afdb04a 100644
+index 0c0f36b74..d1a2ba41f 100644
 --- a/gameSource/ExistingAccountPage.cpp
 +++ b/gameSource/ExistingAccountPage.cpp
-@@ -773,6 +773,10 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
+@@ -788,6 +788,10 @@ void ExistingAccountPage::draw( doublePair inViewCenter,
          delete [] key;
          delete [] s;
          }
@@ -199,11 +199,11 @@ index 000000000..a0d2d2fa5
 +    };
 +
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index f59c8c2e1..3dca3bfb0 100644
+index ebadfb84d..868d252c2 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 418;
+ int versionNumber = 425;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
@@ -297,7 +297,7 @@ index f59c8c2e1..3dca3bfb0 100644
      delete loadingPage;
      delete autoUpdatePage;
      delete autoAHAPUpdatePage;
-@@ -1987,8 +2010,24 @@ void drawFrame( char inUpdate ) {
+@@ -2010,8 +2033,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  
@@ -324,7 +324,7 @@ index f59c8c2e1..3dca3bfb0 100644
                  }
              }
          else if( currentGamePage == settingsPage ) {
-@@ -2510,6 +2549,15 @@ void drawFrame( char inUpdate ) {
+@@ -2554,6 +2593,15 @@ void drawFrame( char inUpdate ) {
                  quitGame();
                  }
              }

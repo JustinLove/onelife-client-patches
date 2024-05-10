@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 5885c33b8..08b389578 100644
+index 3f59b5bf5..e66fa295b 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -160,6 +160,8 @@ static int showShiverSweat = 0;
@@ -11,7 +11,7 @@ index 5885c33b8..08b389578 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2796,6 +2798,8 @@ LivingLifePage::LivingLifePage()
+@@ -2895,6 +2897,8 @@ LivingLifePage::LivingLifePage()
  
      preferObjectsOverPlayersWithScreenLock = SettingsManager::getIntSetting( "preferObjectsOverPlayersWithScreenLock", 1 );
  
@@ -20,7 +20,7 @@ index 5885c33b8..08b389578 100644
      openSayFieldOnTypingLower = SettingsManager::getIntSetting( "openSayFieldOnTypingLower", 0 );
      openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
  
-@@ -11198,6 +11202,39 @@ void LivingLifePage::draw( doublePair inViewCenter,
+@@ -11299,6 +11303,39 @@ void LivingLifePage::draw( doublePair inViewCenter,
              }
              
  
@@ -60,7 +60,7 @@ index 5885c33b8..08b389578 100644
          
          if( showBugMessage ) {
              
-@@ -26523,6 +26560,39 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
+@@ -26636,6 +26673,39 @@ void LivingLifePage::pointerUp( float inX, float inY ) {
          // pointerDown( inX, inY );
          }
  
