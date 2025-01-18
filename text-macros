@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index a5ff3b210..9cb25d2d5 100644
+index 885ca6f72..cb73fb78e 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -262,6 +262,55 @@ void initKeybinds() {
@@ -69,7 +69,7 @@ index a5ff3b210..9cb25d2d5 100644
      
      showYumHover = SettingsManager::getIntSetting( "showYumHover", 1 );
  
-@@ -31038,6 +31091,25 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -31202,6 +31255,25 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
      else if( inKeyCode == MG_KEY_F1 ) {
          mSayField.unfocus();
          }

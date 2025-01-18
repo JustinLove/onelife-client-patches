@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index db21c1a44..38200e392 100644
+index db21c1a44..9b8fc5419 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -164,6 +164,82 @@ static int dragDropUse = 1;
@@ -392,7 +392,7 @@ index db21c1a44..38200e392 100644
              && ! vogMode
              && (isalpha( inASCII )
                  || (inASCII == ' ' && keyDownGap < 30 && sayCapture != 0 ))) {
-@@ -27842,6 +28178,9 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28006,6 +28342,9 @@ void LivingLifePage::specialKeyDown( int inKeyCode ) {
                  }
              }
          }
