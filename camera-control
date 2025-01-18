@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 1f86e900f..f006cc4e9 100644
+index 38200e392..829472128 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -57,6 +57,9 @@
@@ -27,7 +27,7 @@ index 1f86e900f..f006cc4e9 100644
  
  // set to true to render for teaser video
  static char teaserVideo = false;
-@@ -2959,6 +2970,24 @@ LivingLifePage::LivingLifePage()
+@@ -3140,6 +3151,24 @@ LivingLifePage::LivingLifePage()
      // allow ctrl-v to paste into chat from clipboard
      mSayField.usePasteShortcut( true );
  
@@ -52,7 +52,7 @@ index 1f86e900f..f006cc4e9 100644
      //
      // set to 0 to disable double click to run; you can't click twice in 1 frame
      maxDoubleClickFrames = SettingsManager::getIntSetting( "maxDoubleClickFrames", 30 );
-@@ -16119,6 +16148,43 @@ void LivingLifePage::step() {
+@@ -16348,6 +16377,43 @@ void LivingLifePage::step() {
              mMapOffsetX = newMapOffsetX;
              mMapOffsetY = newMapOffsetY;
              
@@ -96,7 +96,7 @@ index 1f86e900f..f006cc4e9 100644
              
              unsigned char *compressedChunk = 
                  new unsigned char[ compressedSize ];
-@@ -21845,6 +21911,30 @@ void LivingLifePage::step() {
+@@ -22087,6 +22153,30 @@ void LivingLifePage::step() {
  
          doublePair screenTargetPos = 
              mult( targetObjectPos, CELL_D );
@@ -127,7 +127,7 @@ index 1f86e900f..f006cc4e9 100644
          
          if( vogMode ) {
              // don't adjust camera
-@@ -21857,6 +21947,10 @@ void LivingLifePage::step() {
+@@ -22099,6 +22189,10 @@ void LivingLifePage::step() {
              // moving
  
              // push camera out in front
@@ -138,7 +138,7 @@ index 1f86e900f..f006cc4e9 100644
              
  
              double moveScale = 40 * cameraFollowsObject->currentSpeed;
-@@ -21888,18 +21982,6 @@ void LivingLifePage::step() {
+@@ -22130,18 +22224,6 @@ void LivingLifePage::step() {
                  lrint( moveScale * 
                         cameraFollowsObject->currentMoveDirection.y );
   
@@ -157,7 +157,7 @@ index 1f86e900f..f006cc4e9 100644
              }
          else if( false ) { // skip for now
              // stopped moving
-@@ -21940,6 +22022,22 @@ void LivingLifePage::step() {
+@@ -22182,6 +22264,22 @@ void LivingLifePage::step() {
              
              }
  
@@ -180,7 +180,7 @@ index 1f86e900f..f006cc4e9 100644
          if( ! vogMode ) {
              
              screenTargetPos.x = 
-@@ -21959,6 +22057,10 @@ void LivingLifePage::step() {
+@@ -22201,6 +22299,10 @@ void LivingLifePage::step() {
          if( !shouldMoveCamera ) {
              screenTargetPos = lastScreenViewCenter;
              }
@@ -191,7 +191,7 @@ index 1f86e900f..f006cc4e9 100644
          
  
          doublePair dir = sub( screenTargetPos, lastScreenViewCenter );
-@@ -23321,6 +23423,7 @@ void LivingLifePage::makeActive( char inFresh ) {
+@@ -23563,6 +23665,7 @@ void LivingLifePage::makeActive( char inFresh ) {
      
      mouseDown = false;
      shouldMoveCamera = true;
@@ -199,7 +199,7 @@ index 1f86e900f..f006cc4e9 100644
      
      screenCenterPlayerOffsetX = 0;
      screenCenterPlayerOffsetY = 0;
-@@ -24476,6 +24579,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
+@@ -24718,6 +24821,28 @@ void LivingLifePage::pointerMove( float inX, float inY ) {
          }
      
      
@@ -228,7 +228,7 @@ index 1f86e900f..f006cc4e9 100644
      }
  
  
-@@ -27881,6 +28006,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
+@@ -28143,6 +28268,11 @@ void LivingLifePage::keyDown( unsigned char inASCII ) {
              keyHandledByKeybind = tryInteractionKeys( inASCII );
              }
  
@@ -240,7 +240,7 @@ index 1f86e900f..f006cc4e9 100644
          // inspired by Awbz OneLife+
          if( ( ( openSayFieldOnTypingLower && islower( inASCII ) )
                || ( openSayFieldOnTypingUpper && isupper( inASCII ) )
-@@ -28105,6 +28235,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
+@@ -28367,6 +28497,9 @@ void LivingLifePage::keyUp( unsigned char inASCII ) {
          case ' ':
              shouldMoveCamera = true;
              break;

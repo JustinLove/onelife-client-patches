@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index 2a30b95bd..dff9d5ba2 100644
+index 738cb4e41..3c97549dd 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -153,6 +153,9 @@ static unsigned int maxDoubleClickFrames = 30;
@@ -12,7 +12,7 @@ index 2a30b95bd..dff9d5ba2 100644
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
  
-@@ -2870,6 +2873,8 @@ LivingLifePage::LivingLifePage()
+@@ -3051,6 +3054,8 @@ LivingLifePage::LivingLifePage()
      //
      // set to 0 for standard road following on any click
      followRoadsOnlyWhileRunning = SettingsManager::getIntSetting( "followRoadsOnlyWhileRunning", 1 ) && maxDoubleClickFrames > 0;
@@ -21,7 +21,7 @@ index 2a30b95bd..dff9d5ba2 100644
      
      initLiveTriggers();
  
-@@ -23556,7 +23561,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -23798,7 +23803,8 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
          // all short objects are mouse-through-able
          
          if( oID > 0 && 
@@ -31,7 +31,7 @@ index 2a30b95bd..dff9d5ba2 100644
              ObjectRecord *obj = getObject( oID );
              
  
-@@ -23667,8 +23673,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -23909,8 +23915,10 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                      false );
                  
                  if( dist < minDistThatHits ) {
@@ -44,7 +44,7 @@ index 2a30b95bd..dff9d5ba2 100644
                      // already hit a short object
                      // AND this object is tall
                      // (don't click through short behind short)
-@@ -23679,7 +23687,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
+@@ -23921,7 +23929,12 @@ void LivingLifePage::checkForPointerHit( PointerHitRecord *inRecord,
                              p->hitOurPlacementBehind = true;
                              }
                          }

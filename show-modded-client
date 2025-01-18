@@ -199,11 +199,11 @@ index 000000000..a0d2d2fa5
 +    };
 +
 diff --git a/gameSource/game.cpp b/gameSource/game.cpp
-index ebadfb84d..868d252c2 100644
+index 568cf8c31..1f6c0b4b3 100644
 --- a/gameSource/game.cpp
 +++ b/gameSource/game.cpp
 @@ -1,5 +1,7 @@
- int versionNumber = 425;
+ int versionNumber = 430;
  int dataVersionNumber = 0;
 +int clientVersionNumber = versionNumber;
 +int expectedVersionNumber = 0;
@@ -289,7 +289,7 @@ index ebadfb84d..868d252c2 100644
      loadingPage = new LoadingPage;
      
      autoUpdatePage = new AutoUpdatePage;
-@@ -832,6 +854,7 @@ void freeFrameDrawer() {
+@@ -834,6 +856,7 @@ void freeFrameDrawer() {
      delete getAHAPVersionPage;
  
      delete finalMessagePage;
@@ -297,7 +297,7 @@ index ebadfb84d..868d252c2 100644
      delete loadingPage;
      delete autoUpdatePage;
      delete autoAHAPUpdatePage;
-@@ -2010,8 +2033,24 @@ void drawFrame( char inUpdate ) {
+@@ -2014,8 +2037,24 @@ void drawFrame( char inUpdate ) {
                          autoLogIn = false;
                          }
  
@@ -324,7 +324,7 @@ index ebadfb84d..868d252c2 100644
                  }
              }
          else if( currentGamePage == settingsPage ) {
-@@ -2554,6 +2593,15 @@ void drawFrame( char inUpdate ) {
+@@ -2558,6 +2597,15 @@ void drawFrame( char inUpdate ) {
                  quitGame();
                  }
              }

@@ -1,5 +1,5 @@
 diff --git a/gameSource/LivingLifePage.cpp b/gameSource/LivingLifePage.cpp
-index e66fa295b..35d6b2cbf 100644
+index ecc42200a..db21c1a44 100644
 --- a/gameSource/LivingLifePage.cpp
 +++ b/gameSource/LivingLifePage.cpp
 @@ -162,6 +162,7 @@ static int preferObjectsOverPlayersWithScreenLock = 1;
@@ -10,7 +10,7 @@ index e66fa295b..35d6b2cbf 100644
  
  static int screenCenterPlayerOffsetX, screenCenterPlayerOffsetY;
  
-@@ -2903,6 +2904,8 @@ LivingLifePage::LivingLifePage()
+@@ -3084,6 +3085,8 @@ LivingLifePage::LivingLifePage()
      openSayFieldOnTypingUpper = SettingsManager::getIntSetting( "openSayFieldOnTypingUpper", 1 );
  
      tabNameCompletion = SettingsManager::getIntSetting( "tabNameCompletion", 1 );
@@ -19,7 +19,7 @@ index e66fa295b..35d6b2cbf 100644
      
      initLiveTriggers();
  
-@@ -25634,7 +25637,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -25881,7 +25884,13 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      p.hitOtherPerson = false;
      
  
@@ -34,7 +34,7 @@ index e66fa295b..35d6b2cbf 100644
  
  
  
-@@ -25790,7 +25799,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
+@@ -26037,7 +26046,7 @@ void LivingLifePage::pointerDown( float inX, float inY ) {
      int mapY = clickDestY - mMapOffsetY + mMapD / 2;    
      
      
